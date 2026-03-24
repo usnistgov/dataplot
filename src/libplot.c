@@ -62,25 +62,10 @@
  *  definitions -DNOUNDERSCORE and -DUPPERCASE can be specified to
  *  override these defaults. */
 
-#ifdef NOUNDERSCORE
-#define APPEND_UNDERSCORE 0
-#else
-#define APPEND_UNDERSCORE 1
-#endif
-#ifdef UPPERCASE
-#define SUBROUTINE_CASE 0
-#else
-#define SUBROUTINE_CASE 1
-#endif
 #ifdef DOUBLE
 #define PRECISION 1
 #else
 #define PRECISION 0
-#endif
-#ifdef INTEGER8
-#define INTEGER_PRECISION 1
-#else
-#define INTEGER_PRECISION 0
 #endif
 
 /*  include files */
@@ -101,7 +86,7 @@
 /* common parameters */
 
 /* flags for current attribute settings */
-static int    OPEN_FLAG_CAIRO = 0;            /* 0 - libplot closed,
+static int    OPEN_FLAG_LIBPLOT = 0;            /* 0 - libplot closed,
                                            1 - libplot open */
 int           PL_DEVICE_TYPE = 0;       /* define device */
                                         /*  1 - X */
@@ -127,20 +112,19 @@ FILE              *infile_null;
 plPlotter         *plotter;
 plPlotterParams   *plotter_params;
 
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void  plend_(), pldraw_(), plpoin_(), plrgfl_(), plseco();
-void  plinit_(), pleras_(), pltxth_(), pltxtv_(), pllatr_();
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void  PLEND_(), PLDRAW_(), PLPOIN_(), PLRGFL_(), PLRGFL_();
-void  PLINIT_(), PLERAS_(), PLTXTH_(), PLTXTV_(), PLLATR()_;
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void  plend(), pldraw(), plpoin(), plrgfl(), plseco();
-void  plinit(), pleras(), pltxth(), pltxtv(), pllatr();
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void  PLEND(), PLDRAW(), PLPOIN(), PLRGFL(), PLRGFL();
-void  PLINIT(), PLERAS(), PLTXTH(), PLTXTV(), PLLATR();
-#endif
-void  i_to_s_9();
+void plend(int *ierror);
+void pldraw(double xpts[],double ypts[],int *npts);
+void plpoin(double *x, double *y);
+void plrgfl(double *x1, double *y1, double *x2, double *y2, int *red, int *green, int *blue);
+void plseco(int *red, int *green, int *blue);
+void plinit(int *itype, int *ierror, int string1[], double *prot, int string2[]);
+void pleras(int iade[], int *red, int *green, int *blue);
+void pltxth(int font[], int string[], double *xpos, double *ypos, int *ijusth, int *ijustv,
+            double *height, int *error);
+void pltxtv(int font[], int string[], double *xpos, double *ypos, int *ijusth, int *ijustv,
+            double *height, int *error);
+void pllatr(int *index, int *icode, double *avalue);
+void i_to_s_9(int string1[], char string2[], int maxlen, int *ilen);
 
 /* PLINIT  - routine to initialize libplot.
  *           For libplot device, set flag saying this routine
@@ -154,41 +138,17 @@ void  i_to_s_9();
  *           3) Rotation for PCL devices
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void plinit_(itype, ierror, string1, prot, string2)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void PLINIT_(itype, ierror, string1, prot, string2)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void plinit(itype, ierror, string1, prot, string2)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void PLINIT(itype, ierror, string1, prot, string2)
-#endif
-double prot;
-int    string1[], string2[];
-#if INTEGER_PRECISION == 0
-int  *itype, *ierror;
-#else
-int  itype[2], ierror[2];
-#endif
+void plinit(int *itype, int *ierror, int string1[], double *prot, int string2[])
 {
 
-   int   itype_temp;
-   int   len, irot;
-   char  string3[80];
-   char  string4[160];
+   int    itype_temp;
+   int    len;
+   char   string3[80];
+   char   string4[160];
 
-#if INTEGER_PRECISION == 0
    itype_temp = *itype;
-#else
-   itype_temp = itype[0];
-#endif
-#if INTEGER_PRECISION == 0
    i_to_s_9(string1, string3, 40, &len);
    i_to_s_9(string2, string4, 80, &len);
-#else
-   i_to_s_9(string2, string4, 80, &len);
-   i_to_s_9(font, font_name, 160, &len2);
-#endif
 /*
  *           itype = 1   => X
  *                 = 2   => pnm  (netPBM binary format)
@@ -227,26 +187,18 @@ int  itype[2], ierror[2];
        }
        */
        if ((plotter = pl_newpl_r ("X", stdin, outfile_null, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
        BITMAP = 1;
     } else if (itype_temp == 2) {
        outfile = fopen("libplot.pnm","wb");
        if ((plotter = pl_newpl_r ("pnm", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
        BITMAP = 1;
@@ -254,222 +206,154 @@ int  itype[2], ierror[2];
        outfile = fopen("libplot.pnm","w");
        pl_setplparam (plotter_params, "META_PORTABLE", "yes");
        if ((plotter = pl_newpl_r ("pnm", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
        BITMAP = 1;
     } else if (itype_temp == 3) {
        outfile = fopen("libplot.gif","wb");
        if ((plotter = pl_newpl_r ("gif", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
        BITMAP = 1;
     } else if (itype_temp == 4) {
        outfile = fopen("libplot.ai","wb");
        if ((plotter = pl_newpl_r ("ai", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 5) {
        pl_setplparam(plotter_params,"PAGESIZE","letter");
        outfile = fopen("libplot.ps","w");
        if ((plotter = pl_newpl_r ("ps", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 6) {
        outfile = fopen("libplot.fig","wb");
        if ((plotter = pl_newpl_r ("fig", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 7) {
        outfile = fopen("libplot.pcl","w");
-       if (prot == 0.) {
+       if (*prot == 0.) {
           pl_setplparam (plotter_params, "PCL_ROTATE", "0");
        }
-       if (prot == 90.) {
+       if (*prot == 90.) {
           pl_setplparam (plotter_params, "PCL_ROTATE", "90");
        }
        if ((plotter = pl_newpl_r ("pcl", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 8) {
        outfile = fopen("libplot.hpgl","w");
        if ((plotter = pl_newpl_r ("hpgl", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 9) {
        if ((plotter = pl_newpl_r ("tek", stdin, stdout, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 19) {
        outfile = fopen("libplot.meta","wb");
        if ((plotter = pl_newpl_r ("tek", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 10) {
        outfile = fopen("libplot.meta","wb");
        if ((plotter = pl_newpl_r ("meta", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 13) {
        outfile = fopen("libplot.meta","w");
        pl_setplparam (plotter_params, "META_PORTABLE", "yes");
        if ((plotter = pl_newpl_r ("meta", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 11) {
        outfile = fopen("libplot.svg","w");
        if ((plotter = pl_newpl_r ("svg", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 12) {
        outfile = fopen("libplot.png","wb");
        if ((plotter = pl_newpl_r ("png", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
        BITMAP = 1;
     } else if (itype_temp == 15) {
        if ((plotter = pl_newpl_r ("regis", stdin, stdout, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 16) {
        outfile = fopen("libplot.regis","wb");
        if ((plotter = pl_newpl_r ("regis", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 17) {
        outfile = fopen("libplot.cgm","wb");
        if ((plotter = pl_newpl_r ("cgm", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     } else if (itype_temp == 18) {
        outfile = fopen("libplot.cgm","w");
        pl_setplparam (plotter_params, "CGM_PORTABLE", "yes");
        if ((plotter = pl_newpl_r ("cgm", stdin, outfile, outfile_null,
-			     plotter_params)) == NULL)
+          plotter_params)) == NULL)
        {
-#if INTEGER_PRECISION == 0
            *ierror  = 1;
-#else
-           ierror[0] = 1;
-#endif
            return;
        }
     }
     PL_DEVICE_TYPE = itype_temp;
 
     pl_openpl_r (plotter);
-    OPEN_FLAG_CAIRO = 1;
+    OPEN_FLAG_LIBPLOT = 1;
 
 }
 
@@ -490,24 +374,7 @@ int  itype[2], ierror[2];
  *  2) background colors only apply to ..
  */
 
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void pleras_(iade, red, green, blue)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void PLERAS_(iade, red, green, blue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void pleras(iade, red, green, blue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void PLERAS(iade, red, green, blue)
-#endif
-
-#if INTEGER_PRECISION == 0
-int  iade[];
-int  *red, *green, *blue;
-#else
-int  iade[];
-int  red[2], green[2], blue[2];
-#endif
-
+void pleras(int iade[], int *red, int *green, int *blue)
 {
 
    int   red_temp, blue_temp, green_temp;
@@ -515,19 +382,13 @@ int  red[2], green[2], blue[2];
    int   i;
    char  pixel_size[20];
 
-#if INTEGER_PRECISION == 0
    red_temp   = *red;
    blue_temp  = *blue;
    green_temp = *green;
-#else
-   red_temp   = red[0];
-   blue_temp  = blue[0];
-   green_temp = green[0];
-#endif
 
    /* First, check if a graph is currently open, if so write it
       to the current file name. */
-   if (OPEN_FLAG_CAIRO == 1) {
+   if (OPEN_FLAG_LIBPLOT == 1) {
 
       if (BITMAP == 1) {
          strcpy(pixel_size," ");
@@ -546,36 +407,15 @@ int  red[2], green[2], blue[2];
 /* PLEND   - routine to end libplot.  Close the display.
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void plend_(ierror)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void PLEND_(ierror)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void plend(ierror)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void PLEND(ierror)
-#endif
-#if INTEGER_PRECISION == 0
-int    *ierror;
-#else
-int    ierror[2];
-#endif
+void plend(int *ierror)
 {
 
-#if INTEGER_PRECISION == 0
    *ierror = 0;
-#else
-   ierror[0] = 0;
-#endif
    pl_closepl_r(plotter);
    if (pl_deletepl_r(plotter) < 0) {
-#if INTEGER_PRECISION == 0
       *ierror = 2;
-#else
-      ierror[0] = 2;
-#endif
    }
-   OPEN_FLAG_CAIRO = 0;
+   OPEN_FLAG_LIBPLOT = 0;
    if (PL_DEVICE_TYPE == 1) {
    } else if (PL_DEVICE_TYPE == 9) {
    } else {
@@ -622,22 +462,8 @@ int    ierror[2];
  *
  */
 #define MAX_WIDTH  15
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void pllatr_(index, icode, avalue)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void PLLATR_(index, icode, avalue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void pllatr(index, icode, avalue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void PLLATR(index, icode, avalue)
-#endif
+void pllatr(int *index, int *icode, double *avalue)
 
-double *avalue;
-#if INTEGER_PRECISION == 0
-int    *index, *icode;
-#else
-int    index[2], icode[2];
-#endif
 {
 unsigned long  valuemask;
 int            dash_offset;
@@ -646,13 +472,8 @@ int            temp;
 int            icode_temp, index_temp;
 double         avalue_temp;
 
-#if INTEGER_PRECISION == 0
    icode_temp  = *icode;
    index_temp  = *index;
-#else
-   icode_temp  = icode[0];
-   index_temp  = index[0];
-#endif
    switch (index_temp) {
       case 1:         /* set the line width */
           pl_flinewidth_r(plotter,avalue_temp);
@@ -741,29 +562,11 @@ double         avalue_temp;
  *
  */
 #define MAX_LINE_POINTS  500
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void pldraw_(xpts,ypts,npts)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void PLDRAW_(xpts,ypts,npts)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void pldraw(xpts,ypts,npts)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void PLDRAW(xpts,ypts,npts)
-#endif
-double   xpts[], ypts[];
-#if INTEGER_PRECISION == 0
-int   *npts;
-#else
-int   npts[2];
-#endif
+void pldraw(double xpts[],double ypts[],int *npts)
 {
    int     npts_temp;
 
-#if INTEGER_PRECISION == 0
    npts_temp = *npts;
-#else
-   npts_temp = npts[0];
-#endif
 
    double x1, x2, y1, y2;
    if (npts_temp == 2) {   /* draw exactly 2 points */
@@ -792,36 +595,17 @@ int   npts[2];
  * jcol   - index for desired color
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void plseco_(red, green, blue)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void PLSECO_(red, green, blue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void plseco(red, green, blue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void PLSECO(red, green, blue)
-#endif
-#if INTEGER_PRECISION == 0
-int   *red, *green, *blue;
-#else
-int   red[2], green[2], blue[2];
-#endif
+void plseco(int *red, int *green, int *blue)
 {
    int     red_temp;
    int     green_temp;
    int     blue_temp;
 
-#if INTEGER_PRECISION == 0
    red_temp   = *red;
    green_temp = *green;
    blue_temp  = *blue;
-#else
-   red_temp   = red[0];
-   green_temp = green[0];
-   blue_temp  = blue[0];
-#endif
 
-   if (OPEN_FLAG_CAIRO > 0) {
+   if (OPEN_FLAG_LIBPLOT > 0) {
       pl_color_r(plotter,red_temp, green_temp, blue_temp);
    }
 
@@ -833,16 +617,7 @@ int   red[2], green[2], blue[2];
  * iy     - contains the y coordinate
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void plpoin_(x, y)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void PLPOIN_(x, y)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void plpoin(x, y)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void PLPOIN(x, y)
-#endif
-double   *x, *y;
+void plpoin(double *x, double *y)
 {
    double xtemp, ytemp;
    xtemp   = *x;
@@ -860,21 +635,7 @@ double   *x, *y;
  *
  */
 #define MAX_REG_POINTS  1000
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void plrgfl_(x1, y1, x2, y2,red, green, blue)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void PLRGFL_(x1, y1, x2, y2, red, green, blue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void plrgfl(x1, y1, x2, y2, red, green, blue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void PLRGFL(x1, y1, x2, y2, red, green, blue)
-#endif
-double   *x1, *y1, *x2, *y2;
-#if INTEGER_PRECISION == 0
-int   *red, *green, *blue;
-#else
-int   red[2], green[2], blue[2];
-#endif
+void plrgfl(double *x1, double *y1, double *x2, double *y2, int *red, int *green, int *blue)
 {
    double   x1temp, y1temp, x2temp, y2temp;
    int     red_temp;
@@ -885,15 +646,9 @@ int   red[2], green[2], blue[2];
    y1temp = *y1;
    x2temp = *x2;
    y2temp = *y2;
-#if INTEGER_PRECISION == 0
    red_temp   = *red;
    green_temp = *green;
    blue_temp  = *blue;
-#else
-   red_temp   = red[0];
-   green_temp = green[0];
-   blue_temp  = blue[0];
-#endif
 
    /* printf("red = %d, green = %d, blue = %d \n",red_temp,green_temp,blue_temp); */
    /* Note: Fill color is always coming out black.  Not sure why.  */
@@ -921,23 +676,8 @@ int   red[2], green[2], blue[2];
  * error  - error flag
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void pltxth_(font, string, xpos, ypos, ijusth, ijustv, height, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void PLTXTH_(font, string, xpos, ypos, ijusth, ijustv, height, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void pltxth(font, string, xpos, ypos, ijusth, ijustv, height, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void PLTXTH(font, string, xpos, ypos, ijusth, ijustv, height, error)
-#endif
-int    font[];
-int    string[];
-double *xpos, *ypos, *height;
-#if INTEGER_PRECISION == 0
-int    *ijusth, *ijustv, *error;
-#else
-int    ijusth[2], ijustv[2], error[2];
-#endif
+void pltxth(int font[], int string[], double *xpos, double *ypos, int *ijusth, int *ijustv,
+            double *height, int *error)
 {
 
    int    len;                  /* number of characters in string */
@@ -954,21 +694,11 @@ int    ijusth[2], ijustv[2], error[2];
    xpos_temp = *xpos;
    ypos_temp = *ypos;
    height_temp = *height;
-#if INTEGER_PRECISION == 0
    ijusth_temp = *ijusth;
    ijustv_temp = *ijustv;
-#else
-   ijusth_temp = ijusth[0];
-   ijustv_temp = ijustv[0];
-#endif
 
-#if INTEGER_PRECISION == 0
    i_to_s_9(string, string2, 130, &len);
    i_to_s_9(font, font_name, 80, &len2);
-#else
-   i_to_s_9(string, string2, 260, &len);
-   i_to_s_9(font, font_name, 160, &len2);
-#endif
 
    int ijust;
    pl_fmove_r(plotter,xpos_temp, ypos_temp);
@@ -1036,23 +766,8 @@ int    ijusth[2], ijustv[2], error[2];
  * error  - error flag
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void pltxtv_(font, string, xpos, ypos, ijusth, ijustv, height, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void PLTXTV_(font, string, xpos, ypos, ijusth, ijustv, height, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void pltxtv(font, string, xpos, ypos, ijusth, ijustv, height, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void PLTXTV(font, string, xpos, ypos, ijusth, ijustv, height, error)
-#endif
-int    font[];
-int    string[];
-double *xpos, *ypos, *height;
-#if INTEGER_PRECISION == 0
-int    *ijusth, *ijustv, *error;
-#else
-int    ijusth[2], ijustv[2], error[2];
-#endif
+void pltxtv(int font[], int string[], double *xpos, double *ypos, int *ijusth, int *ijustv,
+            double *height, int *error)
 {
 
    int    len;                  /* number of characters in string */
@@ -1149,15 +864,12 @@ int    ijusth[2], ijustv[2], error[2];
  * ilen    - length of character string
  *
  */
-void i_to_s_9(string1, string2, maxlen, ilen)
-int   string1[], maxlen, *ilen;
-char  string2[];
+void i_to_s_9(int string1[], char string2[], int maxlen, int *ilen)
 
 {
      int  i;
      int  itemp;
      i = 0;
-#if INTEGER_PRECISION == 0
      while (string1[i] != 0 && i < (maxlen - 1) ) {
          itemp = string1[i];
          string2[i] = string1[i];
@@ -1166,13 +878,3 @@ char  string2[];
      *ilen = i;
      string2[i]='\0';
 }
-#else
-     while (string1[2*i] != 0 && i < (maxlen - 1) ) {
-         itemp = string1[2*i];
-         string2[i] = string1[2*i];
-         i++;
-     }
-     *ilen = i;
-     string2[i]='\0';
-}
-#endif

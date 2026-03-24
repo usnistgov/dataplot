@@ -1,0 +1,39 @@
+Name:        SUBJECT.DAT
+Source:      Wallgren, Wallgren, Persson, Jorner, and Haaland (1996),
+             "Graphing Statistics & Data: Creating Better Charts,"
+             Sage Publications, p. 77.
+Description: Boys and Girls choices for subjects in upper secondary school.
+Data:        Column 1: Number of Entrants
+             Column 2: Percentage of Entrants that are Women
+             Column 3: Type of Subject
+                       1 => Theoretical
+                       2 => Vocational
+             Column 4: Subject
+         
+
+
+
+
+
+
+
+
+
+
+
+NUMBER   PERWOMEN   TYPE     SUBJECT
+-------------------------------------------------------
+ 4104       85        1      Humanities
+12048       71        1      Social Sciences
+ 8520       52        1      Science
+10930       19        1      Engineering
+12431       56        1      Economics
+  465        1        2      Construction
+ 1200       62        2      Business Studies
+ 1752        3        2      Industrial Engineering
+ 1289       50        2      Agriculture
+  815        4        2      Electrical Engineering
+ 3427       87        2      Nursing (care)
+ 1126        4        2      Vehicles and Transport
+  513       58        2      Catering
+  772       92        2      Nursing

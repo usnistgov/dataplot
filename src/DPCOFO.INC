@@ -1,52 +1,52 @@
-C-----THIS IS COMMON/INCLUDE FILE DPCOFO.INC-----
-C     THIS IS COMMON FOR FILE OPERATIONS (PART 1)
-C
-CCCCC UPDATED--APRIL       2009. INCREASE DIMENSION OF IA TO 255
-CCCCC UPDATED--AUGUST      2020. INCREASE DIMENSION OF IA TO 10000
-C
-C               **************************************
-C               **************************************
-C               **  DEFINE AND EQUIVALENCE INTEGER  **
-C               **  FILE OPERATION                  **
-C               **  VARIABLES AND ARRAYS            **
-C               **************************************
-C               **************************************
-C
+!-----THIS IS COMMON/INCLUDE FILE DPCOFO.INC-----
+!     THIS IS COMMON FOR FILE OPERATIONS (PART 1)
+!
+!CCCC UPDATED--APRIL       2009. INCREASE DIMENSION OF IA TO 255
+!CCCC UPDATED--AUGUST      2020. INCREASE DIMENSION OF IA TO 10000
+!
+!               **************************************
+!               **************************************
+!               **  DEFINE AND EQUIVALENCE INTEGER  **
+!               **  FILE OPERATION                  **
+!               **  VARIABLES AND ARRAYS            **
+!               **************************************
+!               **************************************
+!
       COMMON /IFILOP/I1FILO(10)
-C
+!
       EQUIVALENCE (I1FILO(2),NUMCHA)
-CCCCC EQUIVALENCE (I1FILO(4),IPRON9)
-CCCCC EQUIVALENCE (I1FILO(5),ICONN9)
-C
-C               **************************************
-C               **************************************
-C               **  DEFINE AND EQUIVALENCE CHARACTER**
-C               **  FILE OPERATION                  **
-C               **  VARIABLES AND ARRAYS            **
-C               **************************************
-C               **************************************
-C
+!CCCC EQUIVALENCE (I1FILO(4),IPRON9)
+!CCCC EQUIVALENCE (I1FILO(5),ICONN9)
+!
+!               **************************************
+!               **************************************
+!               **  DEFINE AND EQUIVALENCE CHARACTER**
+!               **  FILE OPERATION                  **
+!               **  VARIABLES AND ARRAYS            **
+!               **************************************
+!               **************************************
+!
       CHARACTER*4 IDEV
-CCCCC CHARACTER*4 IPROGR
-CCCCC CHARACTER*4 ICONCL
-CCCCC CHARACTER*4 IEOF9
+!CCCC CHARACTER*4 IPROGR
+!CCCC CHARACTER*4 ICONCL
+!CCCC CHARACTER*4 IEOF9
       CHARACTER*4 IA
-C
-CCCCC DIMENSION IA(132)
-CCCCC DIMENSION IA(255)
-CCCCC DIMENSION IA(1024)
+!
+!CCCC DIMENSION IA(132)
+!CCCC DIMENSION IA(255)
+!CCCC DIMENSION IA(1024)
       DIMENSION IA(10000)
-C
+!
       CHARACTER*4 IH1FIL
-C
-CCCCC COMMON /IHFILO/IH1FIL(200)
-CCCCC COMMON /IHFILO/IH1FIL(300)
-CCCCC COMMON /IHFILO/IH1FIL(500)
+!
+!CCCC COMMON /IHFILO/IH1FIL(200)
+!CCCC COMMON /IHFILO/IH1FIL(300)
+!CCCC COMMON /IHFILO/IH1FIL(500)
       COMMON /IHFILO/IH1FIL(11000)
-C
+!
       EQUIVALENCE (IH1FIL(1) ,IDEV)
-CCCCC EQUIVALENCE (IH1FIL(3) ,IPROGR)
-CCCCC EQUIVALENCE (IH1FIL(4) ,ICONCL)
-CCCCC EQUIVALENCE (IH1FIL(5) ,IEOF9)
+!CCCC EQUIVALENCE (IH1FIL(3) ,IPROGR)
+!CCCC EQUIVALENCE (IH1FIL(4) ,ICONCL)
+!CCCC EQUIVALENCE (IH1FIL(5) ,IEOF9)
       EQUIVALENCE (IH1FIL(11),IA)
-C
+!

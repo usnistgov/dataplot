@@ -34,34 +34,34 @@ CC = /usr/local/bin/gcc
 # Following recommend line for Intel chips
 # FEATURES = X11 AQUA MACOSX
 # Following recommend line for M1 chips
-FEATURES = X11 MACOSX MACOSX_M1
+FEATURES = X11 MACOSX MACOSX_M1 STACK_SIZE
 
-# PREFIX is the parent of where are installed (recommend /usr/local or /usr)
-# For non-root install, consider PREFIX=$(HOME)
+
+# PREFIX is the parent of where are installed
+# for non-root install, consider PREFIX=$(HOME) or /var/tmp
 # DESTDIR is used by packaging programs (e.g., rpmbuild).
-# PREFIX = $(HOME)
 PREFIX = $(DESTDIR)/usr/local
+#PREFIX = $(HOME)
 BINDIR = $(PREFIX)/bin
 
 # where to find additional dataplot files (help, menus, etc).
 DPLIBDIR=$(PREFIX)/lib/dataplot
 
-FFLAGS += -O2 -DLINUX -DMACOSX -fdefault-real-8 -fdefault-double-8
+#FFLAGS += -O2 -DLINUX -fdefault-real-8 -fdefault-double-8 -fmax-stack-var-size=1000000 -Wall
+#FFLAGS += -O2 -g -DLINUX -fdefault-real-8 -fdefault-double-8 -Wall
+FFLAGS += -O2 -DLINUX -fdefault-real-8 -fdefault-double-8 -Wall
 CFLAGS += -O2
 
 # special flags for dp1
 DP1FLAGS = -DDDOUBLE -DINTEGER32 -DHAVE_ISNAN -DHAVE_EXECUTE_COMMAND_LINE -DDPLIBDIR=\'$(DPLIBDIR)\'
+ifneq (,$(findstring DISABLE_SYSTEM_COMMAND,$(FEATURES)))
+DP1FLAGS += -DDISABLE_SYSTEM_COMMAND
+endif
 
 
 # object files sorted by size for fastest parallel compilation; dp2.o first as it takes the longest
 # ls -S *.F | egrep -v 'msfort_intel' | sed 's/\.F/.o/g' | xargs
-OBJS = dp40.o dp36.o dp42.o dp19.o dp11.o dp38.o dp20.o dp21.o dp2.o dp3.o dp43.o dp18.o dp29.o dp4.o dp37.o dp16.o dp22.o dp9.o dp32.o dp8.o dp41.o dp17.o dp31.o dp15.o dp6.o dp45.o dp12.o dp5.o dp13.o dp30.o dp44.o dp10.o dp25.o starpac.o edsub.o dp27.o dp14.o dp33.o optimi.o dp28.o fit3b.o odrpck.o dp23.o dp26.o dp1.o dp35.o dp7.o dp34.o cluster.o dp24.o dp39.o main.o dpdds3.o edsear.o compgeom.o edmai2.o dpdds.o dpdds2.o edinit.o edwrst.o
-
-# Turn on following to activate the "-g" compile option for more detailed
-# debug output (not on by default as it greatly increases the size of the exextable)
-ifneq (,$(findstring DEBUG,$(FEATURES)))
-FFLAGS += -g
-endif
+OBJS = dp40.o dp36.o dp42.o dp19.o dp11.o dp38.o dp20.o dp21.o dp2.o dp3.o dp43.o dp18.o dp29.o dp4.o dp37.o dp16.o dp22.o dp9.o dp32.o dp8.o dp41.o dp17.o dp31.o dp15.o dp6.o dp45.o dp12.o dp5.o dp13.o dp30.o dp44.o dp10.o dp25.o starpac.o fed.o dp27.o dp14.o dp33.o optimi.o dp28.o fit3b.o odrpck.o dp23.o dp26.o dp1.o dp35.o dp7.o dp34.o cluster.o dp24.o dp39.o main.o dpddsall.o compgeom.o block_data.o
 
 #  MACOSX_M1 is used to specify an additional compilation flag
 ifneq (,$(findstring MACOSX_M1,$(FEATURES)))
@@ -82,42 +82,322 @@ FFLAGS4 += -DHAVE_AQUA
 CFLAGS += -I/Library/Frameworks/AquaTerm.framework/Versions/Current/Headers
 endif
 
+ifneq (,$(findstring READLINE,$(FEATURES)))
+OBJS += rldp.o
+CFLAGS4 = -I/usr/include/readline
+FFLAGS4 = -DHAVE_READLINE
+LDFLAGS += -lreadline
+endif
+
+ifneq (,$(findstring ISOCLINE,$(FEATURES)))
+OBJS += isocdp.c isocline.o
+FFLAGS4 += -DHAVE_ISOCLINE
+endif
+
+# Some versions of gfortran may require following line to avoid compiler warnings
+ifneq (,$(findstring STACK_SIZE,$(FEATURES)))
+FFLAGS += -fmax-stack-var-size=1500000
+endif
+
+# Turn on following to activate the "-g" compile option for more detailed
+# debug output (not on by default as it greatly increases the size of the exextable)
+ifneq (,$(findstring DEBUG,$(FEATURES)))
+FFLAGS += -g
+endif
+
+ifneq (,$(findstring NCURSES,$(FEATURES)))
+LDFLAGS += -lncurses
+endif
+
+ifneq (,$(findstring TIFF,$(FEATURES)))
+FEATURES += GD
+CFLAGS += -DHAVE_GD_TIFF
+LDFLAGS += -ltiff
+endif
+
+ifneq (,$(findstring AVIF,$(FEATURES)))
+FEATURES += GD
+CFLAGS += -DHAVE_GD_AVIF
+LDFLAGS += -lavif
+endif
+
+ifneq (,$(findstring HEIF,$(FEATURES)))
+FEATURES += GD
+CFLAGS += -DHAVE_GD_HEIF
+LDFLAGS += -lheif
+endif
+
+ifneq (,$(findstring VPX,$(FEATURES)))
+FEATURES += GD
+CFLAGS += -DHAVE_GD_VPX
+LDFLAGS += -lvpx
+endif
+
+ifneq (,$(findstring GD,$(FEATURES)))
+OBJS += gd.o
+#LDFLAGS += -lgd -lpng -ljpeg -lz -lfontconfig -lfreetype -lpthread 
+LDFLAGS += -lgd
+FFLAGS4 += -DHAVE_GD
+endif
+
+ifneq (,$(findstring CAIRO,$(FEATURES)))
+OBJS += cairo.o
+FEATURES += X11
+LDFLAGS += -lcairo
+FFLAGS4 += -DHAVE_CAIRO
+CFLAGS += -DHAVE_X11
+#CFLAGS += -I/usr/include/cairo
+endif
+
+ifneq (,$(findstring PLOT,$(FEATURES)))
+OBJS += libplot.o
+FEATURES += X11
+LDFLAGS += -lplot
+#LDFLAGS += -lplot -lXaw -lXmu -lXt -lSM -lICE -lXext
+FFLAGS4 += -DHAVE_LIBPLOT
+endif
+
+ifneq (,$(findstring X11,$(FEATURES)))
+OBJS += x11.o
+FFLAGS4 += -DHAVE_X11
+LDFLAGS += -lX11 -lXft
+CFLAGS  += -I/usr/include/freetype2
+endif
+
+ifneq (,$(findstring XCLIP,$(FEATURES)))
+FEATURES += GD
+CFLAGS += -DHAVE_GD_AVIF
+LDFLAGS += -lavif
+endif
+
+ifneq (,$(findstring HEIF,$(FEATURES)))
+FEATURES += GD
+CFLAGS += -DHAVE_GD_HEIF
+LDFLAGS += -lheif
+endif
+
+ifneq (,$(findstring VPX,$(FEATURES)))
+FEATURES += GD
+CFLAGS += -DHAVE_GD_VPX
+LDFLAGS += -lvpx
+endif
+
+ifneq (,$(findstring GD,$(FEATURES)))
+OBJS += gd.o
+#LDFLAGS += -lgd -lpng -ljpeg -lz -lfontconfig -lfreetype -lpthread 
+LDFLAGS += -lgd
+FFLAGS4 += -DHAVE_GD
+endif
+
+ifneq (,$(findstring CAIRO,$(FEATURES)))
+OBJS += cairo.o
+FEATURES += X11
+LDFLAGS += -lcairo
+FFLAGS4 += -DHAVE_CAIRO
+CFLAGS += -DHAVE_X11
+#CFLAGS += -I/usr/include/cairo
+endif
+
+ifneq (,$(findstring PLOT,$(FEATURES)))
+OBJS += libplot.o
+FEATURES += X11
+LDFLAGS += -lplot
+#LDFLAGS += -lplot -lXaw -lXmu -lXt -lSM -lICE -lXext
+FFLAGS4 += -DHAVE_LIBPLOT
+endif
+
+ifneq (,$(findstring X11,$(FEATURES)))
+OBJS += x11.o
+FFLAGS4 += -DHAVE_X11
+LDFLAGS += -lX11 -lXft
+CFLAGS  += -I/usr/include/freetype2
+endif
+
+ifneq (,$(findstring XCLIP,$(FEATURES)))
+FFLAGS4 += -DHAVE_XCLIP
+endif
+
+ifneq (,$(findstring CYGWIN,$(FEATURES)))
+FFLAGS4 += -DCYGWIN
+endif
+
+ifneq (,$(findstring MACOS,$(FEATURES)))
+FFLAGS4 += -DMACOSX
+endif
+
+ifneq (,$(findstring TCL,$(FEATURES)))
+OBJS += ftcl_mod.o
+OBJS += ftcl_c.o
+FFLAGS4 += -DHAVE_TCL
+endif
+
+ifneq (,$(findstring GKS,$(FEATURES)))
+LDFLAGS += -lgks
+FFLAGS4 += -DHAVE_OPEN_GKS
+endif
+
+ifneq (,$(findstring OPENGL,$(FEATURES)))
+OBJS += gl.o
+LDFLAGS += -lGLU -lGL
+FFLAGS4 += -DHAVE_OPEN_GL
+endif
+
+
 
 all: xdataplot dataplot
 
 dataplot: $(OBJS)
 	$(FC) -o $@  $(OBJS)  $(LDFLAGS)
 
-dp1.o: dp1.F
-	$(FC) $(FFLAGS) $(DP1FLAGS) -c -o $@ $<
+dp1.o: dp1.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
 
-dp16.o: dp16.F
+dp2.o: dp2.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp3.o: dp3.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp4.o: dp4.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp5.o: dp5.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp6.o: dp6.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp7.o: dp7.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp8.o: dp8.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp9.o: dp9.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp10.o: dp10.F90
 	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-dp24.o: dp24.F
+dp11.o: dp11.F90
 	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-dp38.o: dp38.F
+dp12.o: dp12.F90
 	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-gd.o: gd.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+dp13.o: dp13.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-xdataplot:
-	sed "s#\(^dplibdir=\).*#\1$(DPLIBDIR)#" < xdataplot.in > xdataplot
-	sed "s#\(^library[[:space:]]\+unix[[:space:]]\+\).*#\1$(DPLIBDIR)#" < ../lib/frscript/xdpConfig.in > ../lib/frscript/xdpConfig
+dp14.o: dp14.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
+dp15.o: dp15.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-.PHONY: clean
+dp16.o: dp16.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-clean:
-	rm -f *.o dataplot xdataplot ../lib/frscript/xdpConfig
+dp17.o: dp17.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-install: dataplot xdataplot
-	@echo installing binary to $(BINDIR)
-	-[ ! -d $(BINDIR) ] && mkdir -vp $(BINDIR) ||:
-	install -pm 755 dataplot xdataplot  $(BINDIR)
+dp18.o: dp18.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-	@echo installing libs to $(DPLIBDIR)
-	-[ ! -d $(DPLIBDIR) ] && mkdir -vp $(DPLIBDIR) ||:
-	cp -a ../lib/* $(DPLIBDIR)
+dp19.o: dp19.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp20.o: dp20.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp21.o: dp21.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp22.o: dp22.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp23.o: dp23.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp24.o: dp24.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp25.o: dp25.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp26.o: dp26.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp27.o: dp27.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp28.o: dp28.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp29.o: dp29.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp30.o: dp30.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp31.o: dp31.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp32.o: dp32.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp33.o: dp33.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp34.o: dp34.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp35.o: dp35.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp36.o: dp36.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp37.o: dp37.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp38.o: dp38.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp39.o: dp39.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp40.o: dp40.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp41.o: dp41.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp42.o: dp42.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp43.o: dp43.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp44.o: dp44.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp45.o: dp45.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dpddsall.o: dpddsall.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+cluster.o: cluster.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+compgeom.o: compgeom.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+fit3b.o: fit3b.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+odrpck.o: odrpck.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+optimi.o: optimi.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<

@@ -1,27 +1,27 @@
-C-----THIS IS COMMON/INCLUDE FILE DPCODB.INC-----
-C     THIS IS COMMON FOR DEBUGGING
-C
-C               ****************************************
-C               ****************************************
-C               **  DEFINE AND EQUIVALENCE INTEGER    **
-C               **  DEBUGGING                         **
-C               **  VARIABLES AND ARRAYS              **
-C               ****************************************
-C               ****************************************
-C
+!-----THIS IS COMMON/INCLUDE FILE DPCODB.INC-----
+!     THIS IS COMMON FOR DEBUGGING
+!
+!               ****************************************
+!               ****************************************
+!               **  DEFINE AND EQUIVALENCE INTEGER    **
+!               **  DEBUGGING                         **
+!               **  VARIABLES AND ARRAYS              **
+!               ****************************************
+!               ****************************************
+!
       COMMON /IBUG/I1BUG(10)
-C
+!
       EQUIVALENCE (I1BUG(1) ,MAXBUG)
       EQUIVALENCE (I1BUG(2) ,NUMBUG)
-C
-C               ****************************************
-C               ****************************************
-C               **  DEFINE AND EQUIVALENCE CHARACTER  **
-C               **  DEBUGGING                         **
-C               **  VARIABLES AND ARRAYS              **
-C               ****************************************
-C               ****************************************
-C
+!
+!               ****************************************
+!               ****************************************
+!               **  DEFINE AND EQUIVALENCE CHARACTER  **
+!               **  DEBUGGING                         **
+!               **  VARIABLES AND ARRAYS              **
+!               ****************************************
+!               ****************************************
+!
       CHARACTER*4 IBUGMA
       CHARACTER*4 IBUGIN
       CHARACTER*4 IBUGLS
@@ -54,11 +54,11 @@ C
       CHARACTER*4 IBUGWR
       CHARACTER*4 IBUGSO
       CHARACTER*4 IBUGTO
-C
+!
       CHARACTER*4 IH1BUG
-C
+!
       COMMON /IHBUG/IH1BUG(100)
-C
+!
       EQUIVALENCE (IH1BUG(3) ,IBUGMA)
       EQUIVALENCE (IH1BUG(4) ,IBUGIN)
       EQUIVALENCE (IH1BUG(5) ,IBUGLS)
@@ -91,4 +91,4 @@ C
       EQUIVALENCE (IH1BUG(57),IBUGWR)
       EQUIVALENCE (IH1BUG(58),IBUGSO)
       EQUIVALENCE (IH1BUG(59),IBUGTO)
-C
+!

@@ -1,0 +1,18032 @@
+       SUBROUTINE DPRTL(ICHAR2,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+                        IBUGD2,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE AND SET THE HERSHEY CHARACTER SET COORDINATES
+!              FOR ROMAN TRIPLEX LOWER CASE.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--87/4
+!     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --MARCH     1987.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICHAR2
+      CHARACTER*4 IOP
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IOP(*)
+      DIMENSION X(*)
+      DIMENSION Y(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+!
+      NUMCO=1
+      ISTART=1
+      ISTOP=1
+      NC=1
+!
+!               ******************************************
+!               **  TREAT THE ROMAN SIMPLEX UPPER CASE  **
+!               **  HERSHEY CHARACTER SET CASE          **
+!               ******************************************
+!
+!
+      IF(IBUGD2.EQ.'OFF')GO TO 90
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,51)
+   51 FORMAT('***** AT THE BEGINNING OF DPRTL--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,52)ICHAR2
+   52 FORMAT('ICHAR2 = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,59)IBUGD2,IFOUND,IERROR
+   59 FORMAT('IBUGD2,IFOUND,IERROR = ',A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+   90 CONTINUE
+!
+!               **************************************************
+!               **  STEP 1--                                    **
+!               **  SEARCH FOR THE INPUT CHARACTER(S).          **
+!               **  MAP THE CHARACTER(S) INTO A NUMERIC VALUE.  **
+!               **************************************************
+!
+      CALL DPCHAL(ICHAR2,ICHARN,IBUGD2,IFOUND)
+      IF(IFOUND.EQ.'NO')GO TO 9000
+!
+      IF(ICHARN.LE.6)GO TO 1010
+      GO TO 1019
+ 1010 CONTINUE
+      CALL DRTL1(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+      GO TO 9000
+ 1019 CONTINUE
+!
+      IF(7.LE.ICHARN.AND.ICHARN.LE.12)GO TO 1020
+      GO TO 1029
+ 1020 CONTINUE
+      CALL DRTL2(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+      GO TO 9000
+ 1029 CONTINUE
+!
+      IF(13.LE.ICHARN.AND.ICHARN.LE.18)GO TO 1030
+      GO TO 1039
+ 1030 CONTINUE
+      CALL DRTL3(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+      GO TO 9000
+ 1039 CONTINUE
+!
+      IF(ICHARN.GE.19)GO TO 1040
+      GO TO 1049
+ 1040 CONTINUE
+      CALL DRTL4(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+      GO TO 9000
+ 1049 CONTINUE
+!
+      IFOUND='NO'
+      GO TO 9000
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGD2.EQ.'OFF')GO TO 9090
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9011)
+ 9011 FORMAT('***** AT THE END       OF DPRTL--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9012)IBUGD2,IFOUND,IERROR
+ 9012 FORMAT('IBUGD2,IFOUND,IERROR = ',A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9013)ICHAR2,ICHARN
+ 9013 FORMAT('ICHAR2,ICHARN = ',A4,I8)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9014)ISTART,ISTOP,NC,NUMCO
+ 9014 FORMAT('ISTART,ISTOP,NC,NUMCO = ',4I8)
+      CALL DPWRST('XXX','BUG ')
+      IF(NUMCO.GE.1.AND.NUMCO.LE.1000)GO TO 9019
+      DO 9015 I=1,NUMCO
+      WRITE(ICOUT,9016)I,IOP(I),X(I),Y(I)
+ 9016 FORMAT('I,IOP(I),X(I),Y(I) = ',I8,2X,A4,2F10.2)
+      CALL DPWRST('XXX','BUG ')
+ 9015 CONTINUE
+ 9019 CONTINUE
+      WRITE(ICOUT,9021)IXMINS,IXMAXS,IXDELS
+ 9021 FORMAT('IXMINS,IXMAXS,IXDELS = ',3I8)
+      CALL DPWRST('XXX','BUG ')
+ 9090 CONTINUE
+!
+      RETURN
+      END 
+      SUBROUTINE DPRTN(ICHAR2,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE AND SET THE HERSHEY CHARACTER SET COORDINATES
+!              FOR ROMAN TRIPLEX NUMERIC.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--87/4
+!     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --MARCH     1987.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICHAR2
+      CHARACTER*4 IOP
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IOP(*)
+      DIMENSION X(*)
+      DIMENSION Y(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+!
+      NUMCO=1
+      ISTART=1
+      ISTOP=1
+      NC=1
+!
+!               ******************************************
+!               **  TREAT THE ROMAN SIMPLEX UPPER CASE  **
+!               **  HERSHEY CHARACTER SET CASE          **
+!               ******************************************
+!
+!
+      IF(IBUGD2.EQ.'OFF')GO TO 90
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,51)
+   51 FORMAT('***** AT THE BEGINNING OF DPRTN--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,52)ICHAR2
+   52 FORMAT('ICHAR2 = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,59)IBUGD2,IFOUND,IERROR
+   59 FORMAT('IBUGD2,IFOUND,IERROR = ',A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+   90 CONTINUE
+!
+!               **************************************************
+!               **  STEP 1--                                    **
+!               **  SEARCH FOR THE INPUT CHARACTER(S).          **
+!               **  MAP THE CHARACTER(S) INTO A NUMERIC VALUE.  **
+!               **************************************************
+!
+      CALL DPCHNU(ICHAR2,ICHARN,IBUGD2,IFOUND)
+      IF(IFOUND.EQ.'NO')GO TO 9000
+!
+      IF(ICHARN.LE.6)GO TO 1010
+      GO TO 1019
+ 1010 CONTINUE
+      CALL DRTN1(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+      GO TO 9000
+ 1019 CONTINUE
+!
+      IF(ICHARN.GE.7)GO TO 1020
+      GO TO 1029
+ 1020 CONTINUE
+      CALL DRTN2(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+      GO TO 9000
+ 1029 CONTINUE
+!
+      IFOUND='NO'
+      GO TO 9000
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGD2.EQ.'OFF')GO TO 9090
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9011)
+ 9011 FORMAT('***** AT THE END       OF DPRTN--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9012)IBUGD2,IFOUND,IERROR
+ 9012 FORMAT('IBUGD2,IFOUND,IERROR = ',A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9013)ICHAR2,ICHARN
+ 9013 FORMAT('ICHAR2,ICHARN = ',A4,I8)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9014)ISTART,ISTOP,NC,NUMCO
+ 9014 FORMAT('ISTART,ISTOP,NC,NUMCO = ',4I8)
+      CALL DPWRST('XXX','BUG ')
+      IF(NUMCO.GE.1.AND.NUMCO.LE.1000)GO TO 9019
+      DO 9015 I=1,NUMCO
+      WRITE(ICOUT,9016)I,IOP(I),X(I),Y(I)
+ 9016 FORMAT('I,IOP(I),X(I),Y(I) = ',I8,2X,A4,2F10.2)
+      CALL DPWRST('XXX','BUG ')
+ 9015 CONTINUE
+ 9019 CONTINUE
+      WRITE(ICOUT,9021)IXMINS,IXMAXS,IXDELS
+ 9021 FORMAT('IXMINS,IXMAXS,IXDELS = ',3I8)
+      CALL DPWRST('XXX','BUG ')
+ 9090 CONTINUE
+!
+      RETURN
+      END SUBROUTINE DPRTN
+      SUBROUTINE DPRTS(ICHAR2,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE AND SET THE HERSHEY CHARACTER SET COORDINATES
+!              FOR ROMAN TRIPLEX SYMBOLS.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--87/4
+!     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
+!     UPDATED         --MARCH     1982.
+!     UPDATED         --MARCH     1987.
+!     UPDATED         --MAY       1982.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICHAR2
+      CHARACTER*4 IOP
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IOP(*)
+      DIMENSION X(*)
+      DIMENSION Y(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+!
+      NUMCO=1
+      ISTART=1
+      ISTOP=1
+      NC=1
+!
+!               ******************************************
+!               **  TREAT THE ROMAN SIMPLEX UPPER CASE  **
+!               **  HERSHEY CHARACTER SET CASE          **
+!               ******************************************
+!
+!
+      IF(IBUGD2.EQ.'OFF')GO TO 90
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,51)
+   51 FORMAT('***** AT THE BEGINNING OF DPRTS--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,52)ICHAR2
+   52 FORMAT('ICHAR2 = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,59)IBUGD2,IFOUND,IERROR
+   59 FORMAT('IBUGD2,IFOUND,IERROR = ',A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+   90 CONTINUE
+!
+!               **************************************************
+!               **  STEP 1--                                    **
+!               **  SEARCH FOR THE INPUT CHARACTER(S).          **
+!               **  MAP THE CHARACTER(S) INTO A NUMERIC VALUE.  **
+!               **************************************************
+!
+      CALL DPCHSY(ICHAR2,ICHARN,IBUGD2,IFOUND)
+      IF(IFOUND.EQ.'NO')GO TO 9000
+!
+      IF(ICHARN.LE.8)GO TO 1010
+      GO TO 1019
+ 1010 CONTINUE
+      CALL DRTS1(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+      GO TO 9000
+ 1019 CONTINUE
+!
+      IF(ICHARN.GE.9)GO TO 1020
+      GO TO 1029
+ 1020 CONTINUE
+      CALL DRTS2(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+      GO TO 9000
+ 1029 CONTINUE
+!
+      IFOUND='NO'
+      GO TO 9000
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGD2.EQ.'OFF')GO TO 9090
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9011)
+ 9011 FORMAT('***** AT THE END       OF DPRTS--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9012)IBUGD2,IFOUND,IERROR
+ 9012 FORMAT('IBUGD2,IFOUND,IERROR = ',A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9013)ICHAR2,ICHARN
+ 9013 FORMAT('ICHAR2,ICHARN = ',A4,I8)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9014)ISTART,ISTOP,NC,NUMCO
+ 9014 FORMAT('ISTART,ISTOP,NC,NUMCO = ',4I8)
+      CALL DPWRST('XXX','BUG ')
+      IF(NUMCO.GE.1.AND.NUMCO.LE.1000)GO TO 9019
+      IF(NUMCO.GE.1.AND.NUMCO.LE.1000)GO TO 9019
+      DO 9015 I=1,NUMCO
+      WRITE(ICOUT,9016)I,IOP(I),X(I),Y(I)
+ 9016 FORMAT('I,IOP(I),X(I),Y(I) = ',I8,2X,A4,2F10.2)
+      CALL DPWRST('XXX','BUG ')
+ 9015 CONTINUE
+ 9019 CONTINUE
+      WRITE(ICOUT,9021)IXMINS,IXMAXS,IXDELS
+ 9021 FORMAT('IXMINS,IXMAXS,IXDELS = ',3I8)
+      CALL DPWRST('XXX','BUG ')
+ 9090 CONTINUE
+!
+      RETURN
+      END SUBROUTINE DPRTS
+      SUBROUTINE DPRTU(ICHAR2,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE AND SET THE HERSHEY CHARACTER SET COORDINATES
+!              FOR ROMAN TRIPLEX UPPER CASE.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--87/4
+!     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MARCH     1981.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --MARCH     1987.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICHAR2
+      CHARACTER*4 IOP
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IOP(*)
+      DIMENSION X(*)
+      DIMENSION Y(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+!
+      NUMCO=1
+      ISTART=1
+      ISTOP=1
+      NC=1
+!
+!               ******************************************
+!               **  TREAT THE ROMAN SIMPLEX UPPER CASE  **
+!               **  HERSHEY CHARACTER SET CASE          **
+!               ******************************************
+!
+!
+      IF(IBUGD2.EQ.'OFF')GO TO 90
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,51)
+   51 FORMAT('***** AT THE BEGINNING OF DPRTU--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,52)ICHAR2
+   52 FORMAT('ICHAR2 = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,59)IBUGD2,IFOUND,IERROR
+   59 FORMAT('IBUGD2,IFOUND,IERROR = ',A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+   90 CONTINUE
+!
+!               **************************************************
+!               **  STEP 1--                                    **
+!               **  SEARCH FOR THE INPUT CHARACTER(S).          **
+!               **  MAP THE CHARACTER(S) INTO A NUMERIC VALUE.  **
+!               **************************************************
+!
+      CALL DPCHAL(ICHAR2,ICHARN,IBUGD2,IFOUND)
+      IF(IFOUND.EQ.'NO')GO TO 9000
+!
+      IF(ICHARN.LE.6)GO TO 1010
+      GO TO 1019
+ 1010 CONTINUE
+      CALL DRTU1(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+      GO TO 9000
+ 1019 CONTINUE
+!
+      IF(7.LE.ICHARN.AND.ICHARN.LE.13)GO TO 1020
+      GO TO 1029
+ 1020 CONTINUE
+      CALL DRTU2(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+      GO TO 9000
+ 1029 CONTINUE
+!
+      IF(14.LE.ICHARN.AND.ICHARN.LE.19)GO TO 1030
+      GO TO 1039
+ 1030 CONTINUE
+      CALL DRTU3(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+      GO TO 9000
+ 1039 CONTINUE
+!
+      IF(ICHARN.GE.20)GO TO 1040
+      GO TO 1049
+ 1040 CONTINUE
+      CALL DRTU4(ICHARN,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
+      IBUGD2,IFOUND,IERROR)
+      GO TO 9000
+ 1049 CONTINUE
+!
+      IFOUND='NO'
+      GO TO 9000
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGD2.EQ.'OFF')GO TO 9090
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9011)
+ 9011 FORMAT('***** AT THE END       OF DPRTU--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9012)IBUGD2,IFOUND,IERROR
+ 9012 FORMAT('IBUGD2,IFOUND,IERROR = ',A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9013)ICHAR2,ICHARN
+ 9013 FORMAT('ICHAR2,ICHARN = ',A4,I8)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9014)ISTART,ISTOP,NC,NUMCO
+ 9014 FORMAT('ISTART,ISTOP,NC,NUMCO = ',4I8)
+      CALL DPWRST('XXX','BUG ')
+      IF(NUMCO.GE.1.AND.NUMCO.LE.1000)GO TO 9019
+      DO 9015 I=1,NUMCO
+      WRITE(ICOUT,9016)I,IOP(I),X(I),Y(I)
+ 9016 FORMAT('I,IOP(I),X(I),Y(I) = ',I8,2X,A4,2F10.2)
+      CALL DPWRST('XXX','BUG ')
+ 9015 CONTINUE
+ 9019 CONTINUE
+      WRITE(ICOUT,9021)IXMINS,IXMAXS,IXDELS
+ 9021 FORMAT('IXMINS,IXMAXS,IXDELS = ',3I8)
+      CALL DPWRST('XXX','BUG ')
+ 9090 CONTINUE
+!
+      RETURN
+      END SUBROUTINE DPRTU
+      SUBROUTINE DPRUH1(P1,N1,P2,N2,P3,N3,ALPHA,ICASAN,IWRITE,   &
+                        PVALUE,ALOWLM,AUPPLM,   &
+                        IBUGA3,ISUBRO,IERROR)
+!
+!     PURPOSE--FOR THREE BINOMIAL PROPORTIONS (P1, N1, P2, N2, P3, N3)
+!              AND ALPHA, COMPUTE THE HYPOTHESIS TEST FOR:
+!
+!                 Ho: P1 = P2*P3
+!
+!              AGAINST
+!
+!                 Ha: P1 <> P1*P2
+!                 Ha: P1 <  P1*P2
+!                 Ha: P1  > P1*P2
+!
+!              RETURN THE APPROPRIATE P-VALUE.
+!     REFERENCE--PRIVATE COMMUNICATION WITH ANDREW RUHKIN OF THE
+!                NIST STATISTICAL ENGINEERING DIVISION.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2008/9
+!     ORIGINAL VERSION--SEPTEMBER 2008.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICASAN
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+!---------------------------------------------------------------------
+!
+      REAL P1
+      REAL P2
+      REAL P3
+      REAL ALPHA
+      REAL PVALUE
+      REAL ALOWLM
+      REAL AUPPLM
+      INTEGER N1
+      INTEGER N2
+      INTEGER N3
+!
+      DOUBLE PRECISION DTERM1
+      DOUBLE PRECISION DTERM2
+      DOUBLE PRECISION DTERM3
+      DOUBLE PRECISION DTERM4
+      DOUBLE PRECISION DP1
+      DOUBLE PRECISION DP2
+      DOUBLE PRECISION DP3
+      DOUBLE PRECISION DN1
+      DOUBLE PRECISION DN2
+      DOUBLE PRECISION DN3
+      DOUBLE PRECISION DPVAL
+      DOUBLE PRECISION DPPF
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPRU'
+      ISUBN2='H1  '
+      IERROR='NO'
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RUH1')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPRUH1--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ICASAN,IWRITE
+   52   FORMAT('IBUGA3,ICASAN,IWRITE = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)P1,N1,P2,N2,P3,N3,ALPHA
+   53   FORMAT('P1,N1,P2,N2,P3,N3,ALPHA = ',3(G15.7,I8),G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ********************************
+!               **  STEP 1--                  **
+!               **  CHECK FOR INPUT ERRORS    **
+!               ********************************
+!
+      PVALUE=0.0
+      ALOWLM=0.0
+      AUPPLM=1.0
+!
+      IF(N1.LT.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,111)
+  111   FORMAT('****** ERROR IN RUHKIN 1 TEST-- ')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('         THE NUMBER OF OBSERVATIONS FOR THE FIRST ',   &
+               'RESPONSE VARIABLE IS LESS THAN 2.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,114)N1
+  114   FORMAT('SAMPLE SIZE = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IF(N2.LT.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,123)
+  123   FORMAT('         THE NUMBER OF OBSERVATIONS FOR THE ',   &
+               'SECOND RESPONSE VARIABLE IS LESS THAN 2.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,114)N2
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IF(N3.LT.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,133)
+  133   FORMAT('         THE NUMBER OF OBSERVATIONS FOR THE ',   &
+               'THIRD RESPONSE VARIABLE IS LESS THAN 2.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,114)N3
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IF(P1.LT.0.0 .OR. P1.GT.1.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,162)
+  162   FORMAT('      THE BINOMIAL PROBABILITY OF SUCCESS PARAMETER ',   &
+               'FOR THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,164)
+  164   FORMAT('      FIRST RESPONSE VARIABLE IS OUTSIDE THE ',   &
+               '(0,1) INTERVAL.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,167)P1
+  167   FORMAT('      THE PROBABILITY OF SUCCESS PARAMETER = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+      IF(P2.LT.0.0 .OR. P2.GT.1.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,162)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,174)
+  174   FORMAT('      SECOND RESPONSE VARIABLE IS OUTSIDE THE ',   &
+               '(0,1) INTERVAL.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,167)P2
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+      IF(P3.LT.0.0 .OR. P3.GT.1.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,162)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,184)
+  184   FORMAT('      THIRD RESPONSE VARIABLE IS OUTSIDE THE ',   &
+               '(0,1) INTERVAL.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,167)P3
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+      ALPHSV=ALPHA
+      IF(ALPHA.GT.1.0 .AND. ALPHA.LE.100.0)ALPHA=ALPHA/100.0
+      IF(ALPHA.LE.0.0 .OR. ALPHA.GE.1.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,192)
+  192   FORMAT('      THE VALUE OF ALPHA IS OUTSIDE THE (0,1) ',   &
+               'INTERVAL.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,197)ALPHA
+  197   FORMAT('      THE VALUE OF ALPHA = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+!CCCC FOR THESE FORMULAS, WE WANT ALPHA AS 0.05 RATHER THAN
+!CCCC 0.95.
+!
+!CCCC IF(ALPHA.LT.0.5)ALPHA=1.0 - ALPHA
+      IF(ALPHA.GT.0.5)ALPHA=1.0 - ALPHA
+!
+!               ********************************************
+!               **  STEP 2--                              **
+!               **  COMPUTE THE DIFFERENCE OF PROPORTIONS **
+!               **  CONFIDENCE INTERVAL.                  **
+!               ********************************************
+!
+      STATVA=P1 - P2*P3
+      IF(P1.GE.1.0 .AND. P2.GE.1.0 .AND. P3.GE.1.0)THEN
+        PVALUE=1.0
+        ALOWLM=STATVA
+        AUPPLM=STATVA
+        GO TO 9000
+      ELSEIF(P1.LE.0.0 .AND. P2.LE.0.0 .AND. P3.LE.0.0)THEN
+        PVALUE=1.0
+        ALOWLM=STATVA
+        AUPPLM=STATVA
+        GO TO 9000
+      ENDIF
+!
+      DN1=DBLE(N1)
+      DN2=DBLE(N2)
+      DN3=DBLE(N3)
+      DP1=DBLE(P1)
+      DP2=DBLE(P2)
+      DP3=DBLE(P3)
+!
+      DTERM1=DP1*(1.0D0 - DP1)/DN1
+      DTERM2=(DP3**2)*DP2*(1.0D0 - DP2)/DN2
+      DTERM3=(DP2**2)*DP3*(1.0D0 - DP3)/DN3
+      IF(ICASAN.EQ.'R1LT')THEN
+        DTERM4=(DP2*DP3 - DP1)/DSQRT(DTERM1 + DTERM2 + DTERM3)
+        CALL NODCDF(DTERM4,DPVAL)
+        DPVAL=1.0D0 - DPVAL
+      ELSEIF(ICASAN.EQ.'R1UT')THEN
+        DTERM4=(DP1 - DP2*DP3)/DSQRT(DTERM1 + DTERM2 + DTERM3)
+        CALL NODCDF(DTERM4,DPVAL)
+        DPVAL=1.0D0 - DPVAL
+      ELSE
+        DTERM4=DABS(DP1 - DP2*DP3)/DSQRT(DTERM1 + DTERM2 + DTERM3)
+        CALL NODCDF(DTERM4,DPVAL)
+        DPVAL=2.0D0*(1.0D0 - DPVAL)
+      ENDIF
+      PVALUE=REAL(DPVAL)
+!
+      DTERM4=DSQRT(DTERM1 + DTERM2 + DTERM3)
+      ALP2=ALPHA/2.0
+      IF(ALP2.LE.0.5)ALP2=1.0 - ALP2
+      CALL NODPPF(DBLE(ALP2),DPPF)
+      A1=STATVA - REAL(DPPF*DTERM4)
+      A2=STATVA + REAL(DPPF*DTERM4)
+      ALOWLM=MIN(A1,A2)
+      AUPPLM=MAX(A1,A2)
+      IF(ALOWLM.LT.-1.0)ALOWLM=-1.0
+      IF(AUPPLM.GT.1.0)AUPPLM=1.0
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT.      **
+!               *****************
+!
+ 9000 CONTINUE
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RUH1')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPRUH1--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IBUGA3,IERROR
+ 9012   FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)STATVA,ALP2,DPPF
+ 9013   FORMAT('STATVA,ALP2,DPPF = ',3(G15.7,2X))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)A1,A2,ALOWLM,AUPPLM
+ 9014   FORMAT('A1,A2,ALOWLM,AUPPLM = ',4(G15.7,2X))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9018)DTERM1,DTERM2,DTERM3,DTERM4
+ 9018   FORMAT('DTERM1,DTERM2,DTERM3,DTERM4 = ',4(G15.7,2X))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9019)DPVAL,PVALUE
+ 9019   FORMAT('DPVAL,PVALUE = ',2(G15.7,2X))
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPRUH1
+      SUBROUTINE DPRUH2(P1,N1,P2,N2,ALPHA,ICASAN,IWRITE,   &
+                        PVALUE,ALOWLM,AUPPLM,   &
+                        IBUGA3,IERROR)
+!
+!     PURPOSE--FOR TWO BINOMIAL PROPORTIONS (P1, N1, P2, N2)
+!              AND ALPHA, COMPUTE THE HYPOTHESIS TEST FOR:
+!
+!                 Ho: P1 = 0.5*P2
+!
+!              AGAINST
+!
+!                 Ha: P1 <> 0.5*P2
+!                 Ha: P1 <  0.5*P2
+!                 Ha: P1  > 0.5*P2
+!
+!              RETURN THE APPROPRIATE P-VALUE AND A CONFIDENCE
+!              INTERVAL.
+!     REFERENCE--PRIVATE COMMUNICATION WITH ANDREW RUHKIN OF THE
+!                NIST STATISTICAL ENGINEERING DIVISION.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2008/9
+!     ORIGINAL VERSION--SEPTEMBER 2008.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICASAN
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+!---------------------------------------------------------------------
+!
+      REAL P1
+      REAL P2
+      REAL ALPHA
+      REAL PVALUE
+      INTEGER N1
+      INTEGER N2
+!
+      DOUBLE PRECISION DTERM1
+      DOUBLE PRECISION DTERM2
+      DOUBLE PRECISION DTERM3
+      DOUBLE PRECISION DTERM4
+      DOUBLE PRECISION DP1
+      DOUBLE PRECISION DP2
+      DOUBLE PRECISION DN1
+      DOUBLE PRECISION DN2
+      DOUBLE PRECISION DPVAL
+      DOUBLE PRECISION DPPF
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPRU'
+      ISUBN2='H2  '
+      IERROR='NO'
+!
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPRUH2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ICASAN,IWRITE
+   52   FORMAT('IBUGA3,ICASAN,IWRITE = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)P1,N1,P2,N2,ALPHA
+   53   FORMAT('P1,N1,P2,N2,ALPHA = ',2(G15.7,I8),G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ********************************
+!               **  STEP 1--                  **
+!               **  CHECK FOR INPUT ERRORS    **
+!               ********************************
+!
+      PVALUE=0.0
+      ALOWLM=0.0
+      AUPPLM=1.0
+!
+      IF(N1.LT.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,111)
+  111   FORMAT('****** ERROR IN RUHKIN 2 TEST-- ')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('         THE NUMBER OF OBSERVATIONS FOR THE FIRST ',   &
+               'RESPONSE VARIABLE IS LESS THAN 2.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,114)N1
+  114   FORMAT('SAMPLE SIZE = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IF(N2.LT.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,123)
+  123   FORMAT('         THE NUMBER OF OBSERVATIONS FOR THE ',   &
+               'SECOND RESPONSE VARIABLE IS LESS THAN 2.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,114)N2
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IF(P1.LT.0.0 .OR. P1.GT.1.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,162)
+  162   FORMAT('      THE BINOMIAL PROBABILITY OF SUCCESS PARAMETER ',   &
+               'FOR THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,164)
+  164   FORMAT('      FIRST RESPONSE VARIABLE IS OUTSIDE THE ',   &
+               '(0,1) INTERVAL.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,167)P1
+  167   FORMAT('      THE PROBABILITY OF SUCCESS PARAMETER = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+      IF(P2.LT.0.0 .OR. P2.GT.1.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,162)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,174)
+  174   FORMAT('      SECOND RESPONSE VARIABLE IS OUTSIDE THE ',   &
+               '(0,1) INTERVAL.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,167)P2
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+      ALPHSV=ALPHA
+      IF(ALPHA.GT.1.0 .AND. ALPHA.LE.100.0)ALPHA=ALPHA/100.0
+      IF(ALPHA.LE.0.0 .OR. ALPHA.GE.1.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,192)
+  192   FORMAT('      THE VALUE OF ALPHA IS OUTSIDE THE (0,1) ',   &
+               'INTERVAL.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,197)ALPHA
+  197   FORMAT('      THE VALUE OF ALPHA = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+!CCCC FOR THESE FORMULAS, WE WANT ALPHA AS 0.05 RATHER THAN
+!CCCC 0.95.
+!
+!CCCC IF(ALPHA.LT.0.5)ALPHA=1.0 - ALPHA
+      IF(ALPHA.GT.0.5)ALPHA=1.0 - ALPHA
+!
+!               ********************************************
+!               **  STEP 2--                              **
+!               **  COMPUTE THE DIFFERENCE OF PROPORTIONS **
+!               **  CONFIDENCE INTERVAL.                  **
+!               ********************************************
+!
+      STATVA=P1 - 0.5*P2
+      IF(P1.GE.1.0 .AND. P2.GE.1.0)THEN
+        PVALUE=1.0
+        ALOWLM=STATVA
+        AUPPLM=STATVA
+        GO TO 9000
+      ELSEIF(P1.LE.0.0 .AND. P2.LE.0.0)THEN
+        PVALUE=1.0
+        ALOWLM=STATVA
+        AUPPLM=STATVA
+        GO TO 9000
+      ENDIF
+!
+      DN1=DBLE(N1)
+      DN2=DBLE(N2)
+      DP1=DBLE(P1)
+      DP2=DBLE(P2)
+!
+      DTERM1=DP1*(1.0D0 - DP1)/DN1
+      DTERM2=DP2*(1.0D0 - DP2)/(4.0D0*DN2)
+      IF(ICASAN.EQ.'R2LT')THEN
+        DTERM3=0.5D0*DP2 - DP1
+        DTERM4=DTERM3/DSQRT(DTERM1 + DTERM2)
+        CALL NODCDF(DTERM4,DPVAL)
+        DPVAL=1.0D0 - DPVAL
+      ELSEIF(ICASAN.EQ.'R2UT')THEN
+        DTERM3=DP1 - 0.5D0*DP2
+        DTERM4=DTERM3/DSQRT(DTERM1 + DTERM2)
+        CALL NODCDF(DTERM4,DPVAL)
+        DPVAL=1.0D0 - DPVAL
+      ELSE
+        DTERM3=DABS(DP1 - 0.5D0*DP2)
+        DTERM4=DTERM3/DSQRT(DTERM1 + DTERM2)
+        CALL NODCDF(DTERM4,DPVAL)
+        DPVAL=2.0D0*(1.0D0 - DPVAL)
+      ENDIF
+      PVALUE=REAL(DPVAL)
+!
+      DTERM4=DSQRT(DTERM1 + DTERM2)
+      ALP2=ALPHA/2.0
+      IF(ALP2.LE.0.5)ALP2=1.0 - ALP2
+      CALL NODPPF(DBLE(ALP2),DPPF)
+      A1=STATVA - REAL(DPPF*DTERM4)
+      A2=STATVA + REAL(DPPF*DTERM4)
+      ALOWLM=MIN(A1,A2)
+      AUPPLM=MAX(A1,A2)
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT.      **
+!               *****************
+!
+ 9000 CONTINUE
+!
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPRUH2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IBUGA3,IERROR
+ 9012   FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)DTERM1,DTERM2,DTERM3,DTERM4
+ 9013   FORMAT('DTERM1,DTERM2,DTERM3,DTERM4 = ',4(G15.7,2X))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)DPVAL,PVALUE
+ 9014   FORMAT('DPVAL,PVALUE = ',2(G15.7,2X))
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPRUH2
+      SUBROUTINE DPRUH3(P1,N1,P2,N2,P3,N3,P4,N4,ALPHA,ICASAN,IWRITE,   &
+                        PVALUE,ALOWLM,AUPPLM,   &
+                        IBUGA3,ISUBRO,IERROR)
+!
+!     PURPOSE--FOR THREE BINOMIAL PROPORTIONS (P1, N1, P2, N2, P3, N3)
+!              AND ALPHA, COMPUTE THE HYPOTHESIS TEST FOR:
+!
+!                 Ho: P1*P2 = P3*P4
+!
+!              AGAINST
+!
+!                 Ha: P1*P2 <> P3*P4
+!                 Ha: P1*P2 <  P3*P4
+!                 Ha: P1*P2  > P3*P4
+!
+!              RETURN THE APPROPRIATE P-VALUE.
+!     REFERENCE--PRIVATE COMMUNICATION WITH ANDREW RUHKIN AND
+!                BILL STRAWDERMAN OF THE NIST STATISTICAL ENGINEERING
+!                DIVISION.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2010/6
+!     ORIGINAL VERSION--JUNE      2010.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICASAN
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+!---------------------------------------------------------------------
+!
+      REAL P1
+      REAL P2
+      REAL P3
+      REAL P4
+      REAL ALPHA
+      REAL PVALUE
+      REAL ALOWLM
+      REAL AUPPLM
+      INTEGER N1
+      INTEGER N2
+      INTEGER N3
+      INTEGER N4
+!
+      DOUBLE PRECISION DTERM1
+      DOUBLE PRECISION DTERM2
+      DOUBLE PRECISION DTERM3
+      DOUBLE PRECISION DTERM4
+      DOUBLE PRECISION DTERM5
+      DOUBLE PRECISION DDELTA
+      DOUBLE PRECISION DP1
+      DOUBLE PRECISION DP2
+      DOUBLE PRECISION DP3
+      DOUBLE PRECISION DP4
+      DOUBLE PRECISION DN1
+      DOUBLE PRECISION DN2
+      DOUBLE PRECISION DN3
+      DOUBLE PRECISION DN4
+      DOUBLE PRECISION DPVAL
+      DOUBLE PRECISION DPPF
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPRU'
+      ISUBN2='H3  '
+      IERROR='NO'
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RUH3')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPRUH3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ICASAN,IWRITE
+   52   FORMAT('IBUGA3,ICASAN,IWRITE = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)P1,N1,P2,N2,P3,N3,P4,N4,ALPHA
+   53   FORMAT('P1,N1,P2,N2,P3,N3,P4,N4,ALPHA = ',4(G15.7,I8),G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ********************************
+!               **  STEP 1--                  **
+!               **  CHECK FOR INPUT ERRORS    **
+!               ********************************
+!
+      PVALUE=0.0
+      ALOWLM=0.0
+      AUPPLM=1.0
+!
+      IF(N1.LT.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,111)
+  111   FORMAT('****** ERROR IN RUHKIN 3 TEST-- ')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('         THE NUMBER OF OBSERVATIONS FOR THE FIRST ',   &
+               'RESPONSE VARIABLE IS LESS THAN 2.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,114)N1
+  114   FORMAT('SAMPLE SIZE = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IF(N2.LT.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,123)
+  123   FORMAT('         THE NUMBER OF OBSERVATIONS FOR THE ',   &
+               'SECOND RESPONSE VARIABLE IS LESS THAN 2.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,114)N2
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IF(N3.LT.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,133)
+  133   FORMAT('         THE NUMBER OF OBSERVATIONS FOR THE ',   &
+               'THIRD RESPONSE VARIABLE IS LESS THAN 2.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,114)N3
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IF(N4.LT.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,143)
+  143   FORMAT('         THE NUMBER OF OBSERVATIONS FOR THE ',   &
+               'FOURTH RESPONSE VARIABLE IS LESS THAN 2.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,114)N4
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IF(P1.LT.0.0 .OR. P1.GT.1.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,162)
+  162   FORMAT('      THE BINOMIAL PROBABILITY OF SUCCESS PARAMETER ',   &
+               'FOR THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,164)
+  164   FORMAT('      FIRST RESPONSE VARIABLE IS OUTSIDE THE ',   &
+               '(0,1) INTERVAL.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,167)P1
+  167   FORMAT('      THE PROBABILITY OF SUCCESS PARAMETER = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+      IF(P2.LT.0.0 .OR. P2.GT.1.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,162)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,174)
+  174   FORMAT('      SECOND RESPONSE VARIABLE IS OUTSIDE THE ',   &
+               '(0,1) INTERVAL.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,167)P2
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+      IF(P3.LT.0.0 .OR. P3.GT.1.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,162)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,184)
+  184   FORMAT('      THIRD RESPONSE VARIABLE IS OUTSIDE THE ',   &
+               '(0,1) INTERVAL.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,167)P3
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+      IF(P4.LT.0.0 .OR. P4.GT.1.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,162)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,194)
+  194   FORMAT('      FOURTH RESPONSE VARIABLE IS OUTSIDE THE ',   &
+               '(0,1) INTERVAL.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,167)P4
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+      ALPHSV=ALPHA
+      IF(ALPHA.GT.1.0 .AND. ALPHA.LE.100.0)ALPHA=ALPHA/100.0
+      IF(ALPHA.LE.0.0 .OR. ALPHA.GE.1.0)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,192)
+  192   FORMAT('      THE VALUE OF ALPHA IS OUTSIDE THE (0,1) ',   &
+               'INTERVAL.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,197)ALPHA
+  197   FORMAT('      THE VALUE OF ALPHA = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+!CCCC FOR THESE FORMULAS, WE WANT ALPHA AS 0.05 RATHER THAN
+!CCCC 0.95.
+!
+!CCCC IF(ALPHA.LT.0.5)ALPHA=1.0 - ALPHA
+      IF(ALPHA.GT.0.5)ALPHA=1.0 - ALPHA
+!
+!               ********************************************
+!               **  STEP 2--                              **
+!               **  COMPUTE THE DIFFERENCE OF PROPORTIONS **
+!               **  CONFIDENCE INTERVAL.                  **
+!               ********************************************
+!
+!     DEFINE CORRECTION TERM:
+!
+!        P(i) = (X(i) + 0.5)/(N(i) + 1)
+!
+      X1=P1*REAL(N1)
+      IX1=INT(X1+0.01)
+      X1=REAL(IX1)
+      P1=(X1+0.5)/(REAL(N1)+1.0)
+      X2=P2*REAL(N2)
+      IX2=INT(X2+0.01)
+      X2=REAL(IX2)
+      P2=(X2+0.5)/(REAL(N2)+1.0)
+      X3=P3*REAL(N3)
+      IX3=INT(X3+0.01)
+      X3=REAL(IX3)
+      P3=(X3+0.5)/(REAL(N3)+1.0)
+      X4=P4*REAL(N4)
+      IX4=INT(X4+0.01)
+      X4=REAL(IX4)
+      P4=(X4+0.5)/(REAL(N4)+1.0)
+!
+      STATVA=P1*P2 - P3*P4
+!
+      IF(P1.GE.1.0 .AND. P2.GE.1.0 .AND. P3.GE.1.0 .AND. P4.GE.1.0)THEN
+        PVALUE=1.0
+        ALOWLM=STATVA
+        AUPPLM=STATVA
+        GO TO 9000
+      ELSEIF(P1.LE.0.0 .AND. P2.LE.0.0 .AND. P3.LE.0.0 .AND.   &
+             P4.LE.0.0)THEN
+        PVALUE=1.0
+        ALOWLM=STATVA
+        AUPPLM=STATVA
+        GO TO 9000
+      ENDIF
+!
+      DN1=DBLE(N1)
+      DN2=DBLE(N2)
+      DN3=DBLE(N3)
+      DN4=DBLE(N4)
+      DP1=DBLE(P1)
+      DP2=DBLE(P2)
+      DP3=DBLE(P3)
+      DP4=DBLE(P4)
+!
+      DTERM1=(DP2**2)*DP1*(1.0D0 - DP1)/DN1
+      DTERM2=(DP1**2)*DP2*(1.0D0 - DP2)/DN2
+      DTERM3=(DP4**2)*DP3*(1.0D0 - DP3)/DN3
+      DTERM4=(DP3**2)*DP4*(1.0D0 - DP4)/DN4
+      DDELTA=DSQRT(DTERM1 + DTERM2 + DTERM3 + DTERM4)
+!
+      IF(ICASAN.EQ.'R3LT')THEN
+        DTERM5=(DP3*DP4 - DP1*DP2)/DDELTA
+        CALL NODCDF(DTERM5,DPVAL)
+        DPVAL=1.0D0 - DPVAL
+      ELSEIF(ICASAN.EQ.'R3UT')THEN
+        DTERM5=(DP1*DP2 - DP3*DP4)/DDELTA
+        CALL NODCDF(DTERM5,DPVAL)
+        DPVAL=1.0D0 - DPVAL
+      ELSE
+        DTERM5=DABS(DP3*DP4 - DP1*DP2)/DDELTA
+        CALL NODCDF(DTERM5,DPVAL)
+        DPVAL=2.0D0*(1.0D0 - DPVAL)
+      ENDIF
+      PVALUE=REAL(DPVAL)
+!
+      ALP2=ALPHA/2.0
+      IF(ALP2.LE.0.5)ALP2=1.0 - ALP2
+      CALL NODPPF(DBLE(ALP2),DPPF)
+      A1=STATVA - REAL(DPPF*DDELTA)
+      A2=STATVA + REAL(DPPF*DDELTA)
+      ALOWLM=MIN(A1,A2)
+      AUPPLM=MAX(A1,A2)
+      IF(ALOWLM.LT.-1.0)ALOWLM=-1.0
+      IF(AUPPLM.GT.1.0)AUPPLM=1.0
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT.      **
+!               *****************
+!
+ 9000 CONTINUE
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RUH3')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPRUH3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IBUGA3,IERROR
+ 9012   FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)STATVA,ALP2,DPPF
+ 9013   FORMAT('STATVA,ALP2,DPPF = ',3(G15.7,2X))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)A1,A2,ALOWLM,AUPPLM
+ 9014   FORMAT('A1,A2,ALOWLM,AUPPLM = ',4(G15.7,2X))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9018)DTERM1,DTERM2,DTERM3,DTERM4,DTERM5
+ 9018   FORMAT('DTERM1,DTERM2,DTERM3,DTERM4,DTERM5 = ',5(G15.7,2X))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9019)DPVAL,PVALUE
+ 9019   FORMAT('DPVAL,PVALUE = ',2(G15.7,2X))
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPRUH3
+      SUBROUTINE DPRUN(XTEMP1,MAXNXT,ICASAN,ICAPSW,IFORSW,   &
+                        IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+!
+!     PURPOSE--CARRY OUT A RUNS ANALYSIS TO TEST FOR RANDOMNESS.
+!     EXAMPLE--RUNS Y
+!              RUNS Y1 TO Y5
+!     REFERENCES--LEVENE AND WOLFOWITZ, ANNALS OF MATHEMATICAL
+!                 STATISTICS, 1944, PAGES 58-69;
+!                 ESPECIALLY PAGES 60, 63, AND 64.
+!               --BRADLEY, DISTRIBUTION-FREE STATISTICAL TESTS,
+!                 1968, CHAPTER 12, PAGES 271-282.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS OF TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--JULY      1984.
+!     UPDATED         --JUNE      1990. TEMPORARY ARRAYS TO GARBAGE COMMON
+!     UPDATED         --MAY       2011. USE DPPARS ROUTINE
+!     UPATED          --MAY       2011. REWRITTEN TO HANDLE MULTIPLE
+!                                       RESPONSE VARIABLES, GROUP-ID
+!                                       VARIABLES, OR A LAB-ID VARIABLE
+!     UPATED          --JULY      2019. TWEAK SCRATCH SPACE
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICASAN
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 IFORSW
+      CHARACTER*4 IBUGA2
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 IREPL
+      CHARACTER*4 IMULT
+      CHARACTER*4 ICTMP1
+      CHARACTER*4 ICTMP2
+      CHARACTER*4 ICTMP3
+      CHARACTER*4 ICTMP4
+      CHARACTER*4 ICASE
+!
+      CHARACTER*40 INAME
+      PARAMETER (MAXSPN=30)
+      CHARACTER*4 IVARN1(MAXSPN)
+      CHARACTER*4 IVARN2(MAXSPN)
+      CHARACTER*4 IVARTY(MAXSPN)
+      CHARACTER*4 IVARID(1)
+      CHARACTER*4 IVARI2(1)
+      REAL PVAR(MAXSPN)
+      REAL PID(MAXSPN)
+      INTEGER ILIS(MAXSPN)
+      INTEGER NRIGHT(MAXSPN)
+      INTEGER ICOLR(MAXSPN)
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+!
+      DIMENSION XTEMP1(*)
+      DIMENSION W(MAXOBV)
+!
+      DIMENSION XDESGN(MAXOBV,7)
+      DIMENSION XIDTEM(MAXOBV)
+      DIMENSION XIDTE2(MAXOBV)
+      DIMENSION XIDTE3(MAXOBV)
+      DIMENSION XIDTE4(MAXOBV)
+      DIMENSION XIDTE5(MAXOBV)
+      DIMENSION XIDTE6(MAXOBV)
+!
+      DIMENSION TEMP1(MAXOBV)
+      DIMENSION TEMP2(MAXOBV)
+!
+      INCLUDE 'DPCOZZ.INC'
+!
+      EQUIVALENCE (GARBAG(IGARB1),TEMP1(1))
+      EQUIVALENCE (GARBAG(IGARB2),XIDTEM(1))
+      EQUIVALENCE (GARBAG(IGARB3),XIDTE2(1))
+      EQUIVALENCE (GARBAG(IGARB4),XIDTE3(1))
+      EQUIVALENCE (GARBAG(IGARB5),XIDTE4(1))
+      EQUIVALENCE (GARBAG(IGARB6),XIDTE5(1))
+      EQUIVALENCE (GARBAG(IGARB7),XIDTE6(1))
+      EQUIVALENCE (GARBAG(IGARB8),W(1))
+      EQUIVALENCE (GARBAG(IGARB9),TEMP2(1))
+      EQUIVALENCE (GARBAG(IGAR10),XDESGN(1,1))
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOSU.INC'
+      INCLUDE 'DPCOST.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IERROR='NO'
+      IFOUND='NO'
+      ICASAN='RUNS'
+      IREPL='OFF'
+      IMULT='OFF'
+      ISUBN1='DPRU'
+      ISUBN2='N   '
+!
+      MAXCP1=MAXCOL+1
+      MAXCP2=MAXCOL+2
+      MAXCP3=MAXCOL+3
+      MAXCP4=MAXCOL+4
+      MAXCP5=MAXCOL+5
+      MAXCP6=MAXCOL+6
+!
+!               ***********************************************
+!               **  TREAT THE RUNS             TEST  CASE    **
+!               ***********************************************
+!
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'PRUN')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPRUN--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGA2,IBUGA3,IBUGQ,ISUBRO,MAXNXT
+   53   FORMAT('IBUGA2,IBUGA3,IBUGQ,ISUBRO,MAXNXT = ',4(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *****************************************************
+!               **  STEP 1--                                       **
+!               **  EXTRACT THE COMMAND                            **
+!               **  LOOK FOR ONE OF THE FOLLOWING COMMANDS:        **
+!               **    1) RUNS              Y                       **
+!               **    2) MULTIPLE RUNS     Y1 ... YK               **
+!               **    3) REPLICATED RUNS   Y X1 ... XK             **
+!               *****************************************************
+!
+      ISTEPN='1'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PRUN')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ILASTZ=9999
+!
+!     LOOK FOR:
+!
+!          RUNS
+!          RUNS TEST
+!
+      DO 100 I=0,NUMARG-1
+!
+        IF(I.EQ.0)THEN
+          ICTMP1=ICOM
+        ELSE
+          ICTMP1=IHARG(I)
+        ENDIF
+        ICTMP2=IHARG(I+1)
+        ICTMP3=IHARG(I+2)
+        ICTMP4=IHARG(I+3)
+!
+        IF(ICTMP1.EQ.'=')THEN
+          IFOUND='NO'
+          GO TO 9000
+        ELSEIF(ICTMP1.EQ.'RUNS' .AND. ICTMP2.EQ.'TEST')THEN
+          IFOUND='YES'
+          ILASTZ=I+1
+        ELSEIF(ICTMP1.EQ.'RUNS')THEN
+          IFOUND='YES'
+          ILASTZ=I
+        ELSEIF(ICTMP1.EQ.'REPL')THEN
+          IREPL='ON'
+          ILASTZ=MAX(ILASTZ,I)
+        ELSEIF(ICTMP1.EQ.'MULT')THEN
+          IMULT='ON'
+          ILASTZ=MAX(ILASTZ,I)
+        ENDIF
+  100 CONTINUE
+!
+      IF(IFOUND.EQ.'NO')GO TO 9000
+!
+      ISHIFT=ILASTZ
+      CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,   &
+                  IBUGA2,IERROR)
+!
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PRUN')THEN
+        WRITE(ICOUT,91)ICASAN,IMULT,IREPL,ISHIFT
+   91   FORMAT('DPRUN: ICASAN,IMULT,IREPL,ISHIFT = ',3(A4,2X),I5)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IF(IMULT.EQ.'ON')THEN
+        IF(IREPL.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,101)
+  101     FORMAT('***** ERROR IN RUNS TEST--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,103)
+  103     FORMAT('      YOU CANNOT SPECIFY BOTH "MULTIPLE" AND ',   &
+                 '"REPLICATION"')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,104)
+  104     FORMAT('      FOR THE RUNS COMMAND.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+      ENDIF
+!
+!               *********************************
+!               **  STEP 4--                   **
+!               **  EXTRACT THE VARIABLE LIST  **
+!               *********************************
+!
+      ISTEPN='4'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PRUN')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      INAME='RUNS'
+      MINNA=1
+      MAXNA=100
+      MINN2=2
+      IFLAGE=0
+      IFLAGM=1
+      IF(IREPL.EQ.'ON')THEN
+        IFLAGM=0
+        IFLAGE=1
+      ENDIF
+      IFLAGP=0
+      JMIN=1
+      JMAX=NUMARG
+      MINNVA=1
+      MAXNVA=MAXSPN
+!
+      CALL DPPARS(IHARG,IHARG2,IARGT,ARG,NUMARG,IANS,IWIDTH,   &
+                  IHNAME,IHNAM2,IUSE,NUMNAM,IN,IVALUE,VALUE,   &
+                  JMIN,JMAX,   &
+                  MINN2,MINNA,MAXNA,MAXSPN,IFLAGE,INAME,   &
+                  IVARN1,IVARN2,IVARTY,PVAR,   &
+                  ILIS,NRIGHT,ICOLR,ISUB,NQ,ILOCQ,NUMVAR,   &
+                  MINNVA,MAXNVA,   &
+                  IFLAGM,IFLAGP,   &
+                  IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+!
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PRUN')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,281)
+  281   FORMAT('***** AFTER CALL DPPARS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,282)NQ,NUMVAR
+  282   FORMAT('NQ,NUMVAR = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NUMVAR.GT.0)THEN
+          DO 285 I=1,NUMVAR
+            WRITE(ICOUT,287)I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),   &
+                            ICOLR(I)
+  287       FORMAT('I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),',   &
+                   'ICOLR(I) = ',I8,2X,A4,A4,2X,3I8)
+            CALL DPWRST('XXX','BUG ')
+  285     CONTINUE
+        ENDIF
+      ENDIF
+!
+!               ***********************************************
+!               **  STEP 5--                                 **
+!               **  DETERMINE:                               **
+!               **  1) NUMBER OF REPLICATION VARIABLES (0-6) **
+!               **  2) NUMBER OF RESPONSE    VARIABLES (>= 1)**
+!               ***********************************************
+!
+      ISTEPN='5'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PRUN')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      DO 501 I=1,MAXNXT
+        W(I)=1.0
+  501 CONTINUE
+      NRESP=0
+      NREPL=0
+      IF(IMULT.EQ.'ON')THEN
+        NRESP=NUMVAR
+      ELSEIF(IREPL.EQ.'ON')THEN
+        NRESP=1
+        NREPL=NUMVAR-NRESP
+        IF(NREPL.LT.1 .OR. NREPL.GT.6)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,101)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,511)
+  511     FORMAT('      FOR THE REPLICATION CASE, THE NUMBER OF ',   &
+                 'REPLICATION VARIABLES')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,512)
+  512     FORMAT('      MUST BE BETWEEN ONE AND SIX.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,513)NREPL
+  513     FORMAT('      THE NUMBER OF REPLICATION VARIABLES = ',I5)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+      ELSE
+        NRESP=NUMVAR
+        IMULT='ON'
+      ENDIF
+!
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PRUN')THEN
+        WRITE(ICOUT,521)NRESP,NREPL
+  521   FORMAT('NRESP,NREPL = ',2I5)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ******************************************************
+!               **  STEP 6--                                        **
+!               **  GENERATE THE RUNS             TEST FOR THE      **
+!               **  VARIOUS CASES                                   **
+!               ******************************************************
+!
+      ISTEPN='6'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PRUN')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!               ******************************************
+!               **  STEP 8A--                           **
+!               **  CASE 1: NO REPLICATION VARIABLES    **
+!               ******************************************
+!
+      IF(NREPL.LT.1)THEN
+        ISTEPN='8A'
+        IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PRUN')   &
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!       LOOP THROUGH EACH OF THE RESPONSE VARIABLES
+!
+        NCURVE=0
+        DO 810 IRESP=1,NRESP
+          NCURVE=NCURVE+1
+!
+          IINDX=ICOLR(IRESP)
+          PID(1)=CPUMIN
+          IVARID(1)=IVARN1(IRESP)
+          IVARI2(1)=IVARN2(IRESP)
+!
+          IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PRUN')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,811)IRESP,NCURVE
+  811       FORMAT('IRESP,NCURVE = ',2I5)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+          ICOL=IRESP
+          NUMVA2=1
+          CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,   &
+                      INAME,IVARN1,IVARN2,IVARTY,   &
+                      ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVA2,   &
+                      MAXCOL,MAXCP1,MAXCP2,MAXCP3,   &
+                      MAXCP4,MAXCP5,MAXCP6,   &
+                      V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,   &
+                      Y,XTEMP1,XTEMP1,NS1,NLOCA2,NLOCA3,ICASE,   &
+                      IBUGA3,ISUBRO,IFOUND,IERROR)
+          IF(IERROR.EQ.'YES')GO TO 9000
+!
+!         *****************************************************
+!         **  STEP 8B--                                      **
+!         *****************************************************
+!
+          IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'PRUN')THEN
+            ISTEPN='8B'
+            CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,822)
+  822       FORMAT('***** FROM THE MIDDLE  OF DPRUN--')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,823)ICASAN,NUMVAR,NS1
+  823       FORMAT('ICASAN,NUMVAR,NS1 = ',A4,2I8)
+            CALL DPWRST('XXX','BUG ')
+            IF(NS1.GE.1)THEN
+              DO 825 I=1,NS1
+                WRITE(ICOUT,826)I,Y(I)
+  826           FORMAT('I,Y(I) = ',I8,G15.7)
+                CALL DPWRST('XXX','BUG ')
+  825         CONTINUE
+            ENDIF
+          ENDIF
+!
+          CALL DPRUN2(Y,W,NS1,XTEMP1,MAXNXT,   &
+                      ICAPSW,ICAPTY,IFORSW,ICASAN,   &
+                      PID,IVARID,IVARI2,NREPL,   &
+                      ISUBRO,IBUGA3,IERROR)
+  810   CONTINUE
+!
+!               ****************************************************
+!               **  STEP 9A--                                     **
+!               **  CASE 3: ONE OR MORE REPLICATION VARIABLES.    **
+!               **          FOR THIS CASE, THE NUMBER OF RESPONSE **
+!               **          VARIABLES MUST BE EXACTLY 1.          **
+!               **          FOR THIS CASE, ALL VARIABLES MUST     **
+!               **          HAVE THE SAME LENGTH.                 **
+!               ****************************************************
+!
+      ELSEIF(NREPL.GE.1)THEN
+        ISTEPN='9A'
+        IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PRUN')   &
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+        J=0
+        IMAX=NRIGHT(1)
+        IF(NQ.LT.NRIGHT(1))IMAX=NQ
+        DO 910 I=1,IMAX
+          IF(ISUB(I).EQ.0)GO TO 910
+          J=J+1
+!
+!         RESPONSE VARIABLE IN Y
+!
+          ICOLC=1
+          IJ=MAXN*(ICOLR(ICOLC)-1)+I
+          IF(ICOLR(ICOLC).LE.MAXCOL)Y(J)=V(IJ)
+          IF(ICOLR(ICOLC).EQ.MAXCP1)Y(J)=PRED(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP2)Y(J)=RES(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP3)Y(J)=YPLOT(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP4)Y(J)=XPLOT(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP5)Y(J)=X2PLOT(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP6)Y(J)=TAGPLO(I)
+!
+          IF(NREPL.GE.1)THEN
+            DO 920 IR=1,MIN(NREPL,6)
+              ICOLC=ICOLC+1
+              ICOLT=ICOLR(ICOLC)
+              IJ=MAXN*(ICOLT-1)+I
+              IF(ICOLT.LE.MAXCOL)XDESGN(J,IR)=V(IJ)
+              IF(ICOLT.EQ.MAXCP1)XDESGN(J,IR)=PRED(I)
+              IF(ICOLT.EQ.MAXCP2)XDESGN(J,IR)=RES(I)
+              IF(ICOLT.EQ.MAXCP3)XDESGN(J,IR)=YPLOT(I)
+              IF(ICOLT.EQ.MAXCP4)XDESGN(J,IR)=XPLOT(I)
+              IF(ICOLT.EQ.MAXCP5)XDESGN(J,IR)=X2PLOT(I)
+              IF(ICOLT.EQ.MAXCP6)XDESGN(J,IR)=TAGPLO(I)
+  920       CONTINUE
+          ENDIF
+!
+  910   CONTINUE
+        NLOCAL=J
+!
+!       *****************************************************
+!       **  STEP 9B--                                      **
+!       **  CALL DPRUN2 TO PERFORM RUNS             TEST.  **
+!       *****************************************************
+!
+!
+        IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'PRUN')THEN
+          ISTEPN='9C'
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,941)
+  941     FORMAT('***** FROM THE MIDDLE  OF DPRUN--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,942)ICASAN,NUMVAR,NLOCAL,NREPL
+  942     FORMAT('ICASAN,NUMVAR,NLOCAL,NREPL = ',   &
+                 A4,3I8)
+          CALL DPWRST('XXX','BUG ')
+          IF(NLOCAL.GE.1)THEN
+            DO 945 I=1,NLOCAL
+              WRITE(ICOUT,946)I,Y(I),XDESGN(I,1),XDESGN(I,2)
+  946         FORMAT('I,Y(I),XDESGN(I,1),XDESGN(I,2) = ',   &
+                     I8,4F12.5)
+              CALL DPWRST('XXX','BUG ')
+  945       CONTINUE
+          ENDIF
+        ENDIF
+!
+!       *****************************************************
+!       **  STEP 9C--                                      **
+!       **  FIND THE DISTINCT VALUES IN EACH OF THE        **
+!       **  REPLICATION VARIABLES.                         **
+!       *****************************************************
+!
+        CALL DPPP5(XDESGN(1,1),XDESGN(1,2),XDESGN(1,3),   &
+                   XDESGN(1,4),XDESGN(1,5),XDESGN(1,6),   &
+                   NREPL,NLOCAL,MAXOBV,   &
+                   XIDTEM,XIDTE2,XIDTE3,XIDTE4,XIDTE5,XIDTE6,   &
+                   XTEMP1,TEMP2,   &
+                   NUMSE1,NUMSE2,NUMSE3,NUMSE4,NUMSE5,NUMSE6,   &
+                   IBUGA3,ISUBRO,IERROR)
+!
+!       *****************************************************
+!       **  STEP 9D--                                      **
+!       **  NOW LOOP THROUGH THE VARIOUS REPLICATIONS      **
+!       *****************************************************
+!
+        NCURVE=0
+        IADD=1
+!
+        IF(NREPL.EQ.1)THEN
+          J=0
+          DO 1110 ISET1=1,NUMSE1
+            K=0
+            PID(IADD+1)=XIDTEM(ISET1)
+            DO 1130 I=1,NLOCAL
+              IF(XIDTEM(ISET1).EQ.XDESGN(I,1))THEN
+                K=K+1
+                TEMP1(K)=Y(I)
+              ENDIF
+ 1130       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            IF(NTEMP.GT.0)THEN
+              CALL DPRUN2(TEMP1,W,NTEMP,XTEMP1,MAXNXT,   &
+                          ICAPSW,ICAPTY,IFORSW,ICASAN,   &
+                          PID,IVARN1,IVARN2,NREPL,   &
+                          ISUBRO,IBUGA3,IERROR)
+            ENDIF
+ 1110     CONTINUE
+        ELSEIF(NREPL.EQ.2)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2
+          DO 1210 ISET1=1,NUMSE1
+          DO 1220 ISET2=1,NUMSE2
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            DO 1290 I=1,NLOCAL
+              IF(   &
+                 XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.   &
+                 XIDTE2(ISET2).EQ.XDESGN(I,2)   &
+                )THEN
+                K=K+1
+                TEMP1(K)=Y(I)
+              ENDIF
+ 1290       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            IF(NTEMP.GT.0)THEN
+              CALL DPRUN2(TEMP1,W,NTEMP,XTEMP1,MAXNXT,   &
+                          ICAPSW,ICAPTY,IFORSW,ICASAN,   &
+                          PID,IVARN1,IVARN2,NREPL,   &
+                          ISUBRO,IBUGA3,IERROR)
+            ENDIF
+ 1220     CONTINUE
+ 1210     CONTINUE
+        ELSEIF(NREPL.EQ.3)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2*NUMSE3
+          DO 1310 ISET1=1,NUMSE1
+          DO 1320 ISET2=1,NUMSE2
+          DO 1330 ISET3=1,NUMSE3
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            PID(3+IADD)=XIDTE3(ISET3)
+            DO 1390 I=1,NLOCAL
+              IF(   &
+                 XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.   &
+                 XIDTE2(ISET2).EQ.XDESGN(I,2) .AND.   &
+                 XIDTE3(ISET3).EQ.XDESGN(I,3)   &
+                )THEN
+                K=K+1
+                TEMP1(K)=Y(I)
+              ENDIF
+ 1390       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            IF(NTEMP.GT.0)THEN
+              CALL DPRUN2(TEMP1,W,NTEMP,XTEMP1,MAXNXT,   &
+                          ICAPSW,ICAPTY,IFORSW,ICASAN,   &
+                          PID,IVARN1,IVARN2,NREPL,   &
+                          ISUBRO,IBUGA3,IERROR)
+            ENDIF
+ 1330     CONTINUE
+ 1320     CONTINUE
+ 1310     CONTINUE
+        ELSEIF(NREPL.EQ.4)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2*NUMSE3*NUMSE4
+          DO 1410 ISET1=1,NUMSE1
+          DO 1420 ISET2=1,NUMSE2
+          DO 1430 ISET3=1,NUMSE3
+          DO 1440 ISET4=1,NUMSE4
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            PID(3+IADD)=XIDTE3(ISET3)
+            PID(4+IADD)=XIDTE4(ISET4)
+            DO 1490 I=1,NLOCAL
+              IF(   &
+                 XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.   &
+                 XIDTE2(ISET2).EQ.XDESGN(I,2) .AND.   &
+                 XIDTE3(ISET3).EQ.XDESGN(I,3) .AND.   &
+                 XIDTE4(ISET4).EQ.XDESGN(I,4)   &
+                )THEN
+                K=K+1
+                TEMP1(K)=Y(I)
+              ENDIF
+ 1490       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            IF(NTEMP.GT.0)THEN
+              CALL DPRUN2(TEMP1,W,NTEMP,XTEMP1,MAXNXT,   &
+                          ICAPSW,ICAPTY,IFORSW,ICASAN,   &
+                          PID,IVARN1,IVARN2,NREPL,   &
+                          ISUBRO,IBUGA3,IERROR)
+            ENDIF
+ 1440     CONTINUE
+ 1430     CONTINUE
+ 1420     CONTINUE
+ 1410     CONTINUE
+        ELSEIF(NREPL.EQ.5)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2*NUMSE3*NUMSE4*NUMSE5
+          DO 1510 ISET1=1,NUMSE1
+          DO 1520 ISET2=1,NUMSE2
+          DO 1530 ISET3=1,NUMSE3
+          DO 1540 ISET4=1,NUMSE4
+          DO 1550 ISET5=1,NUMSE5
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            PID(3+IADD)=XIDTE3(ISET3)
+            PID(4+IADD)=XIDTE4(ISET4)
+            PID(5+IADD)=XIDTE5(ISET4)
+            DO 1590 I=1,NLOCAL
+              IF(   &
+                 XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.   &
+                 XIDTE2(ISET2).EQ.XDESGN(I,2) .AND.   &
+                 XIDTE3(ISET3).EQ.XDESGN(I,3) .AND.   &
+                 XIDTE4(ISET4).EQ.XDESGN(I,4) .AND.   &
+                 XIDTE5(ISET5).EQ.XDESGN(I,5)   &
+                )THEN
+                K=K+1
+                TEMP1(K)=Y(I)
+              ENDIF
+ 1590       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            IF(NTEMP.GT.0)THEN
+              CALL DPRUN2(TEMP1,W,NTEMP,XTEMP1,MAXNXT,   &
+                          ICAPSW,ICAPTY,IFORSW,ICASAN,   &
+                          PID,IVARN1,IVARN2,NREPL,   &
+                          ISUBRO,IBUGA3,IERROR)
+            ENDIF
+ 1550     CONTINUE
+ 1540     CONTINUE
+ 1530     CONTINUE
+ 1520     CONTINUE
+ 1510     CONTINUE
+        ELSEIF(NREPL.EQ.6)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2*NUMSE3*NUMSE4*NUMSE5*NUMSE6
+          DO 1610 ISET1=1,NUMSE1
+          DO 1620 ISET2=1,NUMSE2
+          DO 1630 ISET3=1,NUMSE3
+          DO 1640 ISET4=1,NUMSE4
+          DO 1650 ISET5=1,NUMSE5
+          DO 1660 ISET6=1,NUMSE6
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            PID(3+IADD)=XIDTE3(ISET3)
+            PID(4+IADD)=XIDTE4(ISET4)
+            PID(5+IADD)=XIDTE5(ISET4)
+            PID(6+IADD)=XIDTE6(ISET4)
+            DO 1690 I=1,NLOCAL
+              IF(   &
+                 XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.   &
+                 XIDTE2(ISET2).EQ.XDESGN(I,2) .AND.   &
+                 XIDTE3(ISET3).EQ.XDESGN(I,3) .AND.   &
+                 XIDTE4(ISET4).EQ.XDESGN(I,4) .AND.   &
+                 XIDTE5(ISET5).EQ.XDESGN(I,5) .AND.   &
+                 XIDTE6(ISET6).EQ.XDESGN(I,6)   &
+                )THEN
+                K=K+1
+                TEMP1(K)=Y(I)
+              ENDIF
+ 1690       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            IF(NTEMP.GT.0)THEN
+              CALL DPRUN2(TEMP1,W,NTEMP,XTEMP1,MAXNXT,   &
+                          ICAPSW,ICAPTY,IFORSW,ICASAN,   &
+                          PID,IVARN1,IVARN2,NREPL,   &
+                          ISUBRO,IBUGA3,IERROR)
+            ENDIF
+ 1660     CONTINUE
+ 1650     CONTINUE
+ 1640     CONTINUE
+ 1630     CONTINUE
+ 1620     CONTINUE
+ 1610     CONTINUE
+        ENDIF
+!
+      ENDIF
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+!
+      IF(IERROR.EQ.'YES')THEN
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,9001)(IANS(I),I=1,MIN(100,IWIDTH))
+ 9001     FORMAT(100A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+!
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'PRUN')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPRUN--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUND,IERROR,ICASAN
+ 9012   FORMAT('IFOUND,IERROR,ICASAN = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPRUN
+      SUBROUTINE DPRUN2(Y,W,N,XTEMP1,MAXNXT,   &
+                        ICAPSW,ICAPTY,IFORSW,ICASAN,   &
+                        PID,IVARID,IVARI2,NREPL,   &
+                        ISUBRO,IBUGA3,IERROR)
+!
+!     PURPOSE--THIS ROUTINE CARRIES OUT A RUNS ANALYSIS
+!              FOR THE DATA IN THE INPUT VECTOR Y.
+!     NOTE--ASSUMPTION--DATA COLLECTED SEQUENTIALLY IN TIME.
+!     INPUT  ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR
+!                                OF EQUALLY-SPACED OBSERVATIONS
+!                                TO BE SMOOTHED.
+!                       N      = THE INTEGER NUMBER OF
+!                                OBSERVATIONS IN THE VECTOR Y.
+!     NOTE--THE ANALYSIS CONSISTS OF FIRST DETERMINING
+!           THE OBSERVED NUMBER OF RUNS FROM THE DATA,
+!           AND THEN COMPUTING
+!           THE EXPECTED NUMBER OF RUNS,
+!           THE STANDARD DEVIATION OF THE NUMBER OF RUNS,
+!           AND THE RESULTING STANDARDIZED STATISTIC
+!           FOR THE NUMBER OF RUNS FOR RUNS OF VARIOUS
+!           LENGTHS.
+!           THIS IS DONE FOR RUNS UP, RUNS DOWN, AND
+!           RUNS UP AND DOWN.
+!           THIS RUNS ANSLYSIS IS A USEFUL DISTRIBUTION-FREE
+!           TEST OF THE RANDOMNESS OF A DATA SET.
+!     OUTPUT--4 PAGES OF AUTOMATIC PRINTOUT
+!             CONSISTING OF THE OBSERVED NUMBER,
+!             EXPECTED NUMBER, STANDARD DEVIATION
+!             AND RESULTING STANDARDIZED STATISTIC
+!             FOR RUNS OF VARIOUS LENGTHS.
+!             AND THE CUMULATIVE FREQUENCY.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI 77 FORTRAN.
+!     REFERENCES--LEVENE AND WOLFOWITZ, ANNALS OF MATHEMATICAL
+!                 STATISTICS, 1944, PAGES 58-69;
+!                 ESPECIALLY PAGES 60, 63, AND 64.
+!     REFERENCES--BRADLEY, DISTRIBUTION-FREE STATISTICAL TESTS,
+!                 1968, CHAPTER 12, PAGES 271-282.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--JULY      1984.
+!     UPDATED         --MAY       2011. USE DPDTA1 AND DPDTA2 TO PRINT
+!                                       TABLES
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IVARID(*)
+      CHARACTER*4 IVARI2(*)
+!
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 ICAPTY
+      CHARACTER*4 IFORSW
+      CHARACTER*4 ICASAN
+!
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION Y(*)
+      DIMENSION W(*)
+      DIMENSION XTEMP1(*)
+      DIMENSION PID(*)
+!
+      DIMENSION NRUL(16), NRDL(16), NRTL(16), NRULG(16), NRDLG(16)
+      DIMENSION NRTLG(16)
+      DIMENSION ENRUL(16),ENRTL(16),ENRULG(16),ENRTLG(16)
+      DIMENSION SNRUL(16),SNRTL(16),SNRULG(16),SNRTLG(16)
+      DIMENSION ZNRUL(16),ZNRDL(16),ZNRTL(16),ZNRULG(16),ZNRDLG(16)
+      DIMENSION ZNRTLG(16)
+      DIMENSION C1(15),C2(15),C3(15),C4(15)
+      DIMENSION ANRUL(16),ANRDL(16),ANRTL(16)
+      DIMENSION ANRULG(16),ANRDLG(16),ANRTLG(16)
+!
+      PARAMETER (MAXROW=20)
+      CHARACTER*60 ITITLE
+      CHARACTER*60 ITITLZ
+      CHARACTER*60 ITITL9
+      CHARACTER*40 ITEXT(MAXROW)
+      CHARACTER*4  ALIGN(MAXROW)
+      CHARACTER*4  VALIGN(MAXROW)
+      REAL         AVALUE(MAXROW)
+      INTEGER      NCTEXT(MAXROW)
+      INTEGER      IDIGIT(MAXROW)
+      INTEGER      NTOT(MAXROW)
+      LOGICAL      IFRST
+      LOGICAL      ILAST
+!
+      PARAMETER(NUMCLI=6)
+      PARAMETER(MAXLIN=1)
+      CHARACTER*60 ITITL2(MAXLIN,NUMCLI)
+      INTEGER      NCTIT2(MAXLIN,NUMCLI)
+      INTEGER      IWHTML(NUMCLI)
+      INTEGER      IWRTF(NUMCLI)
+      REAL         AMAT(MAXROW,NUMCLI)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!------DATA STATEMENTS------------------------------------------------
+!
+      DATA C1(1),C1(2),C1(3),C1(4),C1(5),C1(6),C1(7),C1(8),C1(9),C1(10),   &
+      C1(11),C1(12),C1(13),C1(14),C1(15)   &
+      / .4236111111E+00,  .1126675485E+00,  .4191688713E-01,   &
+        .1076912487E-01,  .2003959238E-02,  .3023235799E-03,   &
+        .3911555473E-04,  .4459038843E-05,  .4551105210E-06,   &
+        .4207466837E-07,  .3555930927E-08,  .2768273257E-09,   &
+        .1997821524E-10,  .1343876568E-11,  .8465610177E-13/
+      DATA C2(1),C2(2),C2(3),C2(4),C2(5),C2(6),C2(7),C2(8),C2(9),C2(10),   &
+      C2(11),C2(12),C2(13),C2(14),C2(15)   &
+      /-.4819444444E+00, -.1628284832E+00, -.9690696649E-01,   &
+       -.3778106786E-01, -.9289228716E-02, -.1724429252E-02,   &
+       -.2638557888E-03, -.3466965096E-04, -.4004129153E-05,   &
+       -.4130382587E-06, -.3851876069E-07, -.3279103786E-08,   &
+       -.2568491117E-09, -.1863433868E-10, -.1259220466E-11/
+      DATA C3(1),C3(2),C3(3),C3(4),C3(5),C3(6),C3(7),C3(8),C3(9),C3(10),   &
+      C3(11),C3(12),C3(13),C3(14),C3(15)   &
+      / .1777777778E+00,  .7916666667E-01,  .4738977072E-01,   &
+        .1274801587E-01,  .2338606059E-02,  .3461358734E-03,   &
+        .4407121770E-04,  .4960020603E-05,  .5010387575E-06,   &
+        .4592883352E-07,  .3854170274E-08,  .2982393839E-09,   &
+        .2141205844E-10,  .1433843200E-11,  .8996663214E-13/
+      DATA C4(1),C4(2),C4(3),C4(4),C4(5),C4(6),C4(7),C4(8),C4(9),C4(10),   &
+      C4(11),C4(12),C4(13),C4(14),C4(15)   &
+      /-.3222222222E+00, -.5972222222E-01, -.1130268959E+00,   &
+       -.4696428571E-01, -.1123273065E-01, -.2025170849E-02,   &
+       -.3029410411E-03, -.3912824548E-04, -.4459234519E-05,   &
+       -.4551128785E-06, -.4207469124E-07, -.3555931110E-08,   &
+       -.2768273269E-09, -.1997821525E-10, -.1343876568E-11/
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPRU'
+      ISUBN2='N2  '
+      IERROR='NO'
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RUN2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPRUN2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)ICASAN,IBUGA3,ISUBRO,N,MAXNXT
+   52   FORMAT('ICASAN,IBUGA3,ISUBRO,N,MAXNXT = ',3(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        DO 56 I=1,N
+          WRITE(ICOUT,57)I,Y(I),W(I)
+   57     FORMAT('I,Y(I),W(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+   56   CONTINUE
+      ENDIF
+!
+!               ********************************************
+!               **  STEP 1--                              **
+!               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+!               ********************************************
+!
+      ISTEPN='1'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(N.LT.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN RUNS ANALYSIS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('      THE NUMBER OF OBSERVATIONS IS LESS THAN TWO.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)N
+  112   FORMAT('SAMPLE SIZE = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      HOLD=Y(1)
+      DO 135 I=2,N
+        IF(Y(I).NE.HOLD)GO TO 139
+  135 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,111)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,131)HOLD
+  131 FORMAT('      THE RESPONSE VARIABLE HAS ALL ELEMENTS = ',G15.7)
+      CALL DPWRST('XXX','BUG ')
+      GO TO 9000
+  139 CONTINUE
+!
+!               ********************************************
+!               **  STEP 11--                             **
+!               **  FORM THE SEQUENTIAL DIFFERENCE TABLE  **
+!               ********************************************
+!
+      ISTEPN='11'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      AN=N
+      NM1=N-1
+      DO 100 I=1,NM1
+        IP1=I+1
+        XTEMP1(I)=Y(IP1)-Y(I)
+  100 CONTINUE
+!
+!               ***********************************************
+!               **  STEP 12--                                **
+!               **  ZERO-OUT THE 6 'NUMBER OF RUNS' VECTORS  **
+!               ***********************************************
+!
+      ISTEPN='12'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      DO 200 I=1,16
+        NRUL(I)=0
+        NRDL(I)=0
+        NRTL(I)=0
+        NRULG(I)=0
+        NRDLG(I)=0
+        NRTLG(I)=0
+  200 CONTINUE
+!
+!               *********************************************************
+!               **  STEP 13--                                          **
+!               **  DETERMINE THE NUMBER OF RUNS UP OF LENGTH EXACTLY I**
+!               **  AND THE NUMBER OF RUNS DOWN OF LENGTH EXACTLY I    **
+!               **  DETERMINE THE LENGTH OF THE LONGEST RUN UP         **
+!               **  AND THE LENGTH OF THE LONGEST RUN DOWN             **
+!               *********************************************************
+!
+      ISTEPN='13'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      LENUP=0
+      LENDN=0
+      MAXLNU=0
+      MAXLND=0
+      DO 300 I=1,NM1
+        IF(XTEMP1(I).EQ.0.0)THEN
+          IF(LENUP.GE.1)LENUP=LENUP+1
+          IF(LENDN.GE.1)LENDN=LENDN+1
+          IF(LENUP.EQ.0.AND.LENDN.EQ.0)LENUP=LENUP+1
+        ELSEIF(XTEMP1(I).GT.0.0)THEN
+          IF(LENDN.GE.1.AND.LENDN.LE.15)NRDL(LENDN)=NRDL(LENDN)+1
+          IF(LENDN.GE.16)NRDL(16)=NRDL(16)+1
+          LENDN=0
+          LENUP=LENUP+1
+        ELSEIF(XTEMP1(I).LT.0.0)THEN
+          IF(LENUP.GE.1.AND.LENUP.LE.15)NRUL(LENUP)=NRUL(LENUP)+1
+          IF(LENUP.GE.16)NRUL(16)=NRUL(16)+1
+          LENUP=0
+          LENDN=LENDN+1
+        ENDIF
+        IF(I.EQ.NM1.AND.LENDN.GE.1)THEN
+          IF(LENDN.LE.15)NRDL(LENDN)=NRDL(LENDN)+1
+          IF(LENDN.GE.16)NRDL(16)=NRDL(16)+1
+        ENDIF
+        IF(I.EQ.NM1.AND.LENUP.GE.1)THEN
+          IF(LENUP.LE.15)NRUL(LENUP)=NRUL(LENUP)+1
+          IF(LENUP.GE.16)NRUL(16)=NRUL(16)+1
+        ENDIF
+        IF(LENUP.GT.MAXLNU)MAXLNU=LENUP
+        IF(LENDN.GT.MAXLND)MAXLND=LENDN
+  300 CONTINUE
+!
+!               **************************************************************
+!               **  STEP 14--                                               **
+!               **  DETERMINE THE NUMBER OF RUNS TOTAL OF LENGTH EXACTLY I  **
+!               **  AND THE LENGTH OF THE LONGEST RUN UP OR DOWN            **
+!               **************************************************************
+!
+      ISTEPN='14'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      DO 400 I=1,16
+        NRTL(I)=NRUL(I)+NRDL(I)
+  400 CONTINUE
+      MAXLNT=MAXLNU
+      IF(MAXLND.GT.MAXLNU)MAXLNT=MAXLND
+!
+!               ***********************************************************
+!               **  STEP 15--                                            **
+!               **  DETERMINE THE NUMBER OF RUNS UP OF LENGTH I OR MORE  **
+!               **  AND THE NUMBER OF RUNS DOWN OF LENGTH I OR MORE      **
+!               **  AND THE NUMBER OF RUNS TOTAL OF LENGTH I OR MORE     **
+!               ***********************************************************
+!
+      ISTEPN='15'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      NRULG(16)=NRUL(16)
+      NRDLG(16)=NRDL(16)
+      NRTLG(16)=NRTL(16)
+      DO 500 I=1,15
+        J=16-I
+        JP1=J+1
+        NRULG(J)=NRULG(JP1)+NRUL(J)
+        NRDLG(J)=NRDLG(JP1)+NRDL(J)
+        NRTLG(J)=NRTLG(JP1)+NRTL(J)
+  500 CONTINUE
+!
+!               ****************************************************************
+!               **  STEP 16--
+!               **  DETERMINE THE NUMBER OF POSITIVE, ZERO, AND NEGATIVE ENTRIES
+!               **  IN THE DIFFERENCE TABLE.  IF RANDOM, THE NUMBER OF POSITIVE
+!               **  APPROXIMATELY EQUAL TO THE NUMBER OF NEGATIVE
+!               ****************************************************************
+!
+      ISTEPN='16'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      NNEG=0
+      NZER=0
+      NPOS=0
+      DO 800 I=1,NM1
+        IF(XTEMP1(I).LT.0.0)NNEG=NNEG+1
+        IF(XTEMP1(I).EQ.0.0)NZER=NZER+1
+        IF(XTEMP1(I).GT.0.0)NPOS=NPOS+1
+  800 CONTINUE
+!
+!               ****************************************************************
+!               **  STEP 17--
+!               **  COMPUTE THE EXPECTED NUMBER OF RUNS UP OF LENGTH EXACTLY I =
+!               **  THE EXPECTED NUMBER OF RUNS DOWN OF LENGTH EXACTLY I =
+!               **  ONE HALF THE EXPECTED NUMBER OF RUNS TOTAL OF LENGTH EXACTLY
+!               ****************************************************************
+!
+      ISTEPN='17'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      DEN=6.0
+      DO 2000 I=1,15
+        AI=I
+        ENRUL(I)=AN*(AI*AI+3.0*AI+1.0)-(AI*AI*AI+3.0*AI*AI-AI-4.0)
+        DEN=DEN*(AI+3.0)
+        ENRUL(I)=ENRUL(I)/DEN
+        ENRTL(I)=2.0*ENRUL(I)
+ 2000 CONTINUE
+!
+!               ****************************************************************
+!               **  STEP 18-
+!               **  COMPUTE THE EXPECTED NUMBER OF RUNS UP OF LENGTH I OR MORE =
+!               **  THE EXPECTED NUMBER OF RUNS DOWN OF LENGTH I OR MORE =
+!               **  ONE HALF THE EXPECTED NUMBER OF RUNS TOTAL OF LENGTH I OR MO
+!               ****************************************************************
+!
+      ISTEPN='18'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      DEN=2.0
+      DO 2100 I=1,15
+        AI=I
+        ENRULG(I)=AN*(AI+1.0)-(AI*AI+AI-1.0)
+        DEN=DEN*(AI+2.0)
+        ENRULG(I)=ENRULG(I)/DEN
+        ENRTLG(I)=2.0*ENRULG(I)
+ 2100 CONTINUE
+!
+!               ****************************************************************
+!               **  STEP 19--
+!               **  COMPUTE THE STANDARD DEV. OF THE NUMBER OF RUNS UP OF LENGTH
+!               **  THE STANDARD DEV. OF THE NUMBER OF RUNS DOWN OF LENGTH EXACT
+!               **  SQRT(0.5)* THE STAND. DEV. OF THE NUMBER OF RUNS TOTAL OF LE
+!               ****************************************************************
+!
+      ISTEPN='19'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      DO 2500 I=1,15
+        ARG=C1(I)*AN+C2(I)
+        SNRTL(I)=0.0
+        IF(ARG.GT.0.0)SNRTL(I)=SQRT(ARG)
+        SNRUL(I)=SQRT(0.5)*SNRTL(I)
+ 2500 CONTINUE
+!
+!               ****************************************************************
+!               **  STEP 20--
+!               **  COMPUTE THE STAND. DEV. OF THE NUMBER OF RUNS UP OF LENGTH I
+!               **  THE STAND. DEV. OF THE NUMBER OF RUNS DOWN OF LENGTH I OR MO
+!               **  SQRT(0.5)* THE STAND. DEV. OF THE NUMBER OF RUNS TOTAL OF LE
+!               ****************************************************************
+!
+      ISTEPN='20'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      DO 2600 I=1,15
+        ARG=C3(I)*AN+C4(I)
+        SNRTLG(I)=0.0
+        IF(ARG.GT.0.0)SNRTLG(I)=SQRT(ARG)
+        SNRULG(I)=SQRT(0.5)*SNRTLG(I)
+ 2600 CONTINUE
+!
+!               *************************
+!               **  STEP 21--          **
+!               **  FORM Z STATISTICS  **
+!               *************************
+!
+      ISTEPN='21'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      DO 3100 I=1,15
+!
+        STAT=NRUL(I)
+        ZNRUL(I)=(-99999.99)
+        IF(SNRUL(I).GT.0.0)ZNRUL(I)=(STAT-ENRUL(I))/SNRUL(I)
+!
+        STAT=NRDL(I)
+        ZNRDL(I)=(-99999.99)
+        IF(SNRUL(I).GT.0.0)ZNRDL(I)=(STAT-ENRUL(I))/SNRUL(I)
+!
+        STAT=NRTL(I)
+        ZNRTL(I)=(-99999.99)
+        IF(SNRTL(I).GT.0.0)ZNRTL(I)=(STAT-ENRTL(I))/SNRTL(I)
+!
+        STAT=NRULG(I)
+        ZNRULG(I)=(-99999.99)
+        IF(SNRULG(I).GT.0.0)ZNRULG(I)=(STAT-ENRULG(I))/SNRULG(I)
+!
+        STAT=NRDLG(I)
+        ZNRDLG(I)=(-99999.99)
+        IF(SNRULG(I).GT.0.0)ZNRDLG(I)=(STAT-ENRULG(I))/SNRULG(I)
+!
+        STAT=NRTLG(I)
+        ZNRTLG(I)=(-99999.99)
+        IF(SNRTLG(I).GT.0.0)ZNRTLG(I)=(STAT-ENRTLG(I))/SNRTLG(I)
+!
+ 3100 CONTINUE
+!
+      DO 3200 I=1,15
+        ANRUL(I)=NRUL(I)
+        ANRDL(I)=NRDL(I)
+        ANRTL(I)=NRTL(I)
+        ANRULG(I)=NRULG(I)
+        ANRDLG(I)=NRDLG(I)
+        ANRTLG(I)=NRTLG(I)
+ 3200 CONTINUE
+!
+!               ****************************
+!               **  STEP 22--             **
+!               **  WRITE EVERYTHING OUT  **
+!               ****************************
+!
+      ISTEPN='22'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'RUN2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     PRINT SUMMARY STATISTICS TABLE
+!
+      NUMDIG=7
+      IF(IFORSW.EQ.'1')NUMDIG=1
+      IF(IFORSW.EQ.'2')NUMDIG=2
+      IF(IFORSW.EQ.'3')NUMDIG=3
+      IF(IFORSW.EQ.'4')NUMDIG=4
+      IF(IFORSW.EQ.'5')NUMDIG=5
+      IF(IFORSW.EQ.'6')NUMDIG=6
+      IF(IFORSW.EQ.'7')NUMDIG=7
+      IF(IFORSW.EQ.'8')NUMDIG=8
+      IF(IFORSW.EQ.'9')NUMDIG=9
+      IF(IFORSW.EQ.'0')NUMDIG=0
+      IF(IFORSW.EQ.'E')NUMDIG=-2
+      IF(IFORSW.EQ.'-2')NUMDIG=-2
+      IF(IFORSW.EQ.'-3')NUMDIG=-3
+      IF(IFORSW.EQ.'-4')NUMDIG=-4
+      IF(IFORSW.EQ.'-5')NUMDIG=-5
+      IF(IFORSW.EQ.'-6')NUMDIG=-6
+      IF(IFORSW.EQ.'-7')NUMDIG=-7
+      IF(IFORSW.EQ.'-8')NUMDIG=-8
+      IF(IFORSW.EQ.'-9')NUMDIG=-9
+!
+      ITITLE='Runs Analysis'
+      NCTITL=13
+      ITITLZ=' '
+      NCTITZ=0
+!
+      ICNT=1
+      ITEXT(ICNT)='Response Variable: '
+      WRITE(ITEXT(ICNT)(20:23),'(A4)')IVARID(1)(1:4)
+      WRITE(ITEXT(ICNT)(24:27),'(A4)')IVARI2(1)(1:4)
+      NCTEXT(ICNT)=27
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+!
+      IF(NREPL.GT.0)THEN
+        IADD=1
+        DO 2101 I=1,NREPL
+          ICNT=ICNT+1
+          ITEMP=I+IADD
+          ITEXT(ICNT)='Factor Variable  : '
+          WRITE(ITEXT(ICNT)(17:17),'(I1)')I
+          WRITE(ITEXT(ICNT)(20:23),'(A4)')IVARID(ITEMP)(1:4)
+          WRITE(ITEXT(ICNT)(24:27),'(A4)')IVARI2(ITEMP)(1:4)
+          NCTEXT(ICNT)=27
+          AVALUE(ICNT)=PID(ITEMP)
+          IDIGIT(ICNT)=NUMDIG
+ 2101   CONTINUE
+      ENDIF
+!
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+!
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Summary Statistics:'
+      NCTEXT(ICNT)=19
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Observations:'
+      NCTEXT(ICNT)=23
+      AVALUE(ICNT)=REAL(N)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Length of the Longest Run Up:'
+      NCTEXT(ICNT)=29
+      AVALUE(ICNT)=REAL(MAXLNU)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Length of the Longest Run Down:'
+      NCTEXT(ICNT)=31
+      AVALUE(ICNT)=REAL(MAXLND)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Length of the Longest Run Up or Down:'
+      NCTEXT(ICNT)=37
+      AVALUE(ICNT)=REAL(MAXLNT)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=0
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Positive Differences:'
+      NCTEXT(ICNT)=31
+      AVALUE(ICNT)=REAL(NPOS)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Negative Differences:'
+      NCTEXT(ICNT)=31
+      AVALUE(ICNT)=REAL(NNEG)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Zero Differences:'
+      NCTEXT(ICNT)=25
+      AVALUE(ICNT)=REAL(NZER)
+      IDIGIT(ICNT)=0
+!
+      NUMROW=ICNT
+      DO 2410 I=1,NUMROW
+        NTOT(I)=15
+ 2410 CONTINUE
+!
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+      CALL DPDTA1(ITITLE,NCTITL,ITITLZ,NCTITZ,ITEXT,NCTEXT,   &
+                  AVALUE,IDIGIT,   &
+                  NTOT,NUMROW,   &
+                  ICAPSW,ICAPTY,ILAST,IFRST,   &
+                  ISUBRO,IBUGA3,IERROR)
+!
+      ITITL9='Runs Up'
+      NCTIT9=7
+      ITITLE='Statistic: Number of Runs Up of Length Exactly I'
+      NCTITL=48
+!
+      NUMLIN=1
+      NUMCOL=5
+      DO 4101 J=1,NUMCLI
+        DO 4103 I=1,MAXLIN
+          ITITL2(I,J)=' '
+          NCTIT2(I,J)=0
+ 4103   CONTINUE
+ 4101 CONTINUE
+!
+      ITITL2(1,1)='I'
+      NCTIT2(1,1)=1
+      ITITL2(1,2)='Statistic'
+      NCTIT2(1,2)=9
+      ITITL2(1,3)='EXP(Stat)'
+      NCTIT2(1,3)=9
+      ITITL2(1,4)='SD(Stat)'
+      NCTIT2(1,4)=8
+      ITITL2(1,5)='Z-Score'
+      NCTIT2(1,5)=7
+!
+      NMAX=0
+      DO 4106 I=1,NUMCOL
+        VALIGN(I)='b'
+        ALIGN(I)='r'
+        NTOT(I)=15
+        IF(I.EQ.1)NTOT(I)=3
+        IF(I.EQ.5)NTOT(I)=10
+        NMAX=NMAX+NTOT(I)
+        IDIGIT(I)=NUMDIG
+        IF(I.EQ.1)IDIGIT(I)=0
+        IF(I.EQ.2)IDIGIT(I)=2
+        IF(I.EQ.5)IDIGIT(I)=2
+ 4106 CONTINUE
+!
+      IMAX=15
+      IF(IMAX.GT.N)IMAX=N
+      IMAX2=10
+!
+      DO 4110 I=1,IMAX2
+        NCTEXT(I)=0
+        AMAT(I,1)=REAL(I)
+        AMAT(I,2)=ANRUL(I)
+        AMAT(I,3)=ENRUL(I)
+        AMAT(I,4)=SNRUL(I)
+        AMAT(I,5)=ZNRUL(I)
+ 4110 CONTINUE
+      IWHTML(1)=75
+      IWHTML(2)=150
+      IWHTML(3)=150
+      IWHTML(4)=150
+      IWHTML(5)=150
+      IWHTML(6)=150
+      IWRTF(1)=800
+      IWRTF(2)=IWRTF(1)+1800
+      IWRTF(3)=IWRTF(2)+1800
+      IWRTF(4)=IWRTF(3)+1800
+      IWRTF(5)=IWRTF(4)+1800
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+!
+      CALL DPDTA2(ITITL9,NCTIT9,   &
+                  ITITLE,NCTITL,ITITL2,NCTIT2,   &
+                  MAXLIN,NUMLIN,NUMCLI,NUMCOL,   &
+                  ITEXT,NCTEXT,AMAT,MAXROW,IMAX2,   &
+                  IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,   &
+                  ICAPSW,ICAPTY,IFRST,ILAST,   &
+                  ISUBRO,IBUGA3,IERROR)
+!
+      ITITL9=' '
+      NCTIT9=0
+      ITITLE='Statistic: Number of Runs Up of Length I or More'
+      NCTITL=48
+!
+      DO 4130 I=1,IMAX2
+        NCTEXT(I)=0
+        AMAT(I,1)=REAL(I)
+        AMAT(I,2)=ANRULG(I)
+        AMAT(I,3)=ENRULG(I)
+        AMAT(I,4)=SNRULG(I)
+        AMAT(I,5)=ZNRULG(I)
+ 4130 CONTINUE
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+!
+      CALL DPDTA2(ITITL9,NCTIT9,   &
+                  ITITLE,NCTITL,ITITL2,NCTIT2,   &
+                  MAXLIN,NUMLIN,NUMCLI,NUMCOL,   &
+                  ITEXT,NCTEXT,AMAT,MAXROW,IMAX2,   &
+                  IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,   &
+                  ICAPSW,ICAPTY,IFRST,ILAST,   &
+                  ISUBRO,IBUGA3,IERROR)
+!
+      ITITL9='Runs Down'
+      NCTIT9=9
+      ITITLE='Statistic: Number of Runs Down of Length Exactly I'
+      NCTITL=50
+!
+      DO 4210 I=1,IMAX2
+        NCTEXT(I)=0
+        AMAT(I,1)=REAL(I)
+        AMAT(I,2)=ANRDL(I)
+        AMAT(I,3)=ENRUL(I)
+        AMAT(I,4)=SNRUL(I)
+        AMAT(I,5)=ZNRDL(I)
+ 4210 CONTINUE
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+!
+      CALL DPDTA2(ITITL9,NCTIT9,   &
+                  ITITLE,NCTITL,ITITL2,NCTIT2,   &
+                  MAXLIN,NUMLIN,NUMCLI,NUMCOL,   &
+                  ITEXT,NCTEXT,AMAT,MAXROW,IMAX2,   &
+                  IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,   &
+                  ICAPSW,ICAPTY,IFRST,ILAST,   &
+                  ISUBRO,IBUGA3,IERROR)
+!
+      ITITL9=' '
+      NCTIT9=0
+      ITITLE='Statistic: Number of Runs Down of Length I or More'
+      NCTITL=50
+!
+      DO 4230 I=1,IMAX2
+        NCTEXT(I)=0
+        AMAT(I,1)=REAL(I)
+        AMAT(I,2)=ANRDLG(I)
+        AMAT(I,3)=ENRULG(I)
+        AMAT(I,4)=SNRULG(I)
+        AMAT(I,5)=ZNRDLG(I)
+ 4230 CONTINUE
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+!
+      CALL DPDTA2(ITITL9,NCTIT9,   &
+                  ITITLE,NCTITL,ITITL2,NCTIT2,   &
+                  MAXLIN,NUMLIN,NUMCLI,NUMCOL,   &
+                  ITEXT,NCTEXT,AMAT,MAXROW,IMAX2,   &
+                  IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,   &
+                  ICAPSW,ICAPTY,IFRST,ILAST,   &
+                  ISUBRO,IBUGA3,IERROR)
+!
+      ITITL9='Runs Total = Runs Up + Runs Down'
+      NCTIT9=32
+      ITITLE='Statistic: Number of Runs Total of Length Exactly I'
+      NCTITL=51
+!
+      DO 4310 I=1,IMAX2
+        NCTEXT(I)=0
+        AMAT(I,1)=REAL(I)
+        AMAT(I,2)=ANRTL(I)
+        AMAT(I,3)=ENRTL(I)
+        AMAT(I,4)=SNRTL(I)
+        AMAT(I,5)=ZNRTL(I)
+ 4310 CONTINUE
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+!
+      CALL DPDTA2(ITITL9,NCTIT9,   &
+                  ITITLE,NCTITL,ITITL2,NCTIT2,   &
+                  MAXLIN,NUMLIN,NUMCLI,NUMCOL,   &
+                  ITEXT,NCTEXT,AMAT,MAXROW,IMAX2,   &
+                  IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,   &
+                  ICAPSW,ICAPTY,IFRST,ILAST,   &
+                  ISUBRO,IBUGA3,IERROR)
+!
+      ITITL9=' '
+      NCTIT9=0
+      ITITLE='Statistic: Number of Runs Total of Length I or More'
+      NCTITL=51
+!
+      DO 4330 I=1,IMAX2
+        NCTEXT(I)=0
+        AMAT(I,1)=REAL(I)
+        AMAT(I,2)=ANRTLG(I)
+        AMAT(I,3)=ENRTLG(I)
+        AMAT(I,4)=SNRTLG(I)
+        AMAT(I,5)=ZNRTLG(I)
+ 4330 CONTINUE
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+!
+      CALL DPDTA2(ITITL9,NCTIT9,   &
+                  ITITLE,NCTITL,ITITL2,NCTIT2,   &
+                  MAXLIN,NUMLIN,NUMCLI,NUMCOL,   &
+                  ITEXT,NCTEXT,AMAT,MAXROW,IMAX2,   &
+                  IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,   &
+                  ICAPSW,ICAPTY,IFRST,ILAST,   &
+                  ISUBRO,IBUGA3,IERROR)
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RUN2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPRUN2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPRUN2
+      SUBROUTINE DPRUNS(NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2,   &
+                        IBUGG2,IBUGG3,IBUGQ,ISUBRO,IFOUND,IERROR)
+!
+!     PURPOSE--FORM A RUN-SEQUENCE PLOT.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--DECEMBER  1977.
+!     UPDATED         --JANUARY   1978.
+!     UPDATED         --FEBRUARY  1978.
+!     UPDATED         --MAY       1978.
+!     UPDATED         --JULY      1978.
+!     UPDATED         --JANUARY   1981.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --MAY       2011. USE DPPARS
+!     UPDATED         --MAY       2011. SUPPORT HIGHLIGHT, MULTIPLE
+!                                       AND REPLICATION OPTIONS
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICASPL
+      CHARACTER*4 IAND1
+      CHARACTER*4 IAND2
+      CHARACTER*4 IBUGG2
+      CHARACTER*4 IBUGG3
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+!
+      CHARACTER*4 IREPL
+      CHARACTER*4 IMULT
+      CHARACTER*4 IHIGH
+      CHARACTER*4 IWRITE
+!
+      CHARACTER*4 ICTMP1
+      CHARACTER*4 ICTMP2
+      CHARACTER*4 ICTMP3
+      CHARACTER*4 ICTMP4
+      CHARACTER*4 ICASE
+      CHARACTER*40 INAME
+      PARAMETER (MAXSPN=30)
+      CHARACTER*4 IVARN1(MAXSPN)
+      CHARACTER*4 IVARN2(MAXSPN)
+      CHARACTER*4 IVARTY(MAXSPN)
+      REAL PVAR(MAXSPN)
+      INTEGER ILIS(MAXSPN)
+      INTEGER NRIGHT(MAXSPN)
+      INTEGER ICOLR(MAXSPN)
+!
+!---------------------------------------------------------------------
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCODA.INC'
+!
+      DIMENSION XHIGH(MAXOBV)
+      DIMENSION ZY(MAXOBV)
+      DIMENSION ZX(MAXOBV)
+      DIMENSION X1(MAXOBV)
+      DIMENSION X2(MAXOBV)
+      DIMENSION X3(MAXOBV)
+      DIMENSION X4(MAXOBV)
+      DIMENSION X5(MAXOBV)
+      DIMENSION X6(MAXOBV)
+      DIMENSION XTEMP1(MAXOBV)
+      DIMENSION XTEMP2(MAXOBV)
+      DIMENSION XTEMP3(MAXOBV)
+      DIMENSION XTEMP4(MAXOBV)
+      DIMENSION XTEMP5(MAXOBV)
+      DIMENSION XTEMP6(MAXOBV)
+!
+      INCLUDE 'DPCOZZ.INC'
+      EQUIVALENCE (GARBAG(IGARB1),XHIGH(1))
+      EQUIVALENCE (GARBAG(IGARB2),ZY(1))
+      EQUIVALENCE (GARBAG(IGARB3),ZX(1))
+      EQUIVALENCE (GARBAG(IGARB4),X1(1))
+      EQUIVALENCE (GARBAG(IGARB5),X2(1))
+      EQUIVALENCE (GARBAG(IGARB6),X3(1))
+      EQUIVALENCE (GARBAG(IGARB7),X4(1))
+      EQUIVALENCE (GARBAG(IGARB8),X5(1))
+      EQUIVALENCE (GARBAG(IGARB9),X6(1))
+      EQUIVALENCE (GARBAG(IGAR10),XTEMP1(1))
+      EQUIVALENCE (GARBAG(JGAR11),XTEMP2(1))
+      EQUIVALENCE (GARBAG(JGAR12),XTEMP3(1))
+      EQUIVALENCE (GARBAG(JGAR13),XTEMP4(1))
+      EQUIVALENCE (GARBAG(JGAR14),XTEMP5(1))
+      EQUIVALENCE (GARBAG(JGAR15),XTEMP6(1))
+!
+!-----COMMON VARIABLES (GENERAL)--------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+      IREPL='OFF'
+      IHIGH='OFF'
+      IMULT='OFF'
+      ISUBN1='DPRU'
+      ISUBN2='NS  '
+!
+      MAXCP1=MAXCOL+1
+      MAXCP2=MAXCOL+2
+      MAXCP3=MAXCOL+3
+      MAXCP4=MAXCOL+4
+      MAXCP5=MAXCOL+5
+      MAXCP6=MAXCOL+6
+!
+!               ****************************************
+!               **  TREAT THE RUN-SEQUENCE PLOT CASE  **
+!               ****************************************
+!
+      IF(IBUGG2.EQ.'ON' .OR. ISUBRO.EQ.'RUNS')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPRUNS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)ICASPL,IAND1,IAND2
+   52   FORMAT('ICASPL,IAND1,IAND2 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGG2,IBUGG3,IBUGQ,ISUBRO
+   53   FORMAT('IBUGG2,IBUGG3,IBUGQ,ISUBRO = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      ICASPL='RUNS'
+      ILASTZ=9999
+      DO 100 I=0,NUMARG-1
+        IF(I.EQ.0)THEN
+          ICTMP1=ICOM
+        ELSE
+          ICTMP1=IHARG(I)
+        ENDIF
+        ICTMP2=IHARG(I+1)
+        ICTMP3=IHARG(I+2)
+        ICTMP4=IHARG(I+3)
+!
+        IF(ICTMP1.EQ.'RUN' .AND. ICTMP2.EQ.'SEQU')THEN
+          IFOUND='YES'
+          ILASTZ=I+1
+        ELSEIF(ICTMP1.EQ.'PLOT')THEN
+          ILASTZ=I
+        ELSEIF(ICTMP1.EQ.'REPL')THEN
+          IREPL='ON'
+          ILASTZ=MAX(ILASTZ,I)
+        ELSEIF(ICTMP1.EQ.'MULT')THEN
+          IMULT='ON'
+          ILASTZ=MAX(ILASTZ,I)
+        ELSEIF(ICTMP1.EQ.'HIGH' .OR. ICTMP1.EQ.'SUBS')THEN
+          IHIGH='ON'
+          ILASTZ=MAX(ILASTZ,I)
+        ENDIF
+  100 CONTINUE
+!
+      IF(IFOUND.EQ.'NO')GO TO 9000
+!
+      ISHIFT=ILASTZ
+      CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,   &
+                  IBUGG2,IERROR)
+!
+      IF(IBUGG2.EQ.'ON' .OR. ISUBRO.EQ.'RUNS')THEN
+        WRITE(ICOUT,92)IMULT,IREPL,IHIGH,ILASTZ
+   92   FORMAT('IMULT,IREPL,IHIGH,ILASTZ = ',3(A4,2X),I5)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IF(IMULT.EQ.'ON')THEN
+        IF(IREPL.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,101)
+  101     FORMAT('***** ERROR IN RUN SEQUENCE PLOT--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,102)
+  102     FORMAT('      YOU CANNOT SPECIFY BOTH "MULTIPLE" AND ',   &
+                 '"REPLICATION" FOR THE PROBABILITY PLOT.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ELSEIF(IHIGH.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,101)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,122)
+  122     FORMAT('      YOU CANNOT SPECIFY BOTH "MULTIPLE" AND ',   &
+                 '"HIGHTLIGHTED" FOR THE PROBABILITY PLOT.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+      ENDIF
+!
+!               *********************************
+!               **  STEP 2--                   **
+!               **  EXTRACT THE VARIABLE LIST  **
+!               *********************************
+!
+      ISTEPN='4'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'RUNS')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      INAME='RUN SEQUENCE PLOT'
+      MINNA=1
+      MAXNA=100
+      MINN2=1
+      IFLAGE=1
+      IFLAGM=0
+      IF(IMULT.EQ.'ON')THEN
+        IFLAGE=0
+        IFLAGM=1
+      ELSE
+         IF(IREPL.EQ.'OFF' .AND. IHIGH.EQ.'OFF')IFLAGM=1
+      ENDIF
+      IFLAGP=0
+      JMIN=1
+      JMAX=NUMARG
+      MINNVA=1
+      MAXNVA=1
+      IF(IHIGH.EQ.'ON')THEN
+        MINNVA=2
+        MAXNVA=2
+      ELSEIF(IREPL.EQ.'ON')THEN
+        MINNVA=2
+        MAXNVA=7
+      ELSEIF(IMULT.EQ.'ON')THEN
+        MINNVA=1
+        MAXNVA=MAXSPN
+      ENDIF
+!
+      CALL DPPARS(IHARG,IHARG2,IARGT,ARG,NUMARG,IANS,IWIDTH,   &
+                  IHNAME,IHNAM2,IUSE,NUMNAM,IN,IVALUE,VALUE,   &
+                  JMIN,JMAX,   &
+                  MINN2,MINNA,MAXNA,MAXSPN,IFLAGE,INAME,   &
+                  IVARN1,IVARN2,IVARTY,PVAR,   &
+                  ILIS,NRIGHT,ICOLR,ISUB,NQ,ILOCQ,NUMVAR,   &
+                  MINNVA,MAXNVA,   &
+                  IFLAGM,IFLAGP,   &
+                  IBUGG3,IBUGQ,ISUBRO,IFOUND,IERROR)
+!
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'RUNS')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,281)
+  281   FORMAT('***** AFTER CALL DPPARS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,282)NQ,NUMVAR
+  282   FORMAT('NQ,NUMVAR = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NUMVAR.GT.0)THEN
+          DO 285 I=1,NUMVAR
+            WRITE(ICOUT,287)I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),   &
+                            ICOLR(I)
+  287       FORMAT('I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),',   &
+                   'ICOLR(I) = ',I8,2X,A4,A4,2X,3I8)
+            CALL DPWRST('XXX','BUG ')
+  285     CONTINUE
+        ENDIF
+      ENDIF
+      IF(IERROR.EQ.'YES')GO TO 9000
+!
+!               ***********************************************
+!               **  STEP 3--                                 **
+!               **  DETERMINE:                               **
+!               **  1) NUMBER OF REPLICATION VARIABLES (0-1) **
+!               **  2) NUMBER OF RESPONSE    VARIABLES (>= 1)**
+!               **  3) NUMBER OF HIGHLIGHT   VARIABLES (0-1) **
+!               ***********************************************
+!
+      ISTEPN='5'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'RUNS')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      NRESP=0
+      NREPL=0
+      NHIGH=0
+      IF(IMULT.EQ.'ON')THEN
+        NRESP=NUMVAR
+      ELSEIF(IHIGH.EQ.'ON')THEN
+        NRESP=1
+        NHIGH=1
+      ELSEIF(IREPL.EQ.'ON')THEN
+        NRESP=1
+        NREPL=NUMVAR-NRESP
+        IF(NREPL.LT.1)IREPL='OFF'
+        IF(NREPL.GT.6)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,101)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,511)
+  511     FORMAT('      FOR THE REPLICATION CASE, AT MOST SIX ',   &
+                 'REPLICATION VARIABLE')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,512)
+  512     FORMAT('      ALLOWED;  SUCH WAS NOT THE CASE HERE.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,513)NREPL
+  513     FORMAT('      THE NUMBER OF REPLICATION VARIABLES = ',I5)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+      ENDIF
+!
+!       CASE 1: NO HIGHLIGHTING AND NO REPLICATION
+!
+      IF(IREPL.EQ.'OFF' .AND. IHIGH.EQ.'OFF')THEN
+        NPLOTP=0
+        ICNT=0
+        DO 510 K=1,NUMVAR
+          ICOL=K
+          NUMVA2=1
+          CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,   &
+                      INAME,IVARN1,IVARN2,IVARTY,   &
+                      ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVA2,   &
+                      MAXCOL,MAXCP1,MAXCP2,MAXCP3,   &
+                      MAXCP4,MAXCP5,MAXCP6,   &
+                      V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,   &
+                      ZY,ZY,ZY,NS,NS,NS,ICASE,   &
+                      IBUGG3,ISUBRO,IFOUND,IERROR)
+          IF(IERROR.EQ.'YES')GO TO 9000
+!
+          ICNT=ICNT+1
+          IF(NS.GE.1)THEN
+            DO 520 I=1,NS
+              NPLOTP=NPLOTP+1
+              Y(NPLOTP)=ZY(I)
+              X(NPLOTP)=REAL(NPLOTP)
+              D(NPLOTP)=REAL(ICNT)
+  520       CONTINUE
+          ENDIF
+  510   CONTINUE
+!
+!       CASE 2: HIGHLIGHTING
+!
+      ELSEIF(IHIGH.EQ.'ON')THEN
+        NPLOTP=0
+        ICOL=1
+        CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,   &
+                    INAME,IVARN1,IVARN2,IVARTY,   &
+                    ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVAR,   &
+                    MAXCOL,MAXCP1,MAXCP2,MAXCP3,   &
+                    MAXCP4,MAXCP5,MAXCP6,   &
+                    V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,   &
+                    ZY,XHIGH,ZY,NS,NS,NS,ICASE,   &
+                    IBUGG3,ISUBRO,IFOUND,IERROR)
+        IF(IERROR.EQ.'YES')GO TO 9000
+!
+        IF(NS.GE.1)THEN
+          DO 620 I=1,NS
+            NPLOTP=NPLOTP+1
+            Y(NPLOTP)=ZY(I)
+            X(NPLOTP)=REAL(NPLOTP)
+            D(NPLOTP)=XHIGH(I)
+  620     CONTINUE
+        ENDIF
+      ELSEIF(IREPL.EQ.'ON')THEN
+        ICOL=1
+        CALL DPPAR5(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,   &
+                    INAME,IVARN1,IVARN2,IVARTY,   &
+                    ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVAR,   &
+                    MAXCOL,MAXCP1,MAXCP2,MAXCP3,   &
+                    MAXCP4,MAXCP5,MAXCP6,   &
+                    V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,   &
+                    ZY,X1,X2,X3,X4,X5,X6,NLOCAL,   &
+                    IBUGG3,ISUBRO,IFOUND,IERROR)
+        IF(IERROR.EQ.'YES')GO TO 9000
+        IF(NLOCAL.LE.0)GO TO 9000
+!
+!       IF THERE ARE TWO OR MORE REPLICATION VARIABLES, COMBINE
+!       THEM TO CREATE A SINGLE REPLICATION VARIABLE.
+!
+        ICCTOF=0
+        ICCTG1=-99
+        ICCTG2=-99
+        ICCTG3=-99
+        ICCTG4=-99
+        ICCTG5=-99
+        IWRITE='OFF'
+!
+        IF(NUMVAR.EQ.3)THEN
+          CALL CODCT2(X1,X2,NLOCAL,ICCTOF,ICCTG1,IWRITE,   &
+                      ZX,XTEMP1,XTEMP2,   &
+                      IBUGG3,ISUBRO,IERROR)
+          DO 7011 I=1,NLOCAL
+            X1(I)=ZX(I)
+ 7011     CONTINUE
+          NUMVAR=2
+        ELSEIF(NUMVAR.EQ.4)THEN
+          CALL CODCT3(X1,X2,X3,NLOCAL,ICCTOF,ICCTG1,ICCTG2,IWRITE,   &
+                      ZX,XTEMP1,XTEMP2,XTEMP3,   &
+                      IBUGG3,ISUBRO,IERROR)
+          DO 7012 I=1,NLOCAL
+            X1(I)=ZX(I)
+ 7012     CONTINUE
+          NUMVAR=2
+        ELSEIF(NUMVAR.EQ.5)THEN
+          CALL CODCT4(X1,X2,X3,X4,NLOCAL,   &
+                      ICCTOF,ICCTG1,ICCTG2,ICCTG3,IWRITE,   &
+                      ZX,XTEMP1,XTEMP2,XTEMP3,XTEMP4,   &
+                      IBUGG3,ISUBRO,IERROR)
+          DO 7013 I=1,NLOCAL
+            X1(I)=ZX(I)
+ 7013     CONTINUE
+          NUMVAR=2
+        ELSEIF(NUMVAR.EQ.6)THEN
+          CALL CODCT5(X1,X2,X3,X4,X5,NLOCAL,   &
+                      ICCTOF,ICCTG1,ICCTG2,ICCTG3,ICCTG4,IWRITE,   &
+                      ZX,XTEMP1,XTEMP2,XTEMP3,XTEMP4,XTEMP5,   &
+                      IBUGG3,ISUBRO,IERROR)
+          DO 7014 I=1,NLOCAL
+            X1(I)=ZX(I)
+ 7014     CONTINUE
+          NUMVAR=2
+        ELSEIF(NUMVAR.EQ.7)THEN
+          CALL CODCT6(X1,X2,X3,X4,X5,X6,NLOCAL,   &
+                      ICCTOF,ICCTG1,ICCTG2,ICCTG3,ICCTG4,ICCTG5,IWRITE,   &
+                      ZX,XTEMP1,XTEMP2,XTEMP3,XTEMP4,XTEMP5,XTEMP6,   &
+                      IBUGG3,ISUBRO,IERROR)
+          DO 7015 I=1,NLOCAL
+            X1(I)=ZX(I)
+ 7015     CONTINUE
+          NUMVAR=2
+        ENDIF
+!
+        NPLOTP=0
+        DO 7020 I=1,NLOCAL
+            NPLOTP=NPLOTP+1
+            Y(NPLOTP)=ZY(I)
+            X(NPLOTP)=REAL(NPLOTP)
+            D(NPLOTP)=X1(I)
+ 7020   CONTINUE
+      ENDIF
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      NPLOTV=1
+      IF(IBUGG2.EQ.'ON' .OR. ISUBRO.EQ.'RUNS')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPRUNS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUND,IERROR
+ 9012   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)NPLOTV,NPLOTP,NLOCAL
+ 9013   FORMAT('NPLOTV,NPLOTP,NLOCAL = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NPLOTP.GE.1)THEN
+          DO 9015 I=1,NPLOTP
+            WRITE(ICOUT,9016)I,Y(I),X(I),D(I)
+ 9016       FORMAT('I,Y(I),X(I),D(I) = ',I8,3F12.5)
+            CALL DPWRST('XXX','BUG ')
+ 9015     CONTINUE
+        ENDIF
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPRUNS
+      SUBROUTINE DPRUPL(NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2,   &
+                        IANGLU,IBUGG2,IBUGG3,IBUGQ,IFOUND,IERROR)
+!
+!     PURPOSE--GENERATE A RUNS PLOT.
+!
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--SEPTEMBER 1981.
+!     UPDATED         --MAY       1982.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICASPL
+      CHARACTER*4 IAND1
+      CHARACTER*4 IAND2
+      CHARACTER*4 IANGLU
+      CHARACTER*4 IBUGG2
+      CHARACTER*4 IBUGG3
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPRU'
+      ISUBN2='PL  '
+      IFOUND='YES'
+      IERROR='NO'
+!
+      IF(IBUGG2.EQ.'ON')THEN
+        WRITE(ICOUT,51)
+   51   FORMAT('***** ERROR IN DPRUPL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)NPLOTV,NPLOTP,NS
+   53   FORMAT('NPLOTV,NPLOTP,NS = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55)ICASPL,IAND1,IAND2,IANGLU
+   55   FORMAT('ICASPL,IAND1,IAND2,IANGLU = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,57)IBUGG2,IBUGG3,IBUGQ
+   57   FORMAT('IBUGG2,IBUGG3,IBUGQ = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,101)
+  101 FORMAT('***** ERROR IN DPRUPL--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,102)
+  102 FORMAT('      RUNS PLOT CAPABILITY')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,103)
+  103 FORMAT('      NOT YET AVAILABLE')
+      CALL DPWRST('XXX','BUG ')
+!
+      RETURN
+      END SUBROUTINE DPRUPL
+      SUBROUTINE DPRWLA(IA,IPARN,IPARN2,IWRITE,IINDX,   &
+                        IBUGA3,ISUBRO,IERROR)
+!
+!     PURPOSE--CONVERT A STRING TO A ROW LABEL.  EXAMPLE:
+!
+!                 LET ROWLABEL = STRING TO ROW LABEL IROW S
+!
+!              WHERE IROW IS THE ROW NUMBER IN THE ROW LABEL AND
+!              S IS A PREVIOUSLY DEFINED STRING.
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THE MAXIMUM ROW NUMBER IS MAXOBV.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     REFERENCES--NONE.
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2012/6
+!     ORIGINAL VERSION--JUNE      2012.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 MESSAG
+      CHARACTER*4 IA
+      CHARACTER*4 IPARN
+      CHARACTER*4 IPARN2
+!
+      DIMENSION IA(*)
+      DIMENSION IPARN(*)
+      DIMENSION IPARN2(*)
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOHK.INC'
+!
+      CHARACTER*4 IHTEMP(200)
+      CHARACTER*130 ISTRIN
+      CHARACTER*130 ISTRI2
+!
+      PARAMETER(MAXIND=100)
+!
+      CHARACTER*4 ISTRN1(MAXIND)
+      CHARACTER*4 ISTRN2(MAXIND)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPRW'
+      ISUBN2='LA  '
+      IERROR='NO'
+      IOPFLG=0
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWLA')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPRWLA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,IA(1),IPARN(1),IPARN2(1)
+   52   FORMAT('IBUGA3,ISUBRO,IA(1),IPARN1,IPARN2 = ',3(A4,2X),2A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *************************************************
+!               **  STEP 1--                                   **
+!               **  DETERMINE ROW INDEX.                       **
+!               *************************************************
+!
+      ISTEPN='1'
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWLA')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      NTEMP=IINDX+1
+      IF(IARGT(NTEMP).EQ.'NUMB')THEN
+        IROW=INT(ARG(NTEMP)+0.5)
+        IF(IROW.LT.1 .OR. IROW.GT.MAXOBV)THEN
+          WRITE(ICOUT,1001)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1013)MAXOBV
+ 1013     FORMAT('      THE ROW INDEX IS LESS THAN ONE OR GREATER ',   &
+                 'THAN ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1015)NTEMP
+ 1015     FORMAT('      THE VALUE OF THE ROW INDEX  = ',I8)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+      ELSE
+        WRITE(ICOUT,1001)
+ 1001   FORMAT('***** ERROR IN STRING TO ROW LABEL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1003)NTEMP
+ 1003   FORMAT('      ARGUMENT ',I5,' (THE ROW INDEX) IS NOT NUMBER.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1005)IHARG(NTEMP),IHARG2(NTEMP)
+ 1005   FORMAT('      THE VALUE OF THE ARGUMENT  = ',A4,A4)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               *************************************************
+!               **  STEP 2--                                   **
+!               **  DETERMINE IF NEXT ARGUMENT IS A PREVIOUSLY **
+!               **  DEFINED STRING.  IF NOT, TREAT AS A        **
+!               **  LITERAL STRING.                            **
+!               *************************************************
+!
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWLA')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      JMIN=IINDX+2
+      JMAX=NUMARG
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWLA')THEN
+        WRITE(ICOUT,4001)JMIN,JMAX,MAXIND
+ 4001   FORMAT('JMIN,JMAX,MAXIND = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IF(JMAX.LT.JMIN)GO TO 8000
+      IWRITE='OFF'
+      IERROR='NO'
+!
+      CALL EXTSTR(IHARG,IHARG2,NUMARG,JMIN,JMAX,MAXIND,   &
+                  IHNAME,IHNAM2,IUSE,NUMNAM,   &
+                  ISTRN1,ISTRN2,NUMSTR,   &
+                  IWRITE,IBUGA3,ISUBRO,IERROR)
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWLA')THEN
+        WRITE(ICOUT,4003)NUMSTR
+ 4003   FORMAT('NUMSTR = ',I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IF(IERROR.EQ.'NO')THEN
+!
+!  CASE WHERE WE ARE EXTRACTING STRINGS
+!
+        IONE=1
+        NUMSTR=MIN(NUMSTR,IONE)
+        N=NUMSTR
+        IROWLB(IROW)=' '
+!
+        DO 4010 I2=1,NUMSTR
+          DO 4015 I=1,NUMNAM
+            II=I
+            IF(ISTRN1(I2).EQ.IHNAME(I) .AND. ISTRN2(I2).EQ.IHNAM2(I))   &
+              GO TO 4019
+ 4015     CONTINUE
+!
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1001)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,4023)ISTRN1(I2),ISTRN2(I2)
+ 4023     FORMAT('       STRING ',A4,A4,' NOT MATCHED IN NAME ',   &
+                 'TABLE.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 8000
+!
+ 4019     CONTINUE
+          IVAL=IVALUE(II)
+          VAL=VALUE(II)
+          IL1=IVSTAR(II)
+          IL2=IVSTOP(II)
+!
+          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWLA')THEN
+            WRITE(ICOUT,4011)IL1,IL2
+ 4011       FORMAT('II,IL1,IL2 = ',3I8)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+          CALL DPCOFH(IL1,IL2,IFUNC,NUMCHF,IHTEMP,NH,IBUGA3,IERROR)
+          ILAST=MIN(24,NH)
+!
+          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWLA')THEN
+            WRITE(ICOUT,4013)NH,ILAST
+ 4013       FORMAT('NH,ILAST = ',2I8)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+          IF(ILAST.GT.0)THEN
+            IROWLB(IROW)=' '
+            DO 4020 J=1,ILAST
+              IROWLB(IROW)(J:J)=IHTEMP(J)(1:1)
+ 4020       CONTINUE
+!
+            IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWLA')THEN
+              WRITE(ICOUT,4014)IROW,IROWLB(IROW)
+ 4014         FORMAT('IROW,IROWLB(IROW) = ',I8,A24)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+!
+          ENDIF
+ 4010   CONTINUE
+      ELSE
+!
+!  CASE WHERE WE ARE EXTRACTING LITERALS
+!
+        ICNT=0
+        IFRST=5
+        MESSAG='OFF'
+        IROWLB(IROW)=' '
+        DO 4108 I=1,130
+          ISTRIN(I:I)=IANSLC(I)(1:1)
+ 4108   CONTINUE
+!
+ 4100   CONTINUE
+        IFRST=IFRST+1
+        ICNT=ICNT+1
+        ISTART=1
+        ISTOP=130
+        IERROR='NO'
+        ICOL1=1
+        ICOL2=130
+        NCOLMX=130
+        CALL DPEXS1(ISTRIN,NCOLMX,ISTART,ISTOP,IFRST,MESSAG,   &
+                    ICOL1,ICOL2,ISTRI2,NCSTR2,   &
+                    IBUGA3,ISUBRO,IERROR)
+        IF(NCSTR2.GT.0 .AND. IERROR.NE.'YES')THEN
+          ILAST=MIN(24,NCSTR2)
+          IROWLB(IROW)=' '
+          DO 4120 J=1,ILAST
+            IROWLB(IROW)(J:J)=ISTRI2(J:J)
+ 4120     CONTINUE
+          GO TO 4100
+        ENDIF
+        N=ICNT-1
+      ENDIF
+!
+!               ******************************
+!               **  STEP 3--                **
+!               **  WRITE OUT A FEW LINES   **
+!               **  OF SUMMARY INFORMATION  **
+!               **  ABOUT THE CODING.       **
+!               ******************************
+!
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2821)IROW,IROWLB(IROW)
+ 2821   FORMAT('ROW LABEL ',I8,' SET TO: ',A24)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+      GO TO 8000
+!
+ 8000 CONTINUE
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT.      **
+!               *****************
+!
+ 9000 CONTINUE
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWLA')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END OF DPRWLA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IBUGA3,IERROR
+ 9012   FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPRWLA
+      SUBROUTINE DPRWL2(IBUGA3,ISUBRO,IERROR)
+!
+!     PURPOSE--DEFINE A SPECIFIC ROW LABEL.  FOR EXAMPLE
+!
+!                 LET ROWLABEL 3 = CIRC
+!
+!              WILL DEFINE ROW LABEL 3 AS "CIRC".  THIS COMMAND
+!              HAS OCCASSIONAL USE WHEN THE ROW LABELS ARE USED
+!              BY THE CHARACTER COMMAND TO DEFINE PLOT POINTS.
+!
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THE MAXIMUM ROW NUMBER IS MAXOBV.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     REFERENCES--NONE.
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2012/8
+!     ORIGINAL VERSION--AUGUST    2012.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPRW'
+      ISUBN2='L2  '
+      IERROR='NO'
+!
+      DO 10 I=1,MAXOBV
+        ISUB(I)=1
+   10 CONTINUE
+      IEQUAL=0
+      ILAST=0
+      IFRST=0
+      NLEN=0
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWL2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPRWL2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO
+   52   FORMAT('IBUGA3,ISUBRO = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *************************************************
+!               **  STEP 1--                                   **
+!               **  DETERMINE INDEX VALUE                      **
+!               *************************************************
+!
+      ISTEPN='1'
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWL2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IINDX=0
+      IF(IARGT(2).EQ.'NUMB')THEN
+        IINDX=INT(ARG(2)+0.5)
+        IF(IINDX.LT.1 .OR. IINDX.GT.MAXOBV)THEN
+          WRITE(ICOUT,1001)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1013)MAXOBV
+ 1013     FORMAT('      THE ROW INDEX IS LESS THAN ONE OR GREATER ',   &
+                 'THAN ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1015)IINDX
+ 1015     FORMAT('      THE VALUE OF THE ROW INDEX = ',I8)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+      ELSE
+        WRITE(ICOUT,1001)
+ 1001   FORMAT('***** ERROR IN ROW LABEL INDEX--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1003)
+ 1003   FORMAT('      ARGUMENT 3 (THE ROW INDEX) IS NOT A NUMBER.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1005)IHARG(3),IHARG2(3)
+ 1005   FORMAT('      THE VALUE OF THE ARGUMENT  = ',2A4)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               *************************************************
+!               **  STEP 2--                                   **
+!               **  NOW EXTRACT THE LABEL FROM IANSLC          **
+!               *************************************************
+!
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWL2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     CHECK FOR SPECIAL CASE: NO ARGUMENTS AFTER "="
+!
+      IF(NUMARG.EQ.3)THEN
+        IROWLB(IINDX)(I:I)=' '
+        GO TO 4000
+      ENDIF
+!
+!     FIRST FIND THE LOCATION OF THE "="
+!
+      DO 2010 I=1,IWIDTH
+        IF(IANSLC(I)(1:1).EQ.'=')THEN
+          IEQUAL=I
+          GO TO 2019
+        ENDIF
+ 2010 CONTINUE
+ 2019 CONTINUE
+!
+!     NOW FIND THE LAST NON-BLANK CHARACTER IN IANSLC
+!
+      DO 2110 I=IWIDTH,IEQUAL+1,-1
+        IF(IANSLC(I)(1:1).NE.' ')THEN
+          ILAST=I
+          GO TO 2119
+        ENDIF
+ 2110 CONTINUE
+ 2119 CONTINUE
+!
+!               *************************************************
+!               **  STEP 3--                                   **
+!               **  NOW DEFINE THE ROW LABEL                   **
+!               *************************************************
+!
+      ISTEPN='3'
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWL2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+                                                                                                                                  
+      IFRST=IEQUAL+1
+      NLEN=ILAST-IFRST+1
+      IF(NLEN.GT.24)NLEN=24
+      IF(NLEN.LT.1)NLEN=1
+      IROWLB(IINDX)=' '
+      DO 3010 I=1,NLEN
+        ICNT=IEQUAL+I
+        IROWLB(IINDX)(I:I)=IANSLC(ICNT)(1:1)
+ 3010 CONTINUE
+!
+!               ******************************
+!               **  STEP 4--                **
+!               **  WRITE OUT A FEW LINES   **
+!               **  OF SUMMARY INFORMATION  **
+!               **  ABOUT THE CODING.       **
+!               ******************************
+!
+ 4000 CONTINUE
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4010)IINDX,IROWLB(IINDX)(1:24)
+ 4010   FORMAT('ROW LABEL ',I8,' HAS BEEN SET TO ',A24)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT.      **
+!               *****************
+!
+ 9000 CONTINUE
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWL2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END OF DPRWL2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IBUGA3,IERROR,IINDX
+ 9012   FORMAT('IBUGA3,IERROR,IINDX = ',A4,2X,A4,2X,I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(IINDX.GE.1 .AND. IINDX.LE.MAXOBV)THEN
+          WRITE(ICOUT,9014)IROWLB(IINDX)(1:24)
+ 9014     FORMAT('IROWLB(IINDX) = ',A24)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPRWL2
+      SUBROUTINE DPRWSH(IBUGA3,ISUBRO,IERROR)
+!
+!     PURPOSE--SHIFT ROW LABELS LEFT (DOWN) OR RIGHT (UP)
+!              A SPECIFIED NUMBER OF ROWS.  FOR EXAMPLE,
+!
+!                 LET ROWLABEL = SHIFT LEFT 3
+!
+!     PRINTING--NONE UNLESS AN INPUT ARGUMENT ERROR CONDITION EXISTS.
+!     RESTRICTIONS--THE MAXIMUM ROW NUMBER IS MAXOBV.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     REFERENCES--NONE.
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2012/8
+!     ORIGINAL VERSION--AUGUST    2012.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 IDIR
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPRW'
+      ISUBN2='SH  '
+      IERROR='NO'
+      IDIR='LEFT'
+      IF(IHARG(4).EQ.'RIGH')IDIR='RIGH'
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWSH')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPRWSH--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,IDIR
+   52   FORMAT('IBUGA3,ISUBRO,IDIR = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *************************************************
+!               **  STEP 1--                                   **
+!               **  DETERMINE SHIFT VALUE                      **
+!               *************************************************
+!
+      ISTEPN='1'
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWSH')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      NSHIFT=0
+      IF(IARGT(5).EQ.'NUMB')THEN
+        NSHIFT=INT(ARG(5)+0.5)
+        NSHIFT=ABS(NSHIFT)
+        IF(NSHIFT.LT.1 .OR. NSHIFT.GT.MAXOBV)THEN
+          WRITE(ICOUT,1001)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1013)MAXOBV
+ 1013     FORMAT('      THE SHIFT VALUE IS LESS THAN ONE OR GREATER ',   &
+                 'THAN ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1015)NSHIFT
+ 1015     FORMAT('      THE VALUE OF THE SHIFT = ',I8)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+      ELSE
+        WRITE(ICOUT,1001)
+ 1001   FORMAT('***** ERROR IN ROW LABEL SHIFT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1003)
+ 1003   FORMAT('      ARGUMENT 5 (THE SHIFT VALUE) IS NOT A NUMBER.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1005)IHARG(5),IHARG2(5)
+ 1005   FORMAT('      THE VALUE OF THE ARGUMENT  = ',2A4)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               *************************************************
+!               **  STEP 2--                                   **
+!               **  NOW SHIFT THE ROW LABELS.                  **
+!               *************************************************
+!
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWSH')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(IDIR.EQ.'LEFT')THEN
+         ISTRT=NSHIFT+1
+         ISTOP=MAXOBV
+         DO 2010 I=ISTRT,ISTOP
+           IROWLB(I-NSHIFT)=IROWLB(I)
+ 2010    CONTINUE
+         ITEMP=MAXOBV-NSHIFT+1
+         DO 2020 I=ITEMP,MAXOBV
+           IROWLB(I)='BLAN'
+ 2020    CONTINUE
+      ELSE
+         ISTRT=1
+         ISTOP=MAXOBV-NSHIFT
+         DO 2110 I=ISTOP,ISTRT,-1
+           IROWLB(I+NSHIFT)=IROWLB(I)
+ 2110    CONTINUE
+         DO 2120 I=1,NSHIFT
+           IROWLB(I)='BLAN'
+ 2120    CONTINUE
+      ENDIF
+!
+!               ******************************
+!               **  STEP 3--                **
+!               **  WRITE OUT A FEW LINES   **
+!               **  OF SUMMARY INFORMATION  **
+!               **  ABOUT THE CODING.       **
+!               ******************************
+!
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IF(IDIR.EQ.'LEFT')THEN
+          WRITE(ICOUT,2811)NSHIFT
+ 2811     FORMAT('THE ROW LABELS HAVE BEEN SHIFTED ',I8,' ROWS LEFT.')
+          CALL DPWRST('XXX','BUG ')
+        ELSE
+          WRITE(ICOUT,2821)NSHIFT
+ 2821     FORMAT('THE ROW LABELS HAVE BEEN SHIFTED ',I8,' ROWS RIGHT.')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT.      **
+!               *****************
+!
+ 9000 CONTINUE
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'RWSH')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END OF DPRWSH--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IBUGA3,IERROR,NSHIFT
+ 9012   FORMAT('IBUGA3,IERROR,NSHIFT = ',A4,2X,A4,2X,I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPRWSH
+      SUBROUTINE DPSACO(IANSLC,IWIDTH,IHARG,IARGT,IARG,NUMARG,   &
+                        IANSSV,IREPMX,IPOINT,ISACNC,   &
+                        IBUGS2,ISUBRO,IFOUND,IERROR)
+!
+!     PURPOSE--SAVE (FOR FUTURE USE BY THE REEXECUTE COMMAND)
+!              SELECTED COMMANDS IN THE (RECENT) COMMAND LIST.
+!              THE RECENT COMMAND LIST CONSISTS OF THE
+!              LAST IREPMX (= 50) COMMANDS.
+!              LAST MAXLIS (==> 200) COMMANDS.  APRIL 1993
+!
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--86/1
+!     ORIGINAL VERSION--APRIL     1986.
+!     UPDATED         --APRIL     1993. SOFT-CODE DIMEN. FOR IANSSV()
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+!CCCC THE FOLLOWING LINE WAS ADDED APRIL 1993
+      INCLUDE 'DPCOPA.INC'
+!
+      CHARACTER*4 IANSLC(*)
+      CHARACTER*4 IHARG(*)
+      CHARACTER*4 IARGT(*)
+      CHARACTER*1 IANSSV(MAXLIS,MAXCIS)
+!CCCC CHARACTER*80 ISACNC
+      CHARACTER (LEN=*) :: ISACNC
+!
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+      CHARACTER*4 IFOUND
+!
+!CCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
+      CHARACTER*12 ISTAT
+      CHARACTER*12 IFORM
+      CHARACTER*12 IACCES
+      CHARACTER*12 IPROT
+      CHARACTER*12 ICURST
+      CHARACTER*4 IENDFI
+      CHARACTER*4 IREWIN
+      CHARACTER*4 ISUBN0
+      CHARACTER*4 IERRFI
+!
+      CHARACTER*1 IC1
+      CHARACTER*4 IC4
+!CCCC CHARACTER*80 ISTRIN
+!CCCC CHARACTER*80 ISTRI2
+      CHARACTER (LEN=MAXSTR) :: ISTRIN
+      CHARACTER (LEN=MAXSTR) :: ISTRI2
+!
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+      DIMENSION IARG(*)
+!CCCC THE FOLLOWING 2 LINES WERE CHANGED APRIL 1993
+!CCCC DIMENSION IANSSV(50,80)
+!CCCC DIMENSION ITAB(50)
+      DIMENSION ITAB(MAXLIS)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOF2.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPSA'
+      ISUBN2='CO  '
+      IFOUND='NO'
+      IERROR='NO'
+!
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SACO')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('AT THE BEGINNING OF DPSACO--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGS2,ISUBRO,IFOUND,IERROR,IWIDTH,NUMARG
+   52   FORMAT('IBUGS2,ISUBRO,IFOUND,IERROR,IWIDTH,NUMARG = ',   &
+               4(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,54)(IANSLC(I),I=1,MIN(80,IWIDTH))
+   54     FORMAT('(IANSLC(I),I=1,IWIDTH) = ',80A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IF(NUMARG.GE.1)THEN
+          DO 56 I=1,NUMARG
+            WRITE(ICOUT,57)I,IHARG(I)
+   57       FORMAT('I,IHARG(I) = ',I8,2X,A4)
+            CALL DPWRST('XXX','BUG ')
+   56     CONTINUE
+        ENDIF
+!CCCC   THE FOLLOWING 2 LINES WERE CHANGED APRIL 1993
+!CCCC   WRITE(ICOUT,61)IREPMX,IPOINT
+!CC61   FORMAT('IREPMX,IPOINT = ',I8,2X,I8)
+!CCCC   CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,61)MAXLIS,IPOINT,ISACNU
+   61   FORMAT('MAXLIS,IPOINT,ISACNU = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+!CCCC   THE FOLLOWING LINE WAS CHANGED APRIL 1993
+!CCCC   DO62J=1,IREPMX
+        DO 62 J=1,MAXLIS
+          WRITE(ICOUT,63)J,(IANSSV(J,I),I=1,80)
+   63     FORMAT('J,(IANSSV(J,I),I=1,80) = ',I8,2X,80A1)
+          CALL DPWRST('XXX','BUG ')
+   62   CONTINUE
+        WRITE(ICOUT,72)ISACNA
+   72   FORMAT('ISACNA = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,73)ISACST,ISACFO,ISACAC,ISACFO,ISACCS
+   73   FORMAT('ISACST,ISACFO,ISACAC,ISACFO,ISACCS = ',4(A12,2X),A12)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,81)ISACNC
+   81   FORMAT('ISACNC = ',A80)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IFOUND='YES'
+!
+!               ******************************************************
+!               **  STEP 11--                                       **
+!               **  DETERMINE IF HAVE AN EXPLICIT FILE REFERENCE    **
+!               **  WHERE THE COMMANDS WILL BE SAVED, OR WILL THEY  **
+!               **  BE SAVED IN THE DEFAULT FILE (DPSACF.TEX)?      **
+!               ******************************************************
+!
+      ISTEPN='11'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SACO')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IFILWD=(-999)
+!
+      DO 1100 I=1,MAXSTR
+        IC4=IANSLC(I)
+        ISTRIN(I:I)=IC4(1:1)
+ 1100 CONTINUE
+!
+      IWORD=1
+      ISTART=1
+      ISTOP=MAXSTR
+      CALL DPEXWO(ISTRIN,ISTART,ISTOP,IWORD,   &
+                  ICOL1,ICOL2,ISTRI2,NCSTR2,   &
+                  IBUGS2,ISUBRO,IERROR)
+!
+      IF(NUMARG.GT.0)THEN
+        IWORD=2
+        ISTART=1
+        ISTOP=MAXSTR
+        CALL DPEXWO(ISTRIN,ISTART,ISTOP,IWORD,   &
+                    ICOL1,ICOL2,ISTRI2,NCSTR2,   &
+                    IBUGS2,ISUBRO,IERROR)
+        IF(NCSTR2.GT.0)THEN
+          DO 1121 I=1,NCSTR2
+            IF(ISTRI2(I:I).EQ.'.')THEN
+              IFILWD=2
+              GO TO 1190
+            ENDIF
+ 1121     CONTINUE
+        ENDIF
+      ENDIF
+!
+      IF(NUMARG.GT.1)THEN
+        IWORD=3
+        ISTART=1
+        ISTOP=MAXSTR
+        CALL DPEXWO(ISTRIN,ISTART,ISTOP,IWORD,   &
+                    ICOL1,ICOL2,ISTRI2,NCSTR2,   &
+                    IBUGS2,ISUBRO,IERROR)
+        IF(NCSTR2.GT.0)THEN
+          DO 1131 I=1,NCSTR2
+            IF(ISTRI2(I:I).EQ.'.')THEN
+              IFILWD=3
+              GO TO 1190
+            ENDIF
+ 1131    CONTINUE
+        ENDIF
+      ENDIF
+!
+ 1190 CONTINUE
+      ISTAM1=0
+      IF(IFILWD.EQ.2.OR.IFILWD.EQ.3)ISTAM1=1
+!
+!               *******************************
+!               **  STEP 12--                **
+!               **  COPY OVER FILE VARIABLES **
+!               *******************************
+!
+      ISTEPN='12'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SACO')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ISACNC=ISACNA
+      IF(IFILWD.EQ.2.OR.IFILWD.EQ.3)ISACNC=ISTRI2
+!
+      IOUNIT=ISACNU
+      IFILE=ISACNA
+      IF(IFILWD.EQ.2.OR.IFILWD.EQ.3)IFILE=ISTRI2(1:256)
+      ISTAT=ISACST
+      IFORM=ISACFO
+      IACCES=ISACAC
+      IPROT=ISACPR
+      ICURST=ISACCS
+!
+      ISUBN0='SACO'
+      IERRFI='NO'
+!
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SACO')THEN
+        WRITE(ICOUT,1294)IFILE
+ 1294   FORMAT('IFILE = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1295)ISTAT,IFORM,IACCES,IPROT,ICURST
+ 1295   FORMAT('ISTAT,IFORM,IACCES,IPROT,ICURST = ',4(A12,2X),A12)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1296)ISUBN0,IERRFI,IOUNIT
+ 1296   FORMAT('ISUBN0,IERRFI,IOUNIT = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ***********************************************************
+!               **  STEP 13--                                            **
+!               **  CHECK TO SEE IF THE SAVE-CONCLUSIONS FILE MAY EXIST  **
+!               ***********************************************************
+!
+      ISTEPN='13'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SACO')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(ISTAT.EQ.'NONE')THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1311)
+ 1311   FORMAT('***** IMPLEMENTATION ERROR IN DPSACO--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1312)
+ 1312   FORMAT('      THE DESIRED SAVING OF COMMANDS CANNOT BE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1314)
+ 1314   FORMAT('      OUT BECAUSE THE INTERNAL VARIABLE    ISACST ')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1315)
+ 1315   FORMAT('      WHICH ALLOWS SUCH COMMAND-SAVINGING')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1316)
+ 1316   FORMAT('      HAS BEEN SET TO    NONE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1317)ISTAT,ISACST
+ 1317   FORMAT('ISTAT,ISACST = ',A12,2X,A12)
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+!               *********************************************************
+!               **  STEP 21--                                          **
+!               **  FROM THE RECALL-LIST OF THE PREVIOUS 30 COMMANDS,  **
+!               **  STRIP OUT THE DESIRED COMMAND LINE NUMBERS         **
+!               **  THE LIST THAT THE ANALYST HAS SPECIFIED            **
+!               **  SHOULD BE IN THE ORDER THAT THE ANALYST            **
+!               **  WANTS THE COMMANDS EXECUTED                        **
+!               **  (USUALLY--BUT NOT NECESSARILY--IT IS FROM LARGEST  **
+!               **  (MOST DISTANT) TO SMALLEST (MOST RECENT))          **
+!               *********************************************************
+!
+!CCCC THE FOLLOWING LINE WAS CHANGED APRIL 1993
+!CCCC MAXTAB=IREPMX
+      MAXTAB=MAXLIS
+      MININT=1
+!CCCC THE FOLLOWING LINE WAS CHANGED APRIL 1993
+!CCCC MAXINT=IREPMX
+      MAXINT=MAXLIS
+      ISTART=ISTAM1+1
+      ISTOP=NUMARG
+      IF(ISTART.GT.ISTOP)THEN
+        I=1
+        ITAB(I)=1
+        NTAB=I
+      ELSE
+        CALL DPEXIN(IHARG,IARGT,IARG,NUMARG,ISTART,ISTOP,   &
+                    MININT,MAXINT,   &
+                    ITAB,NTAB,MAXTAB,   &
+                    IBUGS2,ISUBRO,IERROR)
+      ENDIF
+!
+!               **************************
+!               **  STEP 31--           **
+!               **  OPEN  THE FILE      **
+!               **************************
+!
+      ISTEPN='31'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SACO')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IREWIN='ON'
+      CALL DPOPFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IPROT,ICURST,   &
+      IREWIN,ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+      IF(IERRFI.EQ.'YES')GO TO 9000
+!
+!               ******************************************************
+!               **  STEP 41--                                       **
+!               **  PRINT OUT THE SPECIFIED COMMANDS                **
+!               **  (BOTH TO SCREEN AND TO FILE)                    **
+!               **  IN ORDER OF EXECUTION                           **
+!               ******************************************************
+!
+      ISTEPN='41'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SACO')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4101)
+ 4101   FORMAT('THE SAVED COMMAND LINES--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      NMAX=80
+      DO 4110 I=1,NTAB
+        I2=ITAB(I)
+        I3=IPOINT-I2
+!CCCC   THE FOLLOWING LINE WAS CHANGED APRIL 1993
+!CCCC   IF(I3.LE.0)I3=I3+IREPMX
+        IF(I3.LE.0)I3=I3+MAXLIS
+        DO 4120 J=1,MAXSTR
+          IC1=IANSSV(I3,J)
+          ISTRIN(J:J)=IC1
+ 4120   CONTINUE
+        WRITE(IOUNIT,4125)(ISTRIN(J:J),J=1,80)
+ 4125   FORMAT(80A1)
+!
+        IF(IFEEDB.EQ.'ON')THEN
+          CALL DPDB80(ISTRIN,J2MAX,NMAX,IBUGS2,ISUBRO,IERROR)
+          WRITE(ICOUT,4126)I2,(ISTRIN(J:J),J=1,MIN(80,J2MAX))
+ 4126     FORMAT(4X,I2,'--',80A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+ 4110 CONTINUE
+!
+!               **************************
+!               **  STEP 51--           **
+!               **  CLOSE THE FILE      **
+!               **************************
+!
+      ISTEPN='51'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SACO')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IENDFI='OFF'
+      IREWIN='OFF'
+      CALL DPCLFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IPROT,ICURST,   &
+      IENDFI,IREWIN,ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT.      **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SACO')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('AT THE END       OF DPSACO--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IBUGS2,ISUBRO,IFOUND,IERROR
+ 9012   FORMAT('IBUGS2,ISUBRO,IFOUND,IERROR = ',A4,2X,A4,2X,A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9021)MAXLIS,IPOINT,IOUNIT
+ 9021   FORMAT('MAXLIS,IPOINT,IOUNIT = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        DO 9022 J=1,IREPMX
+          WRITE(ICOUT,9023)J,(IANSSV(J,I),I=1,80)
+ 9023     FORMAT('J,(IANSSV(J,I),I=1,80) = ',I8,2X,80A1)
+          CALL DPWRST('XXX','BUG ')
+ 9022   CONTINUE
+        WRITE(ICOUT,9042)IFILE(1:80)
+ 9042   FORMAT('IFILE  = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9043)ISTAT,IFORM,IACCES,IPROT,ICURST
+ 9043   FORMAT('ISTAT,IFORM,IACCES,IPROT,ICURST  = ',4(A12,2X),A12)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9048)IENDFI,IREWIN,ISUBN0,IERRFI
+ 9048   FORMAT('IENDFI,IREWIN,ISUBN0,IERRFI = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9061)IFILWD,ISTAM1,ISTART,ISTOP
+ 9061   FORMAT('IFILWD,ISTAM1,ISTART,ISTOP = ',4I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9063)MININT,MAXINT,NTAB,MAXTAB
+ 9063   FORMAT('MININT,MAXINT,NTAB,MAXTAB = ',4I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NTAB.GT.0)THEN
+          DO 9072 I=1,NTAB
+            WRITE(ICOUT,9073)I,ITAB(I)
+ 9073       FORMAT('I,ITAB(I) = ',2I8)
+            CALL DPWRST('XXX','BUG ')
+ 9072     CONTINUE
+        ENDIF
+        WRITE(ICOUT,9081)ISACNC(1:80)
+ 9081   FORMAT('ISACNC = ',A80)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSACO
+      SUBROUTINE DPSAPC(IBUGS2,ISUBRO,IFOUND,IERROR)
+!
+!     PURPOSE--GUI SAVE PLOT CONTROL (= LIST OUT PLOT CONTROL
+!              SETTINGS TO SCREEN SO TCL/TK CAN READ THEM.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--97/11
+!     ORIGINAL VERSION--NOVEMBER  1997.
+!     UPDATED         --JULY      2009. MODIFY SOME FORMATS FOR
+!                                       GUI
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+      CHARACTER*4 ITEMP
+      CHARACTER*4 ITITFL
+      CHARACTER*4 ILABFL
+      CHARACTER*4 ILEGFL
+      CHARACTER*4 ILINFL
+      CHARACTER*4 ICHAFL
+      CHARACTER*4 ISPIFL
+      CHARACTER*4 IBARFL
+      CHARACTER*4 IBACFL
+      CHARACTER*4 ILIMFL
+!
+      CHARACTER*4 ITMP1
+      CHARACTER*4 ITMP2
+      CHARACTER*4 ITMP3
+      CHARACTER*4 ITMP4
+!
+      CHARACTER*24 ITEMPH(10)
+!
+      REAL TEMP(100)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOPC.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPSA'
+      ISUBN2='PC  '
+      IFOUND='YES'
+      IERROR='NO'
+!
+      IF(IBUGS2.EQ.'OFF'.AND.ISUBRO.NE.'SAPC')GO TO 90
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,51)
+   51 FORMAT('***** AT THE BEGINNING OF DPSAPC--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,53)IBUGS2,ISUBRO,IERROR
+   53 FORMAT('IBUGS2,ISUBRO,IERROR = ',A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,54)IWIDTH
+   54 FORMAT('IWIDTH = ',I8)
+      CALL DPWRST('XXX','BUG ')
+      IF(IWIDTH.GE.1)WRITE(ICOUT,55)(IANSLC(I),I=1,IWIDTH)
+   55 FORMAT('(IANSLC(I),I=1,IWIDTH) = ',80A1)
+      IF(IWIDTH.GE.1)CALL DPWRST('XXX','BUG ')
+   90 CONTINUE
+!
+      ISTART=1
+      ISTOP=100
+      ITITFL='OFF'
+      ILABFL='OFF'
+      ILEGFL='OFF'
+      ILINFL='OFF'
+      ICHAFL='OFF'
+      ISPIFL='OFF'
+      IBARFL='OFF'
+      IBACFL='OFF'
+      ILIMFL='OFF'
+!
+      IJUNK1=NUMARG
+      IJUNK2=NUMARG-1
+      IJUNK3=NUMARG-2
+      IF(NUMARG.GE.2.AND.IARGT(IJUNK1).EQ.'NUMB'.AND.   &
+        IARGT(IJUNK2).EQ.'NUMB')THEN
+         ISTART=IARG(IJUNK2)
+         ISTOP=IARG(IJUNK1)
+         IF(ISTART.LT.1)ISTART=1
+         IF(ISTOP.GT.100)ISTOP=100
+         IF(ISTART.GT.ISTOP)THEN
+           IJUNK4=ISTOP
+           ISTOP=ISTART
+           ISTART=IJUNK4
+         ENDIF
+      ELSEIF(NUMARG.GE.2.AND.IARGT(IJUNK1).EQ.'NUMB'.AND.   &
+        IARGT(IJUNK2).NE.'NUMB')THEN
+        ISTART=1
+        ISTOP=IARG(IJUNK1)
+        IF(ISTOP.GT.100)ISTOP=100
+        IJUNK3=IJUNK2
+      ELSE
+        IJUNK3=IJUNK1
+      ENDIF
+!
+      IF(IJUNK3.GE.1)THEN
+        ITEMP=IHARG(IJUNK3)
+        IF(ITEMP.EQ.'TITL')ITITFL='ON'
+        IF(ITEMP.EQ.'LABE')ILABFL='ON'
+        IF(ITEMP.EQ.'LEGE')ILEGFL='ON'
+        IF(ITEMP.EQ.'LINE')ILINFL='ON'
+        IF(ITEMP.EQ.'CHAR')ICHAFL='ON'
+        IF(ITEMP.EQ.'SPIK')ISPIFL='ON'
+        IF(ITEMP.EQ.'BAR ')IBARFL='ON'
+        IF(ITEMP.EQ.'BACK')IBACFL='ON'
+        IF(ITEMP.EQ.'LIMI')ILIMFL='ON'
+        IF(ITEMP.EQ.'ALL ')THEN
+          ITITFL='ON'
+          ILABFL='ON'
+          ILEGFL='ON'
+          ILINFL='ON'
+          ICHAFL='ON'
+          ISPIFL='ON'
+          IBARFL='ON'
+          IBACFL='ON'
+          ILIMFL='ON'
+        ENDIF
+      ENDIF
+!
+      LINC=5
+!
+!               ******************************************************
+!               **  STEP 41--
+!               **  WRITE OUT TO THE SAVE FILE;
+!               ******************************************************
+!
+      ISTEPN='41'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAPC')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     -----WRITE OUT COMMON FOR PLOT CONTROL-----
+!
+      IF(IBACFL.EQ.'OFF')GO TO 199
+      WRITE(ICOUT,101)IBACCO
+  101 FORMAT('BACKGROUND COLOR = ',A4)
+      CALL DPWRST('XXX','BUG ')
+  199 CONTINUE
+!
+      IF(ITITFL.EQ.'OFF')GO TO 299
+      WRITE(ICOUT,201)
+  201 FORMAT('TITLE ATTRIBUTES')
+      CALL DPWRST('XXX','BUG ')
+!
+      WRITE(ICOUT,202)(ITITTE(I)(1:1),I=1,MIN(NCTITL,130))
+  202 FORMAT('   TITLE = ',130A1)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,203)ITITFO
+  203 FORMAT('   TITLE FONT = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,204)ITITCA
+  204 FORMAT('   TITLE CASE = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,205)ITITFI
+  205 FORMAT('   TITLE FILL = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,206)ITITCO
+  206 FORMAT('   TITLE COLOR = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,207)PTITHE
+  207 FORMAT('   TITLE SIZE = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,208)PTITTH
+  208 FORMAT('   TITLE THICKNESS = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,209)PTITDS
+  209 FORMAT('   TITLE DISPLACEMENT = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+  299 CONTINUE
+!
+      IF(ILABFL.EQ.'OFF')GO TO 399
+      WRITE(ICOUT,301)
+  301 FORMAT('AXIS LABEL ATTRIBUTES')
+      CALL DPWRST('XXX','BUG ')
+!
+      WRITE(ICOUT,311)(IX1LTE(I)(1:1),I=1,NCX1LA)
+  311 FORMAT('    X1LABEL = ',130A1)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,312)(IX2LTE(I)(1:1),I=1,NCX2LA)
+  312 FORMAT('    X2LABEL = ',130A1)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,313)(IX3LTE(I)(1:1),I=1,NCX3LA)
+  313 FORMAT('    X3LABEL = ',130A1)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,314)(IY1LTE(I)(1:1),I=1,NCY1LA)
+  314 FORMAT('    Y1LABEL = ',130A1)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,315)(IY2LTE(I)(1:1),I=1,NCY2LA)
+  315 FORMAT('    Y2LABEL = ',130A1)
+      CALL DPWRST('XXX','BUG ')
+!
+      WRITE(ICOUT,321)IX1LFO
+  321 FORMAT('   X1LABEL FONT = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,322)IX1LCA
+  322 FORMAT('   X1LABEL CASE = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,323)IX1LFI
+  323 FORMAT('   X1LABEL FILL = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,324)IX1LCO
+  324 FORMAT('   X1LABEL COLOR = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,325)PX1LDS
+  325 FORMAT('   X1LABEL DISPLACEMENT = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,326)PX1LHE
+  326 FORMAT('   X1LABEL SIZE = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,327)PX1LTH
+  327 FORMAT('   X1LABEL THICKNESS = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+!
+      WRITE(ICOUT,331)IX2LFO
+  331 FORMAT('   X2LABEL FONT = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,332)IX2LCA
+  332 FORMAT('   X2LABEL CASE = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,333)IX2LFI
+  333 FORMAT('   X2LABEL FILL = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,334)IX2LCO
+  334 FORMAT('   X2LABEL COLOR = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,335)PX2LDS
+  335 FORMAT('   X2LABEL DISPLACEMENT = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,336)PX2LHE
+  336 FORMAT('   X2LABEL SIZE = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,337)PX2LTH
+  337 FORMAT('   X2LABEL THICKNESS = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+!
+      WRITE(ICOUT,341)IX3LFO
+  341 FORMAT('   X3LABEL FONT = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,342)IX3LCA
+  342 FORMAT('   X3LABEL CASE = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,343)IX3LFI
+  343 FORMAT('   X3LABEL FILL = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,344)IX3LCO
+  344 FORMAT('   X3LABEL COLOR = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,345)PX3LDS
+  345 FORMAT('   X3LABEL DISPLACEMENT = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,346)PX3LHE
+  346 FORMAT('   X3LABEL SIZE = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,347)PX3LTH
+  347 FORMAT('   X3LABEL THICKNESS = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+!
+      WRITE(ICOUT,351)IY1LFO
+  351 FORMAT('   Y1LABEL FONT = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,352)IY1LCA
+  352 FORMAT('   Y1LABEL CASE = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,353)IY1LFI
+  353 FORMAT('   Y1LABEL FILL = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,354)IY1LCO
+  354 FORMAT('   Y1LABEL COLOR = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,355)PY1LDS
+  355 FORMAT('   Y1LABEL DISPLACEMENT = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,356)PY1LHE
+  356 FORMAT('   Y1LABEL SIZE = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,357)PY1LTH
+  357 FORMAT('   Y1LABEL THICKNESS = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+!
+      WRITE(ICOUT,361)IY2LFO
+  361 FORMAT('   Y2LABEL FONT = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,362)IY2LCA
+  362 FORMAT('   Y2LABEL CASE = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,363)IY2LFI
+  363 FORMAT('   Y2LABEL FILL = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,364)IY2LCO
+  364 FORMAT('   Y2LABEL COLOR = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,365)PY2LDS
+  365 FORMAT('   Y2LABEL DISPLACEMENT = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,366)PY2LHE
+  366 FORMAT('   Y2LABEL SIZE = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,367)PY2LTH
+  367 FORMAT('   Y2LABEL THICKNESS = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+  399 CONTINUE
+!
+      IF(ILEGFL.EQ.'OFF')GO TO 499
+      WRITE(ICOUT,401)
+  401 FORMAT('LEGEND ATTRIBUTES')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,402)NUMLEG
+  402 FORMAT('    NUMBER OF CURRENTLY DEFINED LEGENDS = ',I10)
+      CALL DPWRST('XXX','BUG ')
+!
+      DO 491 LL=1,20
+      LSTRT=(LL-1)*LINC+1
+      LSTOP=LL*LINC
+      IF(LSTRT.GT.NUMLEG)GO TO 498
+      IF(LSTOP.GT.NUMLEG)LSTOP=NUMLEG
+!
+      DO 490 L=LSTRT,LSTOP
+      ISTRT=ILEGST(L)
+      ISTP=ILEGSP(L)
+      IF(ISTP-ISTRT+1.GT.80)ISTP=ISTRT+79
+      WRITE(ICOUT,411)L,L,(ILEGTE(J)(1:1),J=ISTRT,ISTP)
+  411 FORMAT('    LEGEND ',2I5,' = ',80A1)
+      CALL DPWRST('XXX','BUG ')
+  490 CONTINUE
+  491 CONTINUE
+  498 CONTINUE
+!
+      DO 492 LL=1,20
+      LSTRT=(LL-1)*LINC+1
+      LSTOP=LL*LINC
+      IF(LSTRT.GT.ISTOP)GO TO 492
+      IF(LSTRT.LT.ISTART)LSTRT=ISTART
+      IF(LSTOP.GT.ISTOP)LSTOP=ISTOP
+!
+      WRITE(ICOUT,412)LSTRT,LSTOP,(ILEGFO(I),I=LSTRT,LSTOP)
+  412 FORMAT('    LEGEND FONT ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,413)LSTRT,LSTOP,(ILEGCA(I),I=LSTRT,LSTOP)
+  413 FORMAT('    LEGEND CASE ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,414)LSTRT,LSTOP,(ILEGJU(I),I=LSTRT,LSTOP)
+  414 FORMAT('    LEGEND JUSTIFICATION ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,415)LSTRT,LSTOP,(ILEGDI(I),I=LSTRT,LSTOP)
+  415 FORMAT('    LEGEND DIRECTION ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,416)LSTRT,LSTOP,(ILEGFI(I),I=LSTRT,LSTOP)
+  416 FORMAT('    LEGEND FILL ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,417)LSTRT,LSTOP,(ILEGCO(I),I=LSTRT,LSTOP)
+  417 FORMAT('    LEGEND COLOR ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+!
+      DO 1418 I=LSTRT,LSTOP
+      WRITE(ICOUT,418)I,I,PLEGXC(I),PLEGYC(I)
+  418 FORMAT('    LEGEND COORDINATES ',I5,1X,I5,' = ',2(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+ 1418 CONTINUE
+!
+      WRITE(ICOUT,419)LSTRT,LSTOP,(PLEGHE(I),I=LSTRT,LSTOP)
+  419 FORMAT('    LEGEND SIZE  ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,420)LSTRT,LSTOP,(PLEGWI(I),I=LSTRT,LSTOP)
+  420 FORMAT('    LEGEND WIDTH ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,421)LSTRT,LSTOP,(PLEGTH(I),I=LSTRT,LSTOP)
+  421 FORMAT('    LEGEND THICKNESS ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,422)LSTRT,LSTOP,(ALEGAN(I),I=LSTRT,LSTOP)
+  422 FORMAT('    LEGEND ANGLE ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+  492 CONTINUE
+!
+  499 CONTINUE
+!
+      DO 1990 LL=1,20
+      LSTRT=(LL-1)*LINC+1
+      LSTOP=LL*LINC
+      IF(LSTRT.GT.ISTOP)GO TO 1999
+      IF(LSTRT.LT.ISTART)LSTRT=ISTART
+      IF(LSTOP.GT.ISTOP)LSTOP=ISTOP
+!
+      IF(ILINFL.EQ.'OFF')GO TO 599
+!CCCC WRITE(ICOUT,501)
+!C501 FORMAT('LINE ATTRIBUTES')
+!CCCC CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,512)LSTRT,LSTOP,(ILINPA(I),I=LSTRT,LSTOP)
+  512 FORMAT('    LINE ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,513)LSTRT,LSTOP,(ILINCO(I),I=LSTRT,LSTOP)
+  513 FORMAT('    LINE COLOR ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,514)LSTRT,LSTOP,(PLINTH(I),I=LSTRT,LSTOP)
+  514 FORMAT('    LINE THICKNESS ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+  599 CONTINUE
+!
+      IF(ICHAFL.EQ.'OFF')GO TO 699
+!CCCC WRITE(ICOUT,601)
+!C601 FORMAT('CHARACTER ATTRIBUTES')
+!CCCC CALL DPWRST('XXX','BUG ')
+      ICOUNT=0
+      DO 601 I=LSTRT,LSTOP
+         ICOUNT=ICOUNT+1
+         ITEMPH(ICOUNT)='BLAN'
+         IF(ICHAPA(I).NE.'    ')ITEMPH(ICOUNT)=ICHAPA(I)
+  601 CONTINUE
+!
+      WRITE(ICOUT,611)LSTRT,LSTOP,(ITEMPH(I),I=1,ICOUNT)
+  611 FORMAT('    CHARACTER ',I5,1X,I5,' = ',10(A16,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,612)LSTRT,LSTOP,(ICHAFO(I),I=LSTRT,LSTOP)
+  612 FORMAT('   CHARACTER FONT ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,613)LSTRT,LSTOP,(ICHACO(I),I=LSTRT,LSTOP)
+  613 FORMAT('   CHARACTER COLOR ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,614)LSTRT,LSTOP,(ICHACA(I),I=LSTRT,LSTOP)
+  614 FORMAT('   CHARACTER CASE ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,615)LSTRT,LSTOP,(ICHAJU(I),I=LSTRT,LSTOP)
+  615 FORMAT('   CHARACTER JUSTIFICATION ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,616)LSTRT,LSTOP,(ICHADI(I),I=LSTRT,LSTOP)
+  616 FORMAT('   CHARACTER DIRECTION ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,617)LSTRT,LSTOP,(ICHAFI(I),I=LSTRT,LSTOP)
+  617 FORMAT('   CHARACTER FILL ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,618)LSTRT,LSTOP,(PCHAHE(I),I=LSTRT,LSTOP)
+  618 FORMAT('   CHARACTER SIZE ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,619)LSTRT,LSTOP,(PCHAWI(I),I=LSTRT,LSTOP)
+  619 FORMAT('   CHARACTER WIDTH ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,620)LSTRT,LSTOP,(ACHAAN(I),I=LSTRT,LSTOP)
+  620 FORMAT('   CHARACTER ANGLE ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,621)LSTRT,LSTOP,(PCHATH(I),I=LSTRT,LSTOP)
+  621 FORMAT('   CHARACTER THICKNESS ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+  699 CONTINUE
+!
+      IF(ISPIFL.EQ.'OFF')GO TO 799
+!CCCC WRITE(ICOUT,701)
+!C701 FORMAT('SPIKE ATTRIBUTES')
+!CCCC CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,711)LSTRT,LSTOP,(ISPISW(I),I=LSTRT,LSTOP)
+  711 FORMAT('   SPIKE ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,712)LSTRT,LSTOP,(ISPILI(I),I=LSTRT,LSTOP)
+  712 FORMAT('   SPIKE LINE ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,713)LSTRT,LSTOP,(ISPICO(I),I=LSTRT,LSTOP)
+  713 FORMAT('   SPIKE COLOR ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,714)LSTRT,LSTOP,(PSPITH(I),I=LSTRT,LSTOP)
+  714 FORMAT('   SPIKE THICKNESS ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,715)LSTRT,LSTOP,(ASPIBA(I),I=LSTRT,LSTOP)
+  715 FORMAT('   SPIKE BASE ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+  799 CONTINUE
+!
+      IF(IBARFL.EQ.'OFF')GO TO 899
+!CCCC WRITE(ICOUT,801)
+!C801 FORMAT('BAR ATTRIBUTES')
+!CCCC CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,811)LSTRT,LSTOP,(IBARSW(I),I=LSTRT,LSTOP)
+  811 FORMAT('   BAR ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,812)LSTRT,LSTOP,(ABARBA(I),I=LSTRT,LSTOP)
+  812 FORMAT('   BAR BASE ',I5,1X,I5,' ',' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+!
+!     NOTE JULY 2009: FOR GUI, IF VALUE SET TO CPUMIN, THEN
+!                     SET TO -99.
+!
+      DO 8813 I=1,100
+        IF(ABARWI(I).LT.-99.0)THEN
+          TEMP(I)=-99.0
+        ELSE
+          TEMP(I)=ABARWI(I)
+        ENDIF
+ 8813 CONTINUE
+!CCCC WRITE(ICOUT,813)LSTRT,LSTOP,(ABARWI(I),I=LSTRT,LSTOP)
+      WRITE(ICOUT,813)LSTRT,LSTOP,(TEMP(I),I=LSTRT,LSTOP)
+  813 FORMAT('   BAR WIDTH ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,821)LSTRT,LSTOP,(IBABLI(I),I=LSTRT,LSTOP)
+  821 FORMAT('   BAR BORDER LINE ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,822)LSTRT,LSTOP,(IBABCO(I),I=LSTRT,LSTOP)
+  822 FORMAT('   BAR BORDER COLOR ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,823)LSTRT,LSTOP,(PBABTH(I),I=LSTRT,LSTOP)
+  823 FORMAT('   BAR BORDER THICKNESS ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,831)LSTRT,LSTOP,(IBAFSW(I),I=LSTRT,LSTOP)
+  831 FORMAT('   BAR FILL ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,832)LSTRT,LSTOP,(IBAFCO(I),I=LSTRT,LSTOP)
+  832 FORMAT('   BAR FILL COLOR ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,841)LSTRT,LSTOP,(IBAPTY(I),I=LSTRT,LSTOP)
+  841 FORMAT('   BAR PATTERN ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,842)LSTRT,LSTOP,(IBAPLI(I),I=LSTRT,LSTOP)
+  842 FORMAT('   BAR PATTERN LINE ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,843)LSTRT,LSTOP,(IBAPCO(I),I=LSTRT,LSTOP)
+  843 FORMAT('   BAR PATTERN COLOR ',I5,1X,I5,' = ',10(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,844)LSTRT,LSTOP,(PBABTH(I),I=LSTRT,LSTOP)
+  844 FORMAT('   BAR PATTERN THICKNESS ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,845)LSTRT,LSTOP,(PBAPSP(I),I=LSTRT,LSTOP)
+  845 FORMAT('   BAR PATTERN SPACING ',I5,1X,I5,' = ',10(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+  899 CONTINUE
+!
+ 1990 CONTINUE
+ 1999 CONTINUE
+!
+      IF(ILIMFL.EQ.'OFF')GO TO 990
+      WRITE(ICOUT,901)
+  901 FORMAT('LIMIT AND TIC MARK ATTRIBUTES')
+      CALL DPWRST('XXX','BUG ')
+!
+!     NOTE JULY 2009: FOR GUI, IF VALUE SET TO CPUMIN, THEN
+!                     SET TO -99.
+!
+      ATEMP1=FX1MNZ
+      ATEMP2=FX1MXZ
+      IF(FX1MNZ.LT.-99)ATEMP1=-99.0
+      IF(FX1MXZ.LT.-99)ATEMP1=-99.0
+!CCCC WRITE(ICOUT,902)FX1MNZ,FX1MXZ
+      WRITE(ICOUT,902)ATEMP1,ATEMP2
+  902 FORMAT('    X1 LIMITS = ',E12.5,1X,E15.7)
+      CALL DPWRST('XXX','BUG ')
+      ATEMP1=FX2MNZ
+      ATEMP2=FX2MXZ
+      IF(FX2MNZ.LT.-99)ATEMP1=-99.0
+      IF(FX2MXZ.LT.-99)ATEMP1=-99.0
+!CCCC WRITE(ICOUT,904)FX2MNZ,FX2MXZ
+      WRITE(ICOUT,904)ATEMP1,ATEMP2
+  904 FORMAT('    X2 LIMITS = ',E12.5,1X,E15.7)
+      CALL DPWRST('XXX','BUG ')
+      ATEMP1=FY1MNZ
+      ATEMP2=FY1MXZ
+      IF(FY1MNZ.LT.-99)ATEMP1=-99.0
+      IF(FY1MXZ.LT.-99)ATEMP1=-99.0
+!CCCC WRITE(ICOUT,906)FY1MNZ,FY1MXZ
+      WRITE(ICOUT,906)ATEMP1,ATEMP2
+  906 FORMAT('    Y1 LIMITS = ',E12.5,1X,E15.7)
+      CALL DPWRST('XXX','BUG ')
+      ATEMP1=FY2MNZ
+      ATEMP2=FY2MXZ
+      IF(FY2MNZ.LT.-99)ATEMP1=-99.0
+      IF(FY2MXZ.LT.-99)ATEMP1=-99.0
+!CCCC WRITE(ICOUT,908)FY2MNZ,FY2MXZ
+      WRITE(ICOUT,908)ATEMP1,ATEMP2
+  908 FORMAT('    Y2 LIMITS = ',E12.5,1X,E15.7)
+      CALL DPWRST('XXX','BUG ')
+!
+      WRITE(ICOUT,911)IX1FSW,IX2FSW,IY1FSW,IY2FSW
+  911 FORMAT('    X1, X2, Y1, Y2 FRAME = ',4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1911)IX1FPA,IX2FPA,IY1FPA,IY2FPA
+ 1911 FORMAT('    X1, X2, Y1, Y2 FRAME PATTERN = ',4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1912)IX1FCO,IX2FCO,IY1FCO,IY2FCO
+ 1912 FORMAT('    X1, X2, Y1, Y2 FRAME COLOR = ',4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1913)PFRATH
+ 1913 FORMAT('    FRAME THICKNESS = ',E12.5)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1915)PXMIN,PXMAX,PYMIN,PYMAX
+ 1915 FORMAT('    FRAME COORDINATES = ',4E12.5)
+      CALL DPWRST('XXX','BUG ')
+!
+      WRITE(ICOUT,912)IVGRSW,IHGRSW
+  912 FORMAT('    X, Y GRID = ',2(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,913)IVGRPA,IHGRPA
+  913 FORMAT('    X, Y GRID PATTERN = ',2(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,914)IVGRCO,IHGRCO
+  914 FORMAT('    X, Y GRID COLOR = ',2(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,915)PVGRTH,PHGRTH
+  915 FORMAT('    X, Y GRID THICKNESS = ',2(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+!
+      WRITE(ICOUT,921)IX1TSW,IX2TSW,IY1TSW,IY2TSW
+  921 FORMAT('    X1, X2, Y1, Y2 TIC = ',4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,922)IX1TJU,IX2TJU,IY1TJU,IY2TJU
+  922 FORMAT('    X1, X2, Y1, Y2 TIC POSITION = ',4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,923)IX1TCO,IX2TCO,IY1TCO,IY2TCO
+  923 FORMAT('    X1, X2, Y1, Y2 TIC COLOR = ',4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,924)PX1TLE,PX2TLE,PY1TLE,PY2TLE
+  924 FORMAT('    X1, X2, Y1, Y2 TIC SIZE = ',4(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      ITMP1='OFF'
+      ITMP2='OFF'
+      ITMP3='OFF'
+      ITMP4='OFF'
+      IF(IX1TSC.EQ.'LOG')ITMP1='ON'
+      IF(IX2TSC.EQ.'LOG')ITMP2='ON'
+      IF(IY1TSC.EQ.'LOG')ITMP3='ON'
+      IF(IY2TSC.EQ.'LOG')ITMP4='ON'
+      WRITE(ICOUT,925)ITMP1,ITMP2,ITMP3,ITMP4
+  925 FORMAT('    X1, X2, Y1, Y2 LOG = ',4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,931)PX1TOL,PX1TOR
+  931 FORMAT('    X1 TIC OFFSET = ',2(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,932)PX2TOL,PX2TOR
+  932 FORMAT('    X2 TIC OFFSET = ',2(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,933)PY1TOB,PY1TOT
+  933 FORMAT('    Y1 TIC OFFSET = ',2(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,934)PY2TOB,PY2TOT
+  934 FORMAT('    Y2 TIC OFFSET = ',2(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,935)ITICUN
+  935 FORMAT('    TIC OFFSET UNITS = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,936)ITICX1,ITICX2,ITICY1,ITICY2
+  936 FORMAT('    X1, X2, Y1, Y2 TIC OFFSET UNITS = ',3(A4,2X),A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,941)NMJX1T,NMJX2T,NMJY1T,NMJY2T
+  941 FORMAT('    X1, X2, Y1, Y2 TIC NUMBER MAJOR = ',4(I5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,942)NMNX1T,NMNX2T,NMNY1T,NMNY2T
+  942 FORMAT('    X1, X2, Y1, Y2 TIC NUMBER MINOR = ',4(I5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,951)IX1ZSW,IX2ZSW,IY1ZSW,IY2ZSW
+  951 FORMAT('    X1, X2, Y1, Y2 TIC LABEL = ',4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,952)IX1ZCO,IX2ZCO,IY1ZCO,IY2ZCO
+  952 FORMAT('    X1, X2, Y1, Y2 TIC LABEL COLOR = ',4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,953)IX1ZCA,IX2ZCA,IY1ZCA,IY2ZCA
+  953 FORMAT('    X1, X2, Y1, Y2 TIC LABEL CASE = ',4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,954)IX1ZFO,IX2ZFO,IY1ZFO,IY2ZFO
+  954 FORMAT('    X1, X2, Y1, Y2 TIC LABEL FONT = ',4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,955)IX1ZJU,IX2ZJU,IY1ZJU,IY2ZJU
+  955 FORMAT('    X1, X2, Y1, Y2 TIC LABEL JUSTIFICATION = ',   &
+      4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,956)IX1ZDI,IX2ZDI,IY1ZDI,IY2ZDI
+  956 FORMAT('    X1, X2, Y1, Y2 TIC LABEL DIRECTION = ',   &
+      4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,957)IX1ZFI,IX2ZFI,IY1ZFI,IY2ZFI
+  957 FORMAT('    X1, X2, Y1, Y2 TIC LABEL FILL = ',4(A4,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,958)IX1ZDP,IX2ZDP,IY1ZDP,IY2ZDP
+  958 FORMAT('    X1, X2, Y1, Y2 TIC LABEL DECIMALS = ',4(I5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,959)PX1ZDS,PX2ZDS,PY1ZDS,PY2ZDS
+  959 FORMAT('    X1, X2, Y1, Y2 TIC LABEL DISPLACEMENT = ',   &
+      4(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,960)AX1ZAN,AX2ZAN,AY1ZAN,AY2ZAN
+  960 FORMAT('    X1, X2, Y1, Y2 TIC LABEL ANGLE = ',4(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,961)PX1ZHE,PX2ZHE,PY1ZHE,PY2ZHE
+  961 FORMAT('    X1, X2, Y1, Y2 TIC LABEL SIZE = ',4(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,971)PTIZTH
+  971 FORMAT('    TIC LABEL THICKNESS = ',4(E12.5,1X))
+      CALL DPWRST('XXX','BUG ')
+!
+  990 CONTINUE
+!
+!     -----END WRITING OUT-----------------------
+!
+!               ***************************
+!               **  STEP 42--            **
+!               **  WRITE OUT A MESSAGE  **
+!               ***************************
+!
+      ISTEPN='42'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAPC')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!               ****************
+!               **  STEP 90-- **
+!               **  EXIT.     **
+!               ****************
+!
+      RETURN
+      END SUBROUTINE DPSAPC
+      SUBROUTINE DPSAPL(IANSLC,IWIDTH,IHARG,NUMARG,   &
+                        IBUGS2,ISUBRO,IFOUND,IERROR)
+!
+!     PURPOSE--SAVE (FOR FUTURE USE BY THE REPEAT GRAPH COMMAND)
+!              SELECTED PLOTS.  IT SUPPORTS THE FOLLOWING:
+!
+!                  SAVE PLOT <FILE NAME>:
+!                      SAVES THE CURRENT PIXMAP TO THE SPECIFIED FILE
+!                  SAVE PLOT AUTOMATIC <FILENAME>:
+!                      AUTOMATICALLY SAVE ALL SUBSEQUENT FILES, USING
+!                      <FILE NAME> AS THE BASE FILE NAME (APPEND A
+!                      ".1", ".2", ETC.)
+!
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGU
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--97/4
+!     ORIGINAL VERSION--APRIL     1997.
+!     UPDATED         --AUGUST    1997. MOVE SOME CODE TO A LOWER LEVEL
+!                                       TO SUPPORT NON-X11 DEVICES
+!                                       (SPECIFICALLY PC FOR NOW)
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      INCLUDE 'DPCOPA.INC'
+!
+      CHARACTER*4 IANSLC(*)
+      CHARACTER*4 IHARG(*)
+!CCCC CHARACTER*1 IANSSV
+!CCCC CHARACTER*80 ISACNC
+!
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+      CHARACTER*4 IFOUND
+!
+      CHARACTER*4 IC4
+      CHARACTER*4 ICODE
+!  DIMENSION FOLLOWING 2 LINES TO MAXSTR
+      CHARACTER (LEN=MAXSTR) :: ISTRIN
+      CHARACTER (LEN=MAXSTR) :: ISTRI2
+      CHARACTER*128 CTEMP
+!
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISAVFL
+!
+!CCCC DIMENSION IADE(128)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPM.INC'
+      INCLUDE 'DPCOF2.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPSA'
+      ISUBN2='PL  '
+      IFOUND='NO'
+      IERROR='NO'
+!
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'SAPL')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('AT THE BEGINNING OF DPSAPL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGS2,ISUBRO,IFOUND,IERROR
+   52   FORMAT('IBUGS2,ISUBRO,IFOUND,IERROR = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IWIDTH,NUMARG
+   53   FORMAT('IWIDTH,NUMARG = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,54)(IANSLC(I),I=1,MIN(80,IWIDTH))
+   54     FORMAT('(IANSLC(I),I=1,IWIDTH) = ',80A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IF(NUMARG.GE.1)THEN
+          DO 56 I=1,NUMARG
+            WRITE(ICOUT,57)I,IHARG(I)
+   57       FORMAT('I,IHARG(I) = ',I8,2X,A4)
+            CALL DPWRST('XXX','BUG ')
+   56     CONTINUE
+        ENDIF
+      ENDIF
+!
+      IFOUND='YES'
+!
+!               ******************************************************
+!               **  STEP 10--                                       **
+!               **  DETERMINE IF HAVE SAVE PLOT AUTOMATIC CASE      **
+!               ******************************************************
+!
+      ISTEPN='10'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ISAVFL='OFF'
+      IF(NUMARG.GE.1)THEN
+        DO 1010 I=1,NUMARG
+          IF(IHARG(I).EQ.'AUTO' .OR. IHARG(I).EQ.'ON' .OR.   &
+             IHARG(I).EQ.'YES' )THEN
+            ISAVFL='ON'
+            IPXMFL='ON'
+            GO TO 1019
+          ENDIF
+ 1010   CONTINUE
+ 1019   CONTINUE
+      ENDIF
+!
+!               ******************************************************
+!               **  STEP 11--                                       **
+!               **  DETERMINE IF HAVE AN EXPLICIT FILE REFERENCE    **
+!               **  WHERE THE PIXMAPS  WILL BE SAVED, OR WILL THEY  **
+!               **  BE SAVED IN THE DEFAULT FILE (PIXMAP.<n>?       **
+!               ******************************************************
+!
+      ISTEPN='11'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IFILWD=(-999)
+!
+      DO 1100 I=1,MAXSTR
+      IC4=IANSLC(I)
+      ISTRIN(I:I)=IC4(1:1)
+ 1100 CONTINUE
+!
+      IWORD=1
+      ISTART=1
+      ISTOP=MAXSTR-1
+      CALL DPEXWO(ISTRIN,ISTART,ISTOP,IWORD,   &
+      ICOL1,ICOL2,ISTRI2,NCSTR2,   &
+      IBUGS2,ISUBRO,IERROR)
+!
+      IF(NUMARG.LE.0)GO TO 1129
+      IWORD=2
+      ISTART=1
+      ISTOP=MAXSTR-1
+      CALL DPEXWO(ISTRIN,ISTART,ISTOP,IWORD,   &
+      ICOL1,ICOL2,ISTRI2,NCSTR2,   &
+      IBUGS2,ISUBRO,IERROR)
+      IF(NCSTR2.LE.0)GO TO 1129
+      DO 1121 I=1,NCSTR2
+      IF(ISTRI2(I:I).EQ.'.')GO TO 1122
+ 1121 CONTINUE
+      GO TO 1129
+ 1122 CONTINUE
+      IFILWD=2
+      GO TO 1190
+ 1129 CONTINUE
+!
+      IF(NUMARG.LE.1)GO TO 1139
+      IWORD=3
+      ISTART=1
+      ISTOP=MAXSTR-1
+      CALL DPEXWO(ISTRIN,ISTART,ISTOP,IWORD,   &
+      ICOL1,ICOL2,ISTRI2,NCSTR2,   &
+      IBUGS2,ISUBRO,IERROR)
+      IF(NCSTR2.LE.0)GO TO 1139
+      DO 1131 I=1,NCSTR2
+      IF(ISTRI2(I:I).EQ.'.')GO TO 1132
+ 1131 CONTINUE
+      GO TO 1139
+ 1132 CONTINUE
+      IFILWD=3
+      GO TO 1190
+ 1139 CONTINUE
+!
+      IF(NUMARG.LE.2)GO TO 1149
+      IWORD=4
+      ISTART=1
+      ISTOP=MAXSTR-1
+      CALL DPEXWO(ISTRIN,ISTART,ISTOP,IWORD,   &
+      ICOL1,ICOL2,ISTRI2,NCSTR2,   &
+      IBUGS2,ISUBRO,IERROR)
+      IF(NCSTR2.LE.0)GO TO 1149
+      DO 1141 I=1,NCSTR2
+      IF(ISTRI2(I:I).EQ.'.')GO TO 1142
+ 1141 CONTINUE
+      GO TO 1149
+ 1142 CONTINUE
+      IFILWD=4
+      GO TO 1190
+ 1149 CONTINUE
+!
+ 1190 CONTINUE
+!
+      IF(ISAVFL.EQ.'ON')THEN
+        IF(IFILWD.GE.1)THEN
+          IPXMFB=' '
+          IPXMFB(1:NCSTR2)=ISTRI2(1:NCSTR2)
+          IPXMNC=NCSTR2
+        ENDIF
+        IF(IHARG(NUMARG).EQ.'OFF'.OR.IHARG(NUMARG).EQ.'DEFA'.OR.   &
+           IHARG(NUMARG).EQ.'NO')THEN
+          ISAVFL='OFF'
+        ENDIF
+        GO TO 9000
+      ENDIF
+!
+      NUMPXM=NUMPXM+1
+      IF(NUMPXM.GT.MAXPM)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1191)MAXPM
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+ 1191 FORMAT('***** ERROR IN DPSAPL: MAXIMUM NUMBER OF PIXMAPS (',I5,   &
+      ') EXCEEDED.')
+!
+      IF(IFILWD.LE.0)THEN
+        ISTRI2=' '
+        ISTRI2(1:7)='pixmap.'
+        IF(NUMPXM.LE.9)THEN
+          WRITE(ISTRI2(8:8),'(I1)')NUMPXM
+          NCSTR2=8
+        ELSEIF(NUMPXM.LE.99)THEN
+          WRITE(ISTRI2(8:9),'(I2)')NUMPXM
+          NCSTR2=9
+        ELSEIF(NUMPXM.LE.999)THEN
+          WRITE(ISTRI2(8:10),'(I3)')NUMPXM
+          NCSTR2=10
+        ENDIF
+      ENDIF
+      IPXMFN(NUMPXM)=' '
+      IPXMFN(NUMPXM)(1:128)=ISTRI2(1:128)
+      IF(IPXMCM(NUMPXM).EQ.' ')THEN
+        IPXMCM(NUMPXM)(1:128)=IPXMFN(NUMPXM)(1:128)
+      ENDIF
+!
+!               *******************************
+!               **  STEP 12--                **
+!               **  CALL XSAVEG              **
+!               *******************************
+!
+      ISTEPN='12'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(NCSTR2.GT.127)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1209)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+ 1209 FORMAT('***** ERROR IN DPSAPL--FILE NAME EXCEEDS 127 ',   &
+      'CHARACTERS.')
+      ENDIF
+!
+!  AUGUST 1997.  TO MAKE CODE MORE GENERAL, CALL A LOW LEVEL
+!  GRAPHICS ROUTINE.  MOVE THIS CODE TO THAT SUBROUTINE.
+!
+      ICODE='SAVE'
+      CTEMP=' '
+      NCTEMP=0
+      CALL GRSAGR(ICODE,ISTRI2,NCSTR2,CTEMP,NCTEMP)
+!
+!CCCC DO1220I=1,NCSTR2
+!CCCC   CALL DPCOAN(ISTRI2(I:I),IJUNK)
+!CCCC   IADE(I)=IJUNK
+!1220 CONTINUE
+!CCCC IADE(NCSTR2+1)=0
+!
+!CCCC IERR=0
+!CCCC CALL XSAVEG(IADE,IERR)
+!CCCC IF(IERR.EQ.1)THEN
+!CCCC   WRITE(ICOUT,999)
+!CCCC   CALL DPWRST('XXX','BUG ')
+!CCCC   WRITE(ICOUT,1251)
+!CCCC   CALL DPWRST('XXX','BUG ')
+!CCCC   IERROR='YES'
+!CCCC   GO TO 9000
+!1251 FORMAT('***** ERROR IN DPSAPL--WRITING BIT MAP UNSUCCESSFUL.')
+!CCCC ELSEIF(IERR.EQ.2)THEN
+!CCCC   WRITE(ICOUT,999)
+!CCCC   CALL DPWRST('XXX','BUG ')
+!CCCC   WRITE(ICOUT,1261)
+!CCCC   CALL DPWRST('XXX','BUG ')
+!CCCC   IERROR='YES'
+!CCCC   GO TO 9000
+!1261 FORMAT('***** ERROR IN DPSAPL--NO CURRENT PIXMAP TO SAVE.')
+!CCCC ELSEIF(IERR.EQ.3)THEN
+!CCCC   WRITE(ICOUT,999)
+!CCCC   CALL DPWRST('XXX','BUG ')
+!CCCC   WRITE(ICOUT,1271)
+!CCCC   CALL DPWRST('XXX','BUG ')
+!CCCC   IERROR='YES'
+!CCCC   GO TO 9000
+!1271 FORMAT('***** ERROR IN DPSAPL--X11 HAS NOT BEEN OPENED.')
+!CCCC ELSEIF(IERR.EQ.4)THEN
+!CCCC   WRITE(ICOUT,999)
+!CCCC   CALL DPWRST('XXX','BUG ')
+!CCCC   WRITE(ICOUT,1281)
+!CCCC   CALL DPWRST('XXX','BUG ')
+!CCCC   IERROR='YES'
+!CCCC   GO TO 9000
+!1281 FORMAT('***** ERROR IN DPSAPL--X11 NOT INSTALLED ON THIS ',
+!CCCC1'IMPLEMENTATION.')
+!CCCC ELSE
+!CCCC   WRITE(ICOUT,999)
+!CCCC   CALL DPWRST('XXX','BUG ')
+!CCCC   WRITE(ICOUT,1291)
+!CCCC   CALL DPWRST('XXX','BUG ')
+!CCCC   WRITE(ICOUT,1292)ISTRI2(1:NCSTR2)
+!CCCC   CALL DPWRST('XXX','BUG ')
+!CCCC   IERROR='YES'
+!CCCC   GO TO 9000
+!1291 FORMAT('***** CURRENT PIXMAP SUCCESSFULLY SAVED TO FILE ')
+!1292 FORMAT('      ',A128)
+!CCCC ENDIF
+!
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'SAPL')THEN
+        WRITE(ICOUT,1293)ISTRI2(1:MIN(128,NCSTR2))
+ 1293   FORMAT('ISTRI2 = ',A128)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1294)NCSTR2
+ 1294   FORMAT('NCSTR2 = ',I4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT.      **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'SAPL')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('AT THE END       OF DPSAPL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IBUGS2,ISUBRO,IFOUND,IERROR
+ 9012   FORMAT('IBUGS2,ISUBRO,IFOUND,IERROR = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)IWIDTH,NUMARG
+ 9013   FORMAT('IWIDTH,NUMARG = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,9014)(IANSLC(I),I=1,IWIDTH)
+ 9014     FORMAT('(IANSLC(I),I=1,IWIDTH) = ',80A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IF(NUMARG.GE.1)THEN
+          DO 9016 I=1,NUMARG
+            WRITE(ICOUT,9017)I,IHARG(I)
+ 9017       FORMAT('I,IHARG(I) = ',I8,2X,A4)
+           CALL DPWRST('XXX','BUG ')
+ 9016    CONTINUE
+        ENDIF
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSAPL
+      SUBROUTINE DPSAVA(IFOUND,IERROR)
+!
+!     PURPOSE--SAVE (= WRITE OUT TO FILE) A SPECIFIED LIST OF
+!              VARIABLES AND/OR PARAMETERS.  CURRENTLY, MATRICES
+!              AND STRINGS/FUNCTIONS ARE NOT SUPPORTED.
+!
+!              THE PRIMARY USE OF THIS COMMAND IS FOR GENERAL
+!              PURPOSE MACROS THAT MAY POTENTIALLY USE PREVIOUSLY
+!              DEFINED VARIABLE/PARAMETER NAMES.
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2020/11
+!     ORIGINAL VERSION--NOVEMBER  2020.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      INCLUDE 'DPCOPA.INC'
+!
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+      CHARACTER (LEN=MAXFNC) :: IFILE
+      CHARACTER*12 ISTAT
+      CHARACTER*12 IFORM
+      CHARACTER*12 IACCES
+      CHARACTER*12 IPROT
+      CHARACTER*12 ICURST
+      CHARACTER*4 IENDFI
+      CHARACTER*4 IREWIN
+      CHARACTER*4 ISUBN0
+      CHARACTER*4 IERRFI
+!
+      CHARACTER*4 IHLEFT
+      CHARACTER*4 IHLEF2
+      CHARACTER*4 ICASE
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 IEXIST
+      CHARACTER*4 IOPEN
+      CHARACTER*4 IOFILE
+      CHARACTER*512 ITEXT2
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+!
+      CHARACTER (LEN=MAXSTR) :: ICANS
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOFO.INC'
+      INCLUDE 'DPCOF2.INC'
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCODB.INC'
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOST.INC'
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPSA'
+      ISUBN2='VA  '
+      ISUBRO='-999'
+      IFOUND='YES'
+      IERROR='NO'
+      ITEXT2=' '
+!CCCC ISUBRO='SAVA'
+!
+      MAXCP1=MAXCOL+1
+      MAXCP2=MAXCOL+2
+      MAXCP3=MAXCOL+3
+      MAXCP4=MAXCOL+4
+      MAXCP5=MAXCOL+5
+      MAXCP6=MAXCOL+6
+!
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'SAVA')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSAVA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGS2,ISUBRO,IERROR,IWIDTH
+   53   FORMAT('IBUGS2,ISUBRO,IERROR,IWIDTH = ',3(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,55)(IANSLC(I),I=1,MIN(80,IWIDTH))
+   55     FORMAT('(IANSLC(I),I=1,MIN(80,IWIDTH)) = ',80A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        WRITE(ICOUT,62)ISAVNA(1:80)
+   62   FORMAT('ISAVNA(1:80) = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,63)ISAVST,ISAVFO,ISAVAC,ISAVCS,ISAVNU
+   63   FORMAT('ISAVST,ISAVFO,ISAVAC,ISAVCS,ISAVNU = ',4(A12,2X),I6)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               **************************
+!               **  STEP 11--           **
+!               **  COPY OVER VARIABLES **
+!               **************************
+!
+      ISTEPN='11'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IOUNIT=ISAVNU
+      IFILE=ISAVNA
+      ISTAT=ISAVST
+!CCCC IFORM=ISAVFO
+      IFORM='FORMATTED'
+      IACCES=ISAVAC
+      IPROT=ISAVPR
+      ICURST=ISAVCS
+!
+      ISUBN0='SAVA'
+      IERRFI='NO'
+!
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'SAVA')THEN
+        WRITE(ICOUT,1194)IFILE(1:80)
+ 1194   FORMAT('IFILE(1:80) = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1195)ISTAT,IFORM,IACCES,IPROT,ICURST
+ 1195   FORMAT('ISTAT,IFORM,IACCES,IPROT,ICURST = ',   &
+               4(A12,2X),A12)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1196)ISUBN0,IERRFI,IOUNIT
+ 1196   FORMAT('ISUBN0,IERRFI,IOUNIT = ',2(A4,2X),I6)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *******************************************
+!               **  STEP 12--                            **
+!               **  CHECK TO SEE IF SAVE FILE MAY EXIST  **
+!               *******************************************
+!
+      ISTEPN='12'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(ISTAT.EQ.'NONE')THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1211)
+ 1211   FORMAT('***** ERROR IN DPSAVA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1212)
+ 1212   FORMAT('      THE DESIRED SAVE CANNOT BE GIVEN BECAUSE THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1214)
+ 1214   FORMAT('      REQUIRED SYSTEM MASS STORAGE FILE WHICH STORES ',   &
+               'SUCH SAVE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1216)
+ 1216   FORMAT('      IS NOT AVAILABLE AT THIS INSTALLATION.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1217)ISTAT,ISAVST
+ 1217   FORMAT('ISTAT,ISAVST = ',A12,2X,A12)
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+!               ****************************
+!               **  STEP 13--             **
+!               **  EXTRACT THE FILE NAME **
+!               **  (THE THIRD WORD)      **
+!               ****************************
+!
+      ISTEPN='13'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      DO 1310 I=1,MAXFNC
+        IFILE(I:I)=' '
+ 1310 CONTINUE
+!
+      DO 1320 I=1,MAXSTR
+        ICANS(I:I)=IANSLC(I)
+ 1320 CONTINUE
+!
+!     IF FEWER THAN 2 ARGUMENTS, NO FILE NAME GIVEN, SO
+!     USE DEFAULT NAME (dpsavf.tex).
+!
+      IFRST=2
+      ISTART=1
+      ISTOP=IWIDTH
+      IF(NUMARG.LE.1)THEN
+        DO 1325 II=1,MAXFNC
+          IFILE(II:II)=ISAVNA(II:II)
+ 1325   CONTINUE
+        NUMFIL=0
+      ELSEIF(NUMARG.GE.2)THEN
+        IWORD=3
+        IOFILE='NO'
+        CALL DPFILE(IANSLC,IWIDTH,IWORD,IOFILE,IBUGS2,ISUBRO,IERROR)
+!
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')THEN
+          WRITE(ICOUT,1329)IOFILE
+ 1329     FORMAT('IOFILE = ',A4)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+        IF(IOFILE.EQ.'NO')THEN
+          IFILE=ISAVNA
+          IFRST=2
+        ELSE
+          ISTART=1
+          ISTOP=IWIDTH
+          IWORD=3
+          CALL DPEXWO(ICANS,ISTART,ISTOP,IWORD,   &
+                      ICOL1,ICOL2,IFILE,NCFILE,   &
+                      IBUGS2,ISUBRO,IERROR)
+!
+          IF(NCFILE.LT.1)THEN
+            IFILE=ISAVNA
+            IFRST=2
+          ENDIF
+          IFRST=3
+        ENDIF
+!
+        IFWORD=0
+        IFQUOT=0
+        ILAST=0
+        IF(IFILE(1:1).EQ.'"')THEN
+          IFQUOT=1
+          DO 1351 I=MAXFNC,1,-1
+            IF(IFILE(I:I).NE.' ')THEN
+              ILAST=I
+              GO TO 1354
+            ENDIF
+ 1351     CONTINUE
+ 1354     CONTINUE
+          ICOUNT=0
+          ISPAC=0
+          DO 1356 I=1,ILAST
+            IF((IFILE(I:I).EQ.' '.OR.IFILE(I:I).EQ.'-') .AND.   &
+               ISPAC.EQ.0)THEN
+              ISPAC=1
+              ICOUNT=ICOUNT+1
+            ELSEIF((IFILE(I:I).NE.' '.AND.IFILE(I:I).NE.'-') .AND.   &
+              ISPAC.EQ.1)THEN
+              ISPAC=0
+            ENDIF
+ 1356     CONTINUE
+          IFWORD=ICOUNT
+        ENDIF
+      ENDIF
+!
+      NCFILE=0
+      DO 1341 II=MAXFNC,1,-1
+        IF(IFILE(II:II).NE.' ')THEN
+          NCFILE=II
+          GO TO 1349
+        ENDIF
+ 1341 CONTINUE
+ 1349 CONTINUE
+!
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')THEN
+        WRITE(ICOUT,1366)IFRST,NCFILE,IFILE(1:MIN(256,NCFILE))
+ 1366   FORMAT('IFRST,NCFILE,IFILE = ',2I6,2X,A256)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *********************
+!               **  STEP 14--      **
+!               **  OPEN THE FILE  **
+!               *********************
+!
+      ISTEPN='14'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     FIRST CHECK IF FILE EXISTS AND DELETE IT IF IT DOES.
+!
+      CALL DPINFI(IFILE,IEXIST,IOPEN,IACCES,ISUBN0,IBUGS2,   &
+                  ISUBRO,IERROR)
+!
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')THEN
+        WRITE(ICOUT,1368)IEXIST
+ 1368   FORMAT('IEXIST = ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IF(IEXIST.EQ.'YES')THEN
+        IF(IHOST1.EQ.'IBM-'.AND.ICOMPI.EQ.'MS-F')THEN
+          NCSTR=6
+          ITEXT2(1:NCSTR)='ERASE '
+        ELSEIF(IOPSY1.EQ.'UNIX' .OR. IOPSY1.EQ.'LINU')THEN
+          NCSTR=3
+          ITEXT2(1:NCSTR)='rm '
+        ELSE
+          GO TO 1399
+        ENDIF
+!
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')THEN
+          WRITE(ICOUT,1371)NCFILE,NCSTR
+ 1371     FORMAT('NCFILE,NCSTR = ',2I8)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+        DO 1390 II=1,NCFILE
+          NCSTR=NCSTR+1
+          ITEXT2(NCSTR:NCSTR)=IFILE(II:II)
+ 1390   CONTINUE
+!
+        IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')THEN
+          WRITE(ICOUT,1372)NCFILE,NCSTR,ITEXT2(1:NCSTR)
+ 1372     FORMAT('NCFILE,NCSTR,ITEXT2(1:NCFILE) = ',2I6,2X,A256)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+        ISSAV1=ISYSPE
+        ISSAV2=ISYSHI
+        ISYSPE='OFF'
+        ISYSHI='ON'
+        CALL DPSYS2(ITEXT2,NCSTR,ISUBRO,IERROR)
+        ISYSPE=ISSAV1
+        ISYSHI=ISSAV2
+      ENDIF
+!
+ 1399 CONTINUE
+!
+      ISTEPN='14B'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IREWIN='ON'
+      CALL DPOPFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IPROT,ICURST,   &
+                  IREWIN,ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+      IF(IERRFI.EQ.'YES')GO TO 9000
+!
+!               ****************************************
+!               **  STEP 2--                          **
+!               **  EXTRACT THE VARIABLE LIST         **
+!               ****************************************
+!
+      ISTEPN='2'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      JMIN=IFRST
+      JMAX=NUMARG
+!
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')THEN
+        WRITE(ICOUT,2001)JMIN,JMAX,IFRST,NUMARG
+ 2001   FORMAT('JMIN,JMAX,IFRST,NUMARG = ',4I6)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      NSAVE=0
+      IF(JMIN.GT.NUMARG .OR. IHARG(NUMARG).EQ.'ALL ')THEN
+!
+        ISTEPN='2A'
+        IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')   &
+           CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+        ICASE='ALL '
+        DO 240 JJ=1,NUMNAM
+          I2=JJ
+          IF(IHNAME(I2).EQ.'PRED' .AND. IHNAM2(I2).EQ.'    ')GO TO 240
+          IF(IHNAME(I2).EQ.'RES ' .AND. IHNAM2(I2).EQ.'    ')GO TO 240
+          IF(IHNAME(I2).EQ.'YPLO' .AND. IHNAM2(I2).EQ.'T   ')GO TO 240
+          IF(IHNAME(I2).EQ.'XPLO' .AND. IHNAM2(I2).EQ.'T   ')GO TO 240
+          IF(IHNAME(I2).EQ.'X2PL' .AND. IHNAM2(I2).EQ.'OT  ')GO TO 240
+          IF(IHNAME(I2).EQ.'TAGP' .AND. IHNAM2(I2).EQ.'LOT ')GO TO 240
+          IF(IUSE(I2).EQ.'V')THEN
+            ILOCV=I2
+            ICOLL=IVALUE(ILOCV)
+            NLEFT=IN(ILOCV)
+            WRITE(IOUNIT,221)IHNAME(I2),IHNAM2(I2)
+            WRITE(IOUNIT,'(I10)')NLEFT
+            DO 243 KK=1,NLEFT
+              IJ=MAXN*(ICOLL-1)+KK
+              IF(ICOLL.LE.MAXCOL)AVAL=V(IJ)
+              IF(ICOLL.EQ.MAXCP1)AVAL=PRED(I)
+              IF(ICOLL.EQ.MAXCP2)AVAL=RES(I)
+              IF(ICOLL.EQ.MAXCP3)AVAL=YPLOT(I)
+              IF(ICOLL.EQ.MAXCP4)AVAL=XPLOT(I)
+              IF(ICOLL.EQ.MAXCP5)AVAL=X2PLOT(I)
+              IF(ICOLL.EQ.MAXCP6)AVAL=TAGPLO(I)
+              WRITE(IOUNIT,'(E15.7)')AVAL
+  243       CONTINUE
+            NSAVE=NSAVE+1
+            GO TO 240
+          ELSEIF(IUSE(I2).EQ.'P')THEN
+            AVAL=VALUE(JJ)
+            WRITE(IOUNIT,231)IHNAME(I2),IHNAM2(I2)
+            WRITE(IOUNIT,'(E15.7)')AVAL
+            NSAVE=NSAVE+1
+            GO TO 240
+          ELSE
+            GO TO 240
+          ENDIF
+  240   CONTINUE
+      ELSE
+!
+        ISTEPN='2B'
+        IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')   &
+           CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+        ICASE='LIST'
+        DO 210 II=JMIN,JMAX
+          IHLEFT=IHARG(II)
+          IHLEF2=IHARG2(II)
+!
+          IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')THEN
+            WRITE(ICOUT,213)II,IHLEFT,IHLEF2
+  213       FORMAT('II,IHLEFT,IHLEF2 = ',I6,2A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+          DO 220 JJ=1,NUMNAM
+            I2=JJ
+!
+            IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')THEN
+              WRITE(ICOUT,227)I2,IHNAME(I2),IHNAM2(I2),IUSE(I2)
+  227         FORMAT('I2,IHNAME(I2),IHNAM2(I2),IUSE(I2) = ',   &
+                     I6,2X,2A4,2X,A4)
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+!
+            IF(IHLEFT.EQ.IHNAME(I2).AND.IHLEF2.EQ.IHNAM2(I2).AND.   &
+               IUSE(I2).EQ.'V')THEN
+              ILOCV=I2
+              ICOLL=IVALUE(ILOCV)
+              NLEFT=IN(ILOCV)
+              WRITE(IOUNIT,221)IHLEFT,IHLEF2
+  221         FORMAT(2A4,' VARIABLE')
+              WRITE(IOUNIT,'(I10)')NLEFT
+              DO 223 KK=1,NLEFT
+                IJ=MAXN*(ICOLL-1)+KK
+                IF(ICOLL.LE.MAXCOL)AVAL=V(IJ)
+                IF(ICOLL.EQ.MAXCP1)AVAL=PRED(I)
+                IF(ICOLL.EQ.MAXCP2)AVAL=RES(I)
+                IF(ICOLL.EQ.MAXCP3)AVAL=YPLOT(I)
+                IF(ICOLL.EQ.MAXCP4)AVAL=XPLOT(I)
+                IF(ICOLL.EQ.MAXCP5)AVAL=X2PLOT(I)
+                IF(ICOLL.EQ.MAXCP6)AVAL=TAGPLO(I)
+                WRITE(IOUNIT,'(E15.7)')AVAL
+  223         CONTINUE
+              NSAVE=NSAVE+1
+              GO TO 229
+            ELSEIF(IHLEFT.EQ.IHNAME(I2).AND.IHLEF2.EQ.IHNAM2(I2).AND.   &
+               IUSE(I2).EQ.'P')THEN
+              AVAL=VALUE(JJ)
+              WRITE(IOUNIT,231)IHLEFT,IHLEF2
+  231         FORMAT(2A4,' PARAMETER')
+              WRITE(IOUNIT,'(E15.7)')AVAL
+              NSAVE=NSAVE+1
+              GO TO 229
+            ENDIF
+  220     CONTINUE
+  229     CONTINUE
+  210   CONTINUE
+      ENDIF
+!
+!
+!               ***************************
+!               **  STEP 42--            **
+!               **  WRITE OUT A MESSAGE  **
+!               ***************************
+!
+      ISTEPN='42'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(IERROR.EQ.'NO' .AND. IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4211)NSAVE
+ 4211   FORMAT(I8,' VARIABLES AND PARAMETERS WERE SAVED.')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ***********************
+!               **  STEP 51--        **
+!               **  CLOSE THE FILE.  **
+!               ***********************
+!
+      ISTEPN='51'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVA')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IENDFI='ON'
+      IREWIN='ON'
+      CALL DPCLFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IPROT,ICURST,   &
+                  IENDFI,IREWIN,ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+!
+!               ****************
+!               **  STEP 90-- **
+!               **  EXIT.     **
+!               ****************
+!
+ 9000 CONTINUE
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'SAVA')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSAVA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9032)IERROR,IERRFI,NSAVE
+ 9032   FORMAT('IERROR,IERRFI,NSAVE = ',A4,2X,A12,2X,I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSAVA
+      SUBROUTINE DPSAVE(IFOUND,IERROR)
+!
+!     PURPOSE--SAVE (= WRITE OUT TO FILE) ALL INTERNAL DATAPLOT SETTINGS.
+!              THE MASS STORAGE FILE IS DESIGNATED BY THE ANALYST.  THIS
+!              IS USEFUL WHEN A RUN MUST BE INTERRUPTED (E.G., LUNCH)
+!              (SEE THE SAVE COMMAND) AND IT IS DESIRED TO PICK UP THE
+!              RUN LATER AT THE POINT OF INTERRUPTION (SEE THE RESTORE
+!              COMMAND).
+!     NOTE--THE SAVE MEMORY COMMAND (AND ITS COMPLEMENT, THE RESTORE
+!           MEMORY COMMAND) BOTH USE UNFORMATTED FORTRAN I/O STATEMENTS
+!           (FOR SPEED AND EFFICIENCY).
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--86/1
+!     ORIGINAL VERSION--NOVEMBER  1980.
+!     UPDATED         --JANUARY   1981.
+!     UPDATED         --JUNE      1981.
+!     UPDATED         --NOVEMBER  1981.
+!     UPDATED         --JANUARY   1982.
+!     UPDATED         --MARCH     1982.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --DECEMBER  1985.
+!     UPDATED         --JUNE      1986.
+!     UPDATED         --NOVEMBER  1987. (DIMENSION FOR I1DATA--1100 TO 100)
+!     UPDATED         --DECEMBER  1987. (DIMENSION FOR V--10000 TO MAXOBW)
+!     UPDATED         --FEBRUARY  1989. SOFT-CODE ALL (ALAN)
+!     UPDATED         --OCTOBER   1991. SUN HAS LIMIT ON # OF WORDS
+!     UPDATED                           FOR UNFORMATTED I/O (2,046)
+!     UPDATED         --APRIL     1992. INCLUDE DPCO3D.INC (ALAN)
+!     UPDATED         --APRIL     1992. PPEDHE TO APEDSZ (ALAN)
+!     UPDATED         --NOVEMBER  2020. UPDATE TO REFLECT CURRENT
+!                                       CONTENTS OF COMMON BLOCKS
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      INCLUDE 'DPCOPA.INC'
+!
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!CCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
+      CHARACTER*12 ISTAT
+      CHARACTER*12 IFORM
+      CHARACTER*12 IACCES
+      CHARACTER*12 IPROT
+      CHARACTER*12 ICURST
+      CHARACTER*4 IENDFI
+      CHARACTER*4 IREWIN
+      CHARACTER*4 ISUBN0
+      CHARACTER*4 IERRFI
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+      CHARACTER*30 ISECT
+!
+!CCCC CHARACTER*80 ICANS
+      CHARACTER (LEN=MAXSTR) :: ICANS
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOMC.INC'
+      INCLUDE 'DPCODB.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCOPC.INC'
+      INCLUDE 'DPCOSU.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOFO.INC'
+      INCLUDE 'DPCOF2.INC'
+      INCLUDE 'DPCOSO.INC'
+      INCLUDE 'DPCOGR.INC'
+      INCLUDE 'DPCONP.INC'
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOTR.INC'
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCODG.INC'
+      INCLUDE 'DPCOCO.INC'
+!  APRIL 1992.  ADD FOLLOWING INCLUDE FILE.
+      INCLUDE 'DPCO3D.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPSA'
+      ISUBN2='VE  '
+      ISUBRO='-999'
+      IFOUND='YES'
+      IERROR='NO'
+!
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'SAVE')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSAVE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGS2,ISUBRO,IERROR,IWIDTH
+   53   FORMAT('IBUGS2,ISUBRO,IERROR,IWIDTH = ',3(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,55)(IANSLC(I),I=1,MIN(80,IWIDTH))
+   55     FORMAT('(IANSLC(I),I=1,MIN(80,IWIDTH)) = ',80A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        WRITE(ICOUT,62)ISAVNA(1:80)
+   62   FORMAT('ISAVNA(1:80) = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,63)ISAVST,ISAVFO,ISAVAC,ISAVCS,ISAVNU
+   63   FORMAT('ISAVST,ISAVFO,ISAVAC,ISAVCS,ISAVNU = ',4(A12,2X),I6)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               **************************
+!               **  STEP 11--           **
+!               **  COPY OVER VARIABLES **
+!               **************************
+!
+      ISTEPN='11'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVE')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IOUNIT=ISAVNU
+      IFILE=ISAVNA
+      ISTAT=ISAVST
+      IFORM=ISAVFO
+      IACCES=ISAVAC
+      IPROT=ISAVPR
+      ICURST=ISAVCS
+!
+      ISUBN0='SAVE'
+      IERRFI='NO'
+!
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'SAVE')THEN
+        WRITE(ICOUT,1194)IFILE(1:80)
+ 1194   FORMAT('IFILE(1:80) = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1195)ISTAT,IFORM,IACCES,IPROT,ICURST
+ 1195   FORMAT('ISTAT,IFORM,IACCES,IPROT,ICURST = ',   &
+               4(A12,2X),A12)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1196)ISUBN0,IERRFI,IOUNIT
+ 1196   FORMAT('ISUBN0,IERRFI,IOUNIT = ',2(A4,2X),I6)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *******************************************
+!               **  STEP 12--                            **
+!               **  CHECK TO SEE IF SAVE FILE MAY EXIST  **
+!               *******************************************
+!
+      ISTEPN='12'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVE')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(ISTAT.EQ.'NONE')THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1211)
+ 1211   FORMAT('***** ERROR IN DPSAVE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1212)
+ 1212   FORMAT('      THE DESIRED SAVE CANNOT BE GIVEN BECAUSE THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1214)
+ 1214   FORMAT('      REQUIRED SYSTEM MASS STORAGE FILE WHICH STORES ',   &
+               'SUCH SAVE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1216)
+ 1216   FORMAT('      IS NOT AVAILABLE AT THIS INSTALLATION.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1217)ISTAT,ISAVST
+ 1217   FORMAT('ISTAT,ISAVST = ',A12,2X,A12)
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+!               ****************************
+!               **  STEP 13--             **
+!               **  EXTRACT THE FILE NAME **
+!               **  (THE THIRD WORD)      **
+!               ****************************
+!
+      ISTEPN='13'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVE')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      DO 1310 I=1,MAXFNC
+        IFILE(I:I)=' '
+ 1310 CONTINUE
+!
+      DO 1320 I=1,MAXSTR
+        ICANS(I:I)=IANSLC(I)
+ 1320 CONTINUE
+!
+!     2020/11: IF FEWER THAN 2 ARGUMENTS, NO FILE NAME GIVEN, SO
+!              USE DEFAULT NAME (dpsavf.tex).
+!
+      ISTART=1
+      ISTOP=IWIDTH
+      IF(NUMARG.LE.1)THEN
+!CCCC   CALL DPW280(ICANS,ISTART,ISTOP,ICOL3,IBUGS2,ISUBRO,IERROR)
+        DO 1325 II=1,MAXFNC
+          IFILE(II:II)=ISAVNA(II:II)
+ 1325   CONTINUE
+      ELSEIF(NUMARG.GE.2)THEN
+        CALL DPW380(ICANS,ISTART,ISTOP,ICOL3,IBUGS2,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GO TO 9000
+!
+        J=0
+        IF(ICOL3.LE.IWIDTH)THEN
+          DO 1330 I=ICOL3,IWIDTH
+            J=J+1
+            IFILE(J:J)=ICANS(I:I)
+ 1330     CONTINUE
+        ENDIF
+      ENDIF
+!
+      NMAX=MAXFNC
+      CALL DPDB80(IFILE,JMAX,NMAX,IBUGS2,ISUBRO,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+      NCFILE=JMAX
+!
+      IF(NCFILE.LT.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1211)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1342)
+ 1342   FORMAT('      A FILE NAME IS REQUIRED IN THE SAVE MEMEORY ',   &
+               'COMMAND.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1344)
+ 1344   FORMAT('      (FOR EXAMPLE,    SAVE MEMORY DPRUN.DAT)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1345)
+ 1345   FORMAT('      BUT NONE WAS GIVEN HERE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1346)
+ 1346   FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,1347)(IANSLC(I),I=1,MIN(80,IWIDTH))
+ 1347     FORMAT('      ',80A1)
+          CALL DPWRST('XXX','BUG ')
+        ELSE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GO TO 9000
+      ENDIF
+!
+!               *********************
+!               **  STEP 31--      **
+!               **  OPEN THE FILE  **
+!               *********************
+!
+      ISTEPN='31'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVE')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IREWIN='ON'
+      CALL DPOPFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IPROT,ICURST,   &
+                  IREWIN,ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+      IF(IERRFI.EQ.'YES')GO TO 9000
+!
+!               ********************************************************
+!               **  STEP 41-                                          **
+!               **  WRITE OUT TO THE SAVE FILE;                       **
+!               ********************************************************
+!
+      ISTEPN='41'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVE')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     -----BEGIN WRITING OUT-----------------------
+!
+!     -----WRITE OUT COMMON FOR STANDARD I/O-----
+!
+      ISECT='STANDARD I/O'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IRD,IPR,CPUMIN,CPUMAX,   &
+                                       NUMBPC,NUMCPW,NUMBPW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IFEEDB,IPRINT
+!
+!     -----WRITE OUT COMMON FOR MACHINE CONSTANTS-----
+!
+      ISECT='MACHINE CONSTANTS'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(I1MACH(I),I=1,16)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(R1MACH(I),I=1,5)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(D1MACH(I),I=1,5)
+!
+!     -----WRITE OUT COMMON FOR BUGS-----
+!
+      ISECT='BUGS'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(I1BUG(I),I=1,10)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IH1BUG(I),I=1,100)
+!
+!     -----WRITE OUT COMMON FOR HOUSEKEEPING-----
+!
+      ISECT='HOUSEKEEPING'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(I1HOUS(I),   &
+                                       I=1,5*MAXNME+MAXSTR+50)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IH1HOU(I),   &
+            I=1,120+3*MAXSTR+5*MAXARG+3*MAXNME)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(R1HOUS(I),I=1,MAXSTR+MAXNME)
+!
+!     -----WRITE OUT COMMON FOR DATA-----
+!
+      ISECT='DATA'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(I1DATA(I),I=1,100)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISUB(I),I=1,MAXOBV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IPARNC(I),I=1,MAXFN2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IPANC2(I),I=1,MAXFN2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IPAROP(I),I=1,MAXFN2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(MODEL(I),I=1,MAXF3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IFUNC(I),I=1,MAXF1)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IFUNC2(I),I=1,MAXF1)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IFUNC3(I),I=1,MAXF1)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PARLIM(I),I=1,100)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PARLLM(I),I=1,100)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PARULM(I),I=1,100)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PRED(I),I=1,MAXOBV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(RES(I),I=1,MAXOBV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(Y(I),I=1,MAXPOP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(X(I),I=1,MAXPOP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(X3D(I),I=1,MAXPOP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(D(I),I=1,MAXPOP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(DSIZE(I),I=1,MAXPOP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(DSYMB(I),I=1,MAXPOP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(DCOLOR(I),I=1,MAXPOP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(DFILL(I),I=1,MAXPOP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(YPLOT(I),I=1,MAXPOP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(XPLOT(I),I=1,MAXPOP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(X2PLOT(I),I=1,MAXPOP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(TAGPLO(I),I=1,MAXPOP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(V(I),I=1,MAXOBW)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)((AMATR1(I,J),I=1,100),J=1,100)
+!
+!     -----WRITE OUT COMMON FOR SUPPORT-----
+!
+      ISECT='SUPPORT'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(I1SUPP(I),I=1,162)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IFORWI(I),I=1,200)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IFORWR(I),I=1,200)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMACLL(I),I=1,50)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMACNC(I),I=1,50)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IH1SUP(I),I=1,250)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)   &
+            ICONCH,IDEFCC,IMACSC,IDEFMS,   &
+            ICOMCH,IDEFCZ,ICOMSW,   &
+            IVCFMT,IDEFVF,IVCARR,IDEFVA,IVCOPN,IDEFVO,   &
+            IFRATY,IDEFFT,IPCMTY,IDEFPT,ICLIFL,ICLILO,   &
+            IMACAR,IMACLA,IMACCL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IRESN1(I),I=1,MAXRES),   &
+            (IRESN2(I),I=1,MAXRES),NUMNRE
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(R1SUPP(I),I=1,60)
+!
+!     -----WRITE OUT COMMON FOR SUBFILE I/O (UNIVAC ONLY)-----
+!
+      ISECT='SUBFILE I/O'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBUF(I),I=1,504)
+!
+!     -----WRITE OUT COMMON FOR DIAGRAMMATIC GRAPHICS-----
+!
+      ISECT='DIAGRAMMATIC GRAPHICS'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IH1DIA(I),I=1,40)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(R1DIAG(I),I=1,40)
+!
+!     -----WRITE OUT COMMON FOR COLOR-----
+!
+      ISECT='COLOR'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICOLOR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPLOTF
+!
+!     -----WRITE OUT COMMON FOR BUGS AND ERROR-----
+!
+      ISECT='BUGS AND ERROR'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IBUGG4
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISUBG4
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IERRG4
+!
+!     -----WRITE OUT COMMON FOR HOST-----
+!
+      ISECT='HOST'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHOST1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHOST2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHMOD1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHMOD2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IOPSY1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IOPSY2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICOMPI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISITE
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWBFLG
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IBROWS
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDPURL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IURL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHBURL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NCHURL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IGUIIO
+!
+!     -----WRITE OUT COMMON FOR TRANSLATOR-----
+!
+      ISECT='TRANSLATOR'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ITRANS
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NCTRA1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NCTRA2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NUMTRA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICTRA1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICTRA2
+!
+!     -----WRITE OUT COMMON FOR NON-PRINTING CHARACTERS-----
+!
+      ISECT='NON-PRINTING CHARACTERS'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)INULC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISOHC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISTXC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IETXC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEOTC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IENQC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IACKC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IBELC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IBSC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHTC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILFC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IVTC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IFFC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICRC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISOC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISIC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDLEC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDC1C
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDC2C
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDC3C
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDC4C
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)INAKC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISYNC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IETBC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICANC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEMC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISUBC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IESCC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IFSC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IGSC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IRSC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IUSC
+!
+!     -----WRITE OUT COMMON FOR GRAPHICS-----
+!
+      ISECT='GRAPHICS'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMANUF
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMODEL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMODE2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMODE3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IGCODE
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IGUNIT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IGCONT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NUMHPP
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NUMVPP
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ANUMHP
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ANUMVP
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IGCOLO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IGBAUD
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)AGERDE
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)AGCODE
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISOFT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISOFT2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISOFT3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPPDE1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPPDE2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICPREP
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICPOST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NCPREP
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NCPOST
+!
+!     -----WRITE OUT COMMON FOR FILE OPERATIONS-----
+!
+      ISECT='FILE OPERATIONS'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(I1FILO(I),I=1,10)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IH1FIL(I),I=1,11000)
+!
+!     -----WRITE OUT COMMON FOR FILE OPERATIONS, PART 2-----
+!
+      ISECT='FILE OPERATIONS PART 2'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMESNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMESNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMESST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMESFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMESAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMESPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMESCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)INEWNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)INEWNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)INEWST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)INEWFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)INEWAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)INEWPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)INEWCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMAINU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMAINA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMAIST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMAIFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMAIAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMAIPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IMAICS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHELNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHELNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHELST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHELFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHELAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHELPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHELCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IBUGNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IBUGNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IBUGST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IBUGFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IBUGAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IBUGPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IBUGCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IQUENU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IQUENA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IQUEST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IQUEFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IQUEAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IQUEPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IQUECS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILOGNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILOGNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILOGST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILOGFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILOGAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILOGPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILOGCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISYSNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISYSNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISYSST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISYSFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISYSAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISYSPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISYSCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDIRNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDIRNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDIRST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDIRFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDIRAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDIRPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDIRCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDICNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDICNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDICST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDICFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDICAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDICPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDICCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREANU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREANA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREACS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRINU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRINA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRICS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISAVNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISAVNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISAVST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISAVFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISAVAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISAVPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISAVCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILISNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILISNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILISST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILISFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILISAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILISPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ILISCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICRENU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICRENA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICREST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICREFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICREAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICREPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICRECS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICREN2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICREN2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICRES2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICREF2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICREA2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICREP2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICREC2
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICAPNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICAPNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICAPST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICAPFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICAPAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICAPPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICAPCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICPNU2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICPNA2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICPST2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICPFO2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICPAC2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICPPR2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICPCS2
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAN1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IRENA1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAS1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAF1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAA1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAP1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAC1
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAN2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IRENA2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAS2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAF2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAA2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAP2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAC2
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAN3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IRENA3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAS3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAF3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAA3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAP3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREAC3
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIN1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRNA1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIS1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIF1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIA1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIP1
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIC1
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIN2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRNA2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIS2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIF2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIA2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIP2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIC2
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIN3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRNA3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIS3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIF3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIA3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIP3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IWRIC3
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISCRNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISCRNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISCRST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISCRFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISCRAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISCRPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISCRCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDATNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDATNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDATST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDATFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDATAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDATPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDATCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL1NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL1NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL1ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL1FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL1AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL1PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL1CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL2NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL2NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL2ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL2FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL2AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL2PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPL2CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPRONU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPRONA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPROST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPROFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPROAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPROPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPROCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICONNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICONNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICONST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICONFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICONAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICONPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ICONCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISACNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISACNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISACST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISACFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISACAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISACPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISACCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX1NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX1NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX1ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX1FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX1AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX1PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX1CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX2NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX2NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX2ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX2FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX2AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX2PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX2CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX3NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX3NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX3ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX3FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX3AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX3PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX3CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX4NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX4NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX4ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX4FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX4AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX4PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX4CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX5NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX5NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX5ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX5FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX5AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX5PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IEX5CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE1NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE1NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE1ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE1FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE1AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE1PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE1CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE2NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE2NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE2ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE2FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE2AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE2PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE2CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE3NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE3NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE3ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE3FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE3AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE3PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE3CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE4NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE4NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE4ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE4FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE4AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE4PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE4CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE5NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE5NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE5ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE5FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE5AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE5PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE5CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE6NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE6NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE6ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE6FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE6AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE6PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE6CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE7NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE7NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE7ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE7FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE7AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE7PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE7CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE8NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE8NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE8ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE8FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE8AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE8PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE8CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE9NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE9NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE9ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE9FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE9AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE9PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHE9CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHRMNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHRMNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHRMST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHRMFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHRMAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHRMPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHRMCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHHBNU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHHBNA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHHBST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHHBFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHHBAC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHHBPR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHHBCS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST1NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST1NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST1ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST1FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST1AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST1PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST1CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST2NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST2NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST2ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST2FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST2AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST2PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST2CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST3NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST3NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST3ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST3FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST3AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST3PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST3CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST4NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST4NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST4ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST4FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST4AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST4PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST4CS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST5NU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST5NA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST5ST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST5FO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST5AC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST5PR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IST5CS
+!
+!     MENU SUB-SYSTEM CURRENTLY DE-ACTIVATED, SO DON'T SAVE
+!     THOSE VALUES
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IFCHAR
+!
+!     -----WRITE OUT COMMON FOR PLOT CONTROL-----
+!
+      ISECT='PLOT CONTROL'
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDMANU(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDMODE(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDMOD2(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDMOD3(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDPOWE(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDCONT(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDCOLO(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDSCRE(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDSCRO(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDPAER(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDSEGM(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDSOFT(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDSOF2(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDSOF3(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDFONT(I),I=1,MAXDV)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDCODE(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDUNIT(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDNHPP(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDNVPP(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDBAUD(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDNVOF(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IDNHOF(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NUMDEV,MAXDEV
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IERASW,IBELSW,ISORSW,ICOPSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IPENSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IBACCO,IMARCO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFXC,IDEFBK,IDEFMC,IDEPEC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISEQSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IFENSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)INEGSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IVISSW,IPEDSW,IPEDCO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFMA,IDEFMO,IDEFM2,IDEFM3
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFPO,IDEFCN,IDEFDC,IDEFTU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IHORSW,IMPSW2,IEMBJH,IEMBJV
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NUMRIN,NUMCOP
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NUMSEQ
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFVP,IDEFHP,IDEFUN
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)BAWIDT,BARSPA,DEFBAS
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)DEFSZ,DEFTL,DEFTOF
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PDSCAL(I),I=1,MAXDV)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)AMPSCH,AMPSCW
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IGRASW
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PGRAXO,PGRAYO,PGRAXC,PGRAYC,   &
+                                       PGRAXN,PGRAYN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PMARXC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PGRAXF,PGRAYF
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PCROXC,PCROYC
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDIASW
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDIAXC,PDIAYC,PDIAX2,PDIAY2
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDIAHE,PDIAWI,PDIAVG,PDIAHG
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PWXMIN,PWXMAX,PWYMIN,PWYMAX
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)WWXMIN,WWXMAX,WWYMIN,WWYMAX
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1MIN,IX1MAX,IY1MIN,IY1MAX
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX2MIN,IX2MAX,IY2MIN,IY2MAX
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PXMIN,PXMAX,PYMIN,PYMAX
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDXMIN,PDXMAX,PDYMIN,PDYMAX
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PGXMIN,PGXMAX,PGYMIN,PGYMAX
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)GX1MIN,GX1MAX,GY1MIN,GY1MAX
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)GX2MIN,GX2MAX,GY2MIN,GY2MAX
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)DX1MIN,DX1MAX,DY1MIN,DY1MAX
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)DX2MIN,DX2MAX,DY2MIN,DY2MAX
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)FX1MIN,FX1MAX,FY1MIN,FY1MAX
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)FX2MIN,FX2MAX,FY2MIN,FY2MAX
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)FZ1MIN,FZ1MAX,FZ2MIN,FZ2MAX
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)FX1MNZ,FX1MXZ,FY1MNZ,FY1MXZ
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)FX2MNZ,FX2MXZ,FY2MNZ,FY2MXZ
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)FZ1MNZ,FZ1MXZ,FZ2MNZ,FZ2MXZ
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1FSW,IX2FSW,IY1FSW,IY2FSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1FPA,IX2FPA,IY1FPA,IY2FPA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1FCO,IX2FCO,IY1FCO,IY2FCO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IZ1FSW,IZ2FSW,IZ1FPA,IZ2FPA,   &
+                                       IZ1FCO,IZ2FCO
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PFRATH
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1TSW,IX2TSW,IY1TSW,IY2TSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1JSW,IX2JSW,IY1JSW,IY2JSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1NSW,IX2NSW,IY1NSW,IY2NSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1TSC,IX2TSC,IY1TSC,IY2TSC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1TJU,IX2TJU,IY1TJU,IY2TJU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1TCO,IX2TCO,IY1TCO,IY2TCO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IZITSW,IZ2TSW,   &
+                                       IZ1JSW,IZ2JSW,   &
+                                       IZ1NSW,IZ2NSW,   &
+                                       IZ1TSC,IZ2TSC,   &
+                                       IZ1TJU,IZ2TJU,   &
+                                       IZ1TCO,IZ2TCO
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NMJX1T,NMJX2T,NMJY1T,NMJY2T
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NMNX1T,NMNX2T,NMNY1T,NMNY2T
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NX1COO,NX2COO,NY1COO,NY2COO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NX1CMN,NX2CMN,NY1CMN,NY2CMN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)MAXTIC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ITICUN,ITICX1,ITICX2,   &
+                                       ITICY1,ITICY2
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PX1COO(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PX2COO(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PY1COO(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PY2COO(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(X1COOR(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(X2COOR(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(Y1COOR(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(Y2COOR(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PX1CMN(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PX2CMN(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PY1CMN(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PY2CMN(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(X1COMN(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(X2COMN(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(Y1COMN(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(Y2COMN(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PX1TLE,PX2TLE,PY1TLE,PY2TLE
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PTICTH,PMNTFA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PZ1COO(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PZ2COO(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(Z1COOR(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(Z2COOR(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PZ1CMN(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PZ2CMN(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(Z1COMN(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(Z2COMN(I),I=1,MAXTC)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PX1TLE,PX2TLE,   &
+                                       PY1TLE,PY2TLE,   &
+                                       PZ1TLE,PZ2TLE,   &
+                                       PTICTH,PMNTFA,   &
+                                       PX1TOL,PX2TOL,   &
+                                       PY1TOB,PY2TOB,   &
+                                       PX1TOR,PX2TOR,   &
+                                       PY1TOT,PY2TOT
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1ZSW,IX2ZSW,IY1ZSW,IY2ZSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1ZFO,IX2ZFO,IY1ZFO,IY2ZFO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1ZCA,IX2ZCA,IY1ZCA,IY2ZCA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1ZJU,IX2ZJU,IY1ZJU,IY2ZJU
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1ZDI,IX2ZDI,IY1ZDI,IY2ZDI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1ZFI,IX2ZFI,IY1ZFI,IY2ZFI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1ZCO,IX2ZCO,IY1ZCO,IY2ZCO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IZ1ZSW,IZ2ZSW,   &
+                                       IZ1ZCN,IZ2ZCN,   &
+                                       IZ1ZFM,IZ2ZFM,   &
+                                       IZ1ZFO,IZ2ZFO,   &
+                                       IZ1ZCA,IZ2ZCA,   &
+                                       IZ1ZJU,IZ2ZJU,   &
+                                       IZ1ZDI,IZ2ZDI,   &
+                                       IZ1ZFI,IZ2ZFI,   &
+                                       IZ1ZCO,IZ2ZCO
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1ZDP,IX2ZDP,IY1ZDP,IY2ZDP,   &
+                                       IDEFDP,   &
+                                       IZ1ZDP,IZ2ZDP
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PX1ZDS,PX2ZDS,PY1ZDS,PY2ZDS
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)AX1ZAN,AX2ZAN,AY1ZAN,AY2ZAN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PX1ZHE,PX1ZWI,PX1ZVG,PX1ZHG
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PX2ZHE,PX2ZWI,PX2ZVG,PX2ZHG
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PY1ZHE,PY1ZWI,PY1ZVG,PY1ZHG
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PY2ZHE,PY2ZWI,PY2ZVG,PY2ZHG
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PTIZTH
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PZ1ZDS,PZ2ZDS,   &
+                                       AZ1ZAN,AZ2AN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PX1ZHE,PX1ZWI,   &
+                                       PX1ZVG,PX1ZHG,   &
+                                       PX2ZHE,PX2ZWI,   &
+                                       PX2ZVG,PX2ZHG,   &
+                                       PY1ZHE,PY1ZWI,   &
+                                       PY1ZVG,PY1ZHG,   &
+                                       PY2ZHE,PY2ZWI,   &
+                                       PY2ZVG,PY2ZHG,   &
+                                       PZ1ZHE,PZ1ZWI,   &
+                                       PZ1ZVG,PZ1ZHG,   &
+                                       PZ2ZHE,PZ2ZWI,   &
+                                       PZ2ZVG,PZ2ZHG,   &
+                                       PTIZTH,   &
+                                       PX1ZGA,PX2ZGA,   &
+                                       PY1ZGA,PY2ZGA
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IVGRSW,IHGRSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IVGRPA,IHGRPA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IVGRCO,IHGRCO
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PVGRTH,PHGRTH
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITITTE(I),I=1,MAXCH)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ITITFO,ITITCA,ITITFI,ITITCO
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NCTITL
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PTITHE,PTITWI,PTITVG,PTITHG,   &
+                                       PTITTH,PTITDS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IX1LTE(I),I=1,MAXCH)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX1LFO,IX1LCA,IX1LFI,IX1LCO,   &
+                                       IX1LJU,IX1LDI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IX2LTE(I),I=1,MAXCH)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX2LFO,IX2LCA,IX2LFI,IX2LCO,   &
+                                       IX2LJU,IX2LDI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IX3LTE(I),I=1,MAXCH)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IX3LFO,IX3LCA,IX3LFI,IX3LCO,   &
+                                       IX3LJU,IX3LDI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IY1LTE(I),I=1,MAXCH)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IY1LFO,IY1LCA,IY1LFI,IY1LCO,   &
+                                       IY1LJU,IY1LDI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IY2LTE(I),I=1,MAXCH)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IY2LFO,IY2LCA,IY2LFI,IY2LCO,   &
+                                       IY2LJU,IY2LDI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IZ1LTE(I),I=1,MAXCH)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IZ1LFO,IZ1LCA,IZ1LFI,IZ1LCO,   &
+                                       IZ1LJU,IZ1LDI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IZ2LTE(I),I=1,MAXCH)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IZ2LFO,IZ2LCA,IZ2LFI,IZ2LCO,   &
+                                       IZ2LJU,IZ2LDI
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NCX1LA,NCX2LA,NCX3LA,   &
+                                       NCY1LA,NCY2LA,   &
+                                       NCZ1LA,NCZ2LA
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PX1LHE,PX1LWI,PX1LVG,PX1LHG,   &
+                                       PX1LTH,PX1LDS,PX1LOF,PX1LAN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PX2LHE,PX2LWI,PX2LVG,PX2LHG,   &
+                                       PX2LTH,PX2LDS,PX2LOF,PX2LAN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PX3LHE,PX3LWI,PX3LVG,PX3LHG,   &
+                                       PX3LTH,PX3LDS,PX3LOF,PX3LAN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PY1LHE,PY1LWI,PY1LVG,PY1LHG,   &
+                                       PY1LTH,PY1LDS,PY1LOF,PY1LAN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PY2LHE,PY2LWI,PY2LVG,PY2LHG,   &
+                                       PY2LTH,PY2LDS,PY1LOF,PY1LAN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PZ1LHE,PZ1LWI,PZ1LVG,PZ1LHG,   &
+                                       PZ1LTH,PZ1LDS,PZ1LOF,PZ1LAN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PZ2LHE,PZ2LWI,PZ2LVG,PZ2LHG,   &
+                                       PZ2LTH,PZ2LDS,PZ1LOF,PZ1LAN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PX1LXC,PX1LYC,   &
+                                       PX2LXC,PX2LYC,   &
+                                       PX3LXC,PX3LYC,   &
+                                       PY1LXC,PY1LYC,   &
+                                       PY2LXC,PY2LYC,   &
+                                       PDEFDS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGTE(I),I=1,MAXLG2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGFO(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGCA(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGJU(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGDI(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGFI(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGCO(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGNA(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGUN(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFUZ
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGST(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGSP(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NCLEG,MXCLEG
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NUMLEG,MAXLEG
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLEGXC(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLEGYC(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLEGHE(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLEGWI(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLEGVG(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLEGHG(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLEGTH(I),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ALEGAN(I),I=1,MAXLG)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOBFI(I),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOBCO(I),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOBPA(I),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOPPA(I),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOPCO(I),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOFPA(I),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOFCO(I),I=1,MAXBX)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NUMBOX,MAXBOX,PDEFSH,PDEFSW
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)((PBOXXC(I,J),I=1,MAXBX),J=1,2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)((PBOXYC(I,J),I=1,MAXBX),J=1,2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PBOPTH(I),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PBOPGA(I),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PBOFTH(I),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PBOSHE(I),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PBOSWI(I),I=1,MAXBX)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IARRPA(I),I=1,MAXAR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IARRCO(I),I=1,MAXAR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IARHFI(I),I=1,MAXAR)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NUMARR,MAXARR
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)((PARRXC(I,J),I=1,MAXAR),J=1,2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)((PARRYC(I,J),I=1,MAXAR),J=1,2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PARRTH(I),I=1,MAXAR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PARHLE(I),I=1,MAXAR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PARHWI(I),I=1,MAXAR)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISEGPA(I),I=1,MAXSG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISEGCO(I),I=1,MAXSG)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NUMSEG,MAXSEG
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)((PSEGXC(I,J),I=1,MAXSG),J=1,2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)((PSEGYC(I,J),I=1,MAXSG),J=1,2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PSEGTH(I),I=1,MAXSG)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILINPA(I),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILINCO(I),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILINPO(I),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILINTY(I),I=1,MAXLN)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)MAXLIN
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLINTH(I),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLINLE(I),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLINL2(I),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLINL3(I),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLINGA(I),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLING2(I),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PLING3(I),I=1,MAXLN)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ICHAPA(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ICHAFO(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ICHACA(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ICHAJU(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ICHADI(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ICHAFI(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ICHACO(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ICHAPO(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ICHATY(I),I=1,MAXCH2)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)MAXCHA,ICHMAP
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PCHAHE(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PCHAWI(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PCHAVG(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PCHAHG(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PCHATH(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ACHAAN(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PCHAHO(I),I=1,MAXCH2)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PCHAVO(I),I=1,MAXCH2)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEXTE(I),I=1,MAXCH)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ITEXPA,ITEXFO,ITEXCA,ITEXJU,   &
+                                       ITEXDI,ITEXAU,ITEXFI,ITEXCO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFPA,IDEFFO,IDEFCA,IDEFJU,   &
+                                       IDEFDI,IDEFAU,IDEFFI,IDEFCO
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ITEXCR,ITEXLF
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFCR,IDEFLF
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ITEXSY,ITEXSP
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFSY,IDEFSP
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)NCTEXT,MXCTEX
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PTEXHE,PTEXWI,PTEXVG,PTEXHG
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PTEXTH,PTEXLE,ATEXAN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEFHE,PDEFWI,PDEFVG,PDEFHG
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEFTH,PDEFLE,ADEFAN
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PTEXMR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEFMR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PXSTAR,PYSTAR
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PXEND,PYEND
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IFILSW(I),I=1,MAXFL)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IFILPA(I),I=1,MAXFL)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IFILCO(I),I=1,MAXFL)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFFS
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFFP
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFFC
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)MAXFIL
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PFILSP(I),I=1,MAXFL)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PFILTH(I),I=1,MAXFL)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(AFILBA(I),I=1,MAXFL)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEFFG
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEFFT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ADEFFB
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IPATSW(I),I=1,MAXPT)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IPATPA(I),I=1,MAXPT)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IPATLI(I),I=1,MAXPT)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IPATCO(I),I=1,MAXPT)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFPS
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFPP
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFPL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFPC
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)MAXPAT
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PPATHE(I),I=1,MAXPT)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PPATWI(I),I=1,MAXPT)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PPATSP(I),I=1,MAXPT)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PPATTH(I),I=1,MAXPT)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEFPH
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEFPW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEFPG
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEFPT
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISPISW(I),I=1,MAXSP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISPILI(I),I=1,MAXSP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISPICO(I),I=1,MAXSP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISPIDI(I),I=1,MAXSP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFSS
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFSL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEFSC
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)MAXSPI
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PSPITH(I),I=1,MAXSP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ASPIBA(I),I=1,MAXSP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEFST
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ADEFSB
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBARSW(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBABLI(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBABCO(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBAFSW(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBAFCO(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBAPTY(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBAPLI(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBAPCO(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBARTY(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBARDI(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBARBA(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEBSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEBBL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEBBC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEBFS
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEBFC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEBPT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEBPL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEBPC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEBTY
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEBDI
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)MAXBAR
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ABARBA(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ABARWI(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PBABTH(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PBAPTH(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PBAPSP(I),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ADEBBA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ADEBWI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEBBT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEBPT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEBPS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREGSW(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREBLI(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREBCO(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREFSW(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREFCO(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREPTY(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREPLI(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREPCO(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDERSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDERBL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDERBC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDERFS
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDERFC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDERPT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDERPL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDERPC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IREBIN,IREBPL
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)MAXREG
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(AREGBA(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(AREGWI(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PREBTH(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PREPTH(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PREPSP(I),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ADERBA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ADERWI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDERBT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDERPT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDERPS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMARSW(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMABLI(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMABCO(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMAFSW(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMAFCO(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMAPTY(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMAPLI(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMAPCO(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEMSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEMBL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEMBC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEMFS
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEMFC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEMPT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEMPL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDEMPC
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)MAXMAR
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(AMARBA(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(AMARWI(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PMABTH(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PMAPTH(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PMAPSP(I),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ADEMBA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ADEMWI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEMBT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEMPT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDEMPS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEXSW(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEBLI(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEBCO(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEFSW(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEFCO(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEPTY(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEPLI(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEPCO(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDETSW
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDETBL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDETBC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDETFS
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDETFC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDETPT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDETPL
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDETPC
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)IDETLF
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)MAXTEX
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ATEXBA(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ATEXWI(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PTEBTH(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PTEPTH(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(PTEPSP(I),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ADETBA
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ADETWI
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDETBT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDETPT
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)PDETPS
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ASUBXL(I),I=1,MAXSUB)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ASUBXU(I),I=1,MAXSUB)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ASUBYL(I),I=1,MAXSUB)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ASUBYU(I),I=1,MAXSUB)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISUBTY(I),I=1,MAXSUB)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISUBSW(I),I=1,MAXSUB)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)ISUBNU,IDEFSB
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IX1TC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IX2TC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IY1TC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IY2TC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IZ1TC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IZ2TC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IX1FC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IX2FC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IY1FC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IY2FC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IZ1FC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IZ2FC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IX1ZC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IX2ZC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IY1ZC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IY2ZC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IZ1ZC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IZ2ZC2(I),I=1,3)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IVGRC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IHGRC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITITC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMARC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBACC2(I),I=1,3)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IX1LC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IX2LC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IX3LC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IY1LC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IY2LC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IZ1LC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IZ2LC2(I),I=1,3)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEXC2(I),I=1,3)
+!
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGC2(I,1),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGC2(I,2),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILEGC2(I,3),I=1,MAXLG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOBC2(I,1),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOBC2(I,2),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOBC2(I,3),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOFC2(I,1),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOFC2(I,2),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBOFC2(I,3),I=1,MAXBX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IARRC2(I,1),I=1,MAXAR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IARRC2(I,2),I=1,MAXAR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IARRC2(I,3),I=1,MAXAR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISEGC2(I,1),I=1,MAXSG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISEGC2(I,2),I=1,MAXSG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISEGC2(I,3),I=1,MAXSG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILINC2(I,1),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILINC2(I,2),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ILINC2(I,3),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ICHAC2(I,1),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ICHAC2(I,2),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ICHAC2(I,3),I=1,MAXLN)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IFILC2(I,1),I=1,MAXFL)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IFILC2(I,2),I=1,MAXFL)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IFILC2(I,3),I=1,MAXFL)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IPATC2(I,1),I=1,MAXPT)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IPATC2(I,2),I=1,MAXPT)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IPATC2(I,3),I=1,MAXPT)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISPIC2(I,1),I=1,MAXSP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISPIC2(I,2),I=1,MAXSP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ISPIC2(I,3),I=1,MAXSP)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBABC2(I,1),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBABC2(I,2),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBABC2(I,3),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBAFC2(I,1),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBAFC2(I,2),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBAFC2(I,3),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBAPC2(I,1),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBAPC2(I,2),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IBAPC2(I,3),I=1,MAXBA)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREBC2(I,1),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREBC2(I,2),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREBC2(I,3),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREFC2(I,1),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREFC2(I,2),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREFC2(I,3),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREPC2(I,1),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREPC2(I,2),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IREPC2(I,3),I=1,MAXRG)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMABC2(I,1),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMABC2(I,2),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMABC2(I,3),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMAFC2(I,1),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMAFC2(I,2),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMAFC2(I,3),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMAPC2(I,1),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMAPC2(I,2),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(IMAPC2(I,3),I=1,MAXMR)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEBC2(I,1),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEBC2(I,2),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEBC2(I,3),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEFC2(I,1),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEFC2(I,2),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEFC2(I,3),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEPC2(I,1),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEPC2(I,2),I=1,MAXTX)
+      WRITE(IOUNIT,IOSTAT=IOS,ERR=8000)(ITEPC2(I,3),I=1,MAXTX)
+!
+!     -----END WRITING OUT-----------------------
+!
+!               ***************************
+!               **  STEP 42--            **
+!               **  WRITE OUT A MESSAGE  **
+!               ***************************
+!
+      ISTEPN='42'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVE')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(IERROR.EQ.'NO' .AND. IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4211)
+ 4211   FORMAT('THE SAVING OF ALL INTERNAL DATAPLOT VARIABLES,')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4212)
+ 4212   FORMAT('    PARAMETERS, ETC. HAS JUST BEEN COMPLETED')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+      GO TO 8099
+!
+ 8000 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1211)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,8011)ISECT
+ 8011 FORMAT('      WRITE FAILED IN SECTION ',A30)
+      CALL DPWRST('XXX','BUG ')
+      GO TO 8099
+!
+!               ***********************
+!               **  STEP 51--        **
+!               **  CLOSE THE FILE.  **
+!               ***********************
+!
+ 8099 CONTINUE
+      ISTEPN='51'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SAVE')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IENDFI='ON'
+      IREWIN='ON'
+      CALL DPCLFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IPROT,ICURST,   &
+                  IENDFI,IREWIN,ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+!
+!               ****************
+!               **  STEP 90-- **
+!               **  EXIT.     **
+!               ****************
+!
+ 9000 CONTINUE
+      IF(IBUGS2.EQ.'ON' .OR. ISUBRO.EQ.'SAVE')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSAVE--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9032)IERROR,IERRFI
+ 9032   FORMAT('IERROR,IERRFI = ',A4,2X,A12)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSAVE
+      SUBROUTINE DPSBEX(ISBNAM,IANGLU,ISEED,IFTEXP,IFTORD,IFORSW,   &
+                        IBUGA2,IBUGA3,IBUGCO,IBUGEV,IBUGQ,   &
+                        ISUBRO,IFOUND,IERROR)
+!
+!     PURPOSE--CARRY OUT A SUBSET OF THE LET COMMAND TO BE USED BY
+!              THE "STATISTIC BLOCK".
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABOARATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2016/08
+!     ORIGINAL VERSION--AUGUST    2016.
+!     UPDATED         --AUGUST    2021. CALL LIST TO CKSTAT AND DPSTC2
+!     UPDATED         --AUGUST    2023. CALL LIST TO CKMATH
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*8 ISBNAM
+      CHARACTER*4 IANGLU
+      CHARACTER*4 IFTEXP
+      CHARACTER*4 IFTORD
+      CHARACTER*4 IFORSW
+      CHARACTER*4 IBUGA2
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IBUGCO
+      CHARACTER*4 IBUGEV
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ICASLE
+      CHARACTER*4 ITYPEL
+      CHARACTER*4 IFOUNZ
+      CHARACTER*4 ITYPE
+      CHARACTER*4 IHOL
+      CHARACTER*4 IHOL2
+      CHARACTER*4 IERRO1
+      CHARACTER*4 ITYPEH
+      CHARACTER*4 IW21HO
+      CHARACTER*4 IW22HO
+      CHARACTER*4 IA
+      CHARACTER*4 IPARN
+      CHARACTER*4 IPARN2
+      CHARACTER*4 IFOUNR
+      CHARACTER*4 IFOUN7
+      CHARACTER*4 IFOUN8
+      CHARACTER*4 ICASL7
+      CHARACTER*4 ICASS7
+      CHARACTER*4 ICASL8
+      CHARACTER*4 ICASRA
+      CHARACTER*4 ITYW1L
+      CHARACTER*4 ICAT1L
+      CHARACTER*4 INLI1L
+      CHARACTER*4 ITYW2L
+      CHARACTER*4 ITYW1R
+      CHARACTER*4 ICAT1R
+      CHARACTER*4 INLI1R
+      CHARACTER*4 ITYW2R
+      CHARACTER*4 IH
+      CHARACTER*4 IH2
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ICOMT
+      CHARACTER*4 IMSUBC
+      CHARACTER*4 ISTARA
+      CHARACTER*4 ICASAR
+      CHARACTER*1 IREPCH
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IFOUNZ(30)
+      DIMENSION IBEGIN(30)
+      DIMENSION IEND(30)
+      DIMENSION ITYPE(30)
+      DIMENSION IHOL(30)
+      DIMENSION IHOL2(30)
+      DIMENSION INT1(30)
+      DIMENSION FLOAT1(30)
+      DIMENSION IERRO1(30)
+!
+      DIMENSION ITYPEH(1000)
+      DIMENSION IW21HO(1000)
+      DIMENSION IW22HO(1000)
+      DIMENSION W2HOLD(1000)
+!
+!     NOTE--THE DIMENSION OF IA SHOULD BE THE SAME AS
+!           THE DIMENSION OF IB IN SUBROUTINE COMPIM
+!           (THE DIMENSION OF IB IS 1000 (JULY 1986))
+!
+      DIMENSION IA(1000)
+      DIMENSION PARAM(100)
+      DIMENSION IPARN(100)
+      DIMENSION IPARN2(100)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCOSB.INC'
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCODA.INC'
+!
+      INCLUDE 'DPCOZI.INC'
+      INCLUDE 'DPCOZZ.INC'
+      INCLUDE 'DPCOZ3.INC'
+      INCLUDE 'DPCOZD.INC'
+!
+      DIMENSION TEMP1(MAXOBV)
+      DIMENSION TEMP2(MAXOBV)
+      DIMENSION TEMP3(MAXOBV)
+      DIMENSION TEMP4(MAXOBV)
+      DIMENSION TEMP5(MAXOBV)
+      DIMENSION TEMP6(MAXOBV)
+      DIMENSION TEMP7(MAXOBV)
+      DIMENSION TEMP8(MAXOBV)
+      INTEGER ITEMP1(MAXOBV)
+      INTEGER ITEMP2(MAXOBV)
+      INTEGER ITEMP3(MAXOBV)
+      INTEGER ITEMP4(MAXOBV)
+      INTEGER ITEMP5(MAXOBV)
+      INTEGER ITEMP6(MAXOBV)
+!
+      EQUIVALENCE (G3RBAG(KGARB1),TEMP1(1))
+      EQUIVALENCE (G3RBAG(KGARB2),TEMP2(1))
+      EQUIVALENCE (G3RBAG(KGARB3),TEMP3(1))
+      EQUIVALENCE (G3RBAG(KGARB4),TEMP4(1))
+      EQUIVALENCE (G3RBAG(KGARB5),TEMP5(1))
+      EQUIVALENCE (G3RBAG(KGARB6),TEMP6(1))
+      EQUIVALENCE (GARBAG(IGAR24),TEMP7(1))
+      EQUIVALENCE (GARBAG(IGAR25),TEMP8(1))
+!
+      EQUIVALENCE (IGARBG(IIGR12),ITEMP1(1))
+      EQUIVALENCE (IGARBG(IIGR13),ITEMP2(1))
+      EQUIVALENCE (IGARBG(IIGR14),ITEMP3(1))
+      EQUIVALENCE (IGARBG(IIGR15),ITEMP4(1))
+      EQUIVALENCE (IGARBG(IIGR16),ITEMP5(1))
+      EQUIVALENCE (IGARBG(IIGR17),ITEMP6(1))
+!
+      DOUBLE PRECISION DTEMP1(MAXOBV)
+      DOUBLE PRECISION DTEMP2(MAXOBV)
+      DOUBLE PRECISION DTEMP3(MAXOBV)
+      EQUIVALENCE (DGARBG(IDGAR8),DTEMP1(1))
+      EQUIVALENCE (DGARBG(IDGAR9),DTEMP2(1))
+      EQUIVALENCE (DGARBG(IDGA10),DTEMP3(1))
+!
+      CHARACTER*4 IANSSV(MAXSTR)
+!
+!-----COMMON VARIABLES (GENERAL)--------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPSB'
+      ISUBN2='EX  '
+      IERROR='NO'
+      ICASLE='UNKN'
+      IMSUBC='UNKN'
+      IREPCH='^'
+!
+      MAXCP1=MAXCOL+1
+      MAXCP2=MAXCOL+2
+      MAXCP3=MAXCOL+3
+      MAXCP4=MAXCOL+4
+      MAXCP5=MAXCOL+5
+      MAXCP6=MAXCOL+6
+!
+      DO 40 I=1,1000
+        ITYPEH(I)='    '
+        IW21HO(I)='    '
+        IW22HO(I)='    '
+        W2HOLD(I)=0.0
+   40 CONTINUE
+!
+!               *************************************
+!               **  TREAT THE STATISTIC BLOCK CASE **
+!               *************************************
+!
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'SBEX')THEN
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSBEX--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)ISBNAM,IANGLU,IFTEXP,IFORSW,ISEED
+   52   FORMAT('ISBNAM,IANGLU,IFTEXP,IFORSW,ISEED, = ',   &
+               A8,2X,3(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGA2,IBUGA3,IBUGCO,IBUGEV,IBUGQ
+   53   FORMAT('IBUGA2,IBUGA3,IBUGCO,IBUGEV,IBUGQ = ',4(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55)ISBNA1,ISBNA2,ISBNA3
+   55   FORMAT('ISBNA1,ISBNA2,ISBNA3 = ',2(A8,2X),A8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,57)ISBCN1,ISBCN2,ISBCN3
+   57   FORMAT('ISBCN1,ISBCN2,ISBCN3 = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ******************************************
+!               **  STEP 1--                            **
+!               **  CHECK IF STATISTIC BLOCK IS DEFINED **
+!               ******************************************
+!
+      IFLAG=0
+      IF(ISBNAM.EQ.ISBNA1)THEN
+        IFLAG=1
+        ISBCNT=ISBCN1
+        ISBCN2=ISBCP1
+      ELSEIF(ISBNAM.EQ.ISBNA2)THEN
+        IFLAG=2
+        ISBCNT=ISBCN2
+        ISBCN2=ISBCP2
+      ELSEIF(ISBNAM.EQ.ISBNA3)THEN
+        IFLAG=3
+        ISBCNT=ISBCN3
+        ISBCN2=ISBCP3
+      ELSE
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR IN STATISTIC BLOCK--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,102)ISBNAM
+  102   FORMAT('      STATISTIC BLOCK ',A8,' HAS NOT BEEN DEFINED.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IF(ISBCNT.LT.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)ISBNAM
+  112   FORMAT('      FUNCTION BLOCK ',A8,' HAS NO ACTIVE COMMANDS.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!     SAVE CURRENT COMMAND LINE
+!
+      DO 910 II=1,MAXSTR
+        IANSSV(II)=IANSLC(II)
+  910 CONTINUE
+!
+!     LOOP THROUGH EACH LINE OF THE FUNCTION BLOCK
+!
+      DO 1000 KK=1,ISBCNT
+!
+!       STEP 1: PUT THE FUNCTION BLOCK LINE INTO IANSLC
+!
+        IF(IFLAG.EQ.1)THEN
+          DO 1010 II=1,MAXSTR
+            IANSLC(II)=' '
+            IANSLC(II)(1:1)=ISBLI1(KK)(II:II)
+ 1010     CONTINUE
+        ELSEIF(IFLAG.EQ.2)THEN
+          DO 1020 II=1,MAXSTR
+            IANSLC(II)=' '
+            IANSLC(II)(1:1)=ISBLI2(KK)(II:II)
+ 1020     CONTINUE
+        ELSEIF(IFLAG.EQ.3)THEN
+          DO 1030 II=1,MAXSTR
+            IANSLC(II)=' '
+            IANSLC(II)(1:1)=ISBLI3(KK)(II:II)
+ 1030     CONTINUE
+        ENDIF
+!
+        IWIDTH=1
+        DO 1040 II=MAXSTR,1,-1
+          IF(IANSLC(II)(1:1).NE.' ')THEN
+            IWIDTH=II
+            GO TO 1049
+          ENDIF
+ 1040   CONTINUE
+ 1049   CONTINUE
+!
+        IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'SBEX')THEN
+          WRITE(ICOUT,1051)KK,IWIDTH
+ 1051     FORMAT('KK,IWIDTH = ',2I8)
+          CALL DPWRST('XXX','BUG ')
+          DO 1053 II=1,IWIDTH
+            WRITE(ICOUT,1054)II,IANSLC(II)
+ 1054       FORMAT('II,IANSLC(II) = ',I5,2X,A4)
+            CALL DPWRST('XXX','BUG ')
+ 1053     CONTINUE
+        ENDIF
+!
+!       STEP 2: NOW PROCESS IANSLC TO BREAK IT INTO COMPONENT ARGUMENTS
+!
+        CALL DPNONP(IANSLC,IWIDTH,IANSLC,IBUGA2,ISUBRO,IERROR)
+        CALL DPREP2(IANSLC,IWIDTH,   &
+                    IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,   &
+                    IVARLB,IROWLB,MAXOBV,   &
+                    IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,IMALEV,   &
+                    IBUGA2,ISUBRO,IERROR)
+        CALL DPUPPE(IANSLC,IWIDTH,IANS,IBUGA2,IERROR)
+        CALL DPTYPE(IANSLC,IWIDTH,IBUGA2,   &
+                    ICOM,ICOM2,ICOMT,ICOMI,ACOM,ICOMLC,ICOML2,   &
+                    IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,   &
+                    IHARG,IHARG2,IARGT,IARG,ARG,IHARLC,IHARL2,NUMARG,   &
+                    IHOST1,IHOST2)
+!
+        IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'SBEX')THEN
+          WRITE(ICOUT,1061)NUMARG
+ 1061     FORMAT('NUMARG = ',I8)
+          CALL DPWRST('XXX','BUG ')
+          DO 1063 II=1,NUMARG
+            WRITE(ICOUT,1064)II,IHARG(II),IHARG2(II)
+ 1064       FORMAT('II,IHARG(II),IHARG2(II) = ',I5,2(2X,A4))
+            CALL DPWRST('XXX','BUG ')
+ 1063     CONTINUE
+        ENDIF
+!
+!       STEP 3: NOW PROCESS THE LET COMMANDS
+!
+!               CHECK FOR AN "=" SIGN (THIS SHOULD NOT BE LAST
+!               ARGUMENT IN LIST)
+!
+        DO 1103 I=1,NUMARG
+          IF(IHARG(I).EQ.'=   ')THEN
+            IF(I.LT.NUMARG)GO TO 1119
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,101)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1112)
+ 1112       FORMAT('      IMPROPER FORM FOR THE    LET   COMMAND.')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1123)
+ 1123       FORMAT('      NOTHING FOUND TO THE RIGHT OF THE EQUAL SIGN')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1114)
+            CALL DPWRST('XXX','BUG ')
+            IF(IWIDTH.GE.1)THEN
+              WRITE(ICOUT,1115)(IANSLC(JJ),JJ=1,MIN(120,IWIDTH))
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
+            IERROR='YES'
+            GO TO 9000
+          ENDIF
+ 1103   CONTINUE
+!
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1112)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1113)
+ 1113   FORMAT('      NO EQUAL SIGN FOUND AFTER THE ',   &
+               'VARIABLE/PARAMETER NAME.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1114)
+ 1114   FORMAT('      THE ENTERED COMMAND LINE IS AS FOLLOWS--')
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,1115)(IANSLC(I),I=1,MIN(120,IWIDTH))
+ 1115     FORMAT('      ',120A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GO TO 9000
+!
+ 1119   CONTINUE
+!
+!               **************************************
+!               **  STEP 2--                        **
+!               **  TREAT THE VARIOUS LET SUBCASES  **
+!               **************************************
+!
+!      CURRENTLY, THERE ARE 25 COMMANDS THAT UTILIZE SUPPORTED
+!      STATISTICS.  THE STATISTIC BLOCKS CAN BE USED BY ANY OF
+!      THESE 25 COMMANDS:
+!
+!      CURRENTLY, STATISTIC BLOCKS ARE RESTRICTED TO THE FOLLOWING
+!      LET SUB-COMMANDS:
+!
+!         1. PATTERN/DATA
+!         2. RANDOM NUMBERS
+!         3. MATH LET SUB-COMMANDS (BUT NOT MATRIX COMMANDS)
+!         4. STATISTICS LET SUB-COMMANDS
+!         5. ARITHMETIC OPERATIONS
+!         6. LET ... = EXECUTE ...
+!
+!      NOTE THAT FOLLOWING MATH LET SUB-COMMANDS ARE NOT HANDLED
+!      IN DPMATC AND ARE NOT SUPPORTED IN STATISTIC BLOCKS:
+!
+!                 A. DERIVATIVE
+!                 B. NUMERICAL DERIVATIVE
+!                 C. INTEGRAL
+!                 D. RUNGE-KUTTA
+!                 E. OPTIMIZE
+!                 F. ROOTS
+!
+!       NOTE THAT FOR STATISTIC LET SUB-COMMANDS, WE NEED TO BE
+!       CONCERNED ABOUT RECURSION.
+!
+!               ********************************************
+!               **  STEP 2.12--                           **
+!               **  TREAT THE PATTERN GENERATION SUBCASE  **
+!               ********************************************
+!
+      IF((IHARG(3).EQ.'PATT'.AND.IHARG2(3).EQ.'ERN ') .OR.   &
+         (IHARG(3).EQ.'DATA'.AND.IHARG2(3).EQ.'    '))THEN
+        IF(IHARG(1).EQ.'PLOT' .AND.   &
+          (IHARG(2).EQ.'CHAR' .OR. IHARG(2).EQ.'LINE' .OR.   &
+          IHARG(2).EQ.'SPIK' .OR. IHARG(2).EQ.'REGI' .OR.   &
+          IHARG(2).EQ.'BAR'))GO TO 1290
+        ICASLE='PATT'
+        CALL DPPAT(IBUGA3,ISUBRO,IBUGQ,IFOUND,IERROR)
+      ENDIF
+!
+ 1290 CONTINUE
+!
+!               **************************************************
+!               **  STEP 2.13--                                 **
+!               **  TREAT THE RANDOM NUMBER GENERATION SUBCASE  **
+!               **  (AND THE RANDOM PERMUTATION SUBCASE)        **
+!               **  (AND THE BOOTSTRAP INDEX SUBCASE == THE     **
+!               **  DISCRETE UNIFORM RANDOM NUMBER SUBCASE)     **
+!               **************************************************
+!
+      CALL CKRAND(ICASRA,ILOCNU,NUMSHA,   &
+                  SHAPE1,SHAPE2,SHAPE3,SHAPE4,   &
+                  SHAPE5,SHAPE6,SHAPE7,   &
+                  IBUGA3,ISUBRO,IFOUNR,IERROR)
+      IF(IFOUNR.EQ.'YES')THEN
+        ICASLE='RAND'
+        CALL DPRAND(ICASRA,ISEED,ILOCNU,NUMSHA,   &
+                    SHAPE1,SHAPE2,SHAPE3,SHAPE4,   &
+                    SHAPE5,SHAPE6,SHAPE7,   &
+                    IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+        GO TO 9000
+      ENDIF
+!
+!               **********************************************
+!               **  STEP 2.20--                             **
+!               **  TREAT THE MATH CALCULATIONS SUBCASE     **
+!               **   (INPUT = A VECTOR; OUTPUT = A VECTOR)  **
+!               **********************************************
+!
+!
+        IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'SBEX')THEN
+          WRITE(ICOUT,2001)
+ 2001     FORMAT('BEFORE CALL CKMATH')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+!        MATH LET SUBCOMMANDS.
+!
+        CALL CKMATH(IBUGA3,ISUBRO,IFOUN7,ICASL7,ICASS7,ISTANR,ISTARA,   &
+                    IMSUBC,ILOCV)
+        IF(IFOUN7.EQ.'YES'.AND.ICASL7.NE.'UNKN'.AND.   &
+           ILOCV.GE.1)THEN
+          ICASLE='MANI'
+          IFOUND='NO'
+          CALL DPMATC(ICASL7,ICASS7,ISTANR,ISTARA,ILOCV,IFTEXP,IFTORD,   &
+                      ISEED,   &
+                      IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+          IF(IFOUND.EQ.'YES')GO TO 1000
+!
+!         DON'T SUPPORT MATRIX CALLS AS THESE MAY HAVE
+!         POTENTIAL CONFLICTS WITH SCRATCH STORAGE.
+!
+!CCCC     CALL DPMAT2(ICASL7,ICASS7,ILOCV,
+!CCCC1                ISEED,IMSUBC,
+!CCCC1                IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+          GO TO 1000
+        ENDIF
+!
+!               **************************************************
+!               **  STEP 2.41--                                 **
+!               **  TREAT THE STATISTICAL CALCULATIONS SUBCASE  **
+!               **  (INPUT = A VECTOR; OUTPUT = A PARAMETER)    **
+!               **************************************************
+!
+        CALL DPTYP2(IANS,IWIDTH,IHNAME,IHNAM2,NUMNAM,MAXNAM,IBUGA3,   &
+                   IUSE,IVALUE,VALUE,IN,   &
+                   IFOUNZ,IBEGIN,IEND,   &
+                   ITYPE,IHOL,IHOL2,INT1,FLOAT1,IERRO1,   &
+                   NUMCL,NUMPL,NUMAOL,ITYW1L,ICAT1L,INLI1L,ITYW2L,   &
+                   NUMCR,NUMPR,NUMAOR,ITYW1R,ICAT1R,INLI1R,ITYW2R)
+!
+        IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'SBEX')THEN
+          WRITE(ICOUT,3091)
+ 3091     FORMAT('BEFORE CALL CKARIT')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+        CALL CKARIT(IFOUNZ,IBEGIN,IANS,IWIDTH,ICASAR,IBUGA3,ISUBRO)
+!
+        IF(NUMARG.GE.3 .AND.   &
+          (IHARG(3).EQ.'SN- ' .OR. IHARG(3).EQ.'SN+ '))ICASAR='NO'
+        IF(NUMARG.GE.4 .AND. IHARG(3).EQ.'TAGU' .AND.   &
+          (IHARG(4).EQ.'SN- ' .OR. IHARG(4).EQ.'SN+ '))ICASAR='NO'
+        IF(NUMARG.GE.6 .AND. IHARG(3).EQ.'CHI ' .AND.   &
+           IHARG(4).EQ.'SQUA'.AND. IHARG(5).EQ.'SD  ' .AND.   &
+           IHARG(6).EQ.'TEST')ICASAR='NO'
+        IF(NUMARG.GE.6 .AND. IHARG(3).EQ.'ONE '.AND.   &
+           IHARG(4).EQ.'SAMP' .AND. IHARG(5).EQ.'T   ' .AND.   &
+           IHARG(6).EQ.'TEST')ICASAR='NO'
+        IF(NUMARG.GE.7 .AND. IHARG(3).EQ.'CHI ' .AND.   &
+           IHARG(4).EQ.'SQUA' .AND. IHARG(5).EQ.'STAN' .AND.   &
+           IHARG(6).EQ.'DEVI' .AND. IHARG(7).EQ.'TEST')ICASAR='NO'
+        IF(NUMARG.GE.4 .AND. IHARG(3).EQ.'HODG' .AND.   &
+           IHARG(4).EQ.'LEHM')ICASAR='NO'
+        IF(NUMARG.GE.6 .AND. IHARG(5).EQ.'HODG' .AND.   &
+           IHARG(6).EQ.'LEHM')ICASAR='NO'
+!
+        IF(ICASAR.EQ.'NO')THEN
+!
+          IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'SBEX')THEN
+            WRITE(ICOUT,4001)
+ 4001       FORMAT('BEFORE CALL CKSTAT')
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+          CALL CKSTAT(IBUGA3,IFOUN8,ICASL8,ILOCV,ISTANR,ISTARA)
+          IF(IFOUN8.EQ.'YES'.AND.ICASL8.NE.'UNKN'.AND.   &
+             ILOCV.GE.1)THEN
+            ICASLE='STAT'
+            CALL DPSTC2(ICASL8,ILOCV,ISTANR,ISTARA,   &
+                        IFOUNZ,IBEGIN,IEND,ITYPE,IHOL,IHOL2,INT1,   &
+                        FLOAT1,IERRO1,   &
+                        TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,TEMP6,   &
+                        TEMP7,TEMP8,MAXOBV,   &
+                        ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,   &
+                        DTEMP1,DTEMP2,DTEMP3,   &
+                        IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+            GO TO 1000
+          ENDIF
+        ENDIF
+!
+!               **********************************************
+!               **  STEP 2.19A--                            **
+!               **  TREAT THE EXECUTE              SUBCASE  **
+!               **********************************************
+!
+      IF(IHARG(2).EQ.'=   '.AND.IHARG(3).EQ.'EXEC')THEN
+        ICASLE='EXEC'
+        IFOUND='YES'
+        ITYPEL='V'
+!
+!       EXTRACT CURRENT PARAMETER LIST FOR FUNCTION BLOCK
+!
+        ICNT=0
+        DO 2190 K=1,ISBCN2
+          IH='    '
+          IH2='    '
+          IF(IFLAG.EQ.1)THEN
+            IH=ISBPL1(K)(1:4)
+            IH2=ISBPL1(K)(5:8)
+          ELSEIF(IFLAG.EQ.2)THEN
+            IH=ISBPL2(K)(1:4)
+            IH2=ISBPL2(K)(5:8)
+          ELSEIF(IFLAG.EQ.3)THEN
+            IH=ISBPL3(K)(1:4)
+            IH2=ISBPL3(K)(5:8)
+          ENDIF
+!
+          DO 2195 II=1,NUMNAM
+            IF(IH.EQ.IHNAME(II) .AND. IH2.EQ.IHNAM2(II) .AND.   &
+               IUSE(II).EQ.'P')THEN
+              ICNT=ICNT+1
+              TEMP1(ICNT)=VALUE(II)
+              GO TO 2190
+            ENDIF
+ 2195     CONTINUE
+ 2190     CONTINUE
+!
+        CALL DPEXFI(TEMP1,ICNT,IBUGA3,ISUBRO,IFOUND,IERROR)
+        GO TO 1000
+      ENDIF
+!
+!               *********************************************
+!               **  STEP 2.50--                            **
+!               **  TREAT THE FUNCTION EVALUATION SUBCASE  **
+!               *********************************************
+!
+!       DON'T SUPPORT THIS AS IT IS MORE USEFUL TO CALL DPSBEX FROM
+!       DPFUEV (I.E., ALLOW FUNCTION EVALUATION TO HANDLE FUNCTION
+!       BLOCKS).
+!
+        IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'SBEX')THEN
+          WRITE(ICOUT,5001)
+ 5001     FORMAT('BEFORE CALL DPFUEV')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+        ICASLE='FUNC'
+        CALL DPFUEV(ITYPEH,IW21HO,IW22HO,W2HOLD,NWHOLD,   &
+                    IA,PARAM,IPARN,IPARN2,   &
+                    IFOUNZ,IBEGIN,IEND,ITYPE,IHOL,IHOL2,INT1,   &
+                    FLOAT1,IERRO1,   &
+                    NUMCL,NUMPL,NUMAOL,ITYW1L,ICAT1L,INLI1L,ITYW2L,   &
+                    NUMCR,NUMPR,NUMAOR,ITYW1R,ICAT1R,INLI1R,ITYW2R,   &
+                    IANGLU,   &
+                    IBUGA3,IBUGCO,IBUGEV,IBUGQ,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES')GO TO 1000
+!
+!       ADMISSABLE LET COMMAND NOT FOUND
+!
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,6001)
+ 6001   FORMAT('      COMMAND IS NOT SUPPORTED IN FUNCTION BLOCK')
+        IERROR='YES'
+        GO TO 9000
+!
+ 1000 CONTINUE
+!
+!
+!               **************************************
+!               **  STEP 3--                        **
+!               **  RESET ORIGINAL COMMAND LINE     **
+!               **************************************
+!
+      DO 7010 II=1,MAXSTR
+        IANSLC(II)=IANSSV(II)
+ 7010 CONTINUE
+!
+      CALL DPNONP(IANSLC,IWIDTH,IANSLC,IBUGA2,ISUBRO,IERROR)
+      CALL DPREP2(IANSLC,IWIDTH,   &
+                  IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,   &
+                  IVARLB,IROWLB,MAXOBV,   &
+                  IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,IMALEV,   &
+                  IBUGA2,ISUBRO,IERROR)
+      CALL DPUPPE(IANSLC,IWIDTH,IANS,IBUGA2,IERROR)
+      CALL DPTYPE(IANSLC,IWIDTH,IBUGA2,   &
+                  ICOM,ICOM2,ICOMT,ICOMI,ACOM,ICOMLC,ICOML2,   &
+                  IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,   &
+                  IHARG,IHARG2,IARGT,IARG,ARG,IHARLC,IHARL2,NUMARG,   &
+                  IHOST1,IHOST2)
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'SBEX')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSBEX--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9016)ICASLE,IMSUBC
+ 9016   FORMAT('ICASLE,IMSUBC = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9017)IFOUND,IERROR
+ 9017   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSBEX
+      SUBROUTINE DPSBLI(ICOM,IHARG,IARGT,ARG,NUMARG,   &
+      ASUBXL,ASUBXU,ASUBYL,ASUBYU,   &
+      MAXSUB,   &
+      IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE LIMITS FOR SUBREGIONS.
+!                 SUBREGION XLIMITS 10 20
+!                 SUBREGION YLIMITS 10 20
+!                 SUBREGION 1 YLIMITS 10 20
+!                 SUBREGION 2 YLIMITS 10 20
+!     INPUT  ARGUMENTS--ICOM  (A  HOLLERITH VARIABLE)
+!                     --IHARG  (A  HOLLERITH VECTOR)
+!                     --IARGT  (A  HOLLERITH VECTOR)
+!                     --ARG    (A  FLOATING POINT VECTOR)
+!                     --NUMARG
+!     OUTPUT ARGUMENTS--
+!                     --ASUBXL = COORDINATE FOR LOWER X LIMIT
+!                     --ASUBXU = COORDINATE FOR UPPER X LIMIT
+!                     --ASUBYL = COORDINATE FOR LOWER Y LIMIT
+!                     --ASUBYU = COORDINATE FOR UPPER Y LIMIT
+!                     --MAXSUB = MAXIMUM NUMBER OF SUBREGIONS
+!                     --IFOUND ('YES' OR 'NO' )
+!                     --IERROR ('YES' OR 'NO' )
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--99/11
+!     ORIGINAL VERSION--NOVEMBER  1999.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICOM
+      CHARACTER*4 IHARG
+      CHARACTER*4 IARGT
+!
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IHARG(*)
+      DIMENSION IARGT(*)
+      DIMENSION ARG(*)
+!
+      DIMENSION ASUBXL(*)
+      DIMENSION ASUBXU(*)
+      DIMENSION ASUBYL(*)
+      DIMENSION ASUBYU(*)
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+!
+      IF(ICOM.NE.'SUBR')THEN
+        IFOUND='NO'
+        GO TO 9000
+      ENDIF
+!
+      IF(NUMARG.LE.0)THEN
+        GO TO 9000
+      ENDIF
+      IF(IHARG(NUMARG).EQ.'?')GO TO 8100
+!
+!               *****************************************************
+!               **  CHECK IF THE FIRST ARGUMENT IS NUMERIC         **
+!               **  (THIS SHOULD DEFINE WHICH SUBREGION IS BEING   **
+!               **  SET)                                           **
+!               *****************************************************
+!
+      IF(IARGT(1).EQ.'NUMB')THEN
+        ISUBID=INT(ARG(1)+0.5)
+        IF(ISUBID.LT.1 .OR. ISUBID.GT.MAXSUB)ISUBID=1
+        IWORD=2
+      ELSE
+        IWORD=1
+        ISUBID=1
+      ENDIF
+!
+!               *****************************************************
+!               **  TREAT THE CASE WHEN                            **
+!               **  THE HORIZONTAL SUBREGION LIMITS ARE TO BE FIXED**
+!               *****************************************************
+!
+      IF(IHARG(IWORD).EQ.'XLIM')GO TO 1100
+      GO TO 1199
+!
+ 1100 CONTINUE
+      IF(NUMARG.LE.IWORD)GO TO 1110
+      IF(IHARG(IWORD+1).EQ.'DEFA')GO TO 1110
+      IF(IARGT(IWORD+1).EQ.'NUMB'.AND.IARGT(IWORD+2).EQ.'NUMB')GO TO 1120
+      GO TO 1110
+!
+ 1110 CONTINUE
+      IFOUND='YES'
+      ASUBXL(ISUBID)=CPUMIN
+      ASUBXU(ISUBID)=CPUMAX
+!
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1115)ISUBID
+ 1115   FORMAT('THE X LIMITS FOR SUB-REGION ',I8,' HAVE JUST BEEN SET')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1117)
+ 1117   FORMAT('TO THE FULL PLOT AREA.')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+      GO TO 9000
+!
+ 1120 CONTINUE
+      IFOUND='YES'
+      ASUBXL(ISUBID)=ARG(IWORD+1)
+      ASUBXU(ISUBID)=ARG(IWORD+2)
+      IF(ASUBXL(ISUBID).GT.ASUBXU(ISUBID))THEN
+        ATEMP=ASUBXL(ISUBID)
+        ASUBXL(ISUBID)=ASUBXU(ISUBID)
+        ASUBXU(ISUBID)=ATEMP
+      ENDIF
+!
+      IF(IFEEDB.EQ.'OFF')GO TO 1129
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1125)ISUBID
+ 1125 FORMAT('THE SUBREGION X LIMITS FOR SUBREGION ',I8)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1126)ASUBXL(ISUBID),ASUBXU(ISUBID)
+ 1126 FORMAT('HAVE JUST BEEN SET TO ',E15.7,E15.7)
+      CALL DPWRST('XXX','BUG ')
+ 1129 CONTINUE
+      GO TO 9000
+!
+ 1199 CONTINUE
+!
+!               *****************************************************
+!               **  TREAT THE CASE WHEN                            **
+!               **  THE VERTICAL   SUBREGION LIMITS ARE TO BE FIXED**
+!               *****************************************************
+!
+      IF(IHARG(IWORD).EQ.'YLIM')GO TO 2100
+      GO TO 2199
+!
+ 2100 CONTINUE
+      IF(NUMARG.LE.IWORD)GO TO 2110
+      IF(IHARG(IWORD+1).EQ.'DEFA')GO TO 2110
+      IF(IARGT(IWORD+1).EQ.'NUMB'.AND.IARGT(IWORD+2).EQ.'NUMB')GO TO 2120
+      GO TO 2110
+!
+ 2110 CONTINUE
+      IFOUND='YES'
+      ASUBYL(ISUBID)=CPUMIN
+      ASUBYU(ISUBID)=CPUMAX
+!
+      IF(IFEEDB.EQ.'OFF')GO TO 2119
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,2115)ISUBID
+ 2115 FORMAT('THE Y LIMITS FOR SUB-REGION ',I8,' HAVE JUST BEEN SET')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,2117)
+ 2117 FORMAT('TO THE FULL PLOT AREA.')
+      CALL DPWRST('XXX','BUG ')
+ 2119 CONTINUE
+      GO TO 9000
+!
+ 2120 CONTINUE
+      IFOUND='YES'
+      ASUBYL(ISUBID)=ARG(IWORD+1)
+      ASUBYU(ISUBID)=ARG(IWORD+2)
+      IF(ASUBYL(ISUBID).GT.ASUBYU(ISUBID))THEN
+        ATEMP=ASUBYL(ISUBID)
+        ASUBYL(ISUBID)=ASUBYU(ISUBID)
+        ASUBYU(ISUBID)=ATEMP
+      ENDIF
+!
+      IF(IFEEDB.EQ.'OFF')GO TO 2129
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,2125)ISUBID
+ 2125 FORMAT('THE SUBREGION Y LIMITS FOR SUBREGION ',I8)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,2126)ASUBYL(ISUBID),ASUBYU(ISUBID)
+ 2126 FORMAT('HAVE JUST BEEN SET TO ',E15.7,E15.7)
+      CALL DPWRST('XXX','BUG ')
+ 2129 CONTINUE
+      GO TO 9000
+!
+ 2199 CONTINUE
+!
+!               *****************************************************
+!               **  TREAT THE CASE WHEN BOTH THE HORIZONTAL AND    **
+!               **  VERTICAL SUBREGION LIMITS ARE TO BE FIXED      **
+!               *****************************************************
+!
+      IF(IHARG(IWORD).EQ.'LIMI')GO TO 3100
+      GO TO 3199
+!
+ 3100 CONTINUE
+      IF(NUMARG.LE.IWORD)GO TO 3110
+      IF(IHARG(IWORD+1).EQ.'DEFA')GO TO 3110
+      IF(IARGT(IWORD+1).EQ.'NUMB'.AND.IARGT(IWORD+2).EQ.'NUMB')GO TO 3120
+      GO TO 3110
+!
+ 3110 CONTINUE
+      IFOUND='YES'
+      ASUBXL(ISUBID)=CPUMIN
+      ASUBXU(ISUBID)=CPUMAX
+      ASUBYL(ISUBID)=CPUMIN
+      ASUBYU(ISUBID)=CPUMAX
+!
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3115)ISUBID
+ 3115   FORMAT('THE LIMITS FOR SUB-REGION ',I8,' HAVE JUST BEEN SET')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3117)
+ 3117   FORMAT('TO THE FULL PLOT AREA.')
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+      GO TO 9000
+!
+ 3120 CONTINUE
+      IFOUND='YES'
+      ASUBXL(ISUBID)=ARG(IWORD+1)
+      ASUBXU(ISUBID)=ARG(IWORD+2)
+      ASUBYL(ISUBID)=ARG(IWORD+1)
+      ASUBYU(ISUBID)=ARG(IWORD+2)
+      IF(ASUBYL(ISUBID).GT.ASUBYU(ISUBID))THEN
+        ATEMP=ASUBYL(ISUBID)
+        ASUBYL(ISUBID)=ASUBYU(ISUBID)
+        ASUBYU(ISUBID)=ATEMP
+      ENDIF
+      IF(ASUBXL(ISUBID).GT.ASUBXU(ISUBID))THEN
+        ATEMP=ASUBXL(ISUBID)
+        ASUBXL(ISUBID)=ASUBXU(ISUBID)
+        ASUBXU(ISUBID)=ATEMP
+      ENDIF
+!
+      IF(IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3125)ISUBID
+ 3125   FORMAT('THE SUBREGION Y LIMITS FOR SUBREGION ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3126)ASUBYL(ISUBID),ASUBYU(ISUBID)
+ 3126   FORMAT('HAVE JUST BEEN SET TO ',2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3126)ASUBXL(ISUBID),ASUBXU(ISUBID)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+      GO TO 9000
+!
+ 3199 CONTINUE
+      GO TO 9000
+!
+!               ********************************************
+!               **  STEP 81--                             **
+!               **  TREAT THE    ?    CASE--              **
+!               **  DUMP OUT CURRENT AND DEFAULT VALUES.  **
+!               ********************************************
+!
+ 8100 CONTINUE
+      IFOUND='YES'
+      DO 8105 I=1,MAXSUB
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,8111)I
+ 8111 FORMAT('THE CURRENT SUBREGION ',I5,' LIMITS ARE ')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,8112)ASUBXL(I),ASUBXU(I)
+ 8112 FORMAT('            --XLIMITS        = ',2E15.7)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,8113)ASUBYL(I),ASUBYU(I)
+ 8113 FORMAT('            --YLIMITS        = ',2E15.7)
+      CALL DPWRST('XXX','BUG ')
+ 8105 CONTINUE
+      GO TO 9000
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      RETURN
+      END SUBROUTINE DPSBLI
+      SUBROUTINE DPSBSP(IFOUNO,IOP,XEND,YEND,HEIGHT,WIDTH,   &
+                        PHEIGH,PWIDTH,PVEGAP,PHOGAP,   &
+                        PHEIG2,PWIDT2,PVEGA2,PHOGA2,   &
+                        ANGLE,AMAX,   &
+                        IBUGD2,IERROR)
+!
+!     PURPOSE--ADJUST XEND, YEND, HEIGHT, AND WIDTH
+!              WHEN ENTERING OR EXITING
+!              SUBSCRIPT OR SUPERSCRIPT MODE.
+!     NOTE--THE INPUT ARGUMENTS XEND, YEND, HEIGHT, AND WIDTH
+!           MAY BE CHANGED BY THIS SUBROUTINE.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--APRIL     1981.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --MARCH     2001. ALLOW SCALE FACTORS FOR
+!                                       SIZE OF SUPER/SUB/SCRIPTS
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IFOUNO
+      CHARACTER*4 IOP
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 IERROR
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOST.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IERROR='NO'
+      SUBFAC=0.15
+      SUPFAC=0.50
+!
+      IF(IBUGD2.EQ.'ON' .OR. ISUBG4.EQ.'SBSP')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSBSP--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IFOUNO,IOP
+   52   FORMAT('IFOUNO,IOP = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)XEND,YEND,HEIGHT,WIDTH
+   53   FORMAT('XEND,YEND,HEIGHT,WIDTH = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55)SUBFAC,SUPFAC,PSUPXS,PSUPYS
+   55   FORMAT('SUBFAC,SUPFAC,PSUPXS,PSUPYS = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,56)PHEIGH,PWIDTH,PVEGAP,PHOGAP
+   56   FORMAT('PHEIGH,PWIDTH,PVEGAP,PHOGAP = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,57)PHEIG2,PWIDT2,PVEGA2,PHOGA2
+   57   FORMAT('PHEIG2,PWIDT2,PVEGA2,PHOGA2 = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,58)ANGLE,AMAX
+   58   FORMAT('ANGLE,AMAX = ',2E15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,69)IBUGG4,ISUBG4,IERRG4
+   69   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      THETA=(ANGLE/AMAX)*2.0*3.1315926
+!
+      IF(IFOUNO.EQ.'NO')GO TO 1190
+!
+      IF(IOP.EQ.'SUB')GO TO 1110
+      IF(IOP.EQ.'UNSB')GO TO 1120
+      IF(IOP.EQ.'SUP')GO TO 1130
+      IF(IOP.EQ.'UNSP')GO TO 1140
+      GO TO 1190
+!
+ 1110 CONTINUE
+!CCCC YEND=YEND-SUBFAC*HEIGHT
+      XEND=XEND+SUBFAC*HEIGHT*SIN(THETA)
+      YEND=YEND-SUBFAC*HEIGHT*COS(THETA)
+!CCCC HEIGHT=HEIGHT/2.0
+!CCCC WIDTH=WIDTH/2.0
+!CCCC PHEIGH=PHEIGH/2.0
+!CCCC PWIDTH=PWIDTH/2.0
+!CCCC PVEGAP=PVEGAP/2.0
+!CCCC PHOGAP=PHOGAP/2.0
+!CCCC PHEIG2=PHEIG2/2.0
+!CCCC PWIDT2=PWIDT2/2.0
+!CCCC PVEGA2=PVEGA2/2.0
+!CCCC PHOGA2=PHOGA2/2.0
+      HEIGHT=HEIGHT/2.0
+      WIDTH=WIDTH*PSUPXS
+      PHEIGH=PHEIGH*PSUPYS
+      PWIDTH=PWIDTH*PSUPXS
+      PVEGAP=PVEGAP*PSUPYS
+      PHOGAP=PHOGAP*PSUPXS
+      PHEIG2=PHEIG2*PSUPYS
+      PWIDT2=PWIDT2*PSUPXS
+      PVEGA2=PVEGA2*PSUPYS
+      PHOGA2=PHOGA2*PSUPXS
+      GO TO 1190
+!
+ 1120 CONTINUE
+!CCCC HEIGHT=HEIGHT*2.0
+!CCCC WIDTH=WIDTH*2.0
+!CCCC PHEIGH=PHEIGH*2.0
+!CCCC PWIDTH=PWIDTH*2.0
+!CCCC PVEGAP=PVEGAP*2.0
+!CCCC PHOGAP=PHOGAP*2.0
+!CCCC PHEIG2=PHEIG2*2.0
+!CCCC PWIDT2=PWIDT2*2.0
+!CCCC PVEGA2=PVEGA2*2.0
+!CCCC PHOGA2=PHOGA2*2.0
+      HEIGHT=HEIGHT*(1.0/PSUPYS)
+      WIDTH=WIDTH*(1.0/PSUPXS)
+      PHEIGH=PHEIGH*(1.0/PSUPYS)
+      PWIDTH=PWIDTH*(1.0/PSUPXS)
+      PVEGAP=PVEGAP*(1.0/PSUPYS)
+      PHOGAP=PHOGAP*(1.0/PSUPXS)
+      PHEIG2=PHEIG2*(1.0/PSUPYS)
+      PWIDT2=PWIDT2*(1.0/PSUPXS)
+      PVEGA2=PVEGA2*(1.0/PSUPYS)
+      PHOGA2=PHOGA2*(1.0/PSUPXS)
+!CCCC YEND=YEND+SUBFAC*HEIGHT
+      XEND=XEND-SUBFAC*HEIGHT*SIN(THETA)
+      YEND=YEND+SUBFAC*HEIGHT*COS(THETA)
+      GO TO 1190
+!
+ 1130 CONTINUE
+!CCCC YEND=YEND+SUPFAC*HEIGHT
+      XEND=XEND-SUPFAC*HEIGHT*SIN(THETA)
+      YEND=YEND+SUPFAC*HEIGHT*COS(THETA)
+!CCCC HEIGHT=HEIGHT/2.0
+!CCCC WIDTH=WIDTH/2.0
+!CCCC PHEIGH=PHEIGH/2.0
+!CCCC PWIDTH=PWIDTH/2.0
+!CCCC PVEGAP=PVEGAP/2.0
+!CCCC PHOGAP=PHOGAP/2.0
+!CCCC PHEIG2=PHEIG2/2.0
+!CCCC PWIDT2=PWIDT2/2.0
+!CCCC PVEGA2=PVEGA2/2.0
+!CCCC PHOGA2=PHOGA2/2.0
+      HEIGHT=HEIGHT*PSUPYS
+      WIDTH=WIDTH*PSUPXS
+      PHEIGH=PHEIGH*PSUPYS
+      PWIDTH=PWIDTH*PSUPXS
+      PVEGAP=PVEGAP*PSUPYS
+      PHOGAP=PHOGAP*PSUPXS
+      PHEIG2=PHEIG2*PSUPYS
+      PWIDT2=PWIDT2*PSUPXS
+      PVEGA2=PVEGA2*PSUPYS
+      PHOGA2=PHOGA2*PSUPXS
+      GO TO 1190
+!
+ 1140 CONTINUE
+!CCCC HEIGHT=HEIGHT*2.0
+!CCCC WIDTH=WIDTH*2.0
+!CCCC PHEIGH=PHEIGH*2.0
+!CCCC PWIDTH=PWIDTH*2.0
+!CCCC PVEGAP=PVEGAP*2.0
+!CCCC PHOGAP=PHOGAP*2.0
+!CCCC PHEIG2=PHEIG2*2.0
+!CCCC PWIDT2=PWIDT2*2.0
+!CCCC PVEGA2=PVEGA2*2.0
+!CCCC PHOGA2=PHOGA2*2.0
+      HEIGHT=HEIGHT*(1.0/PSUPYS)
+      WIDTH=WIDTH*(1.0/PSUPXS)
+      PHEIGH=PHEIGH*(1.0/PSUPYS)
+      PWIDTH=PWIDTH*(1.0/PSUPXS)
+      PVEGAP=PVEGAP*(1.0/PSUPYS)
+      PHOGAP=PHOGAP*(1.0/PSUPXS)
+      PHEIG2=PHEIG2*(1.0/PSUPYS)
+      PWIDT2=PWIDT2*(1.0/PSUPXS)
+      PVEGA2=PVEGA2*(1.0/PSUPYS)
+      PHOGA2=PHOGA2*(1.0/PSUPXS)
+!CCCC YEND=YEND-SUPFAC*HEIGHT
+      XEND=XEND+SUPFAC*HEIGHT*SIN(THETA)
+      YEND=YEND-SUPFAC*HEIGHT*COS(THETA)
+      GO TO 1190
+!
+ 1190 CONTINUE
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'SBSP')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSBSP--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUNO,IOP,IERRG4
+ 9012   FORMAT('IFOUNO,IOP,IERRG4 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)XEND,YEND,HEIGHT,WIDTH
+ 9013   FORMAT('XEND,YEND,HEIGHT,WIDTH = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)SUBFAC,SUPFAC,ANGLE,AMAX,THETA
+ 9015   FORMAT('SUBFAC,SUPFAC,ANGLE,AMAX,THETA = ',5G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9016)PHEIGH,PWIDTH,PVEGAP,PHOGAP
+ 9016   FORMAT('PHEIGH,PWIDTH,PVEGAP,PHOGAP = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9017)PHEIG2,PWIDT2,PVEGA2,PHOGA2
+ 9017   FORMAT('PHEIG2,PWIDT2,PVEGA2,PHOGA2 = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSBSP
+      SUBROUTINE DPSBSW(IHARG,NUMARG,IDEFSB,MAXSUB,ISUBSW,   &
+                        IBUGP2,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE THE SUB-REGION SWITCHES.
+!              THESE ARE LOCATED IN THE VECTOR ISUBSW(.).
+!     INPUT  ARGUMENTS--IHARG  (A  CHARACTER VECTOR)
+!                     --NUMARG
+!                     --IDEFSB
+!                     --MAXSUB
+!                     --IBUGP2 ('ON' OR 'OFF' )
+!     OUTPUT ARGUMENTS--ISUBSW (A CHARACTER VECTOR)
+!                     --IFOUND ('YES' OR 'NO' )
+!                     --IERROR ('YES' OR 'NO' )
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--99/11
+!     ORIGINAL VERSION--NOVEMBER  1999.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IHARG
+      CHARACTER*4 IDEFSB
+      CHARACTER*4 ISUBSW
+!
+      CHARACTER*4 IBUGP2
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 IHOLD1
+      CHARACTER*4 IHOLD2
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+!
+      DIMENSION IHARG(*)
+      DIMENSION ISUBSW(*)
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+      ISUBN1='DPSB'
+      ISUBN2='SW  '
+!
+      NUMSUB=0
+      IHOLD1='-999'
+      IHOLD2='-999'
+!
+      IF(IBUGP2.EQ.'OFF')GO TO 90
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,51)
+   51 FORMAT('***** AT THE BEGINNING OF DPSBSW--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,52)IBUGP2,IFOUND,IERROR
+   52 FORMAT('IBUGP2,IFOUND,IERROR = ',A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,53)MAXSUB,NUMSUB
+   53 FORMAT('MAXSUB,NUMSUB = ',I8,I8)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,54)IHOLD1,IHOLD2
+   54 FORMAT('IHOLD1,IHOLD2 = ',A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,55)IDEFSB
+   55 FORMAT('IDEFSB = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,60)NUMARG
+   60 FORMAT('NUMARG = ',I8)
+      CALL DPWRST('XXX','BUG ')
+      DO 65 I=1,NUMARG
+      WRITE(ICOUT,66)IHARG(I)
+   66 FORMAT('IHARG(I) = ',A4)
+      CALL DPWRST('XXX','BUG ')
+   65 CONTINUE
+      WRITE(ICOUT,70)ISUBSW(1)
+   70 FORMAT('ISUBSW(1) = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      DO 75 I=1,10
+      WRITE(ICOUT,76)I,ISUBSW(I)
+   76 FORMAT('I,ISUBSW(I) = ',I8,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+   75 CONTINUE
+   90 CONTINUE
+!
+!               **************************************
+!               **  STEP 1--                        **
+!               **  BRANCH TO THE APPROPRIATE CASE  **
+!               **************************************
+!
+      ISTEPN='1'
+      IF(IBUGP2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(NUMARG.LE.0)GO TO 1100
+      IF(NUMARG.EQ.1)GO TO 1110
+      IF(NUMARG.EQ.2)GO TO 1120
+      GO TO 1130
+!
+ 1100 CONTINUE
+      GO TO 1200
+!
+ 1110 CONTINUE
+      IF(IHARG(1).EQ.'ALL')IHOLD1='OFF'
+      IF(IHARG(1).EQ.'ALL')GO TO 1300
+      GO TO 1200
+!
+ 1120 CONTINUE
+      IF(IHARG(1).EQ.'ALL')IHOLD1=IHARG(2)
+      IF(IHARG(1).EQ.'ALL')GO TO 1300
+      IF(IHARG(2).EQ.'ALL')IHOLD1=IHARG(1)
+      IF(IHARG(2).EQ.'ALL')GO TO 1300
+      GO TO 1200
+!
+ 1130 CONTINUE
+      GO TO 1200
+!
+!               *************************************************
+!               **  STEP 2--                                   **
+!               **  TREAT THE INDIVIDUAL SPECIFICATIONS CASE  **
+!               *************************************************
+!
+ 1200 CONTINUE
+      ISTEPN='2'
+      IF(IBUGP2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(NUMARG.LE.0)GO TO 1210
+      GO TO 1220
+!
+ 1210 CONTINUE
+      NUMSUB=1
+      ISUBSW(1)='ON'
+      GO TO 1270
+!
+ 1220 CONTINUE
+      NUMSUB=NUMARG
+      IF(NUMSUB.GT.MAXSUB)NUMSUB=MAXSUB
+      DO 1225 I=1,NUMSUB
+      J=I
+      IHOLD1=IHARG(J)
+      IHOLD2=IHOLD1
+      IF(IHOLD1.EQ.'ON')IHOLD2='ON'
+      IF(IHOLD1.EQ.'OFF')IHOLD2='OFF'
+      ISUBSW(I)=IHOLD2
+ 1225 CONTINUE
+      GO TO 1270
+!
+ 1270 CONTINUE
+      IF(IFEEDB.EQ.'OFF')GO TO 1279
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      DO 1278 I=1,NUMSUB
+      WRITE(ICOUT,1276)I,ISUBSW(I)
+ 1276 FORMAT('SUBREGION ',I6,' HAS JUST BEEN SET TO ',   &
+      A4)
+      CALL DPWRST('XXX','BUG ')
+ 1278 CONTINUE
+ 1279 CONTINUE
+      IFOUND='YES'
+      GO TO 9000
+!
+!               **************************
+!               **  STEP 2--            **
+!               **  TREAT THE ALL CASE  **
+!               **************************
+!
+ 1300 CONTINUE
+      ISTEPN='3'
+      IF(IBUGP2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      NUMSUB=MAXSUB
+      IHOLD2=IHOLD1
+      IF(IHOLD1.EQ.'ON')IHOLD2='ON'
+      IF(IHOLD1.EQ.'OFF')IHOLD2='OFF'
+      DO 1315 I=1,NUMSUB
+      ISUBSW(I)=IHOLD2
+ 1315 CONTINUE
+      GO TO 1370
+!
+ 1370 CONTINUE
+      IF(IFEEDB.EQ.'OFF')GO TO 1319
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      I=1
+      WRITE(ICOUT,1316)ISUBSW(I)
+ 1316 FORMAT('ALL SPIKES HAVE JUST BEEN SET TO ',   &
+      A4)
+      CALL DPWRST('XXX','BUG ')
+ 1319 CONTINUE
+      IFOUND='YES'
+      GO TO 9000
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGP2.EQ.'OFF')GO TO 9090
+      WRITE(ICOUT,9011)
+ 9011 FORMAT('***** AT THE END       OF DPSBSW--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9012)IBUGP2,IFOUND,IERROR
+ 9012 FORMAT('IBUGP2,IFOUND,IERROR = ',A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9013)MAXSUB,NUMSUB
+ 9013 FORMAT('MAXSUB,NUMSUB = ',I8,I8)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9014)IHOLD1,IHOLD2
+ 9014 FORMAT('IHOLD1,IHOLD2 = ',A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9015)IDEFSB
+ 9015 FORMAT('IDEFSB = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9020)NUMARG
+ 9020 FORMAT('NUMARG = ',I8)
+      CALL DPWRST('XXX','BUG ')
+      DO 9025 I=1,NUMARG
+      WRITE(ICOUT,9026)IHARG(I)
+ 9026 FORMAT('IHARG(I) = ',A4)
+      CALL DPWRST('XXX','BUG ')
+ 9025 CONTINUE
+      WRITE(ICOUT,9030)ISUBSW(1)
+ 9030 FORMAT('ISUBSW(1) = ',A4)
+      CALL DPWRST('XXX','BUG ')
+      DO 9035 I=1,10
+      WRITE(ICOUT,9036)I,ISUBSW(I)
+ 9036 FORMAT('I,ISUBSW(I) = ',I8,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+ 9035 CONTINUE
+ 9090 CONTINUE
+!
+      RETURN
+      END SUBROUTINE DPSBSW
+      SUBROUTINE DPSCAN(ISTART,ISTRIN,NUMCHS,ILOCR2,   &
+      ICHAR2,IOP,IFONT,ICASE,IJUST,ISEQUE,ISUBSU,   &
+      HMAX,VMAX,AMAX,X0,Y0,ANGLE,WIDTH,HEIGHT,   &
+      IEND,IFOUNC,IFOUNO,IBUGD2,IERROR)
+!
+!     PURPOSE--SCAN THE STRING IN ISTRIN(.) STARTING WITH POSITION ISTART.
+!                EXAMINE THE NEXT 6 CHARACTERS AT MOST.
+!                COPY AND PACK THE NEXT 4 CHARACTERS INTO IWORD1.
+!           IF () FOUND IN NEXT 6 CHARACTERS, THEN STRIP OFF ()
+!            AND SAVE PREVIOUS INTO IWORD1 (PACKED).
+!      |      IF() NOT FOUND, THEN OUTPUT A SINGLE CHARACTER IN IWORD1.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--JANUARY   1981.
+!     UPDATED         --OCTOBER   1981.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --APRIL     1987.
+!     UPDATED         --AUGUST    1992.  ADDITIONAL SYMBOLS
+!     UPDATED         --FEBRUARY  1995.  CONVERT IWORD1 TO UPPER CASE
+!                                        (CASE ASIS COMPLICATION)
+!     UPDATED         --NOVEMBER  1996.  COMPILE ERROR FOR LINIX G77
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ISTRIN
+      CHARACTER*4 ICHAR2
+      CHARACTER*4 IOP
+      CHARACTER*4 IFONT
+      CHARACTER*4 ICASE
+      CHARACTER*4 IJUST
+      CHARACTER*4 ISEQUE
+      CHARACTER*4 ISUBSU
+      CHARACTER*4 IFOUNC
+      CHARACTER*4 IFOUNO
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 IWORD1
+      CHARACTER*4 IXXXXX
+      CHARACTER*4 IFOULR
+      CHARACTER*4 IOPERT
+      CHARACTER*4 IGREET
+      CHARACTER*4 IMATHT
+!
+!CCCC CHARACTER*4 ICHAR3
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION ISTRIN(*)
+!
+      DIMENSION IOPERT(50)
+      DIMENSION IGREET(25)
+      DIMENSION IMATHT(200)
+!
+      DIMENSION IOPERN(50)
+      DIMENSION IGREEN(25)
+      DIMENSION IMATHN(200)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----DATA STATEMENTS-------------------------------------------------
+!
+!               *************************
+!               **  DEFINE OPERATIONS  **
+!               *************************
+!
+      DATA IOPERT( 1)   /'SIMP'/
+      DATA IOPERT( 2)   /'DUPL'/
+      DATA IOPERT( 3)   /'TRIP'/
+      DATA IOPERT( 4)   /'COMP'/
+      DATA IOPERT( 5)   /'TRII'/
+      DATA IOPERT( 6)   /'COMI'/
+      DATA IOPERT( 7)   /'SIMS'/
+      DATA IOPERT( 8)   /'COMS'/
+!
+      DATA IOPERT( 9)   /'UC  '/
+      DATA IOPERT(10)   /'CAP '/
+      DATA IOPERT(11)   /'CAPS'/
+      DATA IOPERT(12)   /'LC  '/
+!
+      DATA IOPERT(13)   /'LJUS'/
+      DATA IOPERT(14)   /'CJUS'/
+      DATA IOPERT(15)   /'RJUS'/
+!
+      DATA IOPERT(16)   /'SEQ '/
+      DATA IOPERT(17)   /'UNSQ'/
+!
+      DATA IOPERT(18)   /'SUB '/
+      DATA IOPERT(19)   /'UNSB'/
+      DATA IOPERT(20)   /'SUP '/
+      DATA IOPERT(21)   /'UNSP'/
+!
+      DATA IOPERT(22)   /'HMAX'/
+      DATA IOPERT(23)   /'VMAX'/
+      DATA IOPERT(24)   /'ANGL'/
+      DATA IOPERT(25)   /'HEIG'/
+      DATA IOPERT(26)   /'WIDT'/
+      DATA IOPERT(27)   /'ANGL'/
+!
+      DATA IOPERT(28)   /'MOVE'/
+      DATA IOPERT(29)   /'DRAW'/
+      DATA IOPERT(30)   /'RELM'/
+      DATA IOPERT(31)   /'RELD'/
+!
+      DATA IOPERT(32)   /'BACK'/
+      DATA IOPERT(33)   /'OVER'/
+      DATA IOPERT(34)   /'UP  '/
+      DATA IOPERT(35)   /'DOWN'/
+      DATA IOPERT(36)   /'TAB '/
+      DATA IOPERT(37)   /'RETU'/
+!
+!               *******************************
+!               **  DEFINE GREEK CHARACTERS  **
+!               *******************************
+!
+      DATA IGREET( 1)   /'ALPH'/
+      DATA IGREET( 2)   /'BETA'/
+      DATA IGREET( 3)   /'GAMM'/
+      DATA IGREET( 4)   /'DELT'/
+      DATA IGREET( 5)   /'EPSI'/
+      DATA IGREET( 6)   /'ZETA'/
+      DATA IGREET( 7)   /'ETA '/
+      DATA IGREET( 8)   /'THET'/
+      DATA IGREET( 9)   /'IOTA'/
+      DATA IGREET(10)   /'KAPP'/
+      DATA IGREET(11)   /'LAMB'/
+      DATA IGREET(12)   /'MU  '/
+      DATA IGREET(13)   /'NU  '/
+      DATA IGREET(14)   /'XI  '/
+      DATA IGREET(15)   /'OMIC'/
+      DATA IGREET(16)   /'PI  '/
+      DATA IGREET(17)   /'RHO '/
+      DATA IGREET(18)   /'SIGM'/
+      DATA IGREET(19)   /'TAU '/
+      DATA IGREET(20)   /'UPSI'/
+      DATA IGREET(21)   /'PHI '/
+      DATA IGREET(22)   /'CHI '/
+      DATA IGREET(23)   /'PSI '/
+      DATA IGREET(24)   /'OMEG'/
+!
+!               ***************************
+!               **  DEFINE MATH SYMBOLS  **
+!               ***************************
+!
+      DATA IMATHT( 1)   /'HASP'/
+      DATA IMATHT( 2)   /'SPAC'/
+      DATA IMATHT( 3)   /'SP  '/
+      DATA IMATHT( 4)   /'LAPO'/
+      DATA IMATHT( 5)   /'RAPO'/
+      DATA IMATHT( 6)   /'LBRA'/
+      DATA IMATHT( 7)   /'RBRA'/
+      DATA IMATHT( 8)   /'LCBR'/
+      DATA IMATHT( 9)   /'RCBR'/
+      DATA IMATHT(10)   /'LELB'/
+      DATA IMATHT(11)   /'RELB'/
+      DATA IMATHT(12)   /'+-  '/
+      DATA IMATHT(13)   /'-+  '/
+      DATA IMATHT(14)   /'TIME'/
+      DATA IMATHT(15)   /'DOTP'/
+      DATA IMATHT(16)   /'DIVI'/
+      DATA IMATHT(17)   /'NOT='/
+      DATA IMATHT(18)   /'EQUI'/
+      DATA IMATHT(19)   /'LT  '/
+      DATA IMATHT(20)   /'GT  '/
+      DATA IMATHT(21)   /'LTEQ'/
+      DATA IMATHT(22)   /'GTEQ'/
+      DATA IMATHT(23)   /'VARI'/
+      DATA IMATHT(24)   /'APPR'/
+      DATA IMATHT(25)   /'TILD'/
+      DATA IMATHT(26)   /'CARA'/
+      DATA IMATHT(27)   /'RACC'/
+      DATA IMATHT(28)   /'PRIM'/
+      DATA IMATHT(29)   /'LACC'/
+      DATA IMATHT(30)   /'BREV'/
+      DATA IMATHT(31)   /'RQUO'/
+      DATA IMATHT(32)   /'LQUO'/
+      DATA IMATHT(33)   /'NASP'/
+      DATA IMATHT(34)   /'IASP'/
+      DATA IMATHT(35)   /'RADI'/
+      DATA IMATHT(36)   /'LRAD'/
+      DATA IMATHT(37)   /'BRAD'/
+      DATA IMATHT(38)   /'SUBS'/
+      DATA IMATHT(39)   /'SUPE'/
+      DATA IMATHT(40)   /'UNIO'/
+      DATA IMATHT(41)   /'INTR'/
+      DATA IMATHT(42)   /'ELEM'/
+      DATA IMATHT(43)   /'RARR'/
+      DATA IMATHT(44)   /'LARR'/
+      DATA IMATHT(45)   /'UARR'/
+      DATA IMATHT(46)   /'DARR'/
+      DATA IMATHT(47)   /'PART'/
+      DATA IMATHT(48)   /'INTE'/
+      DATA IMATHT(49)   /'CINT'/
+      DATA IMATHT(50)   /'SUMM'/
+      DATA IMATHT(51)   /'PROD'/
+      DATA IMATHT(52)   /'INFI'/
+      DATA IMATHT(53)   /'PARA'/
+      DATA IMATHT(54)   /'DAGG'/
+      DATA IMATHT(55)   /'DDAG'/
+      DATA IMATHT(56)   /'THEX'/
+      DATA IMATHT(57)   /'THFO'/
+      DATA IMATHT(58)   /'VBAR'/
+      DATA IMATHT(59)   /'DVBA'/
+      DATA IMATHT(60)   /'LVBA'/
+      DATA IMATHT(61)   /'HBAR'/
+      DATA IMATHT(62)   /'LHBA'/
+      DATA IMATHT(63)   /'HHBA'/
+      DATA IMATHT(64)   /'BAR '/
+      DATA IMATHT(65)   /'DEL '/
+!
+      DATA IMATHT(66)   /'ZZZZ'/
+      DATA IMATHT(67)   /'ZZZZ'/
+      DATA IMATHT(68)   /'ZZZZ'/
+      DATA IMATHT(69)   /'ZZZZ'/
+      DATA IMATHT(70)   /'ZZZZ'/
+!
+      DATA IMATHT(71)   /'.   '/
+      DATA IMATHT(72)   /'POIN'/
+      DATA IMATHT(73)   /'PO  '/
+      DATA IMATHT(74)   /'PT  '/
+      DATA IMATHT(75)   /'CIRC'/
+      DATA IMATHT(76)   /'CI  '/
+      DATA IMATHT(77)   /'SQUA'/
+      DATA IMATHT(78)   /'SQ  '/
+      DATA IMATHT(79)   /'TRIA'/
+      DATA IMATHT(80)   /'TR  '/
+      DATA IMATHT(81)   /'DIAM'/
+      DATA IMATHT(82)   /'DI  '/
+      DATA IMATHT(83)   /'STAR'/
+      DATA IMATHT(84)   /'ST  '/
+      DATA IMATHT(85)   /'*   '/
+      DATA IMATHT(86)   /'ASTE'/
+      DATA IMATHT(87)   /'AS  '/
+      DATA IMATHT(88)   /'TRIR'/
+      DATA IMATHT(89)   /'TRII'/
+      DATA IMATHT(90)   /'BARU'/
+      DATA IMATHT(91)   /'BU  '/
+      DATA IMATHT(92)   /'BARV'/
+      DATA IMATHT(93)   /'BV  '/
+      DATA IMATHT(94)   /'BARH'/
+      DATA IMATHT(95)   /'BH  '/
+      DATA IMATHT(96)   /'ARRU'/
+      DATA IMATHT(97)   /'AU  '/
+      DATA IMATHT(98)   /'ARRD'/
+      DATA IMATHT(99)   /'AD  '/
+      DATA IMATHT(100)  /'ARRL'/
+      DATA IMATHT(101)  /'AL  '/
+      DATA IMATHT(102)  /'ARRR'/
+      DATA IMATHT(103)  /'AR  '/
+!CCCC NOVEMBER 1996.  FOLLOWING LINE CAUSES COMPILE ERROR ON LINUX
+!CCCC G77 COMPILER.
+!LINX DATA IMATHT(104)  /'\   '/
+      DATA IMATHT(105)  /'BASL'/
+      DATA IMATHT(106)  /'BACK'/
+      DATA IMATHT(107)  /'BS  '/
+      DATA IMATHT(108)  /'_   '/
+      DATA IMATHT(109)  /'UNDE'/
+      DATA IMATHT(110)  /'CUBE'/
+      DATA IMATHT(111)  /'PYRA'/
+!  AUGUST 1992.  ADD REVT, RT (FOR REVERSE TRIANGLE, TO AGREE WITH
+!  DOCUMENTATION), AND ARRO, ARRH, VECT FOR THE ARROW COMMAND
+      DATA IMATHT(112)  /'REVT'/
+      DATA IMATHT(113)  /'RT  '/
+      DATA IMATHT(114)  /'ARRO'/
+      DATA IMATHT(115)  /'ARRH'/
+      DATA IMATHT(116)  /'VECT'/
+      DATA IMATHT(117)  /'DEGR'/
+!
+!---------------------------------------------------------------------
+!
+!               ******************************************************
+!               **  DEFINE THE NUMBER OF CHARACTERS FOR OPERATIONS  **
+!               ******************************************************
+!
+      DATA IOPERN( 1)   /4/
+      DATA IOPERN( 2)   /4/
+      DATA IOPERN( 3)   /4/
+      DATA IOPERN( 4)   /4/
+      DATA IOPERN( 5)   /4/
+      DATA IOPERN( 6)   /4/
+      DATA IOPERN( 7)   /4/
+      DATA IOPERN( 8)   /4/
+!
+      DATA IOPERN( 9)   /2/
+      DATA IOPERN(10)   /3/
+      DATA IOPERN(11)   /4/
+      DATA IOPERN(12)   /2/
+!
+      DATA IOPERN(13)   /4/
+      DATA IOPERN(14)   /4/
+      DATA IOPERN(15)   /4/
+!
+      DATA IOPERN(16)   /3/
+      DATA IOPERN(17)   /4/
+!
+      DATA IOPERN(18)   /3/
+      DATA IOPERN(19)   /4/
+      DATA IOPERN(20)   /3/
+      DATA IOPERN(21)   /4/
+!
+      DATA IOPERN(22)   /4/
+      DATA IOPERN(23)   /4/
+      DATA IOPERN(24)   /4/
+      DATA IOPERN(25)   /4/
+      DATA IOPERN(26)   /4/
+      DATA IOPERN(27)   /4/
+!
+      DATA IOPERN(28)   /4/
+      DATA IOPERN(29)   /4/
+      DATA IOPERN(30)   /4/
+      DATA IOPERN(31)   /4/
+!
+      DATA IOPERN(32)   /4/
+      DATA IOPERN(33)   /4/
+      DATA IOPERN(34)   /2/
+      DATA IOPERN(35)   /4/
+      DATA IOPERN(36)   /3/
+      DATA IOPERN(37)   /4/
+!
+!               ************************************************************
+!               **  DEFINE THE NUMBER OF CHARACTERS FOR GREEK CHARACTERS  **
+!               ************************************************************
+!
+      DATA IGREEN( 1)   /4/
+      DATA IGREEN( 2)   /4/
+      DATA IGREEN( 3)   /4/
+      DATA IGREEN( 4)   /4/
+      DATA IGREEN( 5)   /4/
+      DATA IGREEN( 6)   /4/
+      DATA IGREEN( 7)   /3/
+      DATA IGREEN( 8)   /4/
+      DATA IGREEN( 9)   /4/
+      DATA IGREEN(10)   /4/
+      DATA IGREEN(11)   /4/
+      DATA IGREEN(12)   /2/
+      DATA IGREEN(13)   /2/
+      DATA IGREEN(14)   /2/
+      DATA IGREEN(15)   /4/
+      DATA IGREEN(16)   /2/
+      DATA IGREEN(17)   /3/
+      DATA IGREEN(18)   /4/
+      DATA IGREEN(19)   /3/
+      DATA IGREEN(20)   /4/
+      DATA IGREEN(21)   /3/
+      DATA IGREEN(22)   /3/
+      DATA IGREEN(23)   /3/
+      DATA IGREEN(24)   /4/
+!
+!               ********************************************************
+!               **  DEFINE THE NUMBER OF CHARACTERS FOR MATH SYMBOLS  **
+!               ********************************************************
+!
+      DATA IMATHN( 1)   /4/
+      DATA IMATHN( 2)   /4/
+      DATA IMATHN( 3)   /2/
+      DATA IMATHN( 4)   /4/
+      DATA IMATHN( 5)   /4/
+      DATA IMATHN( 6)   /4/
+      DATA IMATHN( 7)   /4/
+      DATA IMATHN( 8)   /4/
+      DATA IMATHN( 9)   /4/
+      DATA IMATHN(10)   /4/
+      DATA IMATHN(11)   /4/
+      DATA IMATHN(12)   /2/
+      DATA IMATHN(13)   /2/
+      DATA IMATHN(14)   /4/
+      DATA IMATHN(15)   /4/
+      DATA IMATHN(16)   /4/
+      DATA IMATHN(17)   /4/
+      DATA IMATHN(18)   /4/
+      DATA IMATHN(19)   /2/
+      DATA IMATHN(20)   /2/
+      DATA IMATHN(21)   /4/
+      DATA IMATHN(22)   /4/
+      DATA IMATHN(23)   /4/
+      DATA IMATHN(24)   /4/
+      DATA IMATHN(25)   /4/
+      DATA IMATHN(26)   /4/
+      DATA IMATHN(27)   /4/
+      DATA IMATHN(28)   /4/
+      DATA IMATHN(29)   /4/
+      DATA IMATHN(30)   /4/
+      DATA IMATHN(31)   /4/
+      DATA IMATHN(32)   /4/
+      DATA IMATHN(33)   /4/
+      DATA IMATHN(34)   /4/
+      DATA IMATHN(35)   /4/
+      DATA IMATHN(36)   /4/
+      DATA IMATHN(37)   /4/
+      DATA IMATHN(38)   /4/
+      DATA IMATHN(39)   /4/
+      DATA IMATHN(40)   /4/
+      DATA IMATHN(41)   /4/
+      DATA IMATHN(42)   /4/
+      DATA IMATHN(43)   /4/
+      DATA IMATHN(44)   /4/
+      DATA IMATHN(45)   /4/
+      DATA IMATHN(46)   /4/
+      DATA IMATHN(47)   /4/
+      DATA IMATHN(48)   /4/
+      DATA IMATHN(49)   /4/
+      DATA IMATHN(50)   /4/
+      DATA IMATHN(51)   /4/
+      DATA IMATHN(52)   /4/
+      DATA IMATHN(53)   /4/
+      DATA IMATHN(54)   /4/
+      DATA IMATHN(55)   /4/
+      DATA IMATHN(56)   /4/
+      DATA IMATHN(57)   /4/
+      DATA IMATHN(58)   /4/
+      DATA IMATHN(59)   /4/
+      DATA IMATHN(60)   /4/
+      DATA IMATHN(61)   /4/
+      DATA IMATHN(62)   /4/
+      DATA IMATHN(63)   /4/
+      DATA IMATHN(64)   /3/
+      DATA IMATHN(65)   /3/
+!
+      DATA IMATHN(66)   /4/
+      DATA IMATHN(67)   /4/
+      DATA IMATHN(68)   /4/
+      DATA IMATHN(69)   /4/
+      DATA IMATHN(70)   /4/
+!
+      DATA IMATHN(71)   /1/
+      DATA IMATHN(72)   /4/
+      DATA IMATHN(73)   /2/
+      DATA IMATHN(74)   /2/
+      DATA IMATHN(75)   /4/
+      DATA IMATHN(76)   /2/
+      DATA IMATHN(77)   /4/
+      DATA IMATHN(78)   /2/
+      DATA IMATHN(79)   /4/
+      DATA IMATHN(80)   /2/
+      DATA IMATHN(81)   /4/
+      DATA IMATHN(82)   /2/
+      DATA IMATHN(83)   /4/
+      DATA IMATHN(84)   /2/
+      DATA IMATHN(85)   /1/
+      DATA IMATHN(86)   /4/
+      DATA IMATHN(87)   /2/
+      DATA IMATHN(88)   /4/
+      DATA IMATHN(89)   /4/
+      DATA IMATHN(90)   /4/
+      DATA IMATHN(91)   /2/
+      DATA IMATHN(92)   /4/
+      DATA IMATHN(93)   /2/
+      DATA IMATHN(94)   /4/
+      DATA IMATHN(95)   /2/
+      DATA IMATHN(96)   /4/
+      DATA IMATHN(97)   /2/
+      DATA IMATHN(98)   /4/
+      DATA IMATHN(99)   /2/
+      DATA IMATHN(100)   /4/
+      DATA IMATHN(101)   /2/
+      DATA IMATHN(102)   /4/
+      DATA IMATHN(103)   /2/
+      DATA IMATHN(104)   /1/
+      DATA IMATHN(105)   /4/
+      DATA IMATHN(106)   /4/
+      DATA IMATHN(107)   /2/
+      DATA IMATHN(108)   /1/
+      DATA IMATHN(109)   /4/
+      DATA IMATHN(110)   /4/
+      DATA IMATHN(111)   /4/
+!
+!  AUGUST 1992.  ADDED FOLLOWING LINES FOR REVERSE TRIANGLE SYNONYMS
+!  AND FOR ARROW.
+!
+      DATA IMATHN(112)   /4/
+      DATA IMATHN(113)   /2/
+      DATA IMATHN(114)   /4/
+      DATA IMATHN(115)   /4/
+      DATA IMATHN(116)   /4/
+      DATA IMATHN(117)   /4/
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPSC'
+      ISUBN2='AN  '
+!
+      IFOUNO='NO'
+      IFOUNC='NO'
+      IERROR='NO'
+!
+!LINX NOVEMBER 1996.  FOLLOWING TO ACCOMODATE LINUX G77 COMPILER.
+      CALL DPCONA(92,IMATHT(104))
+      J2=0
+      NUMC=0
+!
+      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'SCAN')GO TO 90
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,51)
+   51 FORMAT('***** AT THE BEGINNING OF DPSCAN--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,52)ISTART,ISTRIN(ISTART),NUMCHS,ILOCR2
+   52 FORMAT('ISTART,ISTRIN(ISTART),NUMCHS,ILOCR2 = ',I8,2X,A4,2I8)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,53)(ISTRIN(I),I=1,NUMCHS)
+   53 FORMAT('(ISTRIN(I),I=1,NUMCHS) = ',100A1)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,59)IBUGG4,ISUBG4
+   59 FORMAT('IBUGG4,ISUBG4 = ',A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+   90 CONTINUE
+!
+!               *********************************************
+!               **  STEP 2--                               **
+!               **  PACK THE PRESENT CHARACTER             **
+!               **  AND THE NEXT 3 CHARACTERS INTO         **
+!               **  THE SINGLE COMPUTER WORD IWORD1.       **
+!               **  IF A LEFT PARENTHESIS IS ENCOUNTERED,  **
+!               **  STOP THE PACK                          **
+!               **  (AND EXCLUDE THE LEFT PARENTHESIS      **
+!               **  FROM THE PACK).                        **
+!               *********************************************
+!
+      ISTEPN='2'
+      IF(IBUGD2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IWORD1=' '
+!
+      ISTAR1=0
+      ILEN1=NUMBPC
+      ILEN2=NUMBPC
+!
+      DO 1100 K=1,4
+      L=ISTART+K-1
+      IF(L.GT.NUMCHS)GO TO 1190
+      IF(ISTRIN(L).EQ.'(')GO TO 1190
+      ISTAR2=NUMBPC*(K-1)
+      CALL DPCHEX(ISTAR1,ILEN1,ISTRIN(L),ISTAR2,ILEN2,IWORD1)
+ 1100 CONTINUE
+ 1190 CONTINUE
+!CCCC CONVERT IWORD1 TO UPPER CASE.             FEBRUARY 1995.
+      DO 1191 I=1,4
+        CALL DPCOAN(IWORD1(I:I),IVALT)
+        IF(IVALT.GE.97.AND.IVALT.LE.122)IVALT=IVALT-32
+        CALL DPCONA(IVALT,IWORD1(I:I))
+ 1191 CONTINUE
+!
+!               *************************************************************
+!               **  STEP 1--CHECK TO SEE                                   **
+!               **          IF BEYOND THE RIGHTMOST RIGHT PARENTHESIS      **
+!               **          (WHICH IMPLIES THAT ALL SUBSEQUENT CHARACTERS  **
+!               **          ARE ONLY 1 CHARACTER LONG).                    **
+!               *************************************************************
+!
+      IF(ISTART.GT.ILOCR2)GO TO 6000
+!
+!               ***************************
+!               **  STEP 3.1--           **
+!               **  CHECK FOR FONT TYPE  **
+!               ***************************
+!
+      ISTEPN='3.1'
+      IF(IBUGD2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      JMIN=1
+      JMAX=8
+      DO 2110 J=JMIN,JMAX
+      J2=J
+      IF(IWORD1.EQ.IOPERT(J))GO TO 2150
+ 2110 CONTINUE
+      GO TO 2190
+ 2150 CONTINUE
+      NUMC=IOPERN(J2)
+      ILOCLP=ISTART+NUMC
+      ILOCRP=ISTART+NUMC+1
+      CALL DPCHLR(ISTRIN,NUMCHS,ILOCLP,ILOCRP,IFOULR,IBUGD2,IERROR)
+      IF(IFOULR.EQ.'YES')GO TO 2160
+      GO TO 2190
+ 2160 CONTINUE
+      IFONT=IWORD1
+      IEND=ILOCRP
+      IOP=IFONT
+      IFOUNO='YES'
+      GO TO 9000
+ 2190 CONTINUE
+!
+!               **********************************
+!               **  STEP 3.2--                  **
+!               **  CHECK FOR UPPER/LOWER CASE  **
+!               **********************************
+!
+      ISTEPN='3.2'
+      IF(IBUGD2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!
+      JMIN=9
+      JMAX=12
+      DO 2210 J=JMIN,JMAX
+      J2=J
+      IF(IWORD1.EQ.IOPERT(J))GO TO 2250
+ 2210 CONTINUE
+      GO TO 2290
+ 2250 CONTINUE
+      NUMC=IOPERN(J2)
+      ILOCLP=ISTART+NUMC
+      ILOCRP=ISTART+NUMC+1
+      CALL DPCHLR(ISTRIN,NUMCHS,ILOCLP,ILOCRP,IFOULR,IBUGD2,IERROR)
+      IF(IFOULR.EQ.'YES')GO TO 2260
+      GO TO 2290
+ 2260 CONTINUE
+      ICASE=IWORD1
+      IF(ICASE.EQ.'LC')ICASE='LOWE'
+      IF(ICASE.EQ.'LCAS')ICASE='LOWE'
+      IF(ICASE.EQ.'UC')ICASE='UPPE'
+      IF(ICASE.EQ.'UCAS')ICASE='UPPE'
+      IF(ICASE.EQ.'CAPS')ICASE='UPPE'
+      IF(ICASE.EQ.'CAP')ICASE='UPPE'
+      IEND=ILOCRP
+      IOP=ICASE
+      IFOUNO='YES'
+      GO TO 9000
+ 2290 CONTINUE
+!
+!               *************************************************
+!               **  STEP 3.3--                                 **
+!               **  CHECK FOR LEFT/CENTER/RIGHT JUSTIFICATION  **
+!               *************************************************
+!
+      ISTEPN='3.3'
+      IF(IBUGD2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      JMIN=13
+      JMAX=15
+      DO 2310 J=JMIN,JMAX
+      J2=J
+      IF(IWORD1.EQ.IOPERT(J))GO TO 2350
+ 2310 CONTINUE
+      GO TO 2390
+ 2350 CONTINUE
+      NUMC=IOPERN(J2)
+      ILOCLP=ISTART+NUMC
+      ILOCRP=ISTART+NUMC+1
+      CALL DPCHLR(ISTRIN,NUMCHS,ILOCLP,ILOCRP,IFOULR,IBUGD2,IERROR)
+      IF(IFOULR.EQ.'YES')GO TO 2360
+      GO TO 2390
+ 2360 CONTINUE
+      IJUST=IWORD1
+      IEND=ILOCRP
+      IOP=IJUST
+      IFOUNO='YES'
+      GO TO 9000
+ 2390 CONTINUE
+!
+!               ******************************************
+!               **  STEP 3.4--                          **
+!               **  CHECK FOR SEQUENCE/UNSEQUENCE CASE  **
+!               ******************************************
+!
+      ISTEPN='3.4'
+      IF(IBUGD2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      JMIN=16
+      JMAX=17
+      DO 2410 J=JMIN,JMAX
+      J2=J
+      IF(IWORD1.EQ.IOPERT(J))GO TO 2450
+ 2410 CONTINUE
+      GO TO 2490
+ 2450 CONTINUE
+      NUMC=IOPERN(J2)
+      ILOCLP=ISTART+NUMC
+      ILOCRP=ISTART+NUMC+1
+      CALL DPCHLR(ISTRIN,NUMCHS,ILOCLP,ILOCRP,IFOULR,IBUGD2,IERROR)
+      IF(IFOULR.EQ.'YES')GO TO 2460
+      GO TO 2490
+ 2460 CONTINUE
+      ISEQUE=IWORD1
+      IEND=ILOCRP
+      IOP=ISEQUE
+      IFOUNO='YES'
+      GO TO 9000
+ 2490 CONTINUE
+!
+!               ********************************************
+!               **  STEP 3.5--                            **
+!               **  CHECK FOR SUBSCRIPT/SUPERSCRIPT CASE  **
+!               ********************************************
+!
+      ISTEPN='3.5'
+      IF(IBUGD2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      JMIN=18
+      JMAX=21
+      DO 2510 J=JMIN,JMAX
+      J2=J
+      IF(IWORD1.EQ.IOPERT(J))GO TO 2550
+ 2510 CONTINUE
+      GO TO 2590
+ 2550 CONTINUE
+      NUMC=IOPERN(J2)
+      ILOCLP=ISTART+NUMC
+      ILOCRP=ISTART+NUMC+1
+      CALL DPCHLR(ISTRIN,NUMCHS,ILOCLP,ILOCRP,IFOULR,IBUGD2,IERROR)
+      IF(IFOULR.EQ.'YES')GO TO 2560
+      GO TO 2590
+ 2560 CONTINUE
+      ISUBSU=IWORD1
+      IEND=ILOCRP
+      IOP=ISUBSU
+      IFOUNO='YES'
+      GO TO 9000
+ 2590 CONTINUE
+!
+!               ****************************************
+!               **  STEP 3.6--                        **
+!               **  CHECK FOR SCREEN MAX, ANGLE MAX,  **
+!               **  HEIGHT, WIDTH, AND ANGLE.         **
+!               ****************************************
+!
+      ISTEPN='3.6'
+      IF(IBUGD2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      JMIN=22
+      JMAX=27
+      DO 2610 J=JMIN,JMAX
+      J2=J
+      IF(IWORD1.EQ.IOPERT(J))GO TO 2650
+ 2610 CONTINUE
+      GO TO 2690
+ 2650 CONTINUE
+      NUMC=IOPERN(J2)
+      ILOCLP=ISTART+NUMC
+      ILOCRP=ISTART+NUMC+1
+      CALL DPCHLR(ISTRIN,NUMCHS,ILOCLP,ILOCRP,IFOULR,IBUGD2,IERROR)
+      IF(IFOULR.EQ.'YES')GO TO 2660
+      GO TO 2690
+ 2660 CONTINUE
+      IXXXXX=IWORD1
+      IEND=ILOCRP
+      IOP=IXXXXX
+      IFOUNO='YES'
+      GO TO 9000
+ 2690 CONTINUE
+!
+!               *********************************************
+!               **  STEP 3.7--                             **
+!               **  CHECK FOR MOVE, DRAW, ETC. OPERATIONS  **
+!               *********************************************
+!
+      ISTEPN='3.7'
+      IF(IBUGD2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      JMIN=28
+      JMAX=37
+      DO 2710 J=JMIN,JMAX
+      J2=J
+      IF(IWORD1.EQ.IOPERT(J))GO TO 2750
+ 2710 CONTINUE
+      GO TO 2790
+ 2750 CONTINUE
+      NUMC=IOPERN(J2)
+      ILOCLP=ISTART+NUMC
+      ILOCRP=ISTART+NUMC+1
+      CALL DPCHLR(ISTRIN,NUMCHS,ILOCLP,ILOCRP,IFOULR,IBUGD2,IERROR)
+      IF(IFOULR.EQ.'YES')GO TO 2760
+      GO TO 2790
+ 2760 CONTINUE
+      IXXXXX=IWORD1
+      IEND=ILOCRP
+      IOP=IXXXXX
+      IFOUNO='YES'
+      GO TO 9000
+ 2790 CONTINUE
+!
+!               **********************************
+!               **  STEP 3.8--                  **
+!               **  CHECK FOR GREEK CHARACTERS  **
+!               **********************************
+!
+      ISTEPN='3.8'
+      IF(IBUGD2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      JMIN=1
+      JMAX=24
+      DO 3110 J=JMIN,JMAX
+      J2=J
+      IF(IWORD1.EQ.IGREET(J))GO TO 3150
+ 3110 CONTINUE
+      GO TO 3190
+ 3150 CONTINUE
+      NUMC=IGREEN(J2)
+      ILOCLP=ISTART+NUMC
+      ILOCRP=ISTART+NUMC+1
+      CALL DPCHLR(ISTRIN,NUMCHS,ILOCLP,ILOCRP,IFOULR,IBUGD2,IERROR)
+      IF(IFOULR.EQ.'YES')GO TO 3160
+      GO TO 3190
+ 3160 CONTINUE
+      ICHAR2=IWORD1
+      IEND=ILOCRP
+      IFOUNC='YES'
+      GO TO 9000
+ 3190 CONTINUE
+!
+!               ******************************
+!               **  STEP 3.9--              **
+!               **  CHECK FOR MATH SYMBOLS  **
+!               ******************************
+!
+      ISTEPN='3.9'
+      IF(IBUGD2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      JMIN=1
+!CCCC JMAX=109
+!CCCC JMAX=111
+      JMAX=117
+      DO 4110 J=JMIN,JMAX
+      J2=J
+      IF(IWORD1.EQ.IMATHT(J))GO TO 4150
+ 4110 CONTINUE
+      GO TO 4190
+ 4150 CONTINUE
+      NUMC=IMATHN(J2)
+      ILOCLP=ISTART+NUMC
+      ILOCRP=ISTART+NUMC+1
+      CALL DPCHLR(ISTRIN,NUMCHS,ILOCLP,ILOCRP,IFOULR,IBUGD2,IERROR)
+      IF(IFOULR.EQ.'YES')GO TO 4160
+      GO TO 4190
+ 4160 CONTINUE
+      ICHAR2=IWORD1
+      IEND=ILOCRP
+      IFOUNC='YES'
+      GO TO 9000
+ 4190 CONTINUE
+!
+!               *************************************************
+!               **  STEP 4--                                   **
+!               **  NO MATCH FOUND FOR ANY OF THE ABOVE;       **
+!               **  THEREFORE OUTPUT ONLY THE LEAD CHARACTER.  **
+!               *************************************************
+!
+!
+ 6000 CONTINUE
+      ISTEPN='4'
+      IF(IBUGD2.EQ.'ON')CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(NUMCHS.LE.1)GO TO 6005
+      ILOCLP=ISTART
+      ILOCRP=ISTART+1
+      IF(ISTRIN(ILOCLP).EQ.'('.AND.ISTRIN(ILOCRP).EQ.')')GO TO 6006
+ 6005 CONTINUE
+      ICHAR2=ISTRIN(ISTART)
+      IEND=ISTART
+      IFOUNC='YES'
+      GO TO 9000
+ 6006 CONTINUE
+      IEND=ILOCRP
+      IFOUNO='YES'
+      GO TO 9000
+!
+!     PRE-1986--THE FOLLOWING COMMENTED-OUT CODE WAS FOR PUTTING OUT
+!     UP TO 4 CHARACTERS AS A PLOT CHARACTER
+!     AND THEREFORE COMMENTED OUT.
+!
+!CCCC DO6010I=1,4
+!CCCC I2=I
+!CCCC ICHAR3='    '
+!CCCC ICHAR3(1:1)=IWORD1(I:I)
+!CCCC IF(ICHAR3.EQ.'(')GO TO 6020
+!CCCC IF(ICHAR3.EQ.' ')GO TO 6020
+!6010 CONTINUE
+!CCCC NUMC=I2
+!CCCC GO TO 6080
+!6020 CONTINUE
+!CCCC NUMC=I2-1
+!CCCC GO TO 6080
+!6080 CONTINUE
+!CCCC IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'SCAN')GO TO 6089
+!CCCC WRITE(ICOUT,6081)
+!6081 FORMAT('***** FROM THE MIDDLE OF DPSCAN--')
+!CCCC CALL DPWRST('XXX','BUG ')
+!CCCC WRITE(ICOUT,6082)IWORD1,ICHAR3
+!6082 FORMAT('IWORD1,ICHAR3 = ',A4,2X,A4)
+!CCCC CALL DPWRST('XXX','BUG ')
+!CCCC WRITE(ICOUT,6083)I2,NUMC
+!6083 FORMAT('I2,NUMC = ',2I8)
+!CCCC CALL DPWRST('XXX','BUG ')
+!6089 CONTINUE
+!6090 CONTINUE
+!CCCC ILOCLP=ISTART+NUMC
+!CCCC ILOCRP=ISTART+NUMC+1
+!CCCC CALL DPCHLR(ISTRIN,NUMCHS,ILOCLP,ILOCRP,IFOULR,IBUGD2,IERROR)
+!CCCC IF(IFOULR.EQ.'YES')GO TO 6095
+!CCCC GO TO 6097
+!6095 CONTINUE
+!CCCC ICHAR2=IWORD1
+!CCCC IEND=ILOCRP
+!CCCC IFOUNC='YES'
+!CCCC GO TO 9000
+!6097 CONTINUE
+!CCCC ICHAR2=ISTRIN(ISTART)
+!CCCC IEND=ISTART
+!CCCC IFOUNC='YES'
+!CCCC GO TO 9000
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGG4.EQ.'OFF'.AND.ISUBG4.NE.'SCAN')GO TO 9090
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9011)
+ 9011 FORMAT('***** AT THE END       OF DPSCAN--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9012)IFOUNC,IFOUNO,IBUGD2,IERROR
+ 9012 FORMAT('IFOUNC,IFOUNO,IBUGD2,IERROR = ',   &
+      A4,2X,A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9013)ICHAR2,IOP,ISTART,IEND
+ 9013 FORMAT('ICHAR2,IOP,ISTART,IEND = ',A4,2X,A4,I8,I8)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9014)IFONT,ICASE,IJUST,ISEQUE,ISUBSU
+ 9014 FORMAT('IFONT,ICASE,IJUST,ISEQUE,ISUBSU = ',   &
+      A4,2X,A4,2X,A4,2X,A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9015)HMAX,VMAX,AMAX
+ 9015 FORMAT('HMAX,VMAX,AMAX = ',3E15.7)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9016)X0,Y0,ANGLE
+ 9016 FORMAT('X0,Y0,ANGLE = ',3E15.7)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9017)WIDTH,HEIGHT
+ 9017 FORMAT('WIDTH,HEIGHT = ',2E15.7)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9018)ISTAR2,IWORD1,NUMC,J2
+ 9018 FORMAT('ISTAR2,IWORD1,NUMC,J2 = ',I8,2X,A4,I8,I8)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9019)IBUGG4,ISUBG4
+ 9019 FORMAT('IBUGG4,ISUBG4 = ',A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+ 9090 CONTINUE
+!
+      RETURN
+      END SUBROUTINE DPSCAN
+      SUBROUTINE DPSCEB(NPTS,NLAB,   &
+                        W,N,   &
+                        AMEAN,ASD,S2BMPS,   &
+                        XSE,XSES2,IDFH,SIGMAH,   &
+                        SESUK1,SESUK2,   &
+                        DLOWSE,DHIGSE,   &
+                        IWRITE,   &
+                        ICAPSW,ICAPTY,NUMDIG,   &
+                        ISUBRO,IBUGA3,IERROR)
+!
+!     PURPOSE--IMPLEMENT SCHILLER-EBERHARDT APPROACH TO CONSENSUS MEANS
+!     PRINTING--YES
+!     SUBROUTINES NEEDED--NONE
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2006/3
+!     ORIGINAL VERSION--MARCH     2006. EXTRACTED FROM DPMAN2 ROUTINE
+!     UPDATED         --OCTOBER   2006. CALL LIST TO TPPF
+!     UPDATED         --FEBRUARY  2010. USE DPDTA1 TO PRINT
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES--------------
+!
+      IMPLICIT DOUBLE PRECISION (A-H, O-Z)
+!
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 ICAPTY
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+      REAL APPF
+      REAL XSE
+      REAL XSES2
+      REAL S2BMPS
+      REAL SIGMAH
+      REAL SESUK1
+      REAL SESUK2
+!
+!----------------------------------------------------------------
+!
+      REAL AMEAN(*)
+      REAL ASD(*)
+!
+      INTEGER N(*)
+!
+      DOUBLE PRECISION W(*)
+!
+      INCLUDE 'DPCOST.INC'
+!
+      PARAMETER (MAXROW=20)
+      CHARACTER*60 ITITLE
+      CHARACTER*60 ITITLZ
+      CHARACTER*60 ITITL9
+      CHARACTER*60 ITEXT(MAXROW)
+      REAL         AVALUE(MAXROW)
+      INTEGER      NCTEXT(MAXROW)
+      INTEGER      IDIGIT(MAXROW)
+      INTEGER      NTOT(MAXROW)
+      LOGICAL IFRST
+      LOGICAL ILAST
+!
+!-----COMMON-----------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT------------------------------------------------
+!
+      IERROR='NO'
+      ISUBN1='DPVR'
+      ISUBN2='ML  '
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SCEB')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSCEB--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IWRITE,NPTS,NLAB
+   52   FORMAT('IWRITE,NPTS,NLAB = ',A4,2X,2I8)
+        CALL DPWRST('XXX','BUG ')
+        DO 55 I=1,NPTS
+          WRITE(ICOUT,56)I,AMEAN(I),ASD(I),N(I)
+   56     FORMAT('I,AMEAN(I),ASD(I),N(I) = ',I8,2G15.7,I8)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+!
+      DSUM1=0.0D0
+      DO 810 I=1,NLAB
+        DVAR=DBLE(ASD(I))**2
+        W(I)=1.0D0/(DVAR+DBLE(S2BMPS))
+        DSUM1=DSUM1 + W(I)
+  810 CONTINUE
+      DWTSUM=DSUM1
+      DSUM1=0.0D0
+      DSUM2=0.0D0
+      DSUM3=0.0D0
+      DO 815 I=1,NLAB
+        NITEMP=ABS(N(I))
+        IF(NITEMP.EQ.0)THEN
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+        DVAR=DBLE(ASD(I))**2
+        W(I)=W(I)/DWTSUM
+        XI=DBLE(AMEAN(I))
+        DSUM1=DSUM1 + W(I)*XI
+        DSUM2=DSUM2 + W(I)*DVAR
+        DSUM3=DSUM3 + (W(I)*DVAR)**2/DBLE(NITEMP-1.0D0)
+  815 CONTINUE
+      XSE=REAL(DSUM1)
+      ADFH=REAL(IDFH)
+      DTERM1=(DSUM2 + SIGMAH**2)**2
+      DTERM2=(DSUM3 + SIGMAH**4/ADFH)
+      ADF=REAL(DTERM1/DTERM2)
+      IDF=INT(ADF+0.5)
+!
+      DSUM1=0.0D0
+      DO 820 I=1,NLAB
+        DVAR=DBLE(ASD(I))**2
+        W(I)=1.0D0/DVAR
+        DSUM1=DSUM1 + W(I)
+  820 CONTINUE
+      DWTSUM=DSUM1
+      DSUM1=0.0D0
+      DO 825 I=1,NLAB
+        DTERM1=(W(I)/DWTSUM)**2
+        DSUM1=DSUM1 + DTERM1*DBLE(ASD(I)**2)
+  825 CONTINUE
+      XSES2=REAL(DSUM1)
+!
+      DBIAS=0.0D0
+      DO 830 I=1,NLAB
+        XI=DBLE(AMEAN(I))
+        DTERM1=DABS(XI-DBLE(XSE))
+        IF(DTERM1.GT.DBIAS)DBIAS=DTERM1
+  830 CONTINUE
+!
+      CALL TPPF(0.975,REAL(IDF),APPF)
+      DSESU1=SQRT(DBLE(XSES2) + DBLE(SIGMAH)**2) + DBIAS
+      DSESU2=2.0D0*SQRT(DBLE(XSES2) + DBLE(SIGMAH)**2) + DBIAS
+      DSEU=DBLE(APPF)*SQRT(DBLE(XSES2) + DBLE(SIGMAH)**2) + DBIAS
+      DLOWSE=DBLE(XSE) - DSEU
+      DHIGSE=DBLE(XSE) + DSEU
+      ABIAS=REAL(DBIAS)
+      ISEDF=IDF
+      SESUK1=REAL(DSESU1)
+      SESUK2=REAL(DSESU2)
+!
+      ITITLE=' '
+      NCTITL=0
+      ITITLZ=' '
+      NCTITZ=0
+!
+      ICNT=1
+      ITEXT(ICNT)='12. Method:Schiller-Eberhardt'
+      NCTEXT(ICNT)=29
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+!
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    Estimate of Consensus Mean:'
+      NCTEXT(ICNT)=31
+      AVALUE(ICNT)=XSE
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    Estimate of Variance of Mean:'
+      NCTEXT(ICNT)=33
+      AVALUE(ICNT)=XSES2
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    Bias Allowance:'
+      NCTEXT(ICNT)=19
+      AVALUE(ICNT)=ABIAS
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    Sigmah (heterogeneity):'
+      NCTEXT(ICNT)=27
+      AVALUE(ICNT)=SIGMAH
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    Degrees of Freedom for Sigmah:'
+      NCTEXT(ICNT)=34
+      AVALUE(ICNT)=IDFH
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    Standard Uncertainty (k = 1):'
+      NCTEXT(ICNT)=33
+      AVALUE(ICNT)=DSESU1
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    Expanded Uncertainty (k = 2):'
+      NCTEXT(ICNT)=33
+      AVALUE(ICNT)=DSESU2
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    Expanded Uncertainty (k =           ):'
+      WRITE(ITEXT(ICNT)(31:40),'(F10.7)')APPF
+      NCTEXT(ICNT)=42
+      AVALUE(ICNT)=DSEU
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    Degrees of Freedom:'
+      NCTEXT(ICNT)=23
+      AVALUE(ICNT)=IDF
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    t Percent Point Value (alpha = 0.05):'
+      NCTEXT(ICNT)=41
+      AVALUE(ICNT)=APPF
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    Lower 95% Confidence Limit:'
+      NCTEXT(ICNT)=31
+      AVALUE(ICNT)=DLOWSE
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    Upper 95% Confidence Limit:'
+      NCTEXT(ICNT)=31
+      AVALUE(ICNT)=DHIGSE
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='    Note: Schiller-Eberhardt Best Usage:'
+      NCTEXT(ICNT)=40
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='          5 or Fewer Labs:'
+      NCTEXT(ICNT)=26
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+!
+      NUMROW=ICNT
+      DO 310 I=1,NUMROW
+        NTOT(I)=15
+  310 CONTINUE
+!
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+      CALL DPDTA1(ITITLE,NCTITL,ITITLZ,NCTITZ,ITEXT,NCTEXT,   &
+                  AVALUE,IDIGIT,   &
+                  NTOT,NUMROW,   &
+                  ICAPSW,ICAPTY,ILAST,IFRST,   &
+                  ISUBRO,IBUGA3,IERROR)
+      ITITLE=' '
+      NCTITL=0
+      ITITLZ=' '
+      NCTITZ=0
+      ITITL9=' '
+      NCTIT9=0
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SCEB')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSCEB--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)NPTS,NLAB
+ 9013   FORMAT('NPTS,NLAB = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)XSE,XSES2,DSEU
+ 9014   FORMAT('XSE,XSES2,DSEU = ',3G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)DLOWSE,DHIGSE
+ 9015   FORMAT('DLOWSE,DHIGSE = ',2G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSCEB
+      SUBROUTINE DPSCI2(X1,Y1,X2,Y2,PX,PY,   &
+                        IFIG,ILINPA,ILINCO,ILINC2,MAXLN,PLINTH,   &
+                        AREGBA,IREBLI,IREBCO,IREBC2,MAXRG,PREBTH,   &
+                        IREFSW,IREFCO,IREFC2,   &
+                        IREPTY,IREPLI,IREPCO,IREPC2,PREPTH,PREPSP,   &
+                        PTEXHE,PTEXWI,PTEXVG,PTEXHG)
+!
+!     PURPOSE--DRAW A SEMI-CIRCLE
+!              WITH ONE END OF THE DIAGONAL AT (X1,Y1)
+!              AND THE OTHER END AT (X2,Y2).
+!     NOTE--THE SEMI-CIRCLE WILL BE DRAWN CLOCKWISE.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--APRIL     1981.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --JANUARY   1989. MODIFY CALLS TO DPDRPL (ALAN)
+!     UPDATED         --JANUARY   1989. MODIFY CALL  TO DPFIRE (ALAN)
+!     UPDATED         --JULY      2019. CREATE SCRATCH STORAGE IN DPSCIR
+!                                       RATHER THAN DPSCI2
+!     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
+!
+!-----NON-COMMON VARIABLES-------------------------------------
+!
+      DIMENSION PX(*)
+      DIMENSION PY(*)
+!
+      CHARACTER*4 IFIG
+      CHARACTER*4 IPATT2
+!
+      CHARACTER*4 ILINPA
+      CHARACTER*4 ILINCO
+!
+      CHARACTER*4 IREBLI
+      CHARACTER*4 IREBCO
+      CHARACTER*4 IREFSW
+      CHARACTER*4 IREFCO
+      CHARACTER*4 IREPTY
+      CHARACTER*4 IREPLI
+      CHARACTER*4 IREPCO
+!
+      CHARACTER*4 IPATT
+      CHARACTER*4 ICOLF
+      CHARACTER*4 ICOLP
+      CHARACTER*4 ICOL
+      CHARACTER*4 IFLAG
+!
+      DIMENSION ILINPA(*)
+      DIMENSION ILINCO(*)
+      DIMENSION ILINC2(MAXLN,3)
+      DIMENSION PLINTH(*)
+!
+      DIMENSION AREGBA(*)
+      DIMENSION IREBLI(*)
+      DIMENSION IREBCO(*)
+      DIMENSION IREBC2(MAXRG,3)
+      DIMENSION PREBTH(*)
+      DIMENSION IREFSW(*)
+      DIMENSION IREFCO(*)
+      DIMENSION IREFC2(MAXRG,3)
+      DIMENSION IREPTY(*)
+      DIMENSION IREPLI(*)
+      DIMENSION IREPCO(*)
+      DIMENSION IREPC2(MAXRG,3)
+      DIMENSION PREPTH(*)
+      DIMENSION PREPSP(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOGR.INC'
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SCI2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSCI2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)X1,Y1,X2,Y2
+   53   FORMAT('X1,Y1,X2,Y2 = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,61)ILINPA(1),ILINCO(1),PLINTH(1)
+   61   FORMAT('ILINPA(1),ILINCO(1),PLINTH(1) = ',A4,2X,A4,G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,62)IFIG,AREGBA(1)
+   62   FORMAT('IFIG,AREGBA(1) = ',A4,2X,G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,63)IREBLI(1),IREBCO(1),PREBTH(1)
+   63   FORMAT('IREBLI(1),IREBCO(1),PREBTH(1) = ',2(A4,2X),G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,64)IREFSW(1),IREFCO(1)
+   64   FORMAT('IREFSW(1),IREFCO(1) = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,65)IREPTY(1),IREPLI(1),IREPCO(1),PREPTH(1),PREPSP(1)
+   65   FORMAT('IREPTY(1),IREPLI(1),IREPCO(1),PREPTH(1),PREPSP(1) = ',   &
+               3(A4,2X),2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,69)PTEXHE,PTEXWI,PTEXVG,PTEXHG
+   69   FORMAT('PTEXHE,PTEXWI,PTEXVG,PTEXHG = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,79)IBUGG4,ISUBG4,IERRG4
+   79   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *********************************
+!               **  STEP 1--                   **
+!               **  DETERMINE THE COORDINATES  **
+!               **  FOR THE SEMI-CIRCLE        **
+!               *********************************
+!
+      DELX=X2-X1
+      DELY=Y2-Y1
+      ALEN=0.0
+      TERM=(X2-X1)**2+(Y2-Y1)**2
+      IF(TERM.GT.0.0)ALEN=SQRT(TERM)
+      RADIUS=ALEN/2.0
+      IF(ABS(DELX).GE.0.00001)THETA=ATAN(DELY/DELX)
+      IF(ABS(DELX).LT.0.00001.AND.DELY.GE.0.0)THETA=3.1415926/2.0
+      IF(ABS(DELX).LT.0.00001.AND.DELY.LT.0.0)THETA=-3.1415926/2.0
+!
+      XCENT=(X1+X2)/2.0
+      YCENT=(Y1+Y2)/2.0
+!
+      K=0
+!
+      X=0.0
+      Y=0.0
+      CALL TRANS(X,Y,X1,Y1,THETA,DELX,DELY,XP,YP,KXP,KYP)
+      K=K+1
+      PX(K)=XP
+      PY(K)=YP
+!
+      DO 3010 I=1,181,5
+      IREV=181-I+1
+      PHI2=IREV-1
+      PHI2=PHI2*(2.0*3.1415926)/360.0
+      X=RADIUS*COS(PHI2)+RADIUS
+      Y=RADIUS*SIN(PHI2)
+      CALL TRANS(X,Y,X1,Y1,THETA,DELX,DELY,XP,YP,KXP,KYP)
+      K=K+1
+      PX(K)=XP
+      PY(K)=YP
+ 3010 CONTINUE
+!
+      NP=K
+!
+!               ***********************
+!               **  STEP 2--         **
+!               **  FILL THE FIGURE  **
+!               **  (IF CALLED FOR)  **
+!               ***********************
+!
+      IF(IREFSW(1).EQ.'OFF')GO TO 2190
+      IPATT=IREPTY(1)
+      IPATT2='SOLI'
+      PTHICK=PREPTH(1)
+      PXGAP=PREPSP(1)
+      PYGAP=PREPSP(1)
+      ICOLF=IREFCO(1)
+      ICOLFR=IREFC2(1,1)
+      ICOLFG=IREFC2(1,2)
+      ICOLFB=IREFC2(1,3)
+      ICOLP=IREPCO(1)
+      ICOLPR=IREPC2(1,1)
+      ICOLPG=IREPC2(1,2)
+      ICOLPB=IREPC2(1,3)
+      ICOLBR=IREBC2(1,1)
+      ICOLBG=IREBC2(1,2)
+      ICOLBB=IREBC2(1,3)
+      CALL DPFIRE(PX,PY,NP,   &
+                  IFIG,IPATT,PTHICK,PXGAP,PYGAP,   &
+                  ICOLF,ICOLFR,ICOLFG,ICOLFB,   &
+                  ICOLP,ICOLPR,ICOLPG,ICOLPB,   &
+                  IPATT2)
+ 2190 CONTINUE
+!
+!               ***************************
+!               **  STEP 3--             **
+!               **  DRAW OUT THE FIGURE  **
+!               ***************************
+!
+      IPATT=ILINPA(1)
+      PTHICK=PLINTH(1)
+      ICOL=ILINCO(1)
+      ICOLR=ILINC2(1,1)
+      ICOLG=ILINC2(1,2)
+      ICOLB=ILINC2(1,3)
+      IFLAG='ON'
+      CALL DPDRPL(PX,PY,NP,   &
+                  IFIG,IPATT,PTHICK,   &
+                  ICOL,ICOLR,ICOLG,ICOLB,   &
+                  JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+      IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SCI2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSCI2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)NP,IERRG4
+ 9014   FORMAT('NP,IERRG4 = ',A4,2X,I8)
+        CALL DPWRST('XXX','BUG ')
+        DO 9015 I=1,NP
+          WRITE(ICOUT,9016)I,PX(I),PY(I)
+ 9016     FORMAT('I,PX(I),PY(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+ 9015   CONTINUE
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSCI2
+      SUBROUTINE DPSCIR(IHARG,IARGT,ARG,NUMARG,   &
+                        PXSTAR,PYSTAR,PXEND,PYEND,   &
+                        ILINPA,ILINCO,ILINC2,MAXLNZ,PLINTH,   &
+                        AREGBA,IREBLI,IREBCO,IREBC2,MAXRGZ,PREBTH,   &
+                        IREFSW,IREFCO,IREFC2,   &
+                        IREPTY,IREPLI,IREPCO,IREPC2,PREPTH,PREPSP,   &
+                        PTEXHE,PTEXWI,PTEXVG,PTEXHG,   &
+                        IGRASW,IDIASW,   &
+                        PGRAXF,PGRAYF,PDIAXC,PDIAYC,PDIAX2,PDIAY2,   &
+                        PDIAHE,PDIAWI,PDIAVG,PDIAHG,   &
+                        NUMDEV,IDMANU,IDMODE,IDMOD2,IDMOD3,   &
+                        IDPOWE,IDCONT,IDCOLO,IDNVPP,IDNHPP,IDUNIT,   &
+                        IDNVOF,IDNHOF,IDFONT,UNITSW,PDSCAL,   &
+                        IBACCO,IBACC2,   &
+                        IBUGD2,IFOUND,IERROR)
+!
+!     PURPOSE--DRAW ONE OR MORE SEMI-CIRCLES (DEPENDING ON HOW MANY
+!              NUMBERS ARE PROVIDED).  THE COORDINATES ARE IN
+!              STANDARDIZED UNITS OF 0 TO 100.
+!     NOTE--THE SEMI-CIRCLE WILL BE DRAWN CLOCKWISE.
+!     NOTE--THE INPUT COORDINATES DEFINE THE ENDS OF THE DIAMETER
+!           OF THE SEMI-CIRCLE.
+!     NOTE-THE USUAL INPUT NUMBER OF COORDINATES IS 2
+!          AND THEREFORE THE USUAL INPUT NUMBER OF NUMBERS IS 2*2 = 4.
+!     NOTE--IF 2 NUMBERS ARE PROVIDED, THEN THE DRAWN SEMI-CIRCLE WILL
+!           GO FROM THE LAST CURSOR POSITION TO THE (X,Y) POINT (EITHER
+!           ABSOLUTE OR RELATIVE) AS DEFINED BY THE 2 NUMBERS.
+!     NOTE--IF 4 NUMBERS ARE PROVIDED, THEN THE DRAWN SEMI-CIRCLE WILL
+!           GO FROM THE ABSOLUTE (X,Y) POSITION AS DEFINED BY THE FIRST
+!           2 NUMBERS TO THE (X,Y) POINT (EITHER ABSOLUTE OR RELATIVE)
+!           AS DEFINED BY THE THIRD AND FOURTH NUMBERS.
+!     NOTE--IF 6 NUMBERS ARE PROVIDED, THEN THE DRAWN SEMI-CIRCLE WILL
+!           GO FROM THE (X,Y) POSITION AS RESULTING FROM THE THIRD AND
+!           FOURTH NUMBERS TO THE (X,Y) POINT (EITHER ABSOLUTE OR
+!           RELATIVE) AS DEFINED BY THE FIFTH AND SIXTH NUMBERS.
+!     NOTE--AND SO FORTH FOR 8, 10, 12, ... NUMBERS.
+!     INPUT  ARGUMENTS--IHARG
+!                     --IARGT
+!                     --ARG
+!                     --NUMARG
+!                     --PXSTAR
+!                     --PYSTAR
+!     OUTPUT ARGUMENTS--PXEND
+!                     --PYEND
+!                     --IFOUND ('YES' OR 'NO' )
+!                     --IERROR ('YES' OR 'NO' )
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--APRIL     1981.
+!     UPDATED         --MARCH     1982.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --NOVEMBER  1982.
+!     UPDATED         --JANUARY   1989. CALL LIST FOR OFFSET VAR (ALAN)
+!     UPDATED         --MARCH     1997. SUPPORT FOR DEVICE FONT (ALAN)
+!     UPDATED         --JULY      1997. SUPPORT FOR "DATA" UNITS (ALAN)
+!     UPDATED         --DECEMBER  2018. CHECK FOR NULL OR NONE DEVICE
+!     UPDATED         --DECEMBER  2018. SUPPORT FOR "DEVICE ... SCALE"
+!                                       COMMAND
+!     UPDATED         --JULY      2019. MOVE CREATION OF SCRATCH
+!                                       STORAGE FROM DPSCI2 TO DPSCIR
+!     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
+!
+!-----NON-COMMON VARIABLES-----------------------------------------
+!
+      CHARACTER*4 IHARG
+      CHARACTER*4 IARGT
+!
+      CHARACTER*4 ILINPA
+      CHARACTER*4 ILINCO
+!
+      CHARACTER*4 IREBLI
+      CHARACTER*4 IREBCO
+      CHARACTER*4 IREFSW
+      CHARACTER*4 IREFCO
+      CHARACTER*4 IREPTY
+      CHARACTER*4 IREPLI
+      CHARACTER*4 IREPCO
+!
+      CHARACTER*4 IGRASW
+      CHARACTER*4 IDIASW
+!
+      CHARACTER*4 IDMANU
+      CHARACTER*4 IDMODE
+      CHARACTER*4 IDMOD2
+      CHARACTER*4 IDMOD3
+      CHARACTER*4 IDPOWE
+      CHARACTER*4 IDCONT
+      CHARACTER*4 IDCOLO
+      CHARACTER*4 IDFONT
+      CHARACTER*4 UNITSW
+!
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 IERROR
+      CHARACTER*4 ISUBRO
+!
+      CHARACTER*4 IFIG
+      CHARACTER*4 IBELSW
+      CHARACTER*4 IERASW
+      CHARACTER*4 IBACCO
+      CHARACTER*4 ICOPSW
+      CHARACTER*4 ITYPEO
+!
+      DIMENSION IHARG(*)
+      DIMENSION IARGT(*)
+      DIMENSION ARG(*)
+!
+      DIMENSION ILINPA(*)
+      DIMENSION ILINCO(*)
+      DIMENSION ILINC2(MAXLNZ,3)
+      DIMENSION PLINTH(*)
+!
+      DIMENSION AREGBA(*)
+      DIMENSION IREBLI(*)
+      DIMENSION IREBCO(*)
+      DIMENSION IREBC2(MAXRGZ,3)
+      DIMENSION PREBTH(*)
+      DIMENSION IREFSW(*)
+      DIMENSION IREFCO(*)
+      DIMENSION IREFC2(MAXRGZ,3)
+      DIMENSION IREPTY(*)
+      DIMENSION IREPLI(*)
+      DIMENSION IREPCO(*)
+      DIMENSION IREPC2(MAXRGZ,3)
+      DIMENSION PREPTH(*)
+      DIMENSION PREPSP(*)
+      DIMENSION PDSCAL(*)
+!
+      DIMENSION IDMANU(*)
+      DIMENSION IDMODE(*)
+      DIMENSION IDMOD2(*)
+      DIMENSION IDMOD3(*)
+      DIMENSION IDPOWE(*)
+      DIMENSION IDCONT(*)
+      DIMENSION IDCOLO(*)
+      DIMENSION IDFONT(*)
+      DIMENSION IDNVPP(*)
+      DIMENSION IDNHPP(*)
+      DIMENSION IDUNIT(*)
+      DIMENSION IDNVOF(*)
+      DIMENSION IDNHOF(*)
+      DIMENSION IBACC2(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZZ.INC'
+      DIMENSION PX(1000)
+      DIMENSION PY(1000)
+      EQUIVALENCE (GARBAG(IGARB1),PX(1))
+      EQUIVALENCE (GARBAG(IGARB2),PY(1))
+!
+!-----COMMON VARIABLES (GENERAL)--------------------------------------
+!
+      INCLUDE 'DPCOGR.INC'
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+      IERRG4=IERROR
+!
+      ILOCFN=0
+      NUMNUM=0
+!
+      X1=0.0
+      Y1=0.0
+      X2=0.0
+      Y2=0.0
+!
+      IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SCIR')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSCIR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)NUMARG,NUMDEV
+   53   FORMAT('NUMARG,NUMDEV = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        DO 55 I=1,NUMARG
+          WRITE(ICOUT,56)I,IHARG(I),IARGT(I),ARG(I)
+   56     FORMAT('I,IHARG(I),IARGT(I),ARG(I) = ',I8,2(2X,A4),G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+        WRITE(ICOUT,57)PXSTAR,PYSTAR,PXEND,PYEND
+   57   FORMAT('PXSTAR,PYSTAR,PXEND,PYEND = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,61)ILINPA(1),ILINCO(1),PLINTH(1)
+   61   FORMAT('ILINPA(1),ILINCO(1),PLINTH(1) = ',2(A4,2X),G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,63)IREBLI(1),IREBCO(1),PREBTH(1),AREGBA(1)
+   63   FORMAT('IREBLI(1),IREBCO(1),PREBTH(1),AREGBA(1) = ',   &
+               2(A4,2X),2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,64)IREFSW(1),IREFCO(1)
+   64   FORMAT('IREFSW(1),IREFCO(1) = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,65)IREPTY(1),IREPLI(1),IREPCO(1),PREPTH(1),PREPSP(1)
+   65   FORMAT('IREPTY(1),IREPLI(1),IREPCO(1),PREPTH(1),PREPSP(1) = ',   &
+               3(A4,2X),2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,69)PTEXHE,PTEXWI,PTEXVG,PTEXHG
+   69   FORMAT('PTEXHE,PTEXWI,PTEXVG,PTEXHG= ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,76)IGRASW,IDIASW
+   76   FORMAT('IGRASW,IDIASW = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,77)PGRAXF,PGRAYF,PDIAXC,PDIAYC
+   77   FORMAT('PGRAXF,PGRAYF,PDIAXC,PDIAYC = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,78)PDIAHE,PDIAWI,PDIAVG,PDIAHG
+   78   FORMAT('PDIAHE,PDIAWI,PDIAVG,PDIAHG = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        DO 81 I=1,NUMDEV
+          WRITE(ICOUT,82)IDMANU(I),IDMODE(I),IDMOD2(I),IDMOD3(I)
+   82     FORMAT('IDMANU(I),IDMODE(I),IDMOD2(I),IDMOD3(I) = ',   &
+                 3(A4,2X),A4)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,83)IDPOWE(I),IDCONT(I),IDCOLO(I)
+   83     FORMAT('IDPOWE(I),IDCONT(I),IDCOLO(I) = ',2(A4,2X),A4)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,84)IDNVPP(I),IDNHPP(I),IDUNIT(I)
+   84     FORMAT('IDNVPP(I),IDNHPP(I),IDUNIT(I) = ',3I8)
+          CALL DPWRST('XXX','BUG ')
+   81   CONTINUE
+        WRITE(ICOUT,88)IBUGG4,IBUGD2,ISUBG4,IERRG4,IFOUND,IERROR
+   88   FORMAT('IBUGG4,IBUGD2,ISUBG4,IERRG4,IFOUND,IERROR = ',   &
+               5(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IFIG='SCIR'
+      NUMPT=2
+      NUMPT2=2*NUMPT
+!
+!               ********************************
+!               **  STEP 0--                  **
+!               **  STEP THROUGH EACH DEVICE  **
+!               ********************************
+!
+      IF(NUMDEV.LE.0)GO TO 9000
+      DO 8000 IDEVIC=1,NUMDEV
+!
+        IF(IDPOWE(IDEVIC).EQ.'OFF')GO TO 8000
+        IF(IDMANU(IDEVIC).EQ.'OFF')GO TO 8000
+        IF(IDMANU(IDEVIC).EQ.'NULL')GO TO 8000
+        IF(IDMANU(IDEVIC).EQ.'NONE')GO TO 8000
+        IF(IDMANU(IDEVIC).EQ.'DISC')GO TO 8000
+!
+        IMANUF=IDMANU(IDEVIC)
+        IMODEL=IDMODE(IDEVIC)
+        IMODE2=IDMOD2(IDEVIC)
+        IMODE3=IDMOD3(IDEVIC)
+        IGCONT=IDCONT(IDEVIC)
+        IGCOLO=IDCOLO(IDEVIC)
+        IGFONT=IDFONT(IDEVIC)
+        NUMVPP=IDNVPP(IDEVIC)
+        NUMHPP=IDNHPP(IDEVIC)
+        ANUMVP=NUMVPP
+        ANUMHP=NUMHPP
+        IOFFSV=IDNVOF(IDEVIC)
+        IOFFSH=IDNHOF(IDEVIC)
+        IGUNIT=IDUNIT(IDEVIC)
+        PCHSCA=PDSCAL(IDEVIC)
+!
+!               ************************************
+!               **  STEP 1--                      **
+!               **  CARRY OUT OPENING OPERATIONS  **
+!               **  ON THE GRAPHICS DEVICES       **
+!               ************************************
+!
+        CALL DPOPDE
+!
+        IBELSW='OFF'
+        NUMRIN=0
+        IERASW='OFF'
+!
+        CALL DPOPPL(IGRASW,IBELSW,NUMRIN,IERASW,IBACCO,IBACC2)
+!
+!               *****************************************
+!               **  STEP 2--                           **
+!               **  SEARCH FOR COMMAND SPECIFICATIONS  **
+!               *****************************************
+!
+        IF(NUMARG.GE.3.AND.   &
+           IARGT(2).EQ.'NUMB'.AND.IARGT(3).EQ.'NUMB')THEN
+          ITYPEO='ABSO'
+          ILOCFN=2
+        ELSEIF(NUMARG.GE.4.AND.IHARG(2).EQ.'ABSO'.AND.   &
+               IARGT(3).EQ.'NUMB'.AND.IARGT(4).EQ.'NUMB')THEN
+          ITYPEO='ABSO'
+          ILOCFN=3
+        ELSEIF(NUMARG.GE.4.AND.IHARG(2).EQ.'RELA'.AND.   &
+               IARGT(3).EQ.'NUMB'.AND.IARGT(4).EQ.'NUMB')THEN
+          ITYPEO='RELA'
+          ILOCFN=3
+        ELSE
+          GO TO 1130
+        ENDIF
+!
+        IF(ILOCFN.GT.NUMARG)GO TO 1130
+        DO 1120 I=ILOCFN,NUMARG
+          IF(IARGT(I).NE.'NUMB')GO TO 1130
+ 1120   CONTINUE
+        IFOUND='YES'
+!
+!               ****************************
+!               **  STEP 3--              **
+!               **  DRAW OUT THE LINE(S)  **
+!               ****************************
+!
+        NUMNUM=NUMARG-ILOCFN+1
+        IF(NUMNUM.LT.NUMPT2)THEN
+          J=ILOCFN-1
+          X1=PXSTAR
+          Y1=PYSTAR
+        ELSE
+          J=ILOCFN
+          IF(J.GT.NUMARG)GO TO 1190
+          X1=ARG(J)
+          IF(UNITSW.EQ.'DATA')CALL DPCODS('X',X1,X1,   &
+             IBUGD2,ISUBRO,IERROR)
+          J=J+1
+          IF(J.GT.NUMARG)GO TO 1190
+          Y1=ARG(J)
+          IF(UNITSW.EQ.'DATA')CALL DPCODS('Y',Y1,Y1,   &
+             IBUGD2,ISUBRO,IERROR)
+        ENDIF
+!
+ 1160   CONTINUE
+        J=J+1
+        IF(J.GT.NUMARG)GO TO 1190
+        X2=ARG(J)
+        IF(UNITSW.EQ.'DATA')CALL DPCODS('X',X2,X2,IBUGD2,ISUBRO,IERROR)
+        IF(ITYPEO.EQ.'RELA')X2=X1+X2
+        J=J+1
+        IF(J.GT.NUMARG)GO TO 1190
+        Y2=ARG(J)
+        IF(UNITSW.EQ.'DATA')CALL DPCODS('Y',Y2,Y2,IBUGD2,ISUBRO,IERROR)
+        IF(ITYPEO.EQ.'RELA')Y2=Y1+Y2
+!
+        CALL DPSCI2(X1,Y1,X2,Y2,PX,PY,   &
+                    IFIG,ILINPA,ILINCO,ILINC2,MAXLNZ,PLINTH,   &
+                    AREGBA,IREBLI,IREBCO,IREBC2,MAXRGZ,PREBTH,   &
+                    IREFSW,IREFCO,IREFC2,   &
+                    IREPTY,IREPLI,IREPCO,IREPC2,PREPTH,PREPSP,   &
+                    PTEXHE,PTEXWI,PTEXVG,PTEXHG)
+!
+        X1=X2
+        Y1=Y2
+!
+        GO TO 1160
+ 1190   CONTINUE
+!
+        PXEND=X2
+        PYEND=Y2
+!
+!               ************************************
+!               **  STEP 4--                      **
+!               **  CARRY OUT CLOSING OPERATIONS  **
+!               **  ON THE GRAPHICS DEVICES       **
+!               ************************************
+!
+        ICOPSW='OFF'
+        NUMCOP=0
+        CALL DPCLPL(ICOPSW,NUMCOP,   &
+                    PGRAXF,PGRAYF,   &
+                    IGRASW,PDIAXC,PDIAYC,PDIAX2,PDIAY2,   &
+                    PDIAHE,PDIAWI,PDIAVG,PDIAHG)
+!
+        CALL DPCLDE
+!
+ 8000 CONTINUE
+      GO TO 9000
+!
+ 1130 CONTINUE
+      IERRG4='YES'
+      WRITE(ICOUT,1131)
+ 1131 FORMAT('***** ERROR IN SEMI-CIRCLE (DPSCIR)--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1132)
+ 1132 FORMAT('      ILLEGAL FORM FOR SEMI-CIRCLE COMMAND.')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1134)
+ 1134 FORMAT('      TEST EXAMPLE TO DEMONSTRATE THE PROPER FORM--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1135)
+ 1135 FORMAT('      SUPPOSE IT IS DESIRED TO DRAW A SEMI-CIRCLE ')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1136)
+ 1136 FORMAT('      WITH ONE END OF A DIAGONAL AT 20 20 ')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1137)
+ 1137 FORMAT('      AND THE OTHER END OF THE DIAGONAL AT 40 60,')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1141)
+ 1141 FORMAT('      THEN ALLOWABLE FORMS ARE--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1142)
+ 1142 FORMAT('      SEMI-CIRCLE 20 20 40 60')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1143)
+ 1143 FORMAT('      SEMI-CIRCLE ABSOLUTE 20 20 40 60')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1145)
+ 1145 FORMAT('      SEMI-CIRCLE RELATIVE 20 20 40 60')
+      CALL DPWRST('XXX','BUG ')
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SCIR')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSCIR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUND,IERROR,ILOCFN,NUMNUM
+ 9012   FORMAT('IFOUND,IERROR,ILOCFN,NUMNUM = ',2(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)X1,Y1,X2,Y2,X3,Y3
+ 9013   FORMAT('X1,Y1,X2,Y2,X3,Y3 = ',6G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9015)PXSTAR,PYSTAR,PXEND,PYEND
+ 9015   FORMAT('PXSTAR,PYSTAR,PXEND,PYEND = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSCIR
+      SUBROUTINE DPSCR7(ISTRIN,NUMCHA,X0,Y0,   &
+                        IFONT,ICASE,IJUST,ANGLE,HMAX,VMAX,AMAX,   &
+                        WIDTH,HEIGHT,   &
+                        PHEIGH,PWIDTH,PVEGAP,PHOGAP,   &
+                        PHEIG2,PWIDT2,PVEGA2,PHOGA2,   &
+                        ANUMHP,ANUMVP,   &
+                        IPATT,PTHICK,ICOL,ICOLR,ICOLG,ICOLB,IRGBFL,   &
+                        JPATT,JTHICK,PTHIC2,JCOL,   &
+                        ISYMBL,ISPAC,IFILL,   &
+                        IMPSW2,AMPSCH,AMPSCW,   &
+                        XEND,YEND,IFOUND,IBUGD2,IERROR)
+!
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--JANUARY   1981.
+!     UPDATED         --OCTOBER   1981.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --OCTOBER   1993. HANDLE LOWER CASE CHARACTERS
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ISTRIN
+!
+      CHARACTER*4 IPATT
+      CHARACTER*4 IFONT
+      CHARACTER*4 ICASE
+      CHARACTER*4 IJUST
+      CHARACTER*4 ICOL
+!
+      CHARACTER*24 ISYMBL
+      CHARACTER*4 ISPAC
+      CHARACTER*4 IFILL
+!
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IBUGD2
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISEQUE
+      CHARACTER*4 ISUBSU
+      CHARACTER*4 IDRAW
+      CHARACTER*4 IFOUNO
+      CHARACTER*4 IFONSV
+      CHARACTER*4 ICASSV
+      CHARACTER*4 ICHAR2
+      CHARACTER*4 IOP
+      CHARACTER*4 IFOUNC
+!CCCC OCTOBER 1993.  ADD FOLLOWING LINE
+      CHARACTER*4 ICASE2
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION ISTRIN(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+!
+      CHARACTER*4 IMPSW2
+!
+!-----COMMON VARIABLES (GENERAL)--------------------------------------
+!
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!CCCC OCTOBER 1993.  ADD FOLLOWING LINE
+      ICASE2='UPPE'
+      ISEQUE='ON'
+      ISUBSU='OFF'
+!
+!
+      X02=50.0
+      Y02=50.0
+!
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'SCR7')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSCR7--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)X0,Y0,ANGLE,IFONT,ICASE,IJUST
+   52   FORMAT('X0,Y0,ANGLE,IFONT,ICASE,IJUST = ',3G15.7,3(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)HMAX,VMAX,AMAX,WIDTH,HEIGHT
+   53   FORMAT('HMAX,VMAX,AMAX,WIDTH,HEIGHT = ',5G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)ANUMHP,ANUMVP
+   54   FORMAT('ANUMHP,ANUMVP = ',2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55)NUMCHA,XEND,YEND,IBUGD2,ISUBRO,ISUBG4
+   55   FORMAT('NUMCHA,XEND,YEND,IBUGD2,ISUBG4 = ',I6,2G15.7,2(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        DO 57 I=1,NUMCHA
+          WRITE(ICOUT,58)I,ISTRIN(I)
+   58     FORMAT('I,ISTRIN(I) = ',I8,2X,A4)
+          CALL DPWRST('XXX','BUG ')
+   57   CONTINUE
+        WRITE(ICOUT,60)ICOL,JCOL,PTHICK,JTHICK,PTHIC2
+   60   FORMAT('ICOL,JCOL,PTHICK,JTHICK,PTHIC2 = ',A4,I8,G15.7,I8,G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,61)IFILL,IPATT,JPATT
+   61   FORMAT('IFILL,IPATT,JPATT = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,62)PHEIGH,PWIDTH,PVEGAP,PHOGAP
+   62   FORMAT('PHEIGH,PWIDTH,PVEGAP,PHOGAP = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,63)PHEIG2,PWIDT2,PVEGA2,PHOGA2
+   63   FORMAT('PHEIG2,PWIDT2,PVEGA2,PHOGA2 = ',4E15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,65)ISYMBL,ISPAC
+   65   FORMAT('ISYMBL,ISPAC = ',A24,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,68)IFOUND,IERROR,IERRG4
+   68   FORMAT('IFOUND,IERROR,IERRG4 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *************************
+!               **  STEP XX--          **
+!               **  SAVE INPUT VALUES  **
+!               *************************
+!
+      IFONSV=IFONT
+      ICASSV=ICASE
+      HEIGSV=HEIGHT
+      WIDTSV=WIDTH
+!
+      PHEISV=PHEIGH
+      PWIDSV=PWIDTH
+      PVEGSV=PVEGAP
+      PHOGSV=PHOGAP
+!
+      PHE2SV=PHEIG2
+      PWI2SV=PWIDT2
+      PVG2SV=PVEGA2
+      PHG2SV=PHOGA2
+!
+      IF(IMPSW2.EQ.'ON')THEN
+        PHEIGH=PHEIGH*AMPSCH
+        PVEGAP=PVEGAP*AMPSCH
+        PWIDTH=PWIDTH*AMPSCW
+        PHOGAP=PHOGAP*AMPSCW
+        PHEIG2=PHEIG2*AMPSCH
+        PVEGA2=PVEGA2*AMPSCH
+        PWIDT2=PWIDT2*AMPSCW
+        PHOGA2=PHOGA2*AMPSCW
+        HEIGHT=HEIGHT*AMPSCH
+        WIDTH=WIDTH*AMPSCW
+      ENDIF
+!
+!               *********************************************
+!               **  STEP XX--                              **
+!               **  DETERMINE THE LOCATION                 **
+!               **  OF THE RIGHT-MOST NON-BLANK CHARACTER  **
+!               *********************************************
+!
+      DO 300 I=1,NUMCHA
+      IREV=NUMCHA-I+1
+      IF(ISTRIN(IREV).NE.' ')GO TO 305
+  300 CONTINUE
+      NUMCHS=0
+      GO TO 309
+  305 CONTINUE
+      NUMCHS=IREV
+  309 CONTINUE
+!
+!               *************************************
+!               **  STEP XX--                      **
+!               **  DETERMINE THE LOCATION         **
+!               **  OF THE RIGHT-MOST PARENTHESIS  **
+!               *************************************
+!
+      ILOCR2=0
+      DO 600 I=1,NUMCHS
+      IREV=NUMCHS-I+1
+      IF(ISTRIN(IREV).EQ.')')GO TO 610
+  600 CONTINUE
+      GO TO 690
+  610 CONTINUE
+      ILOCR2=IREV
+      GO TO 690
+  690 CONTINUE
+!
+!               ***********************************************
+!               **  STEP XX--                                **
+!               **  PROCEED SEQUENTIALLY THROUGH THE STRING  **
+!               ***********************************************
+!
+      IF(IJUST.EQ.'LEFT')GO TO 1100
+      IF(IJUST.EQ.'LEBO')GO TO 1100
+      IF(IJUST.EQ.'LECE')GO TO 1100
+      IF(IJUST.EQ.'LETO')GO TO 1100
+!
+      IF(IJUST.EQ.'CENT')GO TO 1200
+      IF(IJUST.EQ.'CEBO')GO TO 1200
+      IF(IJUST.EQ.'CECE')GO TO 1200
+      IF(IJUST.EQ.'CETO')GO TO 1200
+!
+      IF(IJUST.EQ.'RIGH')GO TO 1200
+      IF(IJUST.EQ.'RIBO')GO TO 1200
+      IF(IJUST.EQ.'RICE')GO TO 1200
+      IF(IJUST.EQ.'RITO')GO TO 1200
+!
+      GO TO 1100
+!
+!               *****************************************
+!               **  STEP 11--                          **
+!               **  TREAT THE LEFT-JUSTIFICATION CASE  **
+!               *****************************************
+!
+ 1100 CONTINUE
+!
+      IEND=0
+!
+      XEND=X0
+      YEND=Y0
+      IF(IJUST.EQ.'LECE')YEND=Y0-PHEIGH/2.0
+      IF(IJUST.EQ.'LETO')YEND=Y0-PHEIGH
+!
+ 1110 CONTINUE
+      ISTART=IEND+1
+      IF(ISTART.GT.NUMCHS)GO TO 1190
+!
+!               ************************************
+!               **  STEP 12--                     **
+!               **  DECODE THE NEXT CHARACTER     **
+!               **  (OR THE NEXT FEW CHARACTERS)  **
+!               ************************************
+!
+      CALL DPSCAN(ISTART,ISTRIN,NUMCHS,ILOCR2,   &
+                  ICHAR2,IOP,IFONT,ICASE,IJUST,ISEQUE,ISUBSU,   &
+                  HMAX,VMAX,AMAX,X0,Y0,ANGLE,WIDTH,HEIGHT,   &
+                  IEND,IFOUNC,IFOUNO,IBUGD2,IERROR)
+!
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'SCR7')THEN
+        WRITE(ICOUT,1112)ICHAR2,IOP,ISTART,IEND,IFOUNC,IFOUNO
+ 1112   FORMAT('ICHAR2,IOP,ISTART,IEND,IFOUNC,IFOUNO = ',   &
+               A4,2X,A4,I8,I8,2X,A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ******************************
+!               **  STEP 13--               **
+!               **  DRAW OUT THE CHARACTER  **
+!               ******************************
+!
+      CALL DPSBSP(IFOUNO,IOP,XEND,YEND,HEIGHT,WIDTH,   &
+                  PHEIGH,PWIDTH,PVEGAP,PHOGAP,   &
+                  PHEIG2,PWIDT2,PVEGA2,PHOGA2,   &
+                  ANGLE,AMAX,   &
+                  IBUGD2,IERROR)
+      IF(IFOUNO.EQ.'YES')GO TO 1180
+!
+      XSTART=XEND
+      YSTART=YEND
+!
+      IDRAW='ON'
+!CCCC OCTOBER 1993.  HANDLE CASE IF ICHAR2 IS LOWER CASE.
+      ICASE2=ICASE
+      CALL DPCOAN(ICHAR2(1:1),IVAL)
+      IF(IVAL.GE.97.AND.IVAL.LE.122)THEN
+        IVAL=IVAL-32
+        CALL DPCONA(IVAL,ICHAR2(1:1))
+        IF(ICASE.EQ.'LOWE'.OR.ICASE.EQ.'ASIS')ICASE2='LOWE'
+      ELSE
+        IF(ICASE.EQ.'ASIS')ICASE2='UPPE'
+      END IF
+!CCCC END CHANGE
+!
+      CALL DPSCR8(ICHAR2,XSTART,YSTART,IDRAW,   &
+                  IFONT,ICASE2,ANGLE,HMAX,VMAX,AMAX,WIDTH,HEIGHT,   &
+                  PHEIGH,PWIDTH,PVEGAP,PHOGAP,   &
+                  PHEIG2,PWIDT2,PVEGA2,PHOGA2,   &
+                  ANUMHP,ANUMVP,   &
+                  IPATT,PTHICK,ICOL,ICOLR,ICOLG,ICOLB,IRGBFL,   &
+                  JPATT,JTHICK,PTHIC2,JCOL,   &
+                  XEND,YEND,   &
+                  ISPAC,IFILL,   &
+                  IFOUND,IBUGD2,IERROR)
+!
+ 1180 CONTINUE
+      GO TO 1110
+!
+ 1190 CONTINUE
+      IF(IJUST.EQ.'LECE')YEND=YEND+PHEIGH/2.0
+      IF(IJUST.EQ.'LETO')YEND=YEND+PHEIGH
+      GO TO 8000
+!
+!               *****************************************
+!               **  STEP 21--                          **
+!               **  TREAT THE CENTER-JUSTIFICATION     **
+!               **  AND THE RIGHT-JUSTIFICATION CASES  **
+!               *****************************************
+!
+ 1200 CONTINUE
+!
+      XLEN=0.0
+      YLEN=0.0
+!
+      IEND=0
+!
+      IDRAW='OFF'
+!
+      XEND99=X0
+      YEND99=Y0
+!
+ 1210 CONTINUE
+      ISTART=IEND+1
+      IF(ISTART.GT.NUMCHS)GO TO 1250
+!
+!               ************************************
+!               **  STEP 22--                     **
+!               **  DECODE THE NEXT CHARACTER     **
+!               **  (OR THE NEXT FEW CHARACTERS)  **
+!               ************************************
+!
+      CALL DPSCAN(ISTART,ISTRIN,NUMCHS,ILOCR2,   &
+                  ICHAR2,IOP,IFONT,ICASE,IJUST,ISEQUE,ISUBSU,   &
+                  HMAX,VMAX,AMAX,X0,Y0,ANGLE,WIDTH,HEIGHT,   &
+                  IEND,IFOUNC,IFOUNO,IBUGD2,IERROR)
+!
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'SCR7')THEN
+        WRITE(ICOUT,1212)ICHAR2,IOP,ISTART,IEND,IFOUNC,IFOUNO
+ 1212   FORMAT('ICHAR2,IOP,ISTART,IEND,IFOUNC,IFOUNO = ',   &
+               A4,2X,A4,I8,I8,2X,A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *********************************************
+!               **  STEP 23--                              **
+!               **  DETERMINE THE LENGTH OF THE CHARACTER  **
+!               *********************************************
+!
+      CALL DPSBSP(IFOUNO,IOP,XEND99,YEND99,HEIGHT,WIDTH,   &
+                  PHEIGH,PWIDTH,PVEGAP,PHOGAP,   &
+                  PHEIG2,PWIDT2,PVEGA2,PHOGA2,   &
+                  ANGLE,AMAX,   &
+                  IBUGD2,IERROR)
+      IF(IFOUNO.EQ.'YES')GO TO 1240
+!
+      XSTA99=XEND99
+      YSTA99=YEND99
+!CCCC OCTOBER 1993.  HANDLE CASE IF ICHAR2 IS LOWER CASE.
+      ICASE2=ICASE
+      CALL DPCOAN(ICHAR2(1:1),IVAL)
+      IF(IVAL.GE.97.AND.IVAL.LE.122)THEN
+        IVAL=IVAL-32
+        CALL DPCONA(IVAL,ICHAR2(1:1))
+        IF(ICASE.EQ.'LOWE'.OR.ICASE.EQ.'ASIS')ICASE2='LOWE'
+      ELSE
+        IF(ICASE.EQ.'ASIS')ICASE2='UPPE'
+      END IF
+!CCCC END CHANGE
+!
+      CALL DPSCR8(ICHAR2,XSTA99,YSTA99,IDRAW,   &
+                   IFONT,ICASE2,ANGLE,HMAX,VMAX,AMAX,WIDTH,HEIGHT,   &
+                   PHEIGH,PWIDTH,PVEGAP,PHOGAP,   &
+                   PHEIG2,PWIDT2,PVEGA2,PHOGA2,   &
+                   ANUMHP,ANUMVP,   &
+                   IPATT,PTHICK,ICOL,ICOLR,ICOLG,ICOLB,IRGBFL,   &
+                   JPATT,JTHICK,PTHIC2,JCOL,   &
+                   XEND99,YEND99,   &
+                   ISPAC,IFILL,   &
+                   IFOUND,IBUGD2,IERROR)
+!
+ 1240 CONTINUE
+      GO TO 1210
+!
+ 1250 CONTINUE
+      XLEN=XEND99-X0
+      YLEN=YEND99-Y0
+!
+!               ***************************************
+!               **  STEP 24--                        **
+!               **  RESTORE VALUES TO THOSE AT TIME  **
+!               **  OF INPUT TO THIS SUBROUTINE      **
+!               ***************************************
+!
+      IFONT=IFONSV
+      ICASE=ICASSV
+      HEIGHT=HEIGSV
+      WIDTH=WIDTSV
+!
+      PHEIGH=PHEISV
+      PWIDTH=PWIDSV
+      PVEGAP=PVEGSV
+      PHOGAP=PHOGSV
+!
+      PHEIG2=PHE2SV
+      PWIDT2=PWI2SV
+      PVEGA2=PVG2SV
+      PHOGA2=PHG2SV
+!
+      IF(IMPSW2.EQ.'ON')THEN
+        PHEIGH=PHEIGH*AMPSCH
+        PVEGAP=PVEGAP*AMPSCH
+        PWIDTH=PWIDTH*AMPSCW
+        PHOGAP=PHOGAP*AMPSCW
+        PHEIG2=PHEIG2*AMPSCH
+        PVEGA2=PVEGA2*AMPSCH
+        PWIDT2=PWIDT2*AMPSCW
+        PHOGA2=PHOGA2*AMPSCW
+        HEIGHT=HEIGHT*AMPSCH
+        WIDTH=WIDTH*AMPSCW
+      ENDIF
+!               ************************************************
+!               **  STEP 25--                                 **
+!               **  COMPUTE STARTING POINT                    **
+!               **  FOR THE CENTER- OR RIGHT-JUSTIFIED STRING **
+!               ************************************************
+!
+!CCCC IF(IJUST.EQ.'CENT')X02=X0-(XLEN/2.0)
+      IF(IJUST.EQ.'CENT')X02=X0-(XLEN/2.0)+(PHOGAP/2.0)
+      IF(IJUST.EQ.'CENT')Y02=Y0-(YLEN/2.0)
+!
+!CCCC IF(IJUST.EQ.'CEBO')X02=X0-(XLEN/2.0)
+      IF(IJUST.EQ.'CEBO')X02=X0-(XLEN/2.0)+(PHOGAP/2.0)
+      IF(IJUST.EQ.'CEBO')Y02=Y0-(YLEN/2.0)
+!
+!CCCC IF(IJUST.EQ.'CECE')X02=X0-(XLEN/2.0)
+      IF(IJUST.EQ.'CECE')X02=X0-(XLEN/2.0)+(PHOGAP/2.0)
+      IF(IJUST.EQ.'CECE')Y02=Y0-(YLEN/2.0)-PHEIGH/2.0
+!
+!CCCC IF(IJUST.EQ.'CETO')X02=X0-(XLEN/2.0)
+      IF(IJUST.EQ.'CETO')X02=X0-(XLEN/2.0)+(PHOGAP/2.0)
+      IF(IJUST.EQ.'CETO')Y02=Y0-(YLEN/2.0)-PHEIGH
+!
+      IF(IJUST.EQ.'RIGH')X02=X0-XLEN
+      IF(IJUST.EQ.'RIGH')Y02=Y0-YLEN
+!
+      IF(IJUST.EQ.'RIBO')X02=X0-XLEN
+      IF(IJUST.EQ.'RIBO')Y02=Y0-YLEN
+!
+      IF(IJUST.EQ.'RICE')X02=X0-XLEN
+      IF(IJUST.EQ.'RICE')Y02=Y0-YLEN-PHEIGH/2.0
+!
+      IF(IJUST.EQ.'RITO')X02=X0-XLEN
+      IF(IJUST.EQ.'RITO')Y02=Y0-YLEN-PHEIGH
+!
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'SCR7')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1251)
+ 1251   FORMAT('***** FROM THE MIDDLE    OF DPSCR7--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1252)IJUST,XLEN,YLEN,PWIDT2,PHEIG2
+ 1252   FORMAT('IJUST,XLEN,YLEN,PWIDT2,PHEIG2 = ',A4,4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1253)X0,Y0,X02,Y02
+ 1253   FORMAT('X0,Y0,X02,Y02 = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IEND=0
+!
+      XEND=X02
+      YEND=Y02
+!
+      IDRAW='ON'
+!
+ 1260 CONTINUE
+      ISTART=IEND+1
+      IF(ISTART.GT.NUMCHS)GO TO 1290
+!
+!               ************************************
+!               **  STEP 26--                     **
+!               **  DECODE THE NEXT CHARACTER     **
+!               **  (OR THE NEXT FEW CHARACTERS)  **
+!               ************************************
+!
+      CALL DPSCAN(ISTART,ISTRIN,NUMCHS,ILOCR2,   &
+                  ICHAR2,IOP,IFONT,ICASE,IJUST,ISEQUE,ISUBSU,   &
+                  HMAX,VMAX,AMAX,X0,Y0,ANGLE,WIDTH,HEIGHT,   &
+                  IEND,IFOUNC,IFOUNO,IBUGD2,IERROR)
+!
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'SCR7')THEN
+        WRITE(ICOUT,1262)ICHAR2,IOP,ISTART,IEND,IFOUNC,IFOUNO
+ 1262   FORMAT('ICHAR2,IOP,ISTART,IEND,IFOUNC,IFOUNO = ',   &
+               2(A4,2X),2I8,2(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ******************************
+!               **  STEP 27--               **
+!               **  DRAW OUT THE CHARACTER  **
+!               ******************************
+!
+      CALL DPSBSP(IFOUNO,IOP,XEND,YEND,HEIGHT,WIDTH,   &
+                  PHEIGH,PWIDTH,PVEGAP,PHOGAP,   &
+                  PHEIG2,PWIDT2,PVEGA2,PHOGA2,   &
+                  ANGLE,AMAX,   &
+                  IBUGD2,IERROR)
+      IF(IFOUNO.EQ.'YES')GO TO 1280
+!
+      XSTART=XEND
+      YSTART=YEND
+!CCCC OCTOBER 1993.  HANDLE CASE IF ICHAR2 IS LOWER CASE.
+      ICASE2=ICASE
+      CALL DPCOAN(ICHAR2(1:1),IVAL)
+      IF(IVAL.GE.97.AND.IVAL.LE.122)THEN
+        IVAL=IVAL-32
+        CALL DPCONA(IVAL,ICHAR2(1:1))
+        IF(ICASE.EQ.'LOWE'.OR.ICASE.EQ.'ASIS')ICASE2='LOWE'
+      ELSE
+        IF(ICASE.EQ.'ASIS')ICASE2='UPPE'
+      END IF
+!CCCC END CHANGE
+!
+      CALL DPSCR8(ICHAR2,XSTART,YSTART,IDRAW,   &
+                  IFONT,ICASE2,ANGLE,HMAX,VMAX,AMAX,WIDTH,HEIGHT,   &
+                  PHEIGH,PWIDTH,PVEGAP,PHOGAP,   &
+                  PHEIG2,PWIDT2,PVEGA2,PHOGA2,   &
+                  ANUMHP,ANUMVP,   &
+                  IPATT,PTHICK,ICOL,ICOLR,ICOLG,ICOLB,IRGBFL,   &
+                  JPATT,JTHICK,PTHIC2,JCOL,   &
+                  XEND,YEND,   &
+                  ISPAC,IFILL,   &
+                  IFOUND,IBUGD2,IERROR)
+!
+ 1280 CONTINUE
+      GO TO 1260
+!
+ 1290 CONTINUE
+      IF(IJUST.EQ.'CECE')YEND=YEND+PHEIGH/2.0
+      IF(IJUST.EQ.'CETO')YEND=YEND+PHEIGH
+      IF(IJUST.EQ.'RICE')YEND=YEND+PHEIGH/2.0
+      IF(IJUST.EQ.'RITO')YEND=YEND+PHEIGH
+      GO TO 8000
+!
+!               ***************************************
+!               **  STEP 28--                        **
+!               **  RESTORE VALUES TO THOSE AT TIME  **
+!               **  OF INPUT TO THIS SUBROUTINE      **
+!               ***************************************
+!
+ 8000 CONTINUE
+      IFONT=IFONSV
+      ICASE=ICASSV
+      WIDTH=WIDTSV
+      HEIGHT=HEIGSV
+!
+      PHEIGH=PHEISV
+      PWIDTH=PWIDSV
+      PVEGAP=PVEGSV
+      PHOGAP=PHOGSV
+!
+      PHEIG2=PHE2SV
+      PWIDT2=PWI2SV
+      PVEGA2=PVG2SV
+      PHOGA2=PHG2SV
+      GO TO 9000
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'SCR7')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSCR7--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)XEND,YEND
+ 9012   FORMAT('XEND,YEND = ',2E15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9028)IFOUND,IERROR,IERRG4
+ 9028   FORMAT('IFOUND,IERROR,IERRG4 = ',2(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSCR7
+      SUBROUTINE DPSCR8(ICHAR2,XSTART,YSTART,IDRAW,   &
+                        IFONT,ICASE,ANGLE,HMAX,VMAX,AMAX,WIDTH,HEIGHT,   &
+                        PHEIGH,PWIDTH,PVEGAP,PHOGAP,   &
+                        PHEIG2,PWIDT2,PVEGA2,PHOGA2,   &
+                        ANUMHP,ANUMVP,   &
+                        IPATT,PTHICK,ICOL,ICOLR,ICOLG,ICOLB,IRGBFL,   &
+                        JPATT,JTHICK,PTHIC2,JCOL,   &
+                        XEND,YEND,   &
+                        ISPAC,   &
+                        IFILL,   &
+                        IFOUND,IBUG,IERROR)
+!
+!     PURPOSE--SCRIBE OUT THE SINGLE CHARACTER
+!              IN THE HOLLERITH VARIABLE ICHAR2.
+!     NOTE--ICHAR2 SHOULD CONTAIN A SINGLE CHARACTER OR SHOULD CONTAIN AN
+!           ABBREVIATED STRING (4 CHARACTERS AT MOST) INDICATING A DESIRED
+!           MATH OPERATION, GREEK LETTER, ETC.  THE ABBREVIATED STRING HAS
+!           HAD () REMOVED.  THE PRE-CHECKING AND FORMATION OF A VALID
+!           ICHAR2 WAS DONE IN DPSCAN.
+!     INPUT  ARGUMENTS--ICHAR2  = THE HOLLERITH VARIABLE
+!                                CONTAINING THE CHARACTER OF INTEREST.
+!                       XSTART = THE STARTING HORIZONTAL COORDINATE;
+!                                THE HORIZONTAL COORDINATE OF THE
+!                                BOTTOM LEFT POINT OF THE FIRST CHARACTER.
+!                                XSTART MAY BE IN ANY UNITS, BUT IS USUALLY
+!                                GIVEN IN % UNITS, INCHES, CENTIMETERS, OR
+!                                TEKTRONIX PICTURE POINTS.
+!                       YSTART = THE STARTING VERTICAL COORDINATE;
+!                                THE VERTICAL COORDINATE OF THE
+!                                BOTTOM LEFT POINT OF THE FIRST CHARACTER.
+!                                YSTART MAY BE IN ANY UNITS, BUT IS USUALLY
+!                                GIVEN IN % UNITS, INCHES, CENTIMETERS, OR
+!                                TEKTRONIX PICTURE POINTS.
+!                       HEIGHT = THE HEIGHT OF THE CHARACTERS (INCLUDING GAP);
+!                                THE HEIGHT OF A CHARACTER
+!                                MAY BE IN ANY UNITS, BUT IS USUALLY
+!                                GIVEN IN % UNITS, INCHES, CENTIMETERS, OR
+!                                TEKTRONIX PICTURE POINTS.
+!
+!                       WIDTH  = THE WIDTH OF THE CHARACTERS (INCLUDING GAP);
+!                                THE WIDTH OF A CHARACTER
+!                                MAY BE IN ANY UNITS, BUT IS USUALLY
+!                                GIVEN IN % UNITS, INCHES, CENTIMETERS, OR
+!                                TEKTRONIX PICTURE POINTS.
+!
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--
+!     UPDATED         --SEPTEMBER 1981.
+!     UPDATED         --MARCH     1982.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --OCTOBER   1991. ADDED SOME ABBREVIATIONS FOR CHARACTER
+!                                       FILL.  ALAN
+!     UPDATED         --AUGUST    1992. ADD SOME CHAR FILL (ALAN)
+!     UPDATED         --OCTOBER   2020. SUPPORT RGB COLOR
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICHAR2
+      CHARACTER*4 IDRAW
+      CHARACTER*4 IPATT
+      CHARACTER*4 IFONT
+      CHARACTER*4 ICASE
+      CHARACTER*4 ICOL
+      CHARACTER*4 ISPAC
+      CHARACTER*4 IFILL
+!
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IBUG
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 IOP
+      CHARACTER*4 IFIG
+      CHARACTER*4 IMATH
+      CHARACTER*4 ICHAR3
+      CHARACTER*4 IHORPA
+      CHARACTER*4 IVERPA
+      CHARACTER*4 IDUPPA
+      CHARACTER*4 IDDOPA
+!
+      CHARACTER*4 ICOLF
+      CHARACTER*4 ICOLP
+      CHARACTER*4 IFLAG
+!
+      CHARACTER*4 IPATT2
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IOP(100)
+      DIMENSION X(100)
+      DIMENSION Y(100)
+!
+      DIMENSION PX(100)
+      DIMENSION PY(100)
+!
+!CCCC DIMENSION PX3(100)
+!CCCC DIMENSION PY3(100)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOBE.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IPATT2='SOLI'
+      IMATH='NO'
+!
+      XFACHP=1.0
+      YFACHP=1.0
+      XMINC=0.0
+      XMAXC=0.0
+      XMINC2=0.0
+      XMAXC2=0.0
+      YMINC2=0.0
+      YMAXC2=0.0
+      X2=0.0
+      X3=0.0
+      X4=0.0
+      XEND2=(-999.0)
+      YEND2=(-999.0)
+      I2=(-999)
+      PPENTH=(-999.0)
+      NLOOP=(-999)
+!
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'SCR8')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('****** AT THE BEGINNING OF DPSCR8--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)ICHAR2,XSTART,YSTART,IDRAW,WIDTH,HEIGHT
+   52   FORMAT('ICHAR2,XSTART,YSTART,IDRAW,WIDTH,HEIGHT = ',   &
+               A4,2G15.7,2X,A4,2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IFONT,ICASE,ISPAC,IFILL,ANGLE
+   53   FORMAT('IFONT,ICASE,ISPAC,IFILL,ANGLE = ',4(A4,2X),G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)HMAX,VMAX,AMAX
+   54   FORMAT('HMAX,VMAX,AMAX = ',3G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,55)ANUMHP,ANUMVP
+   55   FORMAT('ANUMHP,ANUMVP = ',2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,58)XEND,YEND
+   58   FORMAT('XEND,YEND = ',2E15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,59)IPATT,JPATT
+   59   FORMAT('IPATT,JPATT = ',A4,I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,60)ICOL,JCOL,PTHICK,JTHICK,PTHIC2
+   60   FORMAT('ICOL,JCOL,PTHICK,JTHICK,PTHIC2 = ',   &
+               A4,I8,G15.7,I8,G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,62)PHEIGH,PWIDTH,PVEGAP,PHOGAP
+   62   FORMAT('PHEIGH,PWIDTH,PVEGAP,PHOGAP = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,63)PHEIG2,PWIDT2,PVEGA2,PHOGA2
+   63   FORMAT('PHEIG2,PWIDT2,PVEGA2,PHOGA2 = ',4E15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,69)IFOUND,IBUGG4,ISUBG4,IERROR
+   69   FORMAT('IFOUND,IBUGG4,ISUBG4,IERROR = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!CCCC           ******************************************************
+!CCCC           **  STEP 3.0--                                      **
+!CCCC           **  COPY OVER VALUES FOR THE USUAL CASE (= 1 PASS)  **
+!CCCC           ******************************************************
+!CCCC
+!CCCC ISTART = LOCATION (1 TO 4) OF FIRST CHARACTER IN ICHAR2
+!CCCC   (IF FIRST CHARACTER IS BLANK, THEN ISTART STILL = 1)
+!CCCC  ISTOP = LOCATION (1 TO 4) OF LAST NON-BLANK CHARACTER IN ICHAR2
+!CCCC   OR OF LAST CHARACTER BEFORE (
+!CCCC  (UNLESS ( IS IN LOCATION 1)
+!CCCC  IPOINT = LOCATION (1 TO 4) OF CURRENTLOCATION OF ITNTEREST.
+!CCCC ICHAR3 EITHER HAS ELEMENTS IPOINT TO ISTOP OF ICHAR2
+!CCCC OR (IF NO MATCH WAS FOUND),
+!CCCC ELEMENTS IPOINT OT IPOINT OF ICHAR2.
+!CCCC ISTART AND ISTOP DO NOT CHANGE.
+!CCCC IPOINT MAY CHANGE (INCREASE) IF NO MATCH
+!CCCC
+!CCCC ISTART=1
+!CCCC ISTOP=4
+!CCCC ICTEMP=ICHAR2(4:4)
+!CCCC IF(ICTEMP.EQ.' ')ISTOP=3
+!CCCC IF(ICTEMP.EQ.'(')ISTOP=3
+!CCCC ICTEMP=ICHAR2(3:3)
+!CCCC IF(ICTEMP.EQ.' ')ISTOP=2
+!CCCC IF(ICTEMP.EQ.'(')ISTOP=2
+!CCCC ICTEMP=ICHAR2(2:2)
+!CCCC IF(ICTEMP.EQ.' ')ISTOP=1
+!CCCC IF(ICTEMP.EQ.'(')ISTOP=1
+!CCCC
+!CCCC IPOINT=ISTART
+!
+      ICHAR3=ICHAR2
+      XSTAR2=XSTART
+      YSTAR2=YSTART
+!
+!               **********************************************
+!               **  STEP 3.1--                              **
+!               **  TREAT THE ROMAN ALPHABET, NUMERIC, AND  **
+!               **  STANDARD SYMBOLS CASE                   **
+!               **********************************************
+!
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'SCR8')THEN
+        WRITE(ICOUT,1201)
+ 1201   FORMAT('***** FROM NEAR BEGINNING OF DPSCR8--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1202)ICHAR2,ICHAR3
+ 1202   FORMAT('ICHAR2,ICHAR3 = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IFOUND='NO'
+      IF(IFONT.EQ.'SIMP')THEN
+        IF(ICASE.EQ.'UPPE')THEN
+          CALL DPRSU(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ELSEIF(ICASE.EQ.'LOWE')THEN
+          CALL DPRSL(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRSN(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRSS(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+      ELSEIF(IFONT.EQ.'DUPL')THEN
+        IF(ICASE.EQ.'UPPE')THEN
+          CALL DPRDU(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ELSEIF(ICASE.EQ.'LOWE')THEN
+          CALL DPRDL(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRDN(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRDS(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+      ELSEIF(IFONT.EQ.'TRIP')THEN
+        IF(ICASE.EQ.'UPPE')THEN
+          CALL DPRTU(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ELSEIF(ICASE.EQ.'LOWE')THEN
+          CALL DPRTL(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRTN(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRTS(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+      ELSEIF(IFONT.EQ.'TRII')THEN
+        IF(ICASE.EQ.'UPPE')THEN
+          CALL DPRTIU(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                      IBUG,IFOUND,IERROR)
+        ELSEIF(ICASE.EQ.'LOWE')THEN
+          CALL DPRTIL(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                      IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRTIN(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                      IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+           CALL DPRTS(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                      IBUG,IFOUND,IERROR)
+        ENDIF
+      ELSEIF(IFONT.EQ.'COMI')THEN
+        IF(ICASE.EQ.'UPPE')THEN
+          CALL DPRCIU(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                      IBUG,IFOUND,IERROR)
+        ELSEIF(ICASE.EQ.'LOWE')THEN
+          CALL DPRCIL(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                      IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRCIN(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                      IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRCS(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+      ELSEIF(IFONT.EQ.'SIMS')THEN
+        IF(ICASE.EQ.'UPPE')THEN
+          CALL DPRSSU(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                      IBUG,IFOUND,IERROR)
+        ELSEIF(ICASE.EQ.'LOWE')THEN
+          CALL DPRSSL(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                      IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRSN(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRSS(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+      ELSEIF(IFONT.EQ.'COMS')THEN
+        IF(ICASE.EQ.'UPPE')THEN
+           CALL DPRCSU(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                       IBUG,IFOUND,IERROR)
+        ELSEIF(ICASE.EQ.'LOWE')THEN
+          CALL DPRCSL(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                      IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRCSN(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                      IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRCS(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+!CCCC ELSEIF(IFONT.EQ.'COMP')THEN
+!
+!       NOTE: IFONT='COMP' IS THE DEFAULT CASE IF FONT NOT MATCHED
+!
+      ELSE
+        IF(ICASE.EQ.'UPPE')THEN
+          CALL DPRCU(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ELSEIF(ICASE.EQ.'LOWE')THEN
+          CALL DPRCL(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRCN(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+        IF(IFOUND.EQ.'NO')THEN
+          CALL DPRCS(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+      ENDIF
+!
+      IF(IFOUND.EQ.'YES')GO TO 1900
+!
+!               *************************************
+!               **  STEP 3.2--                     **
+!               **  TREAT THE GREEK ALPHABET CASE  **
+!               *************************************
+!
+      IFOUND='NO'
+      IF(IFONT.EQ.'SIMP')THEN
+        IF(ICASE.EQ.'UPPE')THEN
+          CALL DPGSU(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ELSEIF(ICASE.EQ.'LOWE')THEN
+          CALL DPGSL(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+      ELSE
+        IF(ICASE.EQ.'UPPE')THEN
+          CALL DPGCU(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ELSEIF(ICASE.EQ.'LOWE')THEN
+          CALL DPGCL(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                     IBUG,IFOUND,IERROR)
+        ENDIF
+      ENDIF
+!
+      IF(IFOUND.EQ.'YES')GO TO 1900
+!
+!               ***********************************
+!               **  STEP 3.3--                   **
+!               **  TREAT THE MATH SYMBOLS CASE  **
+!               ***********************************
+!
+      IFOUND='NO'
+      CALL DPMATH(ICHAR3,IOP,X,Y,NUMCO,IXMINC,IXMAXC,IXDELC,   &
+                  IBUG,IFOUND,IERROR)
+      IF(IFOUND.EQ.'YES')THEN
+        IMATH='YES'
+        GO TO 1900
+      ELSE
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               ****************************************************
+!               **  STEP XX--                                     **
+!               **  BRANCH POINT FOR A SUCCESSFUL FIND            **
+!               **  (IN THE VARIOUS FONTS) OF ICHAR2 FROM ABOVE.  **
+!               ****************************************************
+!
+ 1900 CONTINUE
+!
+!               ********************************************************
+!               **  STEP XX--                                         **
+!               **  DRAW OUT THE CHARACTER (IF IDRAW IS ON).          **
+!               **  INVISIBLY DRAW OUT THE CHARACTER (TO DETERMINE    **
+!               **  LENGTH) (IF I INDEX I IS THE POSITION IN THE      **
+!               **  COORDINATE VECTOR INDEX J IS THE VERTEX NUMBER    **
+!               **  WITHIN A SUB-TRACE.                               **
+!               **  NOTE--(XMAXC2-XMINC2) (= 20) HERSHEY UNITS =      **
+!               **  PWIDTH (= %) DA FOR BOTH FIXED SPACING AND        **
+!               **  PROPORTIONAL SPACING.  THEREFORE TO TRANSLATE A   **
+!               **  HERSHEY DIFFERENCE INTO A DATAPLOT (0 TO 100%     **
+!               **  UNITS) DIFFERENCE, MULTIPLY THE HERSHEY           **
+!               **  DIFFERENCE BY PWIDTH/(XMAXC2-XMINC2) = PWIDTH/20  **
+!               ********************************************************
+!
+!     NOTE--THE VALUES -8 TO 8 ARE THE ACTUAL HERSHEY
+!           WIDTH OF THE ROMAN SIMPLEX UPPER CASE A
+!           AND -9 TO 12 ARE THE ACTUAL HERESHEY HEIGHT
+!           OF THE ROMAN SIMPLEX UPPER CASE A.
+!
+      XMINC=IXMINC
+      XMAXC=IXMAXC
+!
+!CCCC XMINC2=(-10.0)
+!CCCC XMAXC2=10.0
+      XMINC2=(-8.0)
+      XMAXC2=8.0
+      IF(IMATH.EQ.'YES')XMINC2=XMINC
+      IF(IMATH.EQ.'YES')XMAXC2=XMAXC
+      YMINC2=(-9.0)
+      YMAXC2=12.0
+!CCCC IF(IMATH.EQ.'YES')YMINC2=(-10.0)
+!CCCC IF(IMATH.EQ.'YES')YMAXC2=10.0
+      IF(IMATH.EQ.'YES')YMINC2=XMINC
+      IF(IMATH.EQ.'YES')YMAXC2=XMAXC
+!
+      XFACHP=PWIDTH/(XMAXC2-XMINC2)
+      YFACHP=PHEIGH/(YMAXC2-YMINC2)
+!
+      I=0
+      J=0
+ 2500 CONTINUE
+      I=I+1
+      IF(I.GT.NUMCO)GO TO 2580
+      IF(IOP(I).EQ.'MOVE')GO TO 2510
+      GO TO 2530
+!
+ 2510 CONTINUE
+      NPTEMP=J
+      IFIG='LINE'
+      IF(J.GE.1.AND.IDRAW.EQ.'ON')GO TO 2520
+      GO TO 2529
+ 2520 CONTINUE
+      IFLAG='ON'
+      ICOLR=-1
+      ICOLG=-1
+      ICOLB=-1
+      CALL DPDRPL(PX,PY,NPTEMP,   &
+                  IFIG,IPATT,PTHICK,   &
+                  ICOL,ICOLR,ICOLG,ICOLB,   &
+                  JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
+!
+!               *********************************
+!               **  FILL (CERTAIN) CHARACTERS  **
+!               *********************************
+!
+      IF(IFILL.EQ.'ON')THEN
+        NPTEM2=NPTEMP
+!       OCTOBER 1991.  FOLLOWING CODE MODIFIED TO RECOGNIZE CHARACTER
+!                      ABREVIATIONS.  SPECIFICALLY, ADDED TR, SQ, DI
+!
+        IF(ICHAR2.EQ.'PYRA')NPTEM2=4
+        IF(ICHAR2.EQ.'CUBE')NPTEM2=5
+        IF(ICHAR2.EQ.'TRIA' .OR. ICHAR2.EQ.'TR'   .OR.   &
+           ICHAR2.EQ.'SQUA' .OR. ICHAR2.EQ.'SQ'   .OR.   &
+           ICHAR2.EQ.'DIAM' .OR. ICHAR2.EQ.'DI'   .OR.   &
+           ICHAR2.EQ.'HEXA' .OR.   &
+           ICHAR2.EQ.'CIRC' .OR. ICHAR2.EQ.'CI'   .OR.   &
+           ICHAR2.EQ.'CUBE' .OR. ICHAR2.EQ.'PYRA' .OR.   &
+           ICHAR2.EQ.'REVT' .OR. ICHAR2.EQ.'TRIR' .OR.   &
+           ICHAR2.EQ.'TRII' .OR. ICHAR2.EQ.'RT  ' .OR.   &
+           ICHAR2.EQ.'ARRO' .OR. ICHAR2.EQ.'ARRH')THEN
+!
+          NP=NPTEM2
+          IFLAG='LOOP'
+          CALL DPDRPL(PX,PY,NPTEM2,   &
+                      IFIG,IPATT,PTHICK,   &
+                      ICOL,ICOLR,ICOLG,ICOLB,   &
+                      JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
+        ENDIF
+      ENDIF
+!
+ 2529 CONTINUE
+      J=0
+      GO TO 2530
+!
+ 2530 CONTINUE
+      J=J+1
+!CCCC X2=X(I)-XMINC2
+!CCCC IF(ISPAC.EQ.'PROP')X2=X(I)-XMINC
+      X2=X(I)-XMINC
+      Y2=Y(I)-YMINC2
+      X3=X2*XFACHP
+      Y3=Y2*YFACHP
+      X5=XSTAR2+X3
+      Y5=YSTAR2+Y3
+      CALL DPROTA(X5,Y5,XSTAR2,YSTAR2,ANGLE,AMAX,X6,Y6)
+      PX(J)=X6
+      PY(J)=Y6
+      GO TO 2500
+!
+ 2580 CONTINUE
+      NPTEMP=J
+      IF(J.GE.1.AND.IDRAW.EQ.'ON')GO TO 2590
+      GO TO 2599
+ 2590 CONTINUE
+      IFLAG='ON'
+      CALL DPDRPL(PX,PY,NPTEMP,   &
+                  IFIG,IPATT,PTHICK,   &
+                  ICOL,ICOLR,ICOLG,ICOLB,   &
+                  JPATT,JTHICK,PTHIC2,JCOL,IFLAG)
+!
+!               *********************************
+!               **  FILL (CERTAIN) CHARACTERS  **
+!               *********************************
+!
+!  OCTOBER 1991.  FOLLOWING CODE MODIFIED TO RECOGNIZE CHARACTER
+!                 ABREVIATIONS.  SPECIFICALLY, ADDED TR, SQ, DI
+!
+      IF(IFILL.EQ.'ON')THEN
+        NPTEM2=NPTEMP
+        IF(ICHAR2.EQ.'CUBE')NPTEM2=5
+        IF(ICHAR2.EQ.'PYRA')NPTEM2=4
+        IF(ICHAR2.EQ.'TRIA' .OR. ICHAR2.EQ.'TR'   .OR.   &
+           ICHAR2.EQ.'SQUA' .OR. ICHAR2.EQ.'SQ'   .OR.   &
+           ICHAR2.EQ.'DIAM' .OR. ICHAR2.EQ.'DI'   .OR.   &
+           ICHAR2.EQ.'HEXA' .OR.   &
+           ICHAR2.EQ.'CIRC' .OR. ICHAR2.EQ.'CI'   .OR.   &
+           ICHAR2.EQ.'CUBE' .OR. ICHAR2.EQ.'PYRA' .OR.   &
+           ICHAR2.EQ.'REVT' .OR. ICHAR2.EQ.'TRIR' .OR.   &
+           ICHAR2.EQ.'TRII' .OR. ICHAR2.EQ.'RT  ' .OR.   &
+           ICHAR2.EQ.'ARRO' .OR. ICHAR2.EQ.'ARRH')THEN
+          IHORPA='OFF'
+          IVERPA='ON'
+          IDUPPA='OFF'
+          IDDOPA='OFF'
+          PXSPA2=0.1
+          PYSPA2=0.1
+          ICOLF=ICOL
+          JCOLF=JCOL
+          ICOLP=ICOL
+          JCOLP=JCOL
+          CALL GRFIRE(PX,PY,NPTEM2,IFIG,   &
+                      IPATT,JPATT,IHORPA,IVERPA,IDUPPA,IDDOPA,   &
+                      PXSPA2,PYSPA2,PTHICK,JTHICK,PTHIC2,   &
+                      ICOLF,JCOLF,ICOLP,JCOLP,   &
+                      ICOLR,ICOLG,ICOLB,ICOLR,ICOLG,ICOLB,   &
+                      IRGBFL,IPATT2)
+        ENDIF
+      ENDIF
+!
+ 2599 CONTINUE
+!
+!     X2 IS THE WIDTH OF THE CHARACTER (NO SPACING) IN HERSHEY UNITS
+!     X3 IS THE WIDTH OF THE CHARACTER (NO SPACING) IN DATAPLOT UNITS
+!     X4 IS THE WIDHT OF THE CHARACTER + SPACING IN DATAPLOT UNITS
+!
+      X2=XMAXC2-XMINC2
+      IF(ISPAC.EQ.'PROP')X2=XMAXC-XMINC
+      X3=X2*XFACHP
+      X4=X3+PHOGAP
+      X5=XSTAR2+X4
+      Y5=YSTAR2
+      CALL DPROTA(X5,Y5,XSTAR2,YSTAR2,ANGLE,AMAX,X6,Y6)
+      XEND2=X6
+      YEND2=Y6
+!
+!               ********************************************************
+!               **  STEP 3.6--                                        **
+!               **  ARE WE DECOMPOSING ICHAR2 CHARACTER BY CHARACTER? **
+!               **  (USUALLY N)  IF NOT, THEN EXIT.                   **
+!               **  IF SO, ARE WE DONE?                               **
+!               ********************************************************
+!
+      XEND=XEND2
+      YEND=YEND2
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+!
+ 9000 CONTINUE
+!
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'SCR8')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('****** AT THE END       OF DPSCR8--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)XSTART,YSTART,XEND,YEND
+ 9012   FORMAT('XSTART,YSTART,XEND,YEND = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9041)IMATH,XMINC,XMAXC
+ 9041   FORMAT('IMATH,XMINC,XMAXC = ',A4,2X,2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9042)XMINC2,XMAXC2,YMINC2,YMAXC2
+ 9042   FORMAT('XMINC2,XMAXC2,YMINC2,YMAXC2 = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9043)XFACHP,YFACHP,Y5,Y6
+ 9043   FORMAT('XFACHP,YFACHP,Y5,Y6 = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9044)X2,X3,X4,X5,X6
+ 9044   FORMAT('X2,X3,X4,X5,X6 = ',5G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9046)XSTART,XEND,YSTART,YEND
+ 9046   FORMAT('XSTART,XEND,YSTART,YEND = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9051)XSTAR2,XEND2,YSTAR2,YEND2
+ 9051   FORMAT('XSTAR2,XEND2,YSTAR2,YEND2 = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9053)ICHAR2,ICHAR3
+ 9053   FORMAT('ICHAR2,ICHAR3 = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9056)PWIDTH,PPENTH,NLOOP
+ 9056   FORMAT('PWIDTH,PPENTH,NLOOP = ',2G15.7,I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9059)IFOUND,IERROR
+ 9059   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSCR8
+      SUBROUTINE DPSDCL(IHARG,NUMARG,IDSDCO,ISDFCO,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE THE COLOR FOR THE 3-D SIDEFACE.
+!              THE COLOR FOR THE SIDEFACE WILL BE PLACED
+!              IN THE CHARACTER VARIABLE ISDFCO.
+!     INPUT  ARGUMENTS--IHARG  (A  CHARACTER VECTOR)
+!                     --NUMARG
+!                     --IDSDCO
+!     OUTPUT ARGUMENTS--ISDFCO
+!                     --IFOUND ('YES' OR 'NO' )
+!                     --IERROR ('YES' OR 'NO' )
+!     NOTE--THIS SUBROUTINE ASSUMES A
+!           COMPLICATED-TO-SIMPLE CHECKING ORDER
+!           (IN MAIPC4) OF THE VARIOUS SIDEFACE COMMANDS.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--88/10
+!     ORIGINAL VERSION--SEPTEMBER 1988.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IHARG
+      CHARACTER*4 IDSDCO
+      CHARACTER*4 ISDFCO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IHARG(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+!
+      IF(NUMARG.EQ.0)GO TO 1199
+      IF(NUMARG.EQ.1)GO TO 1150
+!
+      IF(IHARG(NUMARG).EQ.'ON')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'OFF')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'AUTO')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'DEFA')GO TO 1150
+      GO TO 1160
+!
+ 1150 CONTINUE
+      ISDFCO=IDSDCO
+      GO TO 1180
+!
+ 1160 CONTINUE
+      ISDFCO=IHARG(NUMARG)
+      GO TO 1180
+!
+ 1180 CONTINUE
+      IFOUND='YES'
+!
+      IF(IFEEDB.EQ.'OFF')GO TO 1189
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1181)ISDFCO
+ 1181 FORMAT('THE (3-D) SIDEFACE COLOR ',   &
+      'HAS JUST BEEN SET TO ',A4)
+      CALL DPWRST('XXX','BUG ')
+ 1189 CONTINUE
+      GO TO 1199
+!
+ 1199 CONTINUE
+      RETURN
+      END SUBROUTINE DPSDCL
+      SUBROUTINE DPSDCI(XTEMP1,XTEMP2,MAXNXT,ICASAN,   &
+                        ICAPSW,IFORSW,IMULT,IREPL,   &
+                        ISUBRO,IBUGA2,IBUGA3,IBUGQ,IFOUND,IERROR)
+!
+!     PURPOSE--GENERATE A CONFIDENCE INTERVAL FOR THE STANDARD
+!              DEVIATION FOR NORMALLY DISTRIBUTED DATA.
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2013/4
+!     ORIGINAL VERSION--APRIL     2013.
+!     UPDATED         --DECEMBER  2017. ADD BONETT'S INTERVAL FOR
+!                                       NON-NORMAL DATA
+!     UPDATED         --AUGUST    2019. ADD CTL999, CTU999
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 IFORSW
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA2
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 IHWUSE
+      CHARACTER*4 MESSAG
+      CHARACTER*4 IH
+      CHARACTER*4 IH2
+      CHARACTER*4 ICASAN
+      CHARACTER*4 ICASA2
+      CHARACTER*4 ICASA3
+      CHARACTER*4 ICASA4
+      CHARACTER*4 ICASE
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 IFLAGU
+!
+      LOGICAL IFRST
+      LOGICAL ILAST
+!
+      CHARACTER*4 IREPL
+      CHARACTER*4 IMULT
+      CHARACTER*4 ICTMP0
+      CHARACTER*4 ICTMP1
+      CHARACTER*4 ICTMP2
+      CHARACTER*4 ICTMP3
+      CHARACTER*4 ICTMP4
+!
+      CHARACTER*40 INAME
+      PARAMETER (MAXSPN=30)
+      CHARACTER*4 IVARN1(MAXSPN)
+      CHARACTER*4 IVARN2(MAXSPN)
+      CHARACTER*4 IVARTY(MAXSPN)
+      CHARACTER*4 IVARID(MAXSPN)
+      CHARACTER*4 IVARI2(MAXSPN)
+      REAL PVAR(MAXSPN)
+      REAL PID(MAXSPN)
+      INTEGER ILIS(MAXSPN)
+      INTEGER NRIGHT(MAXSPN)
+      INTEGER ICOLR(MAXSPN)
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+!
+      DIMENSION XTEMP1(*)
+      DIMENSION XTEMP2(*)
+      DIMENSION TEMP1(MAXOBV)
+      DIMENSION TEMP2(MAXOBV)
+      DIMENSION TEMP3(MAXOBV)
+!
+      DIMENSION XDESGN(MAXOBV,6)
+      DIMENSION XIDTEM(MAXOBV)
+      DIMENSION XIDTE2(MAXOBV)
+      DIMENSION XIDTE3(MAXOBV)
+      DIMENSION XIDTE4(MAXOBV)
+      DIMENSION XIDTE5(MAXOBV)
+      DIMENSION XIDTE6(MAXOBV)
+!
+      INCLUDE 'DPCOZZ.INC'
+      EQUIVALENCE (GARBAG(IGARB1),XIDTEM(1))
+      EQUIVALENCE (GARBAG(IGARB2),XIDTE2(1))
+      EQUIVALENCE (GARBAG(IGARB3),XIDTE3(1))
+      EQUIVALENCE (GARBAG(IGARB4),XIDTE4(1))
+      EQUIVALENCE (GARBAG(IGARB5),XIDTE5(1))
+      EQUIVALENCE (GARBAG(IGARB6),XIDTE6(1))
+      EQUIVALENCE (GARBAG(IGARB7),TEMP1(1))
+      EQUIVALENCE (GARBAG(IGARB8),TEMP2(1))
+      EQUIVALENCE (GARBAG(IGARB9),TEMP3(1))
+      EQUIVALENCE (GARBAG(IGAR10),XDESGN(1,1))
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCOSU.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOST.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPSD'
+      ISUBN2='CI  '
+      IFOUND='YES'
+      IERROR='NO'
+!
+      MAXCP1=MAXCOL+1
+      MAXCP2=MAXCOL+2
+      MAXCP3=MAXCOL+3
+      MAXCP4=MAXCOL+4
+      MAXCP5=MAXCOL+5
+      MAXCP6=MAXCOL+6
+!
+!               *******************************************
+!               **  TREAT THE SD CONFIDENCE LIMITS CASE  **
+!               *******************************************
+!
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'SDCI')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSDCI--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA2,IBUGA3,IBUGQ,ISUBRO,MAXNXT
+   52   FORMAT('IBUGA2,IBUGA3,IBUGQ,ISUBRO,MAXNXT = ',4(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *********************************
+!               **  STEP 1--                   **
+!               **  EXTRACT THE COMMAND        **
+!               *********************************
+!
+      ISTEPN='1'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'SDCI')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     THE FOLLOWING COMMANDS ARE ACCEPTED:
+!
+!         STANDARD DEVIATION CONFIDENCE LIMITS Y        (TWO SIDED)
+!         LOWER STANDARD DEVIATION CONFIDENCE LIMITS Y  (ONE SIDED)
+!         UPPER STANDARD DEVIATION CONFIDENCE LIMITS Y  (ONE SIDED)
+!
+!
+!     IN ADDITION, CHECK FOR THE "MULTIPLE" AND "REPLICATION" OPTIONS.
+!
+!     2023/06: CHECK FOR "RATIO OF SD CONFIDENCE LIMITS"
+!
+      IF(ICOM.EQ.'RATI')THEN
+        IFOUND='NO'
+        GO TO 9000
+      ENDIF
+!
+      ILASTZ=9999
+      IFOUND='NO'
+      ICASAN='LIMI'
+      ICASA2='UPPE'
+      ICASA3='RAW'
+      ICASA4='TWOS'
+!
+      DO 100 I=0,NUMARG-1
+!
+        ICTMP0='XXXX'
+        IF(I.EQ.0)THEN
+          ICTMP1=ICOM
+          ICTMP2=IHARG(I+1)
+          ICTMP3=IHARG(I+2)
+          ICTMP4=IHARG(I+3)
+        ELSE
+          IF(I.GE.2)ICTMP0=IHARG(I-1)
+          ICTMP1=IHARG(I)
+          ICTMP2=IHARG(I+1)
+          ICTMP3=IHARG(I+2)
+          ICTMP4=IHARG(I+3)
+        ENDIF
+!
+        IF(ICTMP1.EQ.'SD  ' .AND. ICTMP2.EQ.'CONF' .AND.   &
+               ICTMP3.EQ.'LIMI')THEN
+          IFOUND='YES'
+          ILASTZ=I+2
+          ICASAN='SDLI'
+          GO TO 109
+        ELSEIF(ICTMP1.EQ.'SD  ' .AND. ICTMP2.EQ.'CONF' .AND.   &
+               ICTMP3.EQ.'INTE')THEN
+          IFOUND='YES'
+          ILASTZ=I+2
+          ICASAN='SDLI'
+          GO TO 109
+        ELSEIF(ICTMP1.EQ.'STAN' .AND. ICTMP2.EQ.'DEVI' .AND.   &
+               ICTMP3.EQ.'CONF' .AND. ICTMP4.EQ.'LIMI')THEN
+          IFOUND='YES'
+          ILASTZ=I+3
+          ICASAN='SDLI'
+          GO TO 109
+        ELSEIF(ICTMP1.EQ.'STAN' .AND. ICTMP2.EQ.'DEVI' .AND.   &
+               ICTMP3.EQ.'CONF' .AND. ICTMP4.EQ.'INTE')THEN
+          IFOUND='YES'
+          ILASTZ=I+3
+          ICASAN='SDLI'
+          GO TO 109
+        ELSEIF(ICTMP1.EQ.'LOWE')THEN
+          ICASA4='ONES'
+          ICASA2='LOWE'
+        ELSEIF(ICTMP1.EQ.'UPPE')THEN
+          ICASA4='ONES'
+          ICASA2='UPPE'
+        ELSEIF(ICTMP1.EQ.'ONE ' .AND. ICTMP2.EQ.'SIDE')THEN
+          ICASA4='ONES'
+        ELSEIF(ICTMP1.EQ.'REPL')THEN
+          IREPL='ON'
+        ELSEIF(ICTMP1.EQ.'MULT')THEN
+          IMULT='ON'
+        ENDIF
+  100 CONTINUE
+  109 CONTINUE
+!
+      IF(IFOUND.EQ.'NO')GO TO 9000
+      ISHIFT=ILASTZ
+      CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,   &
+                  IBUGA2,IERROR)
+!
+      IF(IMULT.EQ.'ON')THEN
+        IF(IREPL.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,101)
+  101     FORMAT('***** ERROR IN STANDARD DEVIATION CONFIDENCE ',   &
+                 'LIMITS--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,102)
+  102     FORMAT('      YOU CANNOT SPECIFY BOTH "MULTIPLE" AND ',   &
+                 '"REPLICATION" FOR THIS COMMAND.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+      ENDIF
+!
+!               *********************************
+!               **  STEP 2--                   **
+!               **  EXTRACT THE VARIABLE LIST  **
+!               *********************************
+!
+      ISTEPN='2'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'SDCI')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      INAME='SD CONFIDENCE LIMITS'
+      MAXNA=100
+      MINNVA=1
+      MAXNVA=100
+      MINNA=1
+      IFLAGE=1
+      IFLAGM=1
+      IF(IREPL.EQ.'ON')THEN
+        MAXNVA=7
+        IFLAGM=0
+      ELSE
+        MAXNVA=30
+        IFLAGE=0
+      ENDIF
+      MINN2=4
+      IFLAGP=0
+      JMIN=1
+      JMAX=NUMARG
+!
+      CALL DPPARS(IHARG,IHARG2,IARGT,ARG,NUMARG,IANS,IWIDTH,   &
+                  IHNAME,IHNAM2,IUSE,NUMNAM,IN,IVALUE,VALUE,   &
+                  JMIN,JMAX,   &
+                  MINN2,MINNA,MAXNA,MAXSPN,IFLAGE,INAME,   &
+                  IVARN1,IVARN2,IVARTY,PVAR,   &
+                  ILIS,NRIGHT,ICOLR,ISUB,NQ,ILOCQ,NUMVAR,   &
+                  MINNVA,MAXNVA,   &
+                  IFLAGM,IFLAGP,   &
+                  IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+!
+      IF(NUMVAR.GT.1 .AND. IREPL.EQ.'OFF')IMULT='ON'
+!
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'SDCI')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,181)
+  181   FORMAT('***** AFTER CALL DPPARS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,182)NQ,NUMVAR,IMULT,IREPL
+  182   FORMAT('NQ,NUMVAR,IMULT,IREPL = ',2I8,2(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        IF(NUMVAR.GT.0)THEN
+          DO 185 I=1,NUMVAR
+            WRITE(ICOUT,187)I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),   &
+                            ICOLR(I)
+  187       FORMAT('I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),',   &
+                   'ICOLR(I) = ',I8,2X,A4,A4,2X,3I8)
+            CALL DPWRST('XXX','BUG ')
+  185     CONTINUE
+        ENDIF
+      ENDIF
+!
+!               ***********************************************
+!               **  STEP 2--                                 **
+!               **  DETERMINE:                               **
+!               **  1) NUMBER OF REPLICATION VARIABLES (0-6) **
+!               **  2) NUMBER OF RESPONSE    VARIABLES (>= 1)**
+!               ***********************************************
+!
+      ISTEPN='2'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'SDCI')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      NRESP=0
+      NREPL=0
+!
+      IF(IMULT.EQ.'ON')THEN
+        NRESP=NUMVAR
+      ELSEIF(IREPL.EQ.'ON')THEN
+        NRESP=1
+        NREPL=NUMVAR-NRESP
+        IF(NREPL.LT.1 .OR. NREPL.GT.6)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,101)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,211)
+  211     FORMAT('      FOR THE REPLICATION CASE, THE NUMBER OF ',   &
+                 'REPLICATION VARIABLES')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,212)
+  212     FORMAT('      MUST BE BETWEEN ONE AND SIX.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,213)NREPL
+  213     FORMAT('      THE NUMBER OF REPLICATION VARIABLES = ',I5)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+      ELSE
+        NRESP=1
+      ENDIF
+!
+      IH='NNEW'
+      IH2='    '
+      IHWUSE='P'
+      MESSAG='NO'
+      CALL CHECKN(IH,IH2,IHWUSE,   &
+                  IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+                  ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCV,IERROR)
+      IF(IERROR.EQ.'YES')THEN
+        NNEW=1
+      ELSE
+        NNEW=INT(VALUE(ILOCV)+0.5)
+        IF(NNEW.LT.1)NNEW=1
+      ENDIF
+!
+      IH='N0  '
+      IH2='    '
+      IHWUSE='P'
+      MESSAG='NO'
+      CALL CHECKN(IH,IH2,IHWUSE,   &
+                  IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+                  ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
+      IF(IERROR.EQ.'NO')THEN
+        N0=INT(VALUE(ILOCP)+0.5)
+      ELSE
+        N0=0
+      ENDIF
+!
+      IH='KURT'
+      IH2='OSIS'
+      IHWUSE='P'
+      MESSAG='NO'
+      CALL CHECKN(IH,IH2,IHWUSE,   &
+                  IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+                  ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
+      IF(IERROR.EQ.'NO')THEN
+        AKURT=VALUE(ILOCP)
+      ELSE
+        AKURT=CPUMIN
+      ENDIF
+!
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'SDCI')THEN
+        WRITE(ICOUT,221)NRESP,NREPL,NNEW,N0,AKURT
+  221   FORMAT('NRESP,NREPL,NNEW,N0,AKURT = ',4I5,G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ******************************************************
+!               **  STEP 3--                                        **
+!               **  GENERATE THE PREDICTION LIMITS FOR THE VARIOUS  **
+!               **  CASES                                           **
+!               ******************************************************
+!
+      ISTEPN='3'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'SDCI')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!               *****************************************
+!               **  STEP 3A--                          **
+!               **  CASE 1: NO REPLICATION             **
+!               *****************************************
+!
+      IF(NREPL.EQ.0)THEN
+        ISTEPN='3A'
+        IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'SDCI')   &
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!       LOOP THROUGH EACH OF THE RESPONSE VARIABLES
+!
+        NCURVE=0
+        DO 410 IRESP=1,NRESP
+          NCURVE=NCURVE+1
+!
+          IINDX=ICOLR(IRESP)
+          PID(1)=CPUMIN
+          IVARID(1)=IVARN1(IRESP)
+          IVARI2(1)=IVARN2(IRESP)
+!
+          IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'SDCI')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,411)IRESP,NCURVE
+  411       FORMAT('IRESP,NCURVE = ',2I5)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+          ICOL=IRESP
+          NUMVA2=1
+          CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,   &
+                      INAME,IVARN1,IVARN2,IVARTY,   &
+                      ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVA2,   &
+                      MAXCOL,MAXCP1,MAXCP2,MAXCP3,   &
+                      MAXCP4,MAXCP5,MAXCP6,   &
+                      V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,   &
+                      Y,XTEMP1,XTEMP2,NLOCAL,NLOCA2,NLOCA3,ICASE,   &
+                      IBUGA3,ISUBRO,IFOUND,IERROR)
+          IF(IERROR.EQ.'YES')GO TO 9000
+!
+!         *****************************************************
+!         **  STEP 4B--                                      **
+!         *****************************************************
+!
+          ISTEPN='4B'
+          IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'SDCI')   &
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+          IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'SDCI')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,422)
+  422       FORMAT('***** FROM THE MIDDLE OF DPSDCI--')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,423)ICASAN,NUMVAR,NLOCAL,IRESP
+  423       FORMAT('ICASAN,NUMVAR,NLOCAL,IRESP = ',A4,3I8)
+            CALL DPWRST('XXX','BUG ')
+            IF(NLOCAL.GE.1)THEN
+              DO 425 I=1,NLOCAL
+                WRITE(ICOUT,426)I,Y(I)
+  426           FORMAT('I,Y(I) = ',I8,F12.5)
+                CALL DPWRST('XXX','BUG ')
+  425         CONTINUE
+            ENDIF
+          ENDIF
+!
+          CALL DPSDC2(Y,NLOCAL,ICASAN,ICASA2,ICASA3,ICASA4,   &
+                      PID,IVARID,IVARI2,NREPL,   &
+                      CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                      CTL999,CTU999,   &
+                      ICAPSW,ICAPTY,IFORSW,IBONSD,IBONAD,   &
+                      TEMP3,MAXNXT,AKURT,N0,   &
+                      ISUBRO,IBUGA3,IERROR)
+!
+          IFLAGU='FILE'
+          IFRST=.FALSE.
+          ILAST=.FALSE.
+          IF(IRESP.EQ.1)IFRST=.TRUE.
+          IF(IRESP.EQ.NRESP)ILAST=.TRUE.
+          CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                      CTL999,CTU999,   &
+                      IFLAGU,IFRST,ILAST,ICASAN,   &
+                      IBUGA2,IBUGA3,ISUBRO,IERROR)
+!
+  410   CONTINUE
+!
+!               ****************************************************
+!               **  STEP 5A--                                     **
+!               **  CASE 3: ONE OR MORE REPLICATION VARIABLES.    **
+!               **          FOR THIS CASE, ALL VARIABLES MUST     **
+!               **          HAVE THE SAME LENGTH.                 **
+!               ****************************************************
+!
+      ELSEIF(IREPL.EQ.'ON')THEN
+        ISTEPN='5A'
+        IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'SDCI')   &
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+        J=0
+        IMAX=NRIGHT(1)
+        IF(NQ.LT.NRIGHT(1))IMAX=NQ
+        DO 510 I=1,IMAX
+          IF(ISUB(I).EQ.0)GO TO 510
+          J=J+1
+!
+!         RESPONSE VARIABLE IN Y
+!
+          ICOLC=1
+          IJ=MAXN*(ICOLR(ICOLC)-1)+I
+          IF(ICOLR(ICOLC).LE.MAXCOL)Y(J)=V(IJ)
+          IF(ICOLR(ICOLC).EQ.MAXCP1)Y(J)=PRED(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP2)Y(J)=RES(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP3)Y(J)=YPLOT(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP4)Y(J)=XPLOT(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP5)Y(J)=X2PLOT(I)
+          IF(ICOLR(ICOLC).EQ.MAXCP6)Y(J)=TAGPLO(I)
+!
+          IF(NREPL.GE.1)THEN
+            DO 520 IR=1,MIN(NREPL,6)
+              ICOLC=ICOLC+1
+              ICOLT=ICOLR(ICOLC)
+              IJ=MAXN*(ICOLT-1)+I
+              IF(ICOLT.LE.MAXCOL)XDESGN(J,IR)=V(IJ)
+              IF(ICOLT.EQ.MAXCP1)XDESGN(J,IR)=PRED(I)
+              IF(ICOLT.EQ.MAXCP2)XDESGN(J,IR)=RES(I)
+              IF(ICOLT.EQ.MAXCP3)XDESGN(J,IR)=YPLOT(I)
+              IF(ICOLT.EQ.MAXCP4)XDESGN(J,IR)=XPLOT(I)
+              IF(ICOLT.EQ.MAXCP5)XDESGN(J,IR)=X2PLOT(I)
+              IF(ICOLT.EQ.MAXCP6)XDESGN(J,IR)=TAGPLO(I)
+  520       CONTINUE
+          ENDIF
+!
+  510   CONTINUE
+        NLOCAL=J
+!
+        ISTEPN='5B'
+        IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'SDCI')   &
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+        PID(1)=CPUMIN
+        IVARID(1)=IVARN1(1)
+        IVARI2(1)=IVARN2(1)
+        IADD=1
+        DO 540 II=1,NREPL
+          IVARID(II+IADD)=IVARN1(II+IADD)
+          IVARI2(II+IADD)=IVARN2(II+IADD)
+  540   CONTINUE
+!
+!       *****************************************************
+!       **  STEP 5C--                                      **
+!       **                                                 **
+!       **  FOR THIS CASE, WE NEED TO LOOP THROUGH THE     **
+!       **  VARIOUS REPLICATIONS.                          **
+!       *****************************************************
+!
+        ISTEPN='5C'
+        IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'SDCI')   &
+          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+        IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'SDCI')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,541)
+  541     FORMAT('***** FROM THE MIDDLE  OF DPSDCL--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,542)ICASAN,NUMVAR,NLOCAL,NLOCA2,NREPL
+  542     FORMAT('ICASAN,NUMVAR,NLOCAL,NLOCA2,NREPL = ',A4,2X,4I8)
+          CALL DPWRST('XXX','BUG ')
+          IF(NLOCAL.GE.1)THEN
+            DO 545 I=1,NLOCAL
+              WRITE(ICOUT,546)I,Y(I),X(I),XDESGN(I,1),XDESGN(I,2)
+  546         FORMAT('I,Y(I),X(I),XDESGN(I,1),XDESGN(I,2) = ',   &
+                     I8,4F12.5)
+              CALL DPWRST('XXX','BUG ')
+  545       CONTINUE
+          ENDIF
+        ENDIF
+!
+!       *****************************************************
+!       **  STEP 5C--                                      **
+!       **  FIND THE DISTINCT VALUES IN EACH OF THE        **
+!       **  REPLICATION VARIABLES.                         **
+!       *****************************************************
+!
+        CALL DPPP5(XDESGN(1,1),XDESGN(1,2),XDESGN(1,3),   &
+                   XDESGN(1,4),XDESGN(1,5),XDESGN(1,6),   &
+                   NREPL,NLOCAL,MAXOBV,   &
+                   XIDTEM,XIDTE2,XIDTE3,XIDTE4,XIDTE5,XIDTE6,   &
+                   XTEMP1,XTEMP2,   &
+                   NUMSE1,NUMSE2,NUMSE3,NUMSE4,NUMSE5,NUMSE6,   &
+                   IBUGA3,ISUBRO,IERROR)
+!
+!       *****************************************************
+!       **  STEP 5D--                                      **
+!       **  NOW LOOP THROUGH THE VARIOUS REPLICATIONS      **
+!       *****************************************************
+!
+        NPLOTP=0
+        NCURVE=0
+        IF(NREPL.EQ.1)THEN
+          J=0
+          DO 1110 ISET1=1,NUMSE1
+            K=0
+            PID(IADD+1)=XIDTEM(ISET1)
+            DO 1130 I=1,NLOCAL
+              IF(XIDTEM(ISET1).EQ.XDESGN(I,1))THEN
+                K=K+1
+                TEMP1(K)=Y(I)
+                TEMP2(K)=X(I)
+              ENDIF
+ 1130       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            IF(NTEMP.GT.0)THEN
+              CALL DPSDC2(TEMP1,NTEMP,ICASAN,ICASA2,ICASA3,ICASA4,   &
+                          PID,IVARID,IVARI2,NREPL,   &
+                          CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                          CTL999,CTU999,   &
+                          ICAPSW,ICAPTY,IFORSW,IBONSD,IBONAD,   &
+                          TEMP3,MAXOBV,AKURT,N0,   &
+                          ISUBRO,IBUGA3,IERROR)
+            ENDIF
+!
+            IFLAGU='FILE'
+            IFRST=.FALSE.
+            ILAST=.FALSE.
+            IF(NCURVE.EQ.1)IFRST=.TRUE.
+            IF(NCURVE.EQ.NUMSE1)ILAST=.TRUE.
+            CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                        CTL999,CTU999,   &
+                        IFLAGU,IFRST,ILAST,ICASAN,   &
+                        IBUGA2,IBUGA3,ISUBRO,IERROR)
+ 1110     CONTINUE
+        ELSEIF(NREPL.EQ.2)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2
+          DO 1210 ISET1=1,NUMSE1
+          DO 1220 ISET2=1,NUMSE2
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            DO 1290 I=1,NLOCAL
+              IF(   &
+                 XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.   &
+                 XIDTE2(ISET2).EQ.XDESGN(I,2)   &
+                )THEN
+                K=K+1
+                TEMP1(K)=Y(I)
+                TEMP2(K)=X(I)
+              ENDIF
+ 1290       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            NPLOT1=NPLOTP
+            IF(NTEMP.GT.0)THEN
+              CALL DPSDC2(TEMP1,NTEMP,ICASAN,ICASA2,ICASA3,ICASA4,   &
+                          PID,IVARID,IVARI2,NREPL,   &
+                          CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                          CTL999,CTU999,   &
+                          ICAPSW,ICAPTY,IFORSW,IBONSD,IBONAD,   &
+                          TEMP3,MAXOBV,AKURT,N0,   &
+                          ISUBRO,IBUGA3,IERROR)
+            ENDIF
+            NPLOT2=NPLOTP
+            IFLAGU='FILE'
+            IFRST=.FALSE.
+            ILAST=.FALSE.
+            IF(NCURVE.EQ.1)IFRST=.TRUE.
+            IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
+            CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                        CTL999,CTU999,   &
+                        IFLAGU,IFRST,ILAST,ICASAN,   &
+                        IBUGA2,IBUGA3,ISUBRO,IERROR)
+ 1220     CONTINUE
+ 1210     CONTINUE
+        ELSEIF(NREPL.EQ.3)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2*NUMSE3
+          DO 1310 ISET1=1,NUMSE1
+          DO 1320 ISET2=1,NUMSE2
+          DO 1330 ISET3=1,NUMSE3
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            PID(3+IADD)=XIDTE3(ISET3)
+            DO 1390 I=1,NLOCAL
+              IF(   &
+                 XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.   &
+                 XIDTE2(ISET2).EQ.XDESGN(I,2) .AND.   &
+                 XIDTE3(ISET3).EQ.XDESGN(I,3)   &
+                )THEN
+                K=K+1
+                TEMP1(K)=Y(I)
+                TEMP2(K)=X(I)
+              ENDIF
+ 1390       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            IF(NTEMP.GT.0)THEN
+              CALL DPSDC2(TEMP1,NTEMP,ICASAN,ICASA2,ICASA3,ICASA4,   &
+                          PID,IVARID,IVARI2,NREPL,   &
+                          CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                          CTL999,CTU999,   &
+                          ICAPSW,ICAPTY,IFORSW,IBONSD,IBONAD,   &
+                          TEMP3,MAXOBV,AKURT,N0,   &
+                          ISUBRO,IBUGA3,IERROR)
+            ENDIF
+            IFLAGU='FILE'
+            IFRST=.FALSE.
+            ILAST=.FALSE.
+            IF(NCURVE.EQ.1)IFRST=.TRUE.
+            IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
+            CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                        CTL999,CTU999,   &
+                        IFLAGU,IFRST,ILAST,ICASAN,   &
+                        IBUGA2,IBUGA3,ISUBRO,IERROR)
+ 1330     CONTINUE
+ 1320     CONTINUE
+ 1310     CONTINUE
+        ELSEIF(NREPL.EQ.4)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2*NUMSE3*NUMSE4
+          DO 1410 ISET1=1,NUMSE1
+          DO 1420 ISET2=1,NUMSE2
+          DO 1430 ISET3=1,NUMSE3
+          DO 1440 ISET4=1,NUMSE4
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            PID(3+IADD)=XIDTE3(ISET3)
+            PID(4+IADD)=XIDTE4(ISET4)
+            DO 1490 I=1,NLOCAL
+              IF(   &
+                 XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.   &
+                 XIDTE2(ISET2).EQ.XDESGN(I,2) .AND.   &
+                 XIDTE3(ISET3).EQ.XDESGN(I,3) .AND.   &
+                 XIDTE4(ISET4).EQ.XDESGN(I,4)   &
+                )THEN
+                K=K+1
+                TEMP1(K)=Y(I)
+                TEMP2(K)=X(I)
+              ENDIF
+ 1490       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            IF(NTEMP.GT.0)THEN
+              CALL DPSDC2(TEMP1,NTEMP,ICASAN,ICASA2,ICASA3,ICASA4,   &
+                          PID,IVARID,IVARI2,NREPL,   &
+                          CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                          CTL999,CTU999,   &
+                          ICAPSW,ICAPTY,IFORSW,IBONSD,IBONAD,   &
+                          TEMP3,MAXOBV,AKURT,N0,   &
+                          ISUBRO,IBUGA3,IERROR)
+            ENDIF
+            IFLAGU='FILE'
+            IFRST=.FALSE.
+            ILAST=.FALSE.
+            IF(NCURVE.EQ.1)IFRST=.TRUE.
+            IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
+            CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                        CTL999,CTU999,   &
+                        IFLAGU,IFRST,ILAST,ICASAN,   &
+                        IBUGA2,IBUGA3,ISUBRO,IERROR)
+ 1440     CONTINUE
+ 1430     CONTINUE
+ 1420     CONTINUE
+ 1410     CONTINUE
+        ELSEIF(NREPL.EQ.5)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2*NUMSE3*NUMSE4*NUMSE5
+          DO 1510 ISET1=1,NUMSE1
+          DO 1520 ISET2=1,NUMSE2
+          DO 1530 ISET3=1,NUMSE3
+          DO 1540 ISET4=1,NUMSE4
+          DO 1550 ISET5=1,NUMSE5
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            PID(3+IADD)=XIDTE3(ISET3)
+            PID(4+IADD)=XIDTE4(ISET4)
+            PID(5+IADD)=XIDTE5(ISET4)
+            DO 1590 I=1,NLOCAL
+              IF(   &
+                 XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.   &
+                 XIDTE2(ISET2).EQ.XDESGN(I,2) .AND.   &
+                 XIDTE3(ISET3).EQ.XDESGN(I,3) .AND.   &
+                 XIDTE4(ISET4).EQ.XDESGN(I,4) .AND.   &
+                 XIDTE5(ISET5).EQ.XDESGN(I,5)   &
+                )THEN
+                K=K+1
+                TEMP1(K)=Y(I)
+                TEMP2(K)=X(I)
+              ENDIF
+ 1590       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            IF(NTEMP.GT.0)THEN
+              CALL DPSDC2(TEMP1,NTEMP,ICASAN,ICASA2,ICASA3,ICASA4,   &
+                          PID,IVARID,IVARI2,NREPL,   &
+                          CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                          CTL999,CTU999,   &
+                          ICAPSW,ICAPTY,IFORSW,IBONSD,IBONAD,   &
+                          TEMP3,MAXOBV,AKURT,N0,   &
+                          ISUBRO,IBUGA3,IERROR)
+            ENDIF
+            IFLAGU='FILE'
+            IFRST=.FALSE.
+            ILAST=.FALSE.
+            IF(NCURVE.EQ.1)IFRST=.TRUE.
+            IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
+            CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                        CTL999,CTU999,   &
+                        IFLAGU,IFRST,ILAST,ICASAN,   &
+                        IBUGA2,IBUGA3,ISUBRO,IERROR)
+ 1550     CONTINUE
+ 1540     CONTINUE
+ 1530     CONTINUE
+ 1520     CONTINUE
+ 1510     CONTINUE
+        ELSEIF(NREPL.EQ.6)THEN
+          J=0
+          NTOT=NUMSE1*NUMSE2*NUMSE3*NUMSE4*NUMSE5*NUMSE6
+          DO 1610 ISET1=1,NUMSE1
+          DO 1620 ISET2=1,NUMSE2
+          DO 1630 ISET3=1,NUMSE3
+          DO 1640 ISET4=1,NUMSE4
+          DO 1650 ISET5=1,NUMSE5
+          DO 1660 ISET6=1,NUMSE6
+            K=0
+            PID(1+IADD)=XIDTEM(ISET1)
+            PID(2+IADD)=XIDTE2(ISET2)
+            PID(3+IADD)=XIDTE3(ISET3)
+            PID(4+IADD)=XIDTE4(ISET4)
+            PID(5+IADD)=XIDTE5(ISET4)
+            PID(6+IADD)=XIDTE6(ISET4)
+            DO 1690 I=1,NLOCAL
+              IF(   &
+                 XIDTEM(ISET1).EQ.XDESGN(I,1) .AND.   &
+                 XIDTE2(ISET2).EQ.XDESGN(I,2) .AND.   &
+                 XIDTE3(ISET3).EQ.XDESGN(I,3) .AND.   &
+                 XIDTE4(ISET4).EQ.XDESGN(I,4) .AND.   &
+                 XIDTE5(ISET5).EQ.XDESGN(I,5) .AND.   &
+                 XIDTE6(ISET6).EQ.XDESGN(I,6)   &
+                )THEN
+                K=K+1
+                TEMP1(K)=Y(I)
+                TEMP2(K)=X(I)
+              ENDIF
+ 1690       CONTINUE
+            NTEMP=K
+            NCURVE=NCURVE+1
+            IF(NTEMP.GT.0)THEN
+              CALL DPSDC2(TEMP1,NTEMP,ICASAN,ICASA2,ICASA3,ICASA4,   &
+                          PID,IVARID,IVARI2,NREPL,   &
+                          CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                          CTL999,CTU999,   &
+                          ICAPSW,ICAPTY,IFORSW,IBONSD,IBONAD,   &
+                          TEMP3,MAXOBV,AKURT,N0,   &
+                          ISUBRO,IBUGA3,IERROR)
+            ENDIF
+            IFLAGU='FILE'
+            IFRST=.FALSE.
+            ILAST=.FALSE.
+            IF(NCURVE.EQ.1)IFRST=.TRUE.
+            IF(NCURVE.EQ.NTOT)ILAST=.TRUE.
+            CALL DPCNF3(CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                        CTL999,CTU999,   &
+                        IFLAGU,IFRST,ILAST,ICASAN,   &
+                        IBUGA2,IBUGA3,ISUBRO,IERROR)
+ 1660     CONTINUE
+ 1650     CONTINUE
+ 1640     CONTINUE
+ 1630     CONTINUE
+ 1620     CONTINUE
+ 1610     CONTINUE
+        ENDIF
+!
+      ENDIF
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGA2.EQ.'ON' .OR. ISUBRO.EQ.'SDCI')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSDCL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9016)IFOUND,IERROR
+ 9016   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSDCI
+      SUBROUTINE DPSDC2(Y,N,ICASAN,ICASA2,ICASA3,ICASA4,   &
+                        PID,IVARID,IVARI2,NREPL,   &
+                        CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                        CTL999,CTU999,   &
+                        ICAPSW,ICAPTY,IFORSW,IBONSD,IBONAD,   &
+                        TEMP1,MAXNXT,AKURT,N0,   &
+                        ISUBRO,IBUGA3,IERROR)
+!
+!     PURPOSE--GENERATE A CONFIDENCE INTERVAL FOR THE STANDARD
+!              DEVIATION FOR NORMALLY DISTRIBUTED DATA.
+!
+!     INPUT  ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!                                ORIGINAL OBSERVATIONS.
+!                       N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR Y.
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     REFERENCES--HAHN AND MEEKER (1991), "STATISTICAL INTERVALS: A
+!                 GUIDE FOR PRACTIONERS", WILEY, PP. 55-56.
+!               --BONETT (2006), "APPROXIMATE CONFIDENCE INTERVAL FOR
+!                 STANDARD DEVIATION OF NONNORMAL DISTRIBUTIONS",
+!                 COMPUTATIONAL STATISTICS AND DATA ANALYSIS,
+!                 VOL. 50, PP. 775 - 782.
+!               --NIWITPONG AND KIRDWICHAI (2008), "ADJUSTED BONETT
+!                 CONFIDENCE INTERVAL FOR STANDARD DEVIATION OF
+!                 NON-NORMAL DISTRIBUTIONS", THAILAND STATISTICIAN,
+!                 VOL. 6, NO. 1, PP. 1-6.
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2013/4
+!     ORIGINAL VERSION--APRIL     2013.
+!     UPDATED         --DECEMBER  2017. ADD BONETT'S INTERVAL FOR
+!                                       NON-NORMAL DATA
+!     UPDATED         --AUGUST    2019. ADD CTL999, CTU999
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICASAN
+      CHARACTER*4 ICASA2
+      CHARACTER*4 ICASA3
+      CHARACTER*4 ICASA4
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 ICAPTY
+      CHARACTER*4 IFORSW
+      CHARACTER*4 IBONSD
+      CHARACTER*4 IBONAD
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 IVARID(*)
+      CHARACTER*4 IVARI2(*)
+!
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION Y(*)
+      DIMENSION TEMP1(*)
+      DIMENSION PID(*)
+!
+      PARAMETER (NUMALP=6)
+      REAL ALPHA(NUMALP)
+      REAL CONF(NUMALP)
+!
+      DIMENSION ALOWLM(NUMALP)
+      DIMENSION AUPPLM(NUMALP)
+!
+      PARAMETER(NUMCLI=4)
+      PARAMETER(MAXLIN=2)
+      PARAMETER (MAXROW=20)
+      CHARACTER*60 ITITLE
+      CHARACTER*60 ITITLZ
+      CHARACTER*40 ITITL9
+      CHARACTER*60 ITEXT(MAXROW)
+      CHARACTER*4  ALIGN(NUMCLI)
+      CHARACTER*4  VALIGN(NUMCLI)
+      CHARACTER*4  ITYPCO(NUMCLI)
+      CHARACTER*20 ITITL2(MAXLIN,NUMCLI)
+      CHARACTER*4  IVALUE(MAXROW,NUMCLI)
+      REAL         AVALUE(MAXROW)
+      REAL         AMAT(MAXROW,NUMCLI)
+      INTEGER      NCVALU(MAXROW,NUMCLI)
+      INTEGER      NCTIT2(MAXLIN,NUMCLI)
+      INTEGER      NCTEXT(MAXROW)
+      INTEGER      IDIGIT(MAXROW)
+      INTEGER      NTOT(MAXROW)
+      INTEGER      IWHTML(NUMCLI)
+      INTEGER      IWRTF(NUMCLI)
+      LOGICAL IFRST
+      LOGICAL ILAST
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      DATA ALPHA /0.50, 0.80, 0.90, 0.95, 0.99, 0.999/
+!
+      ISUBN1='DPSD'
+      ISUBN2='C2  '
+      IERROR='NO'
+      IWRITE='OFF'
+!
+      NUMDIG=7
+      IF(IFORSW.EQ.'1')NUMDIG=1
+      IF(IFORSW.EQ.'2')NUMDIG=2
+      IF(IFORSW.EQ.'3')NUMDIG=3
+      IF(IFORSW.EQ.'4')NUMDIG=4
+      IF(IFORSW.EQ.'5')NUMDIG=5
+      IF(IFORSW.EQ.'6')NUMDIG=6
+      IF(IFORSW.EQ.'7')NUMDIG=7
+      IF(IFORSW.EQ.'8')NUMDIG=8
+      IF(IFORSW.EQ.'9')NUMDIG=9
+      IF(IFORSW.EQ.'0')NUMDIG=0
+      IF(IFORSW.EQ.'E')NUMDIG=-2
+      IF(IFORSW.EQ.'-2')NUMDIG=-2
+      IF(IFORSW.EQ.'-3')NUMDIG=-3
+      IF(IFORSW.EQ.'-4')NUMDIG=-4
+      IF(IFORSW.EQ.'-5')NUMDIG=-5
+      IF(IFORSW.EQ.'-6')NUMDIG=-6
+      IF(IFORSW.EQ.'-7')NUMDIG=-7
+      IF(IFORSW.EQ.'-8')NUMDIG=-8
+      IF(IFORSW.EQ.'-9')NUMDIG=-9
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SDC2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPSDC2--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,ICASAN,ICASA2,ICASA3,ICASA4
+   52   FORMAT('IBUGA3,ISUBRO,ICASAN,ICASA2,ICASA3,ICASA4 = ',   &
+               5(A4,2X),A4)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,54)N,IBONSD,IBONAD,AKURT,N0
+   54   FORMAT('N,IBONSD,IBONAD,AKURT,N0 = ',I8,2(2X,A4),G15.7,I8)
+        CALL DPWRST('XXX','WRIT')
+        DO 56 I=1,N
+          WRITE(ICOUT,57)I,Y(I)
+   57     FORMAT('I,Y(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
+      ENDIF
+!
+!               ********************************************
+!               **  STEP 1--                              **
+!               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+!               ********************************************
+!
+      ISTEPN='1'
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SDC2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(N.LE.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR IN STANDARD DEVIATION CONFIDENCE LIMITS--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,103)
+  103   FORMAT('      THE NUMBER OF OBSERVATIONS IN THE RESPONSE ',   &
+               'VARIABLE IS LESS THAN TWO.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,105)N
+  105   FORMAT('SAMPLE SIZE = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      HOLD=Y(1)
+      DO 135 I=2,N
+        IF(Y(I).NE.HOLD)GO TO 139
+  135 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','WRIT')
+      WRITE(ICOUT,101)
+      CALL DPWRST('XXX','WRIT')
+      WRITE(ICOUT,131)HOLD
+  131 FORMAT('      THE RESPONSE VARIABLE HAS ALL ELEMENTS = ',G15.7)
+      CALL DPWRST('XXX','WRIT')
+      GO TO 9000
+  139 CONTINUE
+!
+!               ***************************************
+!               **  STEP 3--                         **
+!               **  COMPUTE CONFIDENCE LIMITS        **
+!               **  FOR VARIOUS PROBABILITY VALUES.  **
+!               ***************************************
+!
+      ISTEPN='4'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'SDC2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     ICASAN - LIMI   => CONFIDENCE LIMIT FOR THE SD
+!     ICASA2:  LOWE   => LOWER LIMIT
+!              UPPE   => UPPER LIMIT
+!     ICASA3:  RAW    => RAW DATA
+!              SUMM   => SUMMARY DATA
+!     ICASA4:  ONES   => ONE-SIDED LIMIT
+!              TWOS   => TWO-SIDED LIMIT
+!
+!     DO STANDARD INTERVAL ON PASS ONE, THEN IF REQUESTED
+!     DO BONETT'S INTERVAL ON PASS TWO.
+!
+      AN=N
+      ICASA3='RAW'
+      IPASS=0
+!
+  400 CONTINUE
+!
+      IPASS=IPASS+1
+      IF(IPASS.EQ.2)THEN
+        IF(IBONSD.EQ.'OFF')GO TO 9000
+      ELSEIF(IPASS.GT.2)THEN
+        GO TO 9000
+      ENDIF
+!
+      IF(IPASS.EQ.1)THEN
+        CALL MEAN(Y,N,IWRITE,YMEAN,IBUGA3,IERROR)
+        CALL DPSDC3(Y,N,ICASAN,ICASA2,ICASA3,ICASA4,   &
+                    YSD,   &
+                    ALPHA,NUMALP,ALOWLM,AUPPLM,   &
+                    ISUBRO,IBUGA3,IERROR)
+      ELSE
+        CALL MEAN(Y,N,IWRITE,YMEAN,IBUGA3,IERROR)
+        CALL DPSDR3(Y,N,ICASA2,ICASA4,MAXNXT,   &
+                    TEMP1,AKURT,N0,IBONAD,   &
+                    YSD,   &
+                    ALPHA,NUMALP,ALOWLM,AUPPLM,   &
+                    ISUBRO,IBUGA3,IERROR)
+      ENDIF
+!
+      CUTL90=ALOWLM(3)
+      CUTU90=AUPPLM(3)
+      CUTL95=ALOWLM(4)
+      CUTU95=AUPPLM(4)
+      CUTL99=ALOWLM(5)
+      CUTU99=AUPPLM(5)
+      CTL999=ALOWLM(6)
+      CTU999=AUPPLM(6)
+      NALP=NUMALP
+      DO 420 I=1,NUMALP
+        CONF(I)=100.0*ALPHA(I) + 0.0001
+  420 CONTINUE
+!
+!               ****************************
+!               **  STEP 5--              **
+!               **  WRITE EVERYTHING OUT  **
+!               ****************************
+!
+      ISTEPN='5'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'SDC2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(IPRINT.EQ.'OFF')GO TO 9000
+!
+      IF(ICASA4.EQ.'TWOS')THEN
+        ITITLE='Two-Sided Confidence Limits for the SD'
+        NCTITL=38
+        IF(IPASS.EQ.2)THEN
+          IF(IBONAD.EQ.'ON')THEN
+            ITITLZ='Bonett Interval (Adjusted) for Non-Normality'
+            NCTITZ=44
+          ELSE
+            ITITLZ='Bonett Interval for Non-Normality'
+            NCTITZ=33
+          ENDIF
+        ELSE
+          ITITLZ=' '
+          NCTITZ=0
+        ENDIF
+      ELSEIF(ICASA4.EQ.'ONES')THEN
+        IF(ICASA2.EQ.'LOWE')THEN
+          ITITLE='One-Sided Lower Confidence Limits for the SD'
+          NCTITL=44
+          IF(IPASS.EQ.2)THEN
+            IF(IBONAD.EQ.'ON')THEN
+              ITITLZ='Bonett Interval (Adjusted) for Non-Normality'
+              NCTITZ=44
+            ELSE
+              ITITLZ='Bonett Interval for Non-Normality'
+              NCTITZ=33
+            ENDIF
+          ELSE
+            ITITLZ=' '
+            NCTITZ=0
+          ENDIF
+        ELSEIF(ICASA2.EQ.'UPPE')THEN
+          ITITLE='One-Sided Upper Confidence Limits for the SD'
+          NCTITL=44
+          IF(IPASS.EQ.2)THEN
+            IF(IBONAD.EQ.'ON')THEN
+              ITITLZ='Bonett Interval (Adjusted) for Non-Normality'
+              NCTITZ=44
+            ELSE
+              ITITLZ='Bonett Interval for Non-Normality'
+              NCTITZ=33
+            ENDIF
+          ELSE
+            ITITLZ=' '
+            NCTITZ=0
+          ENDIF
+        ENDIF
+      ENDIF
+!
+      ICNT=1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=0
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Response Variable: '
+      WRITE(ITEXT(ICNT)(20:23),'(A4)')IVARID(1)(1:4)
+      WRITE(ITEXT(ICNT)(24:27),'(A4)')IVARI2(1)(1:4)
+      NCTEXT(ICNT)=27
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+!
+      IF(NREPL.GT.0)THEN
+        NRESP=1
+        DO 4101 I=1,NREPL
+          ICNT=ICNT+1
+          ITEMP=I+NRESP
+          ITEXT(ICNT)='Factor Variable  : '
+          WRITE(ITEXT(ICNT)(17:17),'(I1)')I
+          WRITE(ITEXT(ICNT)(20:23),'(A4)')IVARID(ITEMP)(1:4)
+          WRITE(ITEXT(ICNT)(24:27),'(A4)')IVARI2(ITEMP)(1:4)
+          NCTEXT(ICNT)=27
+          AVALUE(ICNT)=PID(ITEMP)
+          IDIGIT(ICNT)=NUMDIG
+ 4101   CONTINUE
+      ENDIF
+!
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+!
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Summary Statistics:'
+      NCTEXT(ICNT)=19
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Observations:'
+      NCTEXT(ICNT)=23
+      AVALUE(ICNT)=REAL(N)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Mean:'
+      NCTEXT(ICNT)=12
+      AVALUE(ICNT)=YMEAN
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Sample Standard Deviation:'
+      NCTEXT(ICNT)=26
+      AVALUE(ICNT)=YSD
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+!
+      NUMROW=ICNT
+      DO 4210 I=1,NUMROW
+        NTOT(I)=15
+ 4210 CONTINUE
+!
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+!
+      ISTEPN='5A'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'SDC2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      CALL DPDTA1(ITITLE,NCTITL,ITITLZ,NCTITZ,ITEXT,NCTEXT,   &
+                  AVALUE,IDIGIT,   &
+                  NTOT,NUMROW,   &
+                  ICAPSW,ICAPTY,ILAST,IFRST,   &
+                  ISUBRO,IBUGA3,IERROR)
+!
+      DO 4215 J=1,NUMCLI
+        DO 4218 I=1,MAXLIN
+          ITITL2(I,J)=' '
+          NCTIT2(I,J)=0
+ 4218   CONTINUE
+        DO 4219 I=1,MAXROW
+          NCVALU(I,J)=0
+          IVALUE(I,J)=' '
+          AMAT(I,J)=0.0
+ 4219   CONTINUE
+ 4215   CONTINUE
+!
+      ITITL2(1,1)='Confidence'
+      NCTIT2(1,1)=10
+      ITITL2(2,1)='Value (%)'
+      NCTIT2(2,1)=9
+      ITITL2(1,2)='Standard'
+      NCTIT2(1,2)=8
+      ITITL2(2,2)='Deviation'
+      NCTIT2(2,2)=9
+      ICOL=2
+!
+      IF(ICASA4.EQ.'TWOS' .OR.   &
+        (ICASA4.EQ.'ONES' .AND. ICASA2.EQ.'LOWE'))THEN
+        ICOL=ICOL+1
+        ITITL2(1,ICOL)='Lower'
+        NCTIT2(1,ICOL)=5
+        ITITL2(2,ICOL)='Limit'
+        NCTIT2(2,ICOL)=5
+      ENDIF
+!
+      IF(ICASA4.EQ.'TWOS' .OR.   &
+        (ICASA4.EQ.'ONES' .AND. ICASA2.EQ.'UPPE'))THEN
+        ICOL=ICOL+1
+        ITITL2(1,ICOL)='Upper'
+        NCTIT2(1,ICOL)=5
+        ITITL2(2,ICOL)='Limit'
+        NCTIT2(2,ICOL)=5
+      ENDIF
+!
+      NUMLIN=2
+      NUMCOL=ICOL
+      NUMROW=NALP
+      NMAX=0
+      DO 4221 I=1,NUMCOL
+        VALIGN(I)='b'
+        ALIGN(I)='r'
+        NTOT(I)=15
+        IDIGIT(I)=NUMDIG
+        ITYPCO(I)='NUME'
+        IWHTML(I)=150
+        IF(I.EQ.1)THEN
+          NTOT(I)=12
+          IDIGIT(I)=1
+          IWHTML(1)=75
+          IWRTF(1)=2000
+        ELSE
+          IWRTF(I)=IWRTF(I-1)+2000
+        ENDIF
+        NMAX=NMAX+NTOT(I)
+ 4221 CONTINUE
+!
+      DO 4223 I=1,NUMROW
+        AMAT(I,1)=CONF(I)
+        AMAT(I,2)=YSD
+        JCNT=2
+        IF(ICASA4.EQ.'TWOS' .OR.   &
+          (ICASA4.EQ.'ONES' .AND. ICASA2.EQ.'LOWE'))THEN
+          JCNT=JCNT+1
+          AMAT(I,JCNT)=ALOWLM(I)
+        ENDIF
+        IF(ICASA4.EQ.'TWOS' .OR.   &
+          (ICASA4.EQ.'ONES' .AND. ICASA2.EQ.'UPPE'))THEN
+          JCNT=JCNT+1
+          AMAT(I,JCNT)=AUPPLM(I)
+        ENDIF
+ 4223 CONTINUE
+!
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+      ITITL9=' '
+      ITITLE=' '
+      NCTIT9=0
+      NCTITL=0
+!
+      CALL DPDTA4(ITITL9,NCTIT9,   &
+                  ITITLE,NCTITL,ITITL2,NCTIT2,   &
+                  MAXLIN,NUMLIN,NUMCLI,NUMCOL,   &
+                  IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,NUMROW,   &
+                  IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,   &
+                  ICAPSW,ICAPTY,IFRST,ILAST,   &
+                  ISUBRO,IBUGA3,IERROR)
+!
+      GO TO 400
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SDC2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSDC2--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSDC2
+      SUBROUTINE DPSDC3(Y,N,ICASAN,ICASA2,ICASA3,ICASA4,   &
+                        YSD,   &
+                        ALPHA,NALPHA,ALOWLM,AUPPLM,   &
+                        ISUBRO,IBUGA3,IERROR)
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES CONFIDENCE LIMITS FOR THE
+!              STANDARD DEVIATION ASSUMING A NORMAL DISTRIBUTION
+!
+!              THE FOLLOWING CASES ARE SUPPORTED:
+!
+!                 LET A = LOWER SD CONFIDENCE LIMIT Y
+!                 LET A = UPPER SD CONFIDENCE LIMIT Y
+!                 LET A = ONE SIDED LOWER SD CONFIDENCE INTERVAL Y
+!                 LET A = ONE SIDED UPPER SD CONFIDENCE INTERVAL Y
+!
+!              THE DATA CONSISTS OF N OBSERVATIONS IN Y.
+!
+!              FOR ALL OF THE CASES ABOVE, THERE IS A "SUMMARY" CASE
+!              WHERE WE SPECIFY THE MEAN, STANDARD DEVIATION, AND SAMPLE
+!              SIZE FOR THE FIRST SAMPLE.  FOR EXAMPLE,
+!
+!                 LET A = SUMMARY LOWER SD CONFIDENCE INTERVAL YMEAN YSD N
+!
+!              A TWO-SIDED CONFIDENCE INTERVAL FOR THE STANDARD
+!              DEVIATION IS:
+!
+!              [s(lower),s(upper)] = [s*SQRT((n-1)/CHSPPF(1-alpha/2;n-1)),
+!                                     s*SQRT((n-1)/CHSPPF(1-alpha/2;n-1))]
+!
+!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED OR SORTED) OBSERVATIONS.
+!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                               IN THE VECTOR Y.
+!                    --ALPHA  = THE SINGLE PRECISION VECTOR OF CONFIDENCE
+!                               LEVELS
+!                      NALPHA = THE INTEGER NUMBER OF ALPHA VALUES
+!     OUTPUT ARGUMENTS-ALOWLM = THE SINGLE PRECISION VECTOR OF LOWER LIMIT
+!                               VALUES
+!                     -AUPPLM = THE SINGLE PRECISION VECTOR OF UPPER LIMIT
+!                               VALUES
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--HAHN AND MEEKER (1991), "STATISTICAL INTERVALS: A
+!                 GUIDE FOR PRACTIONERS", WILEY, PP. 55-56.
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     ORIGINAL VERSION--APRIL     2013.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION Y(*)
+      DIMENSION ALOWLM(*)
+      DIMENSION AUPPLM(*)
+      DIMENSION ALPHA(*)
+!
+      CHARACTER*4 ICASAN
+      CHARACTER*4 ICASA2
+      CHARACTER*4 ICASA3
+      CHARACTER*4 ICASA4
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='SDC3'
+      ISUBN2='    '
+      IWRITE='OFF'
+      IERROR='NO'
+!
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'SDC3')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPSDC3--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,ICASAN,ICASA2,ICASA3,ICASA4
+   52   FORMAT('IBUGA3,ISUBRO,ICASAN,ICASA2,ICASA3,ICASA4 = ',   &
+               5(A4,2X),A4)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,53)N,NALPHA,YSD,ALPHA(1)
+   53   FORMAT('N,NALPHA,YSD,ALPHA(1) = ',2I8,2G15.7)
+        CALL DPWRST('XXX','WRIT')
+        IF(ICASA3.EQ.'RAW')THEN
+          DO 56 I=1,N
+            WRITE(ICOUT,57)I,Y(I)
+   57       FORMAT('I,Y(I) = ',I8,G15.7)
+            CALL DPWRST('XXX','WRIT')
+   56     CONTINUE
+        ENDIF
+        DO 76 I=1,NALPHA
+          WRITE(ICOUT,77)I,ALPHA(I)
+   77     FORMAT('I,ALPHA(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','WRIT')
+   76   CONTINUE
+      ENDIF
+!
+!               ********************************************
+!               **  STEP 11--                             **
+!               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+!               ********************************************
+!
+      ISTEPN='11'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'SDC3')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(N.LT.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR: STANDARD DEVIATION CONFIDENCE LIMITS--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,102)
+  102   FORMAT('      THE NUMBER OF ORIGINAL OBSERVATIONS  IS LESS ',   &
+               'THAN TWO.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,103)N
+  103   FORMAT('      SAMPLE SIZE = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               ********************************************
+!               **  STEP 21--                             **
+!               **  CARRY OUT CALCULATIONS FOR PREDICTION **
+!               **  LIMITS.                               **
+!               ********************************************
+!
+      ISTEPN='21'
+      IF(IBUGA3.EQ.'ON'.AND.ISUBRO.EQ.'SDC3')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     ICASAN:  LIMI     => CONFIDENCE LIMIT FOR SD
+!     ICASA2:  LOWE     => LOWER LIMIT
+!              UPPE     => UPPER LIMIT
+!     ICASA3:  RAW      => RAW DATA IN Y1
+!              SUMM     => SUMMARY DATA IN YMEAN AND YSD
+!     ICASA4:  ONES     => ONE-SIDED LIMIT
+!              TWOS     => TWO-SIDED LIMIT
+!
+!     COMPUTE STANDARD DEVIATION
+!
+      DO 210 I=1,NALPHA
+        ALOWLM(I)=CPUMIN
+        AUPPLM(I)=CPUMIN
+  210 CONTINUE
+!
+      IF(ICASA3.EQ.'RAW')THEN
+        CALL SD(Y,N,IWRITE,YSD,IBUGA3,IERROR)
+      ENDIF
+!
+      IF(YSD.LE.0.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,212)
+  212   FORMAT('      THE STANDARD DEVIATION OF THE ORIGINAL ',   &
+               'OBSERVATIONS IS NON-POSITIVE.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      NU1=N-1
+      ANU=REAL(NU1)
+!
+!     2016/07: ISSUE WITH CHSPPF WHEN DEGREES OF FREEDOM IS LARGE.
+!              FOR NOW, TRUNCATE DEGREES OF FREEDOM AT 150,000.
+!
+      NU1TMP=NU1
+      IF(NU1TMP.GT.150000)THEN
+        NU1TMP=150000
+        ANU=REAL(NU1TMP)
+      ENDIF
+!
+      IF(ICASA4.EQ.'ONES')THEN
+        DO 460 I=1,NALPHA
+          ALPHAT=ALPHA(I)
+          IF(ALPHAT.GE.1.0 .AND. ALPHAT.LT.100.0)ALPHAT=ALPHAT/100.
+          IF(ALPHAT.LE.0.0 .OR. ALPHAT.GE.1.0)GO TO 8000
+          IF(ALPHAT.GT.0.5)ALPHAT=1.0 - ALPHAT
+          CALL CHSPPF(ALPHAT,NU1TMP,PPF)
+          AUPPLM(I)=YSD*SQRT(ANU/PPF)
+          ALPHAT=1.0 - ALPHAT
+          CALL CHSPPF(ALPHAT,NU1TMP,PPF)
+          ALOWLM(I)=YSD*SQRT(ANU/PPF)
+  460   CONTINUE
+      ELSEIF(ICASA4.EQ.'TWOS')THEN
+        DO 465 I=1,NALPHA
+          ALPHAT=ALPHA(I)
+          IF(ALPHAT.GE.1.0 .AND. ALPHAT.LT.100.0)ALPHAT=ALPHAT/100.
+          IF(ALPHAT.LE.0.0 .OR. ALPHAT.GE.1.0)GO TO 8000
+          IF(ALPHAT.GT.0.5)ALPHAT=1.0 - ALPHAT
+          ALPHAT=ALPHAT/2.0
+          CALL CHSPPF(ALPHAT,NU1TMP,PPF)
+          AUPPLM(I)=YSD*SQRT(ANU/PPF)
+          ALPHAT=1.0 - ALPHAT
+          CALL CHSPPF(ALPHAT,NU1TMP,PPF)
+          ALOWLM(I)=YSD*SQRT(ANU/PPF)
+  465   CONTINUE
+      ENDIF
+!
+      GO TO 9000
+!
+ 8000 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','WRIT')
+      WRITE(ICOUT,101)
+      CALL DPWRST('XXX','WRIT')
+      WRITE(ICOUT,8001)I
+ 8001 FORMAT('      ROW ',I8,' OF ALPHA VALUES IS OUT OF RANGE.')
+      CALL DPWRST('XXX','WRIT')
+      WRITE(ICOUT,8003)ALPHA(I)
+ 8003 FORMAT('      THE VALUE OF ALPHA IS ',G15.7)
+      CALL DPWRST('XXX','WRIT')
+      IERROR='YES'
+      GO TO 9000
+!
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SDC3')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9051)
+ 9051   FORMAT('**** AT THE END OF DPSDC3--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9052)YSD,PPF,ALPHA(NALPHA),ALPHAT,ANU,PPF
+ 9052   FORMAT('YSD,PPF,ALPHA(NALPHA),ALPHAT,ANU,PPF = ',6G15.7)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSDC3
+      SUBROUTINE DPSDF(IHARG,NUMARG,ISDFSW,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE THE 3-D SIDEFACE SWITCH ISDFSW.
+!     INPUT  ARGUMENTS--IHARG  (A  HOLLERITH VECTOR)
+!                     --NUMARG
+!     OUTPUT ARGUMENTS--ISDFSW   ('ON'  OR 'OFF')
+!                     --IFOUND ('YES' OR 'NO' )
+!                     --IERROR ('YES' OR 'NO' )
+!     NOTE--THIS SUBROUTINE ASSUMES A
+!           COMPLICATED-TO-SIMPLE CHECKING ORDER
+!           (IN MAIPC4) OF THE VARIOUS SIDEFACE COMMANDS.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--88/10
+!     ORIGINAL VERSION--SEPTEMBER 1988.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IHARG
+      CHARACTER*4 ISDFSW
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IHARG(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+!
+      IF(NUMARG.EQ.0)GO TO 1150
+!
+      IF(IHARG(NUMARG).EQ.'ON')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'OFF')GO TO 1160
+      IF(IHARG(NUMARG).EQ.'AUTO')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'DEFA')GO TO 1160
+      GO TO 1199
+!
+ 1150 CONTINUE
+      ISDFSW='ON'
+      GO TO 1180
+!
+ 1160 CONTINUE
+      ISDFSW='OFF'
+      GO TO 1180
+!
+ 1180 CONTINUE
+      IFOUND='YES'
+!
+      IF(IFEEDB.EQ.'OFF')GO TO 1189
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1181)ISDFSW
+ 1181 FORMAT('THE (3-D) SIDEFACE SWITCH ',   &
+      'HAS JUST BEEN SET TO ',A4)
+      CALL DPWRST('XXX','BUG ')
+ 1189 CONTINUE
+      GO TO 1199
+!
+ 1199 CONTINUE
+      RETURN
+      END SUBROUTINE DPSDF
+      SUBROUTINE DPSDGC(IHARG,NUMARG,IDSDGC,ISDFGC,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE THE COLOR FOR THE 3-D SIDEFACE GRID.
+!              THE COLOR FOR THE SIDEFACE GRID WILL BE PLACED
+!              IN THE CHARACTER VARIABLE ISDFGC.
+!     INPUT  ARGUMENTS--IHARG  (A  CHARACTER VECTOR)
+!                     --NUMARG
+!                     --IDSDGC
+!     OUTPUT ARGUMENTS--ISDFGC
+!                     --IFOUND ('YES' OR 'NO' )
+!                     --IERROR ('YES' OR 'NO' )
+!     NOTE--THIS SUBROUTINE ASSUMES A
+!           COMPLICATED-TO-SIMPLE CHECKING ORDER
+!           (IN MAIPC4) OF THE VARIOUS SIDEFACE COMMANDS.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 WASHINGPON, D. C. 20234
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--88/10
+!     ORIGINAL VERSION--SEPTEMBER 1988.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IHARG
+      CHARACTER*4 IDSDGC
+      CHARACTER*4 ISDFGC
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IHARG(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+!
+      IF(NUMARG.LE.1)GO TO 1199
+      IF(NUMARG.EQ.2)GO TO 1150
+!
+      IF(IHARG(NUMARG).EQ.'ON')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'OFF')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'AUTO')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'DEFA')GO TO 1150
+      GO TO 1160
+!
+ 1150 CONTINUE
+      ISDFGC=IDSDGC
+      GO TO 1180
+!
+ 1160 CONTINUE
+      ISDFGC=IHARG(NUMARG)
+      GO TO 1180
+!
+ 1180 CONTINUE
+      IFOUND='YES'
+!
+      IF(IFEEDB.EQ.'OFF')GO TO 1189
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1181)ISDFGC
+ 1181 FORMAT('THE (3-D) SIDEFACE GRID COLOR ',   &
+      'HAS JUST BEEN SET TO ',A4)
+      CALL DPWRST('XXX','BUG ')
+ 1189 CONTINUE
+      GO TO 1199
+!
+ 1199 CONTINUE
+      RETURN
+      END SUBROUTINE DPSDGC
+      SUBROUTINE DPSDGP(IHARG,NUMARG,IDSDGP,ISDFGP,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE THE PATTERN FOR THE 3-D SIDEFACE GRID.
+!              THE PATTERN FOR THE SIDEFACE GRID WILL BE PLACED
+!              IN THE CHARACTER VARIABLE ISDFGP.
+!     INPUT  ARGUMENTS--IHARG  (A  CHARACTER VECTOR)
+!                     --NUMARG
+!                     --IDSDGP
+!     OUTPUT ARGUMENTS--ISDFGP
+!                     --IFOUND ('YES' OR 'NO' )
+!                     --IERROR ('YES' OR 'NO' )
+!     NOTE--THIS SUBROUTINE ASSUMES A
+!           COMPLICATED-TO-SIMPLE CHECKING ORDER
+!           (IN MAIPC4) OF THE VARIOUS SIDEFACE COMMANDS.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 WASHINGPON, D. C. 20234
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--88/10
+!     ORIGINAL VERSION--SEPTEMBER 1988.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IHARG
+      CHARACTER*4 IDSDGP
+      CHARACTER*4 ISDFGP
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IHARG(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+!
+      IF(NUMARG.LE.1)GO TO 1199
+      IF(NUMARG.EQ.2)GO TO 1160
+!
+      IF(IHARG(NUMARG).EQ.'ON')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'OFF')GO TO 1160
+      IF(IHARG(NUMARG).EQ.'AUTO')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'DEFA')GO TO 1170
+      GO TO 1175
+!
+ 1150 CONTINUE
+      ISDFGP='SOLI'
+      GO TO 1180
+!
+ 1160 CONTINUE
+      ISDFGP='BLAN'
+      GO TO 1180
+!
+ 1170 CONTINUE
+      ISDFGP=IDSDGP
+      GO TO 1180
+!
+ 1175 CONTINUE
+      ISDFGP=IHARG(NUMARG)
+      GO TO 1180
+!
+ 1180 CONTINUE
+      IFOUND='YES'
+!
+      IF(IFEEDB.EQ.'OFF')GO TO 1189
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1181)ISDFGP
+ 1181 FORMAT('THE (3-D) SIDEFACE GRID PATTERN ',   &
+      'HAS JUST BEEN SET TO ',A4)
+      CALL DPWRST('XXX','BUG ')
+ 1189 CONTINUE
+      GO TO 1199
+!
+ 1199 CONTINUE
+      RETURN
+      END SUBROUTINE DPSDGP
+      SUBROUTINE DPSDGR(IHARG,NUMARG,IDSDGR,ISDFGR,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE THE 3-D SIDEFACE GRID SWITCH ISDFGR.
+!     INPUT  ARGUMENTS--IHARG  (A  HOLLERITH VECTOR)
+!                     --NUMARG
+!                     --IDSDGR
+!     OUTPUT ARGUMENTS--ISDFGR   ('ON'  OR 'OFF')
+!                     --IFOUND ('YES' OR 'NO' )
+!                     --IERROR ('YES' OR 'NO' )
+!     NOTE--THIS SUBROUTINE ASSUMES A
+!           COMPLICATED-TO-SIMPLE CHECKING ORDER
+!           (IN MAIPC4) OF THE VARIOUS SIDEFACE COMMANDS.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--88/10
+!     ORIGINAL VERSION--SEPTEMBER 1988.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IHARG
+      CHARACTER*4 IDSDGR
+      CHARACTER*4 ISDFGR
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IHARG(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+!
+      IF(NUMARG.EQ.0)GO TO 1199
+      IF(NUMARG.EQ.1)GO TO 1150
+!
+      IF(IHARG(NUMARG).EQ.'ON')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'OFF')GO TO 1160
+      IF(IHARG(NUMARG).EQ.'AUTO')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'DEFA')GO TO 1170
+      GO TO 1199
+!
+ 1150 CONTINUE
+      ISDFGR='ON'
+      GO TO 1180
+!
+ 1160 CONTINUE
+      ISDFGR='OFF'
+      GO TO 1180
+!
+ 1170 CONTINUE
+      ISDFGR=IDSDGR
+      GO TO 1180
+!
+ 1180 CONTINUE
+      IFOUND='YES'
+!
+      IF(IFEEDB.EQ.'OFF')GO TO 1189
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1181)ISDFGR
+ 1181 FORMAT('THE (3-D) SIDEFACE GRID SWITCH ',   &
+      'HAS JUST BEEN SET TO ',A4)
+      CALL DPWRST('XXX','BUG ')
+ 1189 CONTINUE
+      GO TO 1199
+!
+ 1199 CONTINUE
+      RETURN
+      END SUBROUTINE DPSDGR
+      SUBROUTINE DPSDPL(NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2,   &
+                        IBUGG2,IBUGG3,IBUGQ,ISUBRO,IFOUND,IERROR)
+!
+!     PURPOSE--GENERATE A SPATIAL DISTRIBUTION PLOT.
+!
+!              GIVEN A RECTANGULAR ARRAY OF POINTS, THERE
+!              ARE 3 COMMON PATTERNS OF CLUSTERING:
+!
+!              1) UNIFORM -
+!
+!                 MODEL WITH A DISCRETE UNIFORM DISTRIBUTION
+!
+!              2) XX -
+!
+!                 MODEL WITH A POISSON DISTRIBUTION
+!
+!              3) XX -
+!
+!                 MODEL WITH A NEGATIVE BINOMIAL DISTRIBUTION
+!
+!              IT IS ASSUMED THAT EACH POINT IS EITHER ON OR
+!              OFF (I.E., <0/1>).  IF THE RESPONSE DATA IS
+!              A GREY-SCALE VALUE, POINTS ABOVE SOME
+!              USER-SPECIFIED THRESHOLD VALUE ARE CONSIDERED
+!              "ON" AND THOSE BELOW THE THRESHOLD ARE
+!              CONSIDERED OFF.
+!
+!              THE POINT OF THIS PLOT IS TO SEE WHICH OF
+!              THE THREE ABOVE DISTRIBUTIONS BEST FITS THE
+!              DATA AT VARIOUS PARTITION SIZES.
+!
+!              THAT IS, WE PICK A PARTITION SIZE.  FOR EXAMPLE,
+!              FOR A 512x512 ARRAY, WE MIGHT START WITH A
+!              PARTITION CONSISTING OF 8x8 SQUARES.  WITHIN EACH
+!              SQUARE, WE SUM THE NUMBER OF "1's".  WE THEN
+!              MODEL THE DISTRIBUTION OF THESE SUMS.  SPECIFICALLY,
+!
+!                1) FOR THE DISCRETE UNIFORM, GENERATE A
+!                   PROBABILITY PLOT.
+!
+!                2) FOR THE POISSON DISTRIBUTION, GENERATE A
+!                   "POISSONESS" PLOT.
+!
+!                3) FOR THE NEGATIVE BINOMIAL, GENERATE A
+!                   "NEGATIVE BINOMIALNESS" PLOT.
+!
+!              IN EACH CASE, THE LINEARITY OF THE PLOT IS AN
+!              INDICATION OF GOODNESS OF FIT.  WE WILL USE THE
+!              CORRELATION COEFFICIENT AS THE MEASURE OF GOODNESS OF
+!              FIT.  THE SPATIAL DISTRIBUTION PLOT THEN CONSISTS OF:
+!
+!                 X-AXIS - SIZE OF PARTITION
+!                 Y-AXIS - CORRELATION COEFFICIENT FOR EACH OF
+!                          THE THREE DISTRIBUTIONS
+!
+!
+!     EXAMPLES--SPATIAL DISTRIBUTION PLOT M
+!               SPATIAL DISTRIBUTION PLOT M PART
+!               SPATIAL DISTRIBUTION PLOT Y ROWID COLID
+!               SPATIAL DISTRIBUTION PLOT Y ROWID COLID PART
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2008/4
+!     ORIGINAL VERSION--APRIL     2008.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICASPL
+      CHARACTER*4 IAND1
+      CHARACTER*4 IAND2
+      CHARACTER*4 IBUGG2
+      CHARACTER*4 IBUGG3
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ICASE
+      CHARACTER*4 IH11
+      CHARACTER*4 IH12
+      CHARACTER*4 IH21
+      CHARACTER*4 IH22
+      CHARACTER*4 IH31
+      CHARACTER*4 IH32
+      CHARACTER*4 IH41
+      CHARACTER*4 IH42
+      CHARACTER*4 IHWUSE
+      CHARACTER*4 MESSAG
+      CHARACTER*4 IHP
+      CHARACTER*4 IHP2
+      CHARACTER*4 IUSE1
+      CHARACTER*4 IUSE2
+      CHARACTER*4 IUSE3
+      CHARACTER*4 ICASEQ
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOCP.INC'
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOST.INC'
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION YRESP(MAXOBV)
+      DIMENSION PART(MAXOBV)
+      DIMENSION ROWID(MAXOBV)
+      DIMENSION COLID(MAXOBV)
+      DIMENSION TEMP1(MAXOBV)
+      DIMENSION TEMP2(MAXOBV)
+      DIMENSION TEMP3(MAXOBV)
+      DIMENSION TEMP4(MAXOBV)
+      INCLUDE 'DPCOZZ.INC'
+      EQUIVALENCE (GARBAG(IGARB1),YRESP(1))
+      EQUIVALENCE (GARBAG(IGARB2),PART(1))
+      EQUIVALENCE (GARBAG(IGARB3),ROWID(1))
+      EQUIVALENCE (GARBAG(IGARB4),COLID(1))
+      EQUIVALENCE (GARBAG(IGARB5),TEMP1(1))
+      EQUIVALENCE (GARBAG(IGARB6),TEMP2(1))
+      EQUIVALENCE (GARBAG(IGARB7),TEMP3(1))
+      EQUIVALENCE (GARBAG(IGARB8),TEMP4(1))
+!
+!-----COMMON VARIABLES (GENERAL)--------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPSD'
+      ISUBN2='PL  '
+      ICASE='VARI'
+      ICASPL='SDPL'
+      IFOUND='NO'
+      IERROR='NO'
+!
+      MAXCP1=MAXCOL+1
+      MAXCP2=MAXCOL+2
+      MAXCP3=MAXCOL+3
+      MAXCP4=MAXCOL+4
+      MAXCP5=MAXCOL+5
+      MAXCP6=MAXCOL+6
+      MINN2=16
+      ICOL4=0
+!
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSDPL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)NPLOTV,NPLOTP,NS
+   52   FORMAT('NPLOTV,NPLOTP,NS = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)ICASPL,IAND1,IAND2
+   53   FORMAT('ICASPL,IAND1,IAND2 = ',A4,2X,A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,56)ICASPL,MAXN
+   56   FORMAT('ICASPL,MAXN = ',A4,I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,57)IFOUND,IERROR
+   57   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,58)MAXNPP
+   58   FORMAT('MAXNPP = ',I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               **************************************************
+!               **  TREAT THE SPATIAL DISTRIBUTION PLOT CASE    **
+!               **************************************************
+!
+      IFOUND='YES'
+      ICASPL='SDPL'
+!
+!               *******************************************************
+!               **  STEP 10--                                        **
+!               **  CHECK FOR THE PROPER NUMBER OF INPUT ARGUMENTS.  **
+!               *******************************************************
+!
+      ISTEPN='10'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      MINNA=1
+      MAXNA=100
+      CALL CHECKA(NUMARG,MINNA,MAXNA,IANS,IWIDTH,ISUBN1,ISUBN2,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+!
+!               *****************************************
+!               **  STEP 11--                          **
+!               **  CHECK THE VALIDITY OF ARGUMENT 1   **
+!               **  (THIS SHULD BE EITHER A VARIABLE   **
+!               **  OR A MATRIX.                       **
+!               **                                     **
+!               **  IF A VARIABLE, THEN 3 OR 4         **
+!               **  INPUT VARIABLES ARE EXPECTED.  IF  **
+!               **  IF A MATRIX, THEN ONE MATRIX       **
+!               **  EXPECTED AND ONE OPTIONAL VARIABLE.**
+!               *****************************************
+!
+      ISTEPN='11'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IH11=IHARG(1)
+      IH12=IHARG2(1)
+      IHWUSE='V'
+      MESSAG='YES'
+!
+      DO 1100 I=1,NUMNAM
+        I2=I
+        IF(IH11.EQ.IHNAME(I).AND.IH12.EQ.IHNAM2(I).AND.   &
+           (IUSE(I).EQ.'P'.OR.IUSE(I).EQ.'F'))THEN
+           GO TO 1109
+        ELSEIF(IH11.EQ.IHNAME(I).AND.IH12.EQ.IHNAM2(I).AND.   &
+           IUSE(I).EQ.'V')THEN
+           ICASE='VARI'
+           GO TO 3000
+        ELSEIF(IH11.EQ.IHNAME(I).AND.IH12.EQ.IHNAM2(I).AND.   &
+           IUSE(I).EQ.'M')THEN
+           ICASE='MATR'
+           ILISR=I2
+           ICOL1=IVALUE(ILISR)
+           ICOL2=IVALU2(ILISR)
+           N1=IN(ILISR)
+           NCOL=(ICOL2 - ICOL1) + 1
+           GO TO 5000
+        ENDIF
+ 1100 CONTINUE
+      GO TO 1109
+!
+ 1109 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1191)
+ 1191 FORMAT('***** ERROR IN SPATIAL DISTRIBUTION PLOT--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1192)
+ 1192 FORMAT('      THE FIRST ARGUMENT WAS EITHER NOT FOUND OR WAS')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1193)
+ 1193 FORMAT('      FOUND AS A PARAMETER, SCALAR OR FUNCTION (AS')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1194)
+ 1194 FORMAT('      OPPOSSED TO A VARIABLE OR A MATRIX).')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1196)
+ 1196 FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
+      CALL DPWRST('XXX','BUG ')
+      IF(IWIDTH.GE.1)THEN
+        WRITE(ICOUT,1197)(IANS(I),I=1,MIN(IWIDTH,80))
+ 1197   FORMAT(80A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+      IERROR='YES'
+      GO TO 9000
+!
+ 3000 CONTINUE
+!
+!               ****************************************
+!               **  STEP 30--                         **
+!               **  CHECK THE VALIDITY OF ARGUMENT 1  **
+!               **  (THIS SHOULD BE A VARIABLE.)      **
+!               ****************************************
+!
+      ISTEPN='30'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IH11=IHARG(1)
+      IH12=IHARG2(1)
+      IHWUSE='V'
+      MESSAG='YES'
+      CALL CHECKN(IH11,IH12,IHWUSE,   &
+      IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+      ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCV,IERROR)
+!
+      IF(IERROR.EQ.'YES')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3011)
+ 3011   FORMAT('***** ERROR IN SPATIAL DISTRIBUTION PLOT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3012)
+ 3012   FORMAT('      FOR THE SPATIAL DISTRIBUTION PLOT, ALL ',   &
+               'ARGUMENTS MUST')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3015)
+ 3015   FORMAT('      BE VARIABLES (AS OPPOSSED TO A PARAMETER OR A')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3016)
+ 3016   FORMAT('      FUNCTION).  ARGUMENT ONE WAS NOT A VARIABLE ',   &
+               'HERE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3018)
+ 3018   FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,3019)(IANS(I),I=1,MIN(IWIDTH,80))
+ 3019     FORMAT(80A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IUSE1=IUSE(ILOCV)
+      ICOL1=IVALUE(ILOCV)
+      N1=IN(ILOCV)
+!
+      ICASE='VARI'
+!
+!               ******************************************************
+!               **  STEP 31--                                       **
+!               **  IF ARGUMENT ONE IS A VARIABLE, CHECK THAT THE   **
+!               **  INPUT NUMBER OF OBSERVATIONS (N1) FOR ARGUMENT  **
+!               **  ONE IS TWO OR MORE.                             **
+!               ******************************************************
+!
+      ISTEPN='31'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(N1.LT.MINN2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3011)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3022)
+ 3022   FORMAT('      THE INPUT NUMBER OF OBSERVATIONS FOR THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3023)MINN2
+ 3023   FORMAT('      SPATIAL DISTRIBUTION PLOT MUST BE ',I8,   &
+               ' OR LARGER.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3025)
+ 3025   FORMAT('      SUCH WAS NOT THE CASE HERE;')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3027)IH11,IH12,N1
+ 3027   FORMAT('      VARIABLE ',A4,A4,' HAS ',I8,' OBSERVATIONS.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3018)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,3019)(IANS(I),I=1,MIN(IWIDTH,80))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               ****************************************
+!               **  STEP 32--                         **
+!               **  CHECK THE VALIDITY OF ARGUMENT 2  **
+!               **  (THIS SHOULD BE A VARIABLE)       **
+!               ****************************************
+!
+      ISTEPN='31B'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IH21=IHARG(2)
+      IH22=IHARG2(2)
+      IHWUSE='V'
+      MESSAG='YES'
+      CALL CHECKN(IH21,IH22,IHWUSE,   &
+      IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+      ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCV,IERROR)
+!
+      IF(IERROR.EQ.'YES')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3011)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3112)
+ 3112   FORMAT('      FOR THE SPATIAL DISTRIBUTION PLOT, WHEN THE ',   &
+               'FIRST ARGUMENT IS A VARIABLE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3115)
+ 3115   FORMAT('      THERE MUST BE AT LEAST THREE VARIABLES ',   &
+               'ENTERED.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3116)
+ 3116   FORMAT('      ONLY ONE VARIABLE WAS GIVEN.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3118)
+ 3118   FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,3019)(IANS(I),I=1,MIN(IWIDTH,80))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IUSE2=IUSE(ILOCV)
+      ICOL2=IVALUE(ILOCV)
+      N2=IN(ILOCV)
+      NVAR=2
+!
+      IF(N2.LT.N1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3011)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3122)
+ 3122   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE SECOND')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3123)
+ 3123   FORMAT('      VARIABLE IS NOT EQUAL TO THE NUMBER OF ',   &
+               'OBSERVATIONS')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3125)
+ 3125   FORMAT('      FOR THE FIRST VARIABLE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3127)IH11,IH12,N1
+ 3127   FORMAT('      VARIABLE ',A4,A4,' HAS ',I8,' OBSERVATIONS.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3027)IH21,IH22,N2
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3018)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,3019)(IANS(I),I=1,MIN(IWIDTH,80))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               ****************************************
+!               **  STEP 32--                         **
+!               **  CHECK THE VALIDITY OF ARGUMENT 3  **
+!               **  (THIS SHOULD BE A VARIABLE)       **
+!               ****************************************
+!
+      ISTEPN='32'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IH31=IHARG(3)
+      IH32=IHARG2(3)
+      IHWUSE='V'
+      MESSAG='YES'
+      CALL CHECKN(IH31,IH32,IHWUSE,   &
+      IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+      ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCV,IERROR)
+!
+      IF(IERROR.EQ.'YES')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3011)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3212)
+ 3212   FORMAT('      FOR THE SPATIAL DISTRIBUTION PLOT, WHEN THE ',   &
+               'FIRST ARGUMENT IS A VARIABLE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3115)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3216)
+ 3216   FORMAT('      ONLY TWO VARIABLE WERE GIVEN.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3118)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,3019)(IANS(I),I=1,MIN(IWIDTH,80))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!
+      IUSE3=IUSE(ILOCV)
+      ICOL3=IVALUE(ILOCV)
+      N3=IN(ILOCV)
+      NVAR=3
+!
+!               ******************************************************
+!               **  STEP 32B--                                      **
+!               **  IF ARGUMENT THREE IS A VARIABLE, CHECK THAT THE **
+!               **  INPUT NUMBER OF OBSERVATIONS (N3) FOR ARGUMENT  **
+!               **  THREE IS EQUAL TO THE NUMBER OF OBSERVATIONS    **
+!               **  FOR VARIABLE ONE.                               **
+!               ******************************************************
+!
+      ISTEPN='32B'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(N3.NE.N1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3011)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3222)
+ 3222   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE THIRD')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3123)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3125)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3027)IH11,IH12,N1
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3027)IH31,IH32,N3
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3018)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,3019)(IANS(I),I=1,MIN(IWIDTH,80))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               ****************************************
+!               **  STEP 33--                         **
+!               **  CHECK THE VALIDITY OF ARGUMENT 4  **
+!               **  (THIS SHOULD BE A VARIABLE IF IT  **
+!               **  EXISTS)                           **
+!               ****************************************
+!
+      ISTEPN='33'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IH41=IHARG(4)
+      IH42=IHARG2(4)
+      IHWUSE='V'
+      MESSAG='NO'
+      CALL CHECKN(IH41,IH42,IHWUSE,   &
+      IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+      ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCV,IERROR)
+!
+      IF(IERROR.EQ.'YES')THEN
+         IERROR='NO'
+         N4=0
+         GO TO 3999
+      ELSE
+        IUSE3=IUSE(ILOCV)
+        ICOL4=IVALUE(ILOCV)
+        N4=IN(ILOCV)
+        NVAR=4
+      ENDIF
+!
+      NPART=N4
+!
+!               ******************************************************
+!               **  STEP 33B-                                       **
+!               **  IF ARGUMENT FOUR  IS A VARIABLE, THIS DENOTES   **
+!               **  THE "PARTITION" VALUES, SO THE NUMBER OF        **
+!               **  OBSERVATIONS NEED NOT MATCH THE NUMBER OF       **
+!               **  OBSERVATIONS FOR VARIABLE ONE.                  **
+!               ******************************************************
+!
+!               *****************************************
+!               **  STEP 40--                          **
+!               **  CHECK TO SEE THE TYPE CASE--       **
+!               **    1) UNQUALIFIED (THAT IS, FULL);  **
+!               **    2) SUBSET/EXCEPT; OR             **
+!               **    3) FOR.                          **
+!               *****************************************
+!
+ 3999 CONTINUE
+!
+      ISTEPN='40'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ICASEQ='FULL'
+      ILOCQ=NUMARG+1
+      IF(NUMARG.LT.1)GO TO 4090
+      DO 4000 J=1,NUMARG
+      J1=J
+      IF(IHARG(J).EQ.'SUBS'.AND.IHARG2(J).EQ.'ET  ') GO TO 4010
+      IF(IHARG(J).EQ.'EXCE'.AND.IHARG2(J).EQ.'PT  ') GO TO 4010
+      IF(IHARG(J).EQ.'FOR '.AND.IHARG2(J).EQ.'    ') GO TO 4020
+ 4000 CONTINUE
+      GO TO 4090
+ 4010 CONTINUE
+      ICASEQ='SUBS'
+      ILOCQ=J1
+      GO TO 4090
+ 4020 CONTINUE
+      ICASEQ='FOR'
+      ILOCQ=J1
+      GO TO 4090
+ 4090 CONTINUE
+!
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')THEN
+        WRITE(ICOUT,4091)NUMARG,ILOCQ
+ 4091   FORMAT('NUMARG,ILOCQ = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ***********************************************
+!               **  STEP 41--                                **
+!               **  TEMPORARILY FORM THE VARIABLE Y(.)       **
+!               **  WHICH WILL HOLD THE DATA  FROM SAMPLE 1. **
+!               **  FORM THIS VARIABLE BY                    **
+!               **  BRANCHING TO THE APPROPRIATE SUBCASE     **
+!               **  (FULL, SUBSET, OR FOR).                  **
+!               ***********************************************
+!
+      ISTEPN='41'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(ICASEQ.EQ.'FULL')GO TO 4110
+      IF(ICASEQ.EQ.'SUBS')GO TO 4120
+      IF(ICASEQ.EQ.'FOR')GO TO 4130
+!
+ 4110 CONTINUE
+      DO 4115 I=1,N1
+      ISUB(I)=1
+ 4115 CONTINUE
+      NQ=N1
+      GO TO 4150
+!
+ 4120 CONTINUE
+      NIOLD=N1
+      CALL DPSUBS(NIOLD,ILOCS,NS,IBUGQ,IERROR)
+      NQ=NIOLD
+      GO TO 4150
+!
+ 4130 CONTINUE
+      NIOLD=N1
+      CALL DPFOR(NIOLD,NFOR,IROW1,IROWN,   &
+      NLOCAL,ILOCS,NS,IBUGQ,IERROR)
+      NQ=NFOR
+      GO TO 4150
+!
+ 4150 CONTINUE
+      IF(NQ.LT.MINN2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3011)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4152)
+ 4152   FORMAT('      AFTER THE APPROPRIATE SUBSET HAS BEEN ',   &
+               'EXTRACTED,')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4153)IH11,IH12
+ 4153   FORMAT('      THE NUMBER OF OBSERVATIONS REMAINING FROM ',   &
+               'VARIABLE ',A4,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4154)
+ 4154   FORMAT('      (FOR WHICH THE SPATIAL DISTRIBUTION PLOT ')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4155)MINN2
+ 4155   FORMAT('      IS TO BE CARRIED OUT) MUST BE AT LEAST ',I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,4157)NQ
+ 4157   FORMAT('      SUCH WAS NOT THE CASE HERE.  (N = ',I8,')')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3018)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,3019)(IANS(I),I=1,MIN(IWIDTH,80))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      J=0
+      IMAX=N1
+      IF(NQ.LT.N1)IMAX=NQ
+      DO 4170 I=1,IMAX
+        IF(ISUB(I).EQ.0)GO TO 4170
+        J=J+1
+!
+        IJ=MAXN*(ICOL1-1)+I
+        IF(ICOL1.LE.MAXCOL)YRESP(J)=V(IJ)
+        IF(ICOL1.EQ.MAXCP1)YRESP(J)=PRED(I)
+        IF(ICOL1.EQ.MAXCP2)YRESP(J)=RES(I)
+        IF(ICOL1.EQ.MAXCP3)YRESP(J)=YPLOT(I)
+        IF(ICOL1.EQ.MAXCP4)YRESP(J)=XPLOT(I)
+        IF(ICOL1.EQ.MAXCP5)YRESP(J)=X2PLOT(I)
+        IF(ICOL1.EQ.MAXCP6)YRESP(J)=TAGPLO(I)
+!
+        IJ=MAXN*(ICOL2-1)+I
+        IF(ICOL2.LE.MAXCOL)ROWID(J)=V(IJ)
+        IF(ICOL2.EQ.MAXCP1)ROWID(J)=PRED(I)
+        IF(ICOL2.EQ.MAXCP2)ROWID(J)=RES(I)
+        IF(ICOL2.EQ.MAXCP3)ROWID(J)=YPLOT(I)
+        IF(ICOL2.EQ.MAXCP4)ROWID(J)=XPLOT(I)
+        IF(ICOL2.EQ.MAXCP5)ROWID(J)=X2PLOT(I)
+        IF(ICOL2.EQ.MAXCP6)ROWID(J)=TAGPLO(I)
+!
+        IJ=MAXN*(ICOL3-1)+I
+        IF(ICOL3.LE.MAXCOL)COLID(J)=V(IJ)
+        IF(ICOL3.EQ.MAXCP1)COLID(J)=PRED(I)
+        IF(ICOL3.EQ.MAXCP2)COLID(J)=RES(I)
+        IF(ICOL3.EQ.MAXCP3)COLID(J)=YPLOT(I)
+        IF(ICOL3.EQ.MAXCP4)COLID(J)=XPLOT(I)
+        IF(ICOL3.EQ.MAXCP5)COLID(J)=X2PLOT(I)
+        IF(ICOL3.EQ.MAXCP6)COLID(J)=TAGPLO(I)
+!
+ 4170 CONTINUE
+      NS=J
+!
+      IF(NPART.GT.0)THEN
+        DO 4180 I=1,NPART
+          IJ=MAXN*(ICOL4-1)+I
+          IF(ICOL4.LE.MAXCOL)PART(I)=V(IJ)
+          IF(ICOL4.EQ.MAXCP1)PART(I)=PRED(I)
+          IF(ICOL4.EQ.MAXCP2)PART(I)=RES(I)
+          IF(ICOL4.EQ.MAXCP3)PART(I)=YPLOT(I)
+          IF(ICOL4.EQ.MAXCP4)PART(I)=XPLOT(I)
+          IF(ICOL4.EQ.MAXCP5)PART(I)=X2PLOT(I)
+          IF(ICOL4.EQ.MAXCP6)PART(I)=TAGPLO(I)
+ 4180   CONTINUE
+      ENDIF
+!
+      GO TO 6000
+!
+ 5000 CONTINUE
+!
+!
+!               ******************************************************
+!               **  STEP 51--                                       **
+!               **  IF ARGUMENT ONE IS A MATRIX, CHECK THAT THE     **
+!               **  INPUT NUMBER OF OBSERVATIONS (N1) FOR ARGUMENT  **
+!               **  ONE IS 16  OR MORE.                             **
+!               ******************************************************
+!
+      ISTEPN='51'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(N1.LT.MINN2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3011)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5022)
+ 5022   FORMAT('      THE INPUT NUMBER OF ROWS FOR THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5023)MINN2
+ 5023   FORMAT('      SPATIAL DISTRIBUTION PLOT MUST BE ',I8,   &
+               ' OR LARGER.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5025)
+ 5025   FORMAT('      SUCH WAS NOT THE CASE HERE;')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5027)IH11,IH12,N1
+ 5027   FORMAT('      MATRIX ',A4,A4,' HAS ',I8,' ROWS.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5018)
+ 5018   FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,5019)(IANS(I),I=1,MIN(IWIDTH,80))
+ 5019     FORMAT(80A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!
+!               ********************************************************
+!               **  STEP 52--                                         **
+!               **  CHECK IF ARGUMENT TWO IS A VARIABLE (IF IT EXISTS)**
+!               ********************************************************
+!
+      ISTEPN='52'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IH21=IHARG(2)
+      IH22=IHARG2(2)
+      IHWUSE='V'
+      MESSAG='NO'
+      CALL CHECKN(IH21,IH22,IHWUSE,   &
+      IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+      ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCV,IERROR)
+!
+      IF(IERROR.EQ.'YES')THEN
+        NPART=0
+      ELSE
+        ILISR=ILOCV
+        ICOL21=IVALUE(ILISR)
+        NPART=IN(ILISR)
+      ENDIF
+!
+!               *****************************************
+!               **  STEP 56--                          **
+!               **  CHECK TO SEE THE TYPE CASE--       **
+!               **    1) UNQUALIFIED (THAT IS, FULL);  **
+!               **    2) SUBSET/EXCEPT; OR             **
+!               **    3) FOR.                          **
+!               *****************************************
+!
+      ISTEPN='56'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ICASEQ='FULL'
+      ILOCQ=NUMARG+1
+      IF(NUMARG.LT.1)GO TO 5609
+      DO 5600 J=1,NUMARG
+      J1=J
+      IF(IHARG(J).EQ.'SUBS'.AND.IHARG2(J).EQ.'ET  ') GO TO 5601
+      IF(IHARG(J).EQ.'EXCE'.AND.IHARG2(J).EQ.'PT  ') GO TO 5601
+      IF(IHARG(J).EQ.'FOR '.AND.IHARG2(J).EQ.'    ') GO TO 5602
+ 5600 CONTINUE
+      GO TO 5609
+ 5601 CONTINUE
+      ICASEQ='SUBS'
+      ILOCQ=J1
+      GO TO 5609
+ 5602 CONTINUE
+      ICASEQ='FOR'
+      ILOCQ=J1
+      GO TO 5609
+ 5609 CONTINUE
+!
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')THEN
+        WRITE(ICOUT,5038)NUMARG,ILOCQ
+ 5038   FORMAT('NUMARG,ILOCQ = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ***********************************************
+!               **  STEP 56B--                               **
+!               **  TEMPORARILY FORM THE VARIABLE Y(.)       **
+!               **  WHICH WILL HOLD THE DATA  FROM SAMPLE 1. **
+!               **  FORM THIS VARIABLE BY                    **
+!               **  BRANCHING TO THE APPROPRIATE SUBCASE     **
+!               **  (FULL, SUBSET, OR FOR).                  **
+!               ***********************************************
+!
+      ISTEPN='56B'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(ICASEQ.EQ.'FULL')GO TO 5610
+      IF(ICASEQ.EQ.'SUBS')GO TO 5620
+      IF(ICASEQ.EQ.'FOR')GO TO 5630
+!
+ 5610 CONTINUE
+      DO 5615 I=1,N1
+      ISUB(I)=1
+ 5615 CONTINUE
+      NQ=N1
+      GO TO 5650
+!
+ 5620 CONTINUE
+      NIOLD=N1
+      CALL DPSUBS(NIOLD,ILOCS,NS,IBUGQ,IERROR)
+      NQ=NIOLD
+      GO TO 5650
+!
+ 5630 CONTINUE
+      NIOLD=N1
+      CALL DPFOR(NIOLD,NFOR,IROW1,IROWN,   &
+      NLOCAL,ILOCS,NS,IBUGQ,IERROR)
+      NQ=NFOR
+      GO TO 5650
+!
+ 5650 CONTINUE
+      IF(NQ.LT.MINN2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5651)
+ 5651   FORMAT('***** ERROR IN THE SPATIAL DISTRIBUTION PLOT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5652)
+ 5652   FORMAT('      AFTER THE APPROPRIATE SUBSET HAS BEEN ',   &
+               'EXTRACTED,')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5653)IH11,IH12
+ 5653   FORMAT('      THE NUMBER OF ROWS REMAINING FROM MATRIX ',   &
+               A4,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5654)
+ 5654   FORMAT('      (FOR WHICH THE SPATIAL DISTRIBUTION PLOT IS ',   &
+               'TO BE CARRIED')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5655)MINN2
+ 5655   FORMAT('      OUT) MUST BE AT LEAST ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,5657)NQ
+ 5657   FORMAT('      SUCH WAS NOT THE CASE HERE.  (NROWS = ',I8,')')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,3018)
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,5019)(IANS(I),I=1,MIN(IWIDTH,80))
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      ICASE='MATR'
+!
+      NLOOP=NCOL
+      IF(NLOOP.LT.1)NLOOP=1
+      IMAX=N1
+      IF(NQ.LT.N1)IMAX=NQ
+!
+      NCOL=0
+      J=0
+      DO 5671 JLOOP=1,NLOOP
+        NCOL=NCOL+1
+        NROW=0
+        DO 5670 I=1,IMAX
+          IF(ISUB(I).EQ.0)GO TO 5670
+          NROW=NROW+1
+          J=J+1
+          ICOLT=ICOL1+JLOOP-1
+          IJ=MAXN*(ICOLT-1)+I
+!
+          IF(ICOLT.LE.MAXCOL)YRESP(J)=V(IJ)
+          IF(ICOLT.EQ.MAXCP1)YRESP(J)=PRED(I)
+          IF(ICOLT.EQ.MAXCP2)YRESP(J)=RES(I)
+          IF(ICOLT.EQ.MAXCP3)YRESP(J)=YPLOT(I)
+          IF(ICOLT.EQ.MAXCP4)YRESP(J)=XPLOT(I)
+          IF(ICOLT.EQ.MAXCP5)YRESP(J)=X2PLOT(I)
+          IF(ICOLT.EQ.MAXCP6)YRESP(J)=TAGPLO(I)
+          ROWID(J)=REAL(NROW)
+          COLID(J)=REAL(NCOL)
+!
+ 5670   CONTINUE
+ 5671 CONTINUE
+!
+      NS=J
+!
+      IF(NPART.GT.0)THEN
+        DO 5680 I=1,NPART
+          IJ=MAXN*(ICOL2-1)+I
+          IF(ICOL2.LE.MAXCOL)PART(I)=V(IJ)
+          IF(ICOL2.EQ.MAXCP1)PART(I)=PRED(I)
+          IF(ICOL2.EQ.MAXCP2)PART(I)=RES(I)
+          IF(ICOL2.EQ.MAXCP3)PART(I)=YPLOT(I)
+          IF(ICOL2.EQ.MAXCP4)PART(I)=XPLOT(I)
+          IF(ICOL2.EQ.MAXCP5)PART(I)=X2PLOT(I)
+          IF(ICOL2.EQ.MAXCP6)PART(I)=TAGPLO(I)
+ 5680   CONTINUE
+      ENDIF
+!
+      GO TO 6000
+!
+ 6000 CONTINUE
+!
+!               ********************************************************
+!               **  STEP 61--                                          *
+!               **  FORM THE VERTICAL AND HORIZONTAL AXIS VARIABLES    *
+!               **  (Y(.) AND X(.), RESPECTIVELY) FOR THE PLOT.        *
+!               **  FORM THE CURVE DESIGNATION VARIABLE D(.)  .        *
+!               **  DEFINE THE NUMBER OF PLOT POINTS    (NPLOTP).      *
+!               **  DEFINE THE NUMBER OF PLOT VARIABLES (NPLOTV).      *
+!               ********************************************************
+!
+      ISTEPN='61'
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IHP ='THRE'
+      IHP2='SHOL'
+      IHWUSE='P'
+      MESSAG='NO'
+      CALL CHECKN(IHP,IHP2,IHWUSE,   &
+      IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+      ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
+      IF(IERROR.EQ.'YES')THEN
+        THRESH=CPUMIN
+      ELSE
+        THRESH=VALUE(ILOCP)
+      ENDIF
+!
+      CALL DPSDP2(YRESP,ROWID,COLID,NS,PART,NPART,   &
+      THRESH,   &
+      TEMP1,TEMP2,TEMP3,TEMP4,MAXOBV,   &
+      Y,X,D,NPLOTP,NPLOTV,   &
+      IBUGG3,ISUBRO,IERROR)
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGG2.EQ.'ON'.OR.ISUBRO.EQ.'SDPL')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSDPL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUND,IERROR
+ 9012   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2
+ 9013   FORMAT('NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2 = ',   &
+               I8,I8,I8,2X,A4,2X,A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)ICASPL,MAXN
+ 9014   FORMAT('ICASPL,MAXN = ',A4,I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NPLOTP.GE.1)THEN
+          DO 9020 I=1,MIN(NPLOTP,200)
+            WRITE(ICOUT,9021)I,Y(I),X(I),D(I)
+ 9021       FORMAT('I,Y(I),X(I),D(I) = ',I8,3F12.5)
+            CALL DPWRST('XXX','BUG ')
+ 9020     CONTINUE
+        ENDIF
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSDPL
+      SUBROUTINE DPSDP2(Y,ROWID,COLID,N,PART,NPART,   &
+      THRESH,   &
+      TEMP1,TEMP2,TEMP3,TEMP4,MAXOBV,   &
+      Y2,X2,D2,NPLOTP,NPLOTV,   &
+      IBUGG3,ISUBRO,IERROR)
+!
+!     PURPOSE--FORM A SPATIAL DISTRIBUTION PLOT.
+!     EXAMPLE--SPATIAL DISTRIBUTION PLOT Y ROWID COLID PART
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2008/4
+!     ORIGINAL VERSION--APRIL     2008.
+!
+!-----COMMON----------------------------------------------------------
+!
+!---------------------------------------------------------------------
+!
+      CHARACTER*4 IBUGG3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IRELAT
+      CHARACTER*4 IRHSTG
+!
+      DIMENSION Y(*)
+      DIMENSION ROWID(*)
+      DIMENSION COLID(*)
+      DIMENSION PART(*)
+      DIMENSION Y2(*)
+      DIMENSION X2(*)
+      DIMENSION D2(*)
+      DIMENSION TEMP1(*)
+      DIMENSION TEMP2(*)
+      DIMENSION TEMP3(*)
+      DIMENSION TEMP4(*)
+!
+      DOUBLE PRECISION DTERM1
+      DOUBLE PRECISION DTERM2
+      DOUBLE PRECISION DTERM3
+      DOUBLE PRECISION DLNGAM
+      DOUBLE PRECISION DBINLN
+!
+      EXTERNAL DLNGAM
+      EXTERNAL DBINLN
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'SDP2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSDP2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGG3,ISUBRO,N,NPART
+   52   FORMAT('IBUGG3,ISUBRO,N,NPART = ',A4,2X,A4,2X,I8,2X,I8)
+        CALL DPWRST('XXX','BUG ')
+        DO 55 I=1,MIN(N,100)
+          WRITE(ICOUT,56)I,Y(I),ROWID(I),COLID(I)
+   56     FORMAT('I,Y(I),ROWID(I),COLID(I) = ',I8,3G12.4)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+        IF(NPART.GT.0)THEN
+          DO 58 I=1,MIN(NPART,100)
+            WRITE(ICOUT,59)I,PART(I)
+   59       FORMAT('I,PART(I) = ',I8,G12.4)
+            CALL DPWRST('XXX','BUG ')
+   58     CONTINUE
+        ENDIF
+      ENDIF
+!
+!               *******************************************************
+!               **  STEP 1--                                         **
+!               **  CHECK INPUT ARRAYS FOR ERRORS                    **
+!               *******************************************************
+!
+      ISTEPN='1'
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'SDP2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     STEP 1A: RESPONSE ARRAY SHOULD BE EITHER 0/1 OR
+!              THERE SHOULD BE A USER-DEFINED THRESHOLD
+!              TO CREATE 0/1 ARRAY.
+!
+      IWRITE='OFF'
+      CALL DISTIN(Y,N,IWRITE,TEMP1,NDIST,IBUGG3,IERROR)
+      IF(NDIST.EQ.2)THEN
+        AVAL1=TEMP1(1)
+        AVAL2=TEMP1(2)
+        ALOW=MIN(AVAL1,AVAL2)
+        AHIGH=MAX(AVAL1,AVAL2)
+        DO 110 I=1,N
+          IF(Y(I).EQ.ALOW)THEN
+            Y(I)=0.0
+          ELSE
+            Y(I)=1.0
+          ENDIF
+  110   CONTINUE
+      ELSE
+        IF(THRESH.NE.CPUMIN)THEN
+          DO 210 I=1,N
+            IF(Y(I).LE.THRESH)THEN
+              Y(I)=0.0
+            ELSE
+              Y(I)=1.0
+            ENDIF
+  210     CONTINUE
+        ELSE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,260)
+  260     FORMAT('***** ERROR IN SPATIAL DISTRIBUTION PLOT--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,261)
+  261     FORMAT('      THERE ARE MORE THAN TWO DISTINCT VALUES FOUND')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,263)
+  263     FORMAT('      IN THE RESPONSE VARIABLE, BUT NO THRESHOLD ',   &
+                 'WAS SPECIFIED.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+      ENDIF
+!
+!     STEP 1B: CHECK THAT THE NUMBER OR ROWS TIMES THE NUMBER OF
+!              COLUMNS EQUALS THE NUMBER OF RESPONSE VALUES.  ALSO
+!              CODE THE ROWID AND COLID TO 1, 2, ..., <NROW/NCOL>.
+!
+      CALL CODE(ROWID,N,IWRITE,TEMP1,TEMP2,MAXOBV,IBUGG3,IERROR)
+      DO 310 I=1,N
+        ROWID(I)=TEMP1(I)
+  310 CONTINUE
+      CALL DISTIN(ROWID,N,IWRITE,TEMP1,NROWS,IBUGG3,IERROR)
+!
+      CALL CODE(COLID,N,IWRITE,TEMP1,TEMP2,MAXOBV,IBUGG3,IERROR)
+      DO 320 I=1,N
+        COLID(I)=TEMP1(I)
+  320 CONTINUE
+      CALL DISTIN(COLID,N,IWRITE,TEMP1,NCOLS,IBUGG3,IERROR)
+!
+      IF(NROWS*NCOLS.NE.N)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,260)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,361)
+  361   FORMAT('      THE NUMBER OF ROWS TIMES THE NUMBER OF ',   &
+               'COLUMNS')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,363)
+  363   FORMAT('      WAS NOT EQUAL TO THE TOTAL NUMBER OF VALUES.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!     STEP 1C: DEFINE THE PARTITIONING.
+!
+!              FOR THIS PLOT TO MAKE SENSE, THERE MUST BE AT
+!              LEAST TWO PARTITIONS, SO THE MINIMUM OF THE
+!              NUMBER OF ROWS AND NUMBER OF COLUMNS MUST BE
+!              AT LEAST 16.
+!
+      NMIN=MIN(NROWS,NCOLS)
+      IF(NMIN.LT.16)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,260)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,401)
+  401   FORMAT('      THE MINIMUM OF THE NUMBER OF ROWS AND THE ',   &
+               'NUMBER OF COLUMNS')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,403)
+  403   FORMAT('      IS LESS THAN 16.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!     IF THE USER DID NOT SPECIFY A PARTITION, THEN
+!     CREATE ONE.  THE MINIMUM PARTITION WILL BE 8x8
+!     AND THE MAXIMUM PARTITION WILL BE N/8.
+!
+      IF(NPART.EQ.0)THEN
+        NSTART=8
+        NLAST=N/8
+        DO 510 I=NSTART,NLAST
+          PART(I)=REAL(I)
+  510   CONTINUE
+      ELSE
+        CALL SORT(PART,NPART,PART)
+        NLOW=4
+        NHIGH=N/4
+        ICNT=0
+        DO 520 I=1,NPART
+          NTEMP=INT(PART(I) + 0.01)
+          IF(NTEMP.GE.NLOW .AND. NTEMP.LE.NHIGH)THEN
+            ICNT=ICNT+1
+            PART(ICNT)=REAL(NTEMP)
+          ENDIF
+  520   CONTINUE
+        IF(ICNT.LT.2)THEN
+          NSTART=8
+          NLAST=N/8
+          ICNT=0
+          DO 530 I=NSTART,NLAST
+            ICNT=ICNT+1
+            PART(ICNT)=REAL(I)
+  530     CONTINUE
+          NPART=ICNT
+        ELSE
+          NPART=ICNT
+        ENDIF
+      ENDIF
+!
+!               *******************************************************
+!               **  STEP 2--                                         **
+!               **  NOW LOOP OVER THE PARTITIONS                     **
+!               *******************************************************
+!
+      ISTEPN='2'
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'SDP2')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ICNT=0
+      ICNT2=0
+      ICNT3=0
+      ICNT4=0
+!
+      DO 1000 IPART=1,NPART
+        APART=PART(IPART)
+        ISIZE=INT(PART(INT(IPART + 0.01)))
+        NHOR=NROWS/ISIZE
+        NVERT=NCOLS/ISIZE
+        ICNT2=0
+!
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,1003)INT(APART+0.01)
+ 1003     FORMAT('PROCESSING PARTITION SIZE ',I8,' ...')
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+        DO 1010 IROW=1,NHOR
+          IROW1=(IROW-1)*ISIZE + 1
+          IROW2=IROW*ISIZE
+          DO 1020 ICOL=1,NVERT
+            ICOL1=(ICOL-1)*ISIZE + 1
+            ICOL2=ICOL*ISIZE
+            SUM1=0.0
+            ICNT=0
+!
+            DO 1030 I=1,N
+              IROWC=INT(ROWID(I)+0.01)
+              ICOLC=INT(COLID(I)+0.01)
+              IF((IROWC.GE.IROW1 .AND. IROWC.LE.IROW2) .AND.   &
+                 (ICOLC.GE.ICOL1 .AND. ICOLC.LE.ICOL2))THEN
+                ICNT=ICNT+1
+                SUM1=SUM1 + Y(I)
+              ENDIF
+ 1030       CONTINUE
+            IF(ICNT.NE.ISIZE*ISIZE)THEN
+              WRITE(ICOUT,999)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,260)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1031)IROW,ICOL
+ 1031         FORMAT('      FOR PARTITION: ROW = ',I8,' COLUM = ',I8)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1033)ISIZE*ISIZE
+ 1033         FORMAT('      THE EXPECTED NUMBER OF VALUES = ',I8)
+              CALL DPWRST('XXX','BUG ')
+              WRITE(ICOUT,1035)ICNT
+ 1035         FORMAT('      THE NUMBER OF VALUES FOUND    = ',I8)
+              CALL DPWRST('XXX','BUG ')
+              IERROR='YES'
+              GO TO 9000
+            ENDIF
+            ICNT2=ICNT2+1
+            TEMP1(ICNT2)=SUM1
+!
+ 1020     CONTINUE
+ 1010   CONTINUE
+!
+!       NOW FIT DISCRETE UNIFORM, POISSON, AND NEGATIVE BINOMIAL
+!       TO THE ARRAY OF SUMS.
+!
+!       DISCRETE UNIFORM PROBABILITY PLOT
+!
+        CALL MEAN(TEMP1,ICNT2,IWRITE,XMEAN,IBUGG3,IERROR)
+        CALL SD(TEMP1,ICNT2,IWRITE,XSD,IBUGG3,IERROR)
+        CALL SORT(TEMP1,ICNT2,TEMP1)
+        XMIN=TEMP1(1)
+        XMAX=TEMP1(ICNT2)
+        NDUN=INT(XMAX+0.01)
+        CALL UNIMED(ICNT2,TEMP2)
+!
+        DO 2010 I=1,ICNT2
+          CALL DISPPF(TEMP2(I),NDUN,X2OUT)
+          TEMP2(I)=X2OUT
+ 2010   CONTINUE
+        CALL CORR(TEMP2,TEMP1,ICNT2,IWRITE,PPCC,IBUGG3,IERROR)
+        ICNT4=ICNT4+1
+        X2(ICNT4)=APART
+        Y2(ICNT4)=PPCC
+        D2(ICNT4)=1.0
+!
+!       BIN THE DATA AND REMOVE ZERO-FREQUENCY CLASSES
+!
+        IRELAT='OFF'
+        IRHSTG='OFF'
+        XMIN=TEMP1(1)
+        XMAX=TEMP1(ICNT2)
+        XSTART=XMIN-0.5
+        XSTOP=XMAX+0.5
+        CLWID=1.0
+        CALL DPBINI(TEMP1,ICNT2,IRELAT,CLWID,XSTART,XSTOP,IRHSTG,   &
+                    TEMP4,TEMP3,N2,IBUGG3,IERROR)
+        IF(IERROR.EQ.'YES')GO TO 9000
+        NTOT=ICNT2
+        ICNT3=0
+        DO 2101 I=1,N2
+          IF(INT(TEMP4(I)+0.01).GT.0)THEN
+            ICNT3=ICNT3+1
+            TEMP2(ICNT3)=TEMP4(I)
+            TEMP1(ICNT3)=TEMP3(I)
+          ENDIF
+2101    CONTINUE
+        N2=ICNT3
+!
+!       POISSON PLOT
+!
+        ICNT3=0
+        DTERM1=DLOG(DBLE(NTOT))
+        DO 2200 I=1,N2
+          AK=TEMP1(I)
+          IK=INT(AK+0.1)
+          ANK=TEMP2(I)
+          IF(ANK.GT.0.0)THEN
+            ICNT3=ICNT3+1
+            DTERM2=DLOG(DBLE(ANK))
+            IF(IK.EQ.0 .OR. IK.EQ.1)THEN
+              DTERM3=DLOG(1.0D0)
+            ELSEIF(IK.EQ.2)THEN
+              DTERM3=DLOG(2.0D0)
+            ELSE
+              DTERM3=DLNGAM(DBLE(AK+1.0))
+            ENDIF
+            TEMP4(ICNT3)=REAL(DTERM2 + DTERM3 - DTERM1)
+            TEMP3(ICNT3)=AK
+          ENDIF
+!
+ 2200   CONTINUE
+        NTEMP=ICNT3
+        CALL CORR(TEMP4,TEMP3,NTEMP,IWRITE,PPCC,IBUGG3,IERROR)
+        ICNT4=ICNT4+1
+        X2(ICNT4)=APART
+        Y2(ICNT4)=PPCC
+        D2(ICNT4)=2.0
+!
+!       NEGATIVE BINOMIAL PLOT
+!
+        AKNB=XMEAN**2/(XSD**2 - XMEAN)
+        ICNT3=0
+        DTERM1=DLOG(DBLE(NTOT))
+        DO 2300 I=1,N2
+          AK=TEMP1(I)
+          IK=INT(AK+0.1)
+          ANK=TEMP2(I)
+          INK=INT(ANK+0.1)
+          IF(ANK.GT.0.0)THEN
+            ICNT3=ICNT3+1
+            DTERM2=DLOG(DBLE(ANK))
+            ITEMP1=INT(AKNB+0.5)+IK-1
+            ITEMP2=IK
+            DTERM3=DBINLN(ITEMP1,ITEMP2)
+            TEMP4(ICNT3)=REAL(DTERM2 - DTERM1 - DTERM3)
+!
+            TEMP3(ICNT3)=AK
+          ENDIF
+!
+ 2300   CONTINUE
+        NTEMP=ICNT3
+        CALL CORR(TEMP4,TEMP3,NTEMP,IWRITE,PPCC,IBUGG3,IERROR)
+        ICNT4=ICNT4+1
+        X2(ICNT4)=APART
+        Y2(ICNT4)=PPCC
+        D2(ICNT4)=3.0
+!
+ 1000 CONTINUE
+!
+      NPLOTP=ICNT4
+      NPLOTV=2
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGG3.EQ.'ON'.OR.ISUBRO.EQ.'SDP2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSDP2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IBUGG3,ISUBRO
+ 9012   FORMAT('IBUGG3,ISUBRO = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)NPLOTP,NPLOTV
+ 9013   FORMAT('NPLOTP,NPLOTV = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NPLOTP.GE.1)THEN
+          DO 9015 I=1,MIN(200,NPLOTP)
+            WRITE(ICOUT,9016)I,Y2(I),X2(I),D2(I)
+ 9016       FORMAT('I,Y2(I),X2(I),D2(I) = ',I8,3F10.5)
+            CALL DPWRST('XXX','BUG ')
+ 9015     CONTINUE
+        ENDIF
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSDP2
+      SUBROUTINE DPSDR3(Y,N,ICASA2,ICASA4,MAXNXT,   &
+                        TEMP1,AKURT,N0,IBONAD,   &
+                        YSD,   &
+                        ALPHA,NALPHA,ALOWLM,AUPPLM,   &
+                        ISUBRO,IBUGA3,IERROR)
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES CONFIDENCE LIMITS FOR THE
+!              STANDARD DEVIATION ASSUMING A NON-NORMAL DISTRIBUTION
+!
+!              THE FOLLOWING CASES ARE SUPPORTED:
+!
+!                 LET A = LOWER ROBUST SD CONFIDENCE LIMIT Y
+!                 LET A = UPPER ROBUST SD CONFIDENCE LIMIT Y
+!                 LET A = ONE SIDED LOWER ROBUST SD CONFIDENCE INTERVAL Y
+!                 LET A = ONE SIDED UPPER ROBUST SD CONFIDENCE INTERVAL Y
+!
+!              THE DATA CONSISTS OF N OBSERVATIONS IN Y.
+!
+!              THE METHOD HERE IS FROM THE BONETT PAPER.  THIS INTERVAL
+!              PROVIDES A NEARLY EXACT INTERVAL FOR NORMALLY DISTRIBUTED
+!              DATA, BUT ALSO PROVIDES GOOD PERFORMANCE FOR MODERATE
+!              NON-NORMALITY.
+!
+!              THE INTERVAL FOR THE VARIANCE IS
+!
+!                 EXP{LOG(C*SIGMAHAT**2) +/- Z(ALPHA/2)*SE}
+!
+!              WHERE
+!
+!                 SIGMAHAT    = SAMPLE STANDARD DEVIATION
+!                 Z           = NORMAL PERCENT POINT FUNCTION
+!                 SE          = C*SQRT[{GAMMA4HAT - (N-3)/N}/(N-1)]
+!                 C           = N/(N - Z(ALPHA/2))
+!                 GAMMA4HAT   = AN ADJUSTED ESTIMATE OF KURTOSIS
+!                               (SEE BELOW FOR DETAILS)
+!
+!              C IS A SMALL SAMPLE ADJUSTMENT FACTOR TO EQUALIZE TAIL
+!              PROBABILITIES.
+!
+!              FOR THE STANDARD DEVIATION, TAKE THE SQUARE ROOT OF THE
+!              ABOVE INTERVAL.
+!
+!              NIWITPONG AND KIRDWICHAI ADJUST THIS STATISTIC BY
+!              USING THE MEDIAN RATHER THAN THE TRIMMED MEAN TO
+!              COMPUTE THE ADJUSTED KURTOSIS AND THEY ALSO USE
+!              t-INTERVALS RATHER THAN THE NORMAL INTERVALS.  THESE
+!              ADJUSTMENTS RESULT IN A MORE CONSERVATIVE INTERVAL,
+!              BUT ONES THAT ARE MORE LIKELY TO MEET THE NOMINAL
+!              COVERAGE IN MORE EXTREME CASES OF NON-NORMALITY.
+!
+!     INPUT ARGUMENTS--Y      = THE SINGLE PRECISION VECTOR OF
+!                               (UNSORTED OR SORTED) OBSERVATIONS.
+!                    --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                               IN THE VECTOR Y.
+!                    --ALPHA  = THE SINGLE PRECISION VECTOR OF CONFIDENCE
+!                               LEVELS
+!                    --NALPHA = THE INTEGER NUMBER OF ALPHA VALUES
+!                    --AKURT  = PRIOR ESTIMATE OF KURTOSIS
+!     OUTPUT ARGUMENTS-ALOWLM = THE SINGLE PRECISION VECTOR OF LOWER LIMIT
+!                               VALUES
+!                     -AUPPLM = THE SINGLE PRECISION VECTOR OF UPPER LIMIT
+!                               VALUES
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN.
+!     REFERENCES--BONETT (2006), "APPROXIMATE CONFIDENCE INTERVAL FOR
+!                 STANDARD DEVIATION OF NONNORMAL DISTRIBUTIONS",
+!                 COMPUTATIONAL STATISTICS AND DATA ANALYSIS,
+!                 VOL. 50, PP. 775 - 782.
+!               --NIWITPONG AND KIRDWICHAI (2008), "ADJUSTED BONETT
+!                 CONFIDENCE INTERVAL FOR STANDARD DEVIATION OF
+!                 NON-NORMAL DISTRIBUTIONS", THAILAND STATISTICIAN,
+!                 VOL. 6, NO. 1, PP. 1-6.
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     ORIGINAL VERSION--DECEMBER  2017.
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION Y(*)
+      DIMENSION TEMP1(*)
+      DIMENSION ALOWLM(*)
+      DIMENSION AUPPLM(*)
+      DIMENSION ALPHA(*)
+!
+      CHARACTER*4 IBONAD
+      CHARACTER*4 ICASA2
+      CHARACTER*4 ICASA4
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+!
+      DOUBLE PRECISION DSUM1
+      DOUBLE PRECISION DSUM2
+      DOUBLE PRECISION DTERM1
+!
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='SDR3'
+      ISUBN2='    '
+      IWRITE='OFF'
+      IERROR='NO'
+!
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'SDR3')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPSDR3--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,ICASA2,ICASA3,ICASA4
+   52   FORMAT('IBUGA3,ISUBRO,ICASA2,ICASA3,ICASA4 = ',   &
+               4(A4,2X),A4)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,53)N,NALPHA,ALPHA(1)
+   53   FORMAT('N,NALPHA,ALPHA(1) = ',2I8,G15.7)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,54)AKURT,N0,IBONAD
+   54   FORMAT('AKURT,N0,IBONAD = ',G15.7,I8,2X,A4)
+        CALL DPWRST('XXX','WRIT')
+        DO 56 I=1,N
+          WRITE(ICOUT,57)I,Y(I)
+   57     FORMAT('I,Y(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
+        DO 76 I=1,NALPHA
+          WRITE(ICOUT,77)I,ALPHA(I)
+   77     FORMAT('I,ALPHA(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','WRIT')
+   76   CONTINUE
+      ENDIF
+!
+!               ********************************************
+!               **  STEP 11--                             **
+!               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+!               ********************************************
+!
+      ISTEPN='11'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'SDR3')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(N.LT.5)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR: ROBUST STANDARD DEVIATION CONFIDENCE ',   &
+               'LIMITS--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,102)
+  102   FORMAT('      THE NUMBER OF ORIGINAL OBSERVATIONS  IS LESS ',   &
+               'THAN FIVE.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,103)N
+  103   FORMAT('      SAMPLE SIZE = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               ********************************************
+!               **  STEP 21--                             **
+!               **  CARRY OUT CALCULATIONS FOR SD         **
+!               **  CONFIDENCE LIMITS.                    **
+!               ********************************************
+!
+      ISTEPN='21'
+      IF(IBUGA3.EQ.'ON'.AND.ISUBRO.EQ.'SDR3')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     ICASA2:  LOWE     => LOWER LIMIT
+!              UPPE     => UPPER LIMIT
+!     ICASA4:  ONES     => ONE-SIDED LIMIT
+!              TWOS     => TWO-SIDED LIMIT
+!
+!     COMPUTE STANDARD DEVIATION
+!
+      DO 210 I=1,NALPHA
+        ALOWLM(I)=CPUMIN
+        AUPPLM(I)=CPUMIN
+  210 CONTINUE
+!
+      CALL SORT(Y,N,Y)
+      CALL MEAN(Y,N,IWRITE,YMEAN,IBUGA3,IERROR)
+      CALL SD(Y,N,IWRITE,YSD,IBUGA3,IERROR)
+      AN=REAL(N)
+!
+      IF(YSD.LE.0.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,212)
+  212   FORMAT('      THE STANDARD DEVIATION OF THE ORIGINAL ',   &
+               'OBSERVATIONS IS NON-POSITIVE.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!     COMPUTE ADJUSTED KURTOSIS
+!
+      IF(IBONAD.EQ.'ON' .OR. N.LE.6)THEN
+        CALL MEDIAN(Y,N,IWRITE,TEMP1,MAXNXT,ADJMEA,IBUGA3,IERROR)
+      ELSE
+!
+!       COMPUTE TRIMMED MEAN.  TRIM AT LEAST ONE FROM EACH END.
+!
+        APERC=1.0/(2.0*SQRT(AN-4.0))
+        NTRIM=INT(AN*APERC + 0.5)
+        IF(NTRIM.EQ.0)NTRIM=1
+        NSTRT=NTRIM+1
+        NSTOP=N-NTRIM
+        NTEMP=N - 2*NTRIM
+        DSUM1=0.0D0
+        DO 230 I=NSTRT,NSTOP
+          DSUM1=DSUM1 + DBLE(Y(I))
+  230   CONTINUE
+        DTERM1=DSUM1/DBLE(NTEMP)
+        ADJMEA=REAL(DTERM1)
+      ENDIF
+!
+      DSUM1=0.0D0
+      DSUM2=0.0D0
+      DO 240 I=1,N
+        DSUM1=DSUM1 + (DBLE(Y(I) - ADJMEA)**4)
+        DSUM2=DSUM2 + (DBLE(Y(I) - YMEAN)**2)
+  240 CONTINUE
+      DTERM1=DBLE(N)*DSUM1/(DSUM2**2)
+      AKURTS=REAL(DTERM1)
+!
+!     POOL SAMPLE KURTOSIS WITH PRIOR MEASURE OF KURTOSIS
+!     (IF GIVEN)
+!
+      IF(AKURT.NE.CPUMIN .AND. N0.GT.0)THEN
+        AKURTS=(AN*AKURTS + REAL(N0)*AKURT)/REAL(N+N0)
+      ENDIF
+      TERM1=AKURTS - ((AN-3.0)/AN)
+      SE=TERM1/(AN-1.0)
+      SE=SQRT(SE)
+!
+      IF(ICASA4.EQ.'ONES')THEN
+        DO 460 I=1,NALPHA
+          ALPHAT=ALPHA(I)
+          IF(ALPHAT.GE.1.0 .AND. ALPHAT.LT.100.0)ALPHAT=ALPHAT/100.
+          IF(ALPHAT.LE.0.0 .OR. ALPHAT.GE.1.0)GO TO 8000
+          IF(ALPHAT.LT.0.5)ALPHAT=1.0 - ALPHAT
+          IF(IBONAD.EQ.'OFF')THEN
+            CALL NORPPF(ALPHAT,Z)
+          ELSE
+            IDF=N-1
+            ANU=REAL(IDF)
+            CALL TPPF(ALPHAT,ANU,Z)
+          ENDIF
+          C=AN/(AN+Z)
+          TERM1=Z*C*SE
+          TERM2=LOG(C*YSD**2)
+          ALOWLM(I)=SQRT(EXP(TERM2 + TERM1))
+          AUPPLM(I)=SQRT(EXP(TERM2 - TERM1))
+  460   CONTINUE
+      ELSEIF(ICASA4.EQ.'TWOS')THEN
+        DO 465 I=1,NALPHA
+          ALPHAT=ALPHA(I)
+          IF(ALPHAT.GE.1.0 .AND. ALPHAT.LT.100.0)ALPHAT=ALPHAT/100.
+          IF(ALPHAT.LE.0.0 .OR. ALPHAT.GE.1.0)GO TO 8000
+          IF(ALPHAT.GT.0.5)ALPHAT=1.0 - ALPHAT
+          ALPHAT=ALPHAT/2.0
+          IF(IBONAD.EQ.'OFF')THEN
+            CALL NORPPF(ALPHAT,Z)
+          ELSE
+            IDF=N-1
+            ANU=REAL(IDF)
+            CALL TPPF(ALPHAT,ANU,Z)
+          ENDIF
+          C=AN/(AN+Z)
+          TERM1=Z*C*SE
+          TERM2=LOG(C*YSD**2)
+          ALOWLM(I)=SQRT(EXP(TERM2 + TERM1))
+          AUPPLM(I)=SQRT(EXP(TERM2 - TERM1))
+!
+          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SDR3')THEN
+            WRITE(ICOUT,471)I,Z,C,SE,TERM1,TERM2
+  471       FORMAT('I,Z,C,SE,TERM1,TERM2 = ',I5,5G15.7)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,473)ALOWLM(I),AUPPLM(I)
+  473       FORMAT('ALOWLM(I),AUPPLM(I) = ',2G15.7)
+            CALL DPWRST('XXX','WRIT')
+          ENDIF
+!
+  465   CONTINUE
+      ENDIF
+!
+      GO TO 9000
+!
+ 8000 CONTINUE
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','WRIT')
+      WRITE(ICOUT,101)
+      CALL DPWRST('XXX','WRIT')
+      WRITE(ICOUT,8001)I
+ 8001 FORMAT('      ROW ',I8,' OF ALPHA VALUES IS OUT OF RANGE.')
+      CALL DPWRST('XXX','WRIT')
+      WRITE(ICOUT,8003)ALPHA(I)
+ 8003 FORMAT('      THE VALUE OF ALPHA IS ',G15.7)
+      CALL DPWRST('XXX','WRIT')
+      IERROR='YES'
+      GO TO 9000
+!
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'SDR3')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9051)
+ 9051   FORMAT('**** AT THE END OF DPSDR3--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9052)YMEAN,YSD,ADJMEA,AKURTS
+ 9052   FORMAT('YMEAN,YSD,ADJMEAN,AKURTS = ',4G15.7)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSDR3
+      SUBROUTINE DPSEAR(IANS,IANSLC,IWIDTH,ICOM,IHARG,IHARG2,NUMARG,   &
+                        ISEART,   &
+                        IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                        IBUGS2,IBUGQ,ISUBRO,IFOUND,IERROR)
+!
+!     PURPOSE--SEARCH A USER-DEFINED FILE FOR A USER-DEFINED STRING
+!              AND PRINT ALL LINES WHERE THAT STRING OCCURS.
+!     ALSO--IF CALLED FOR, SEARCH THE MASTER REFERENCE FILE (WHICH IS A
+!           FILE CONTAINING LISTS OF FILE NAMES) FOR DATA FILE NAMES,
+!           FOR REFERENCE FILE NAMES, AND FOR MACRO FILE NAMES.
+!     ALSO--IF CALLED FOR, SEARCH THE DICTIONARY FILE (WHICH IS A FILE
+!           CONTAINING THE LIST OF COMMANDS, FUNCTIONS, LET SUBCOMMANDS,
+!           AND OTHER KEYWORDS.)
+!     NOTE--THIS SUBROUTINE USES THE SAME FILE AS LIST.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--88/1
+!     ORIGINAL VERSION--JANUARY   1988.
+!     UPDATED         --AUGUST    1988. (CHANGE DPMASF TO DPDIRF)
+!     UPDATED         --AUGUST    1988. (DICTIONARY FILE)
+!     UPDATED         --JANUARY   1994. SEARCH1  (1LIN)
+!     UPDATED         --FEBRUARY  2003. STORE LINE NUMBER OF FIRST MATCH
+!                                       IN INTERNAL PARAMETER "LINENUMB".
+!     UPDATED         --APRIL     2018. ADD "REFMAN.TEX" AND
+!                                       "HANDBK.TEX" SEARCHES
+!     UPDATED         --APRIL     2018. ADD VARIOUS SYNONYMS
+!     UPDATED         --APRIL     2018. SUPPORT MORE THAN ONE
+!                                       WORD FOR STRING TO MATCH
+!     UPDATED         --SEPTEMBER 2019. ADD "GREP" OPTION TO USE
+!                                       AN OPERATING SYSTEM BASED
+!                                       SEARCH
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      INCLUDE 'DPCOPA.INC'
+!
+      CHARACTER*4 IANSLC(*)
+      CHARACTER*4 IANS(*)
+      CHARACTER*4 ICOM
+      CHARACTER*4 IHARG(*)
+      CHARACTER*4 IHARG2(*)
+!
+      CHARACTER*4 IHNAME(*)
+      CHARACTER*4 IHNAM2(*)
+      CHARACTER*4 IUSE(*)
+!
+      CHARACTER*4 ISEART
+      CHARACTER*4 IBUGS2
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!CCCC CHARACTER*80 IFILE
+      CHARACTER (LEN=MAXFNC) :: IFILE
+      CHARACTER*12 ISTAT
+      CHARACTER*12 IFORM
+      CHARACTER*12 IACCES
+      CHARACTER*12 IPROT
+      CHARACTER*12 ICURST
+      CHARACTER*4 IENDFI
+      CHARACTER*4 IREWIN
+      CHARACTER*4 ISUBN0
+      CHARACTER*4 IERRFI
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ICASEQ
+      CHARACTER*4 IANSI
+!CCCC CHARACTER*100 ICANS
+!CCCC CHARACTER*100 ISTRIN
+!CCCC CHARACTER*100 ISTRIU
+!CCCC CHARACTER*100 ITAST
+!CCCC CHARACTER*100 ITASTU
+!CCCC CHARACTER*255 IAOUT
+      CHARACTER (LEN=MAXSTR) :: IAOUT
+      CHARACTER (LEN=MAXSTR) :: ICANS
+      CHARACTER (LEN=MAXSTR) :: ISTRIN
+      CHARACTER (LEN=MAXSTR) :: ISTRIU
+      CHARACTER (LEN=MAXSTR) :: ITAST
+      CHARACTER (LEN=MAXSTR) :: ITASTU
+      CHARACTER*4 IHIT
+      CHARACTER*4 IGO
+      CHARACTER*4 IH
+      CHARACTER*4 IH2
+      CHARACTER*4 ISSAV1
+      CHARACTER*4 ISSAV2
+!
+      DIMENSION VALUE(*)
+      DIMENSION IVALUE(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOF2.INC'
+      INCLUDE 'DPCOST.INC'
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPSE'
+      ISUBN2='AR  '
+      IFOUND='YES'
+      IERROR='NO'
+      IHIT='NO'
+      IGO='NO'
+      IAOUT=' '
+!
+      ILISAV=1
+      MINN2=1
+      NCSTRI=(-999)
+      MAXLEN=9999
+      NQ=0
+!
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSEAR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IWIDTH,IBUGS2,ISUBRO,IERROR,ISEART,ICOM
+   53   FORMAT('IWIDTH,IBUGS2,ISUBRO,IERROR,ISEART,ICOM = ',   &
+               I5,5(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,55)(IANSLC(I),I=1,MIN(100,IWIDTH))
+   55     FORMAT('(IANSLC(I),I=1,IWIDTH) = ',100A1)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        WRITE(ICOUT,61)ILISNU,IDIRNU,IDICNU
+   61   FORMAT('ILISNU,IDIRNU,IDICNU = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,62)ILISNA(1:80)
+   62   FORMAT('ILISNA = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,63)ILISST,ILISFO,ILISAC,ILISFO,ILISCS
+   63   FORMAT('ILISST,ILISFO,ILISAC,ILISFO,ILISCS = ',   &
+               4(A12,2X),A12)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,72)IDIRNA(1:80)
+   72   FORMAT('IDIRNA = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,73)IDIRST,IDIRFO,IDIRAC,IDIRFO,IDIRCS
+   73   FORMAT('IDIRST,IDIRFO,IDIRAC,IDIRFO,IDIRCS = ',   &
+               4(A12,2X),A12)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,82)IDICNA(1:80)
+   82   FORMAT('IDICNA = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,83)IDICST,IDICFO,IDICAC,IDICFO,IDICCS
+   83   FORMAT('IDICST,IDICFO,IDICAC,IDICFO,IDICCS = ',   &
+               4(A12,2X),A12)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *************************************************
+!               **  STEP 10--                                  **
+!               **  PERFORM AN OPERATION SYSTEM BASED SEARCH   **
+!               *************************************************
+!
+!     2019/09: THE "GREP" VARIANT WILL DO AN OPERATIONG SYSTEM
+!              BASED SEARCH.
+!
+!                 1. FOR LINUX/UNIX (AND MACOS) SYSTEMS, USE THE
+!                    GREP COMMAND.
+!
+!                 2. FOR WINDOWS SYSTEMS, USE THE FINDSTR COMMAND.
+!
+!              NOTE THAT WHILE THIS CAN EASILY BE DONE JUST USING
+!              THE "SYSTEM" COMMAND, IMPLEMENTING THIS AS A DISTINCT
+!              COMMAND ALLOWS GENERAL PURPOSE MACROS TO BE WRITTEN
+!              THAT DON'T REQUIRE SPECIAL CODING BASED ON THE HOST
+!              OPERATING SYSTEM.
+!
+      ISTEPN='10'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(ISEART.EQ.'GREP' .OR. ISEART.EQ.'FIND')THEN
+!
+!       STEP 1: FIND FIRST NON-BLANK CHARACTER AFTER "GREP "
+!               OR "FINDSTR ".
+!
+        ISTRT=-1
+        IF(ISEART.EQ.'GREP')THEN
+          DO 101 II=1,MIN(250,IWIDTH-5)
+            IF(IANS(II)(1:1)  .EQ.'G' .AND. IANS(II+1)(1:1).EQ.'R' .AND.   &
+               IANS(II+2)(1:1).EQ.'E' .AND. IANS(II+3)(1:1).EQ.'P' .AND.   &
+               IANS(II+4)(1:1).EQ.' ')THEN
+              ISTRT=II+5
+              GO TO 109
+            ENDIF
+  101     CONTINUE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1211)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,103)
+  103     FORMAT('      GREP NOT FOUND AT BEGINNING OF COMMAND LINE.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+  109     CONTINUE
+        ELSEIF(ISEART.EQ.'FIND')THEN
+          DO 111 II=1,MIN(247,IWIDTH-8)
+            IF(IANS(II)(1:1)  .EQ.'F' .AND. IANS(II+1)(1:1).EQ.'I' .AND.   &
+               IANS(II+2)(1:1).EQ.'N' .AND. IANS(II+3)(1:1).EQ.'D' .AND.   &
+               IANS(II+4)(1:1).EQ.'S' .AND. IANS(II+5)(1:1).EQ.'T' .AND.   &
+               IANS(II+6)(1:1).EQ.'R' .AND. IANS(II+7)(1:1).EQ.' ')THEN
+              ISTRT=II+8
+              GO TO 119
+            ENDIF
+  111     CONTINUE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1211)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,113)
+  113     FORMAT('      FINDSTR NOT FOUND AT BEGINNING OF COMMAND ',   &
+                 'LINE.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+  119     CONTINUE
+!
+          DO 121 II=ISTRT,IWIDTH
+            IF(IANS(II)(1:1).NE.' ')THEN
+              ISTRT=II
+              GO TO 129
+            ENDIF
+  121     CONTINUE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1211)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,123)
+  123     FORMAT('      NO TEXT FOUND AFTER GREP (OR FINDSTR) ',   &
+                 'ON THE COMMAND LINE.')
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+  129     CONTINUE
+        ENDIF
+!
+!       STEP 2: FIND LAST NON-BLANK CHARACTER
+!
+        ILAST=ISTRT
+        DO 131 II=IWIDTH,ISTRT,-1
+          IF(IANS(II)(1:1).NE.' ')THEN
+            ILAST=II
+            GO TO 139
+          ENDIF
+  131   CONTINUE
+  139   CONTINUE
+!
+!       STEP 3: CREATE STRING TO BE SENT TO SYSTEM COMMAND.
+!               NOTE THAT DATAPLOT DOES NO ERROR CHECKING, IT
+!               JUST PASSES WHAT THE USER ENTERED.
+!
+        IF(IHOST1.EQ.'IBM-')THEN
+          IF(IGRPCA.EQ.'IGNO')THEN
+            NCSTR=11
+            IAOUT(1:NCSTR)='FINDSTR /I '
+          ELSE
+            NCSTR=8
+            IAOUT(1:NCSTR)='FINDSTR '
+          ENDIF
+          IF(IGRPRE.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='/S '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPLN.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='/N '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPEM.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='/X '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPNM.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='/V '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPFN.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='/M '
+            NCSTR=NCSTR+3
+          ENDIF
+        ELSE
+          IF(IGRPCA.EQ.'IGNO')THEN
+            NCSTR=8
+            IAOUT(1:NCSTR)='grep -i '
+          ELSE
+            NCSTR=5
+            IAOUT(1:NCSTR)='grep '
+          ENDIF
+          IF(IGRPRE.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='-r '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPLN.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='-n '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPEM.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='-x '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPNM.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='-v '
+            NCSTR=NCSTR+3
+          ENDIF
+          IF(IGRPFN.EQ.'ON')THEN
+            IAOUT(NCSTR+1:NCSTR+3)='-l '
+            NCSTR=NCSTR+3
+          ENDIF
+        ENDIF
+!
+        MAXNCH=MAXSTR
+        DO 141 II=ISTRT,ILAST
+          NCSTR=NCSTR+1
+          IF(NCSTR.GT.MAXNCH)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1211)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1291)MAXNCH
+ 1291       FORMAT('      MAXIMUM NUMBER OF CHARACTERS (',I3,   &
+                   ') EXCEEDED.')
+            CALL DPWRST('XXX','BUG ')
+            IERROR='YES'
+            GO TO 9000
+          ENDIF
+          IAOUT(NCSTR:NCSTR)=IANSLC(II)(1:1)
+  141   CONTINUE
+!
+        ISSAV1=ISYSPE
+        ISSAV2=ISYSHI
+        ISYSPE='ON'
+        ISYSHI='OFF'
+        CALL DPSYS2(IAOUT,NCSTR,ISUBRO,IERROR)
+        ISYSPE=ISSAV1
+        ISYSHI=ISSAV2
+!
+        GO TO 9000
+      ENDIF
+!
+!               **************************
+!               **  STEP 11--           **
+!               **  COPY OVER VARIABLES **
+!               **************************
+!
+      ISTEPN='11'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IOUNIT=ILISNU
+      IFILE=ILISNA
+      ISTAT=ILISST
+      IFORM=ILISFO
+      IACCES=ILISAC
+      IPROT=ILISPR
+      ICURST=ILISCS
+!
+      ISUBN0='SEAR'
+      IERRFI='NO'
+!
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')THEN
+        WRITE(ICOUT,1193)IOUNIT,ISUBN0,IERRFI
+ 1193   FORMAT('IOUNIT,ISUBN0,IERRFI = ',I8,2(2X,A4))
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1194)IFILE
+ 1194   FORMAT('IFILE = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1195)ISTAT,IFORM,IACCES,IPROT,ICURST
+ 1195   FORMAT('ISTAT,IFORM,IACCES,IPROT,ICURST = ',   &
+               4(A12,2X),A12)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               ***********************************************
+!               **  STEP 12--                                **
+!               **  CHECK TO SEE IF THE LIST FILE MAY EXIST  **
+!               ***********************************************
+!
+      ISTEPN='12'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(ISTAT.EQ.'NONE')THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1211)
+ 1211   FORMAT('***** ERROR IN SEARCH COMMAND--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1212)
+ 1212   FORMAT('      THE DESIRED SEARCHING CANNOT BE CARRIED OUT')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1214)
+ 1214   FORMAT('      BECAUSE THE INTERNAL VARIABLE    ILISST   WHICH')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1215)
+ 1215   FORMAT('      ALLOWS SUCH SEARCHING HAS BEEN SET TO    NONE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1217)ISTAT,ILISST
+ 1217   FORMAT('ISTAT,ILISST = ',A12,2X,A12)
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+!               ********************************
+!               **  STEP 13--                 **
+!               **  EXTRACT THE FILE NAME.    **
+!               **  DO THE GENERAL CASE OF    **
+!               **  SEARCHING GENERAL FILES.  **
+!               **  DO ALSO THE SPECIAL CASE  **
+!               **  OF SEARCHING THE          **
+!               **  MASTER DIRECTORY FILE.    **
+!               **  DO ALSO THE SPECIAL CASE  **
+!               **  OF SEARCHING THE          **
+!               **  DICTIONARY      FILE.     **
+!               ********************************
+!
+      ISTEPN='13'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      DO 1310 I=1,MAXSTR
+        IANSI=IANSLC(I)
+        ICANS(I:I)=IANSI(1:1)
+ 1310 CONTINUE
+!
+      IFLAGZ=0
+      ISTART=1
+      ISTOP=IWIDTH
+      IWORD=2
+      NCFILE=0
+      IF(ICOM.NE.'?   ' .AND. ICOM.NE.'??? ')THEN
+        CALL DPEXWO(ICANS,ISTART,ISTOP,IWORD,   &
+                    ICOL1,ICOL2,IFILE,NCFILE,   &
+                    IBUGS2,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GO TO 9000
+      ELSEIF(ICOM.EQ.'?   ' .AND. NUMARG.EQ.0)THEN
+        IFILE='dp_question_mark_examples.txt'
+        NCFILE=29
+        IFLAGZ=1
+        ICASEQ='FULL'
+        GO TO 2190
+      ENDIF
+!
+      IFLAGF=1
+!
+      IF((NCFILE.EQ.9.AND.IFILE.EQ.'DIRECTORY') .OR.   &
+         (NCFILE.EQ.9.AND.IFILE.EQ.'directory') .OR.   &
+         (NCFILE.EQ.3.AND.IFILE.EQ.'DIR') .OR.   &
+         (NCFILE.EQ.3.AND.IFILE.EQ.'dir') .OR.   &
+         (NCFILE.EQ.4.AND.IFILE.EQ.'DIRE') .OR.   &
+         (NCFILE.EQ.4.AND.IFILE.EQ.'dire') .OR.   &
+         (NCFILE.EQ.1.AND.IFILE.EQ.'M') .OR.   &
+         (NCFILE.EQ.1.AND.IFILE.EQ.'m') .OR.   &
+         (NCFILE.EQ.6.AND.IFILE.EQ.'MASTER') .OR.   &
+         (NCFILE.EQ.6.AND.IFILE.EQ.'master'))THEN
+        IFILE=IDIRNA
+      ELSEIF((NCFILE.EQ.10.AND.IFILE.EQ.'DICTIONARY') .OR.   &
+             (NCFILE.EQ.10.AND.IFILE.EQ.'dictionary') .OR.   &
+             (NCFILE.EQ.3.AND.IFILE.EQ.'DIC') .OR.   &
+             (NCFILE.EQ.3.AND.IFILE.EQ.'dic') .OR.   &
+             (NCFILE.EQ.4.AND.IFILE.EQ.'DICT') .OR.   &
+             (NCFILE.EQ.4.AND.IFILE.EQ.'dict'))THEN
+        IFILE=IDICNA
+      ELSEIF((NCFILE.EQ.8.AND.IFILE.EQ.'HANDBOOK') .OR.   &
+             (NCFILE.EQ.8.AND.IFILE.EQ.'handbook') .OR.   &
+             (NCFILE.EQ.2.AND.IFILE.EQ.'HB') .OR.   &
+             (NCFILE.EQ.2.AND.IFILE.EQ.'hb') .OR.   &
+             (NCFILE.EQ.6.AND.IFILE.EQ.'HANDBK') .OR.   &
+             (NCFILE.EQ.6.AND.IFILE.EQ.'handbk') .OR.   &
+             (ICOM.EQ.'??? '))THEN
+        IFILE='handbk.tex'
+        NCFILE=10
+      ELSEIF((NCFILE.EQ.9.AND.IFILE.EQ.'REFERENCE') .OR.   &
+             (NCFILE.EQ.9.AND.IFILE.EQ.'reference') .OR.   &
+             (NCFILE.EQ.2.AND.IFILE.EQ.'RM') .OR.   &
+             (NCFILE.EQ.2.AND.IFILE.EQ.'rm') .OR.   &
+             (ICOM.EQ.'?   '))THEN
+        IFILE='refman.tex'
+        NCFILE=10
+        MAXLEN=40
+      ELSE
+!
+!       2018/04: CHECK IF FIRST ARGUMENT IS A FILE NAME (I.E.,
+!                DOES IT CONTAIN A ".").
+!
+        DO 1360 II=1,NCFILE
+          IF(IFILE(II:II).EQ.'.')GO TO 1369
+ 1360   CONTINUE
+        IFLAGF=0
+        IFILE='refman.tex'
+        NCFILE=10
+ 1369   CONTINUE
+      ENDIF
+!
+      IF(NCFILE.LT.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1211)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1372)
+ 1372   FORMAT('      A USER FILE NAME IS REQUIRED IN THE SEARCH ',   &
+               'COMMAND')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1374)
+ 1374   FORMAT('      (FOR EXAMPLE,    SEARCH PROG7.DP)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1375)
+ 1375   FORMAT('      BUT NONE WAS GIVEN HERE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1376)
+ 1376   FORMAT('      THE ENTERED COMMAND LINE WAS AS FOLLOWS--')
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,1377)(IANSLC(I),I=1,MIN(80,IWIDTH))
+ 1377     FORMAT('      ',80A1)
+          CALL DPWRST('XXX','BUG ')
+        ELSE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GO TO 9000
+      ENDIF
+!
+!               ************************************************
+!               **  STEP 14--                                 **
+!               **  EXTRACT THE STRING TO BE SEARCHED FOR.    **
+!               ************************************************
+!
+      ISTEPN='14'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ISTART=1
+      ISTOP=IWIDTH
+      IWORD=3
+      IF(ICOM.EQ.'?   ' .OR. ICOM.EQ.'??? ')THEN
+        IWORD=2
+      ELSE
+        IWORD=3
+        IF(IFLAGF.EQ.0)IWORD=IWORD-1
+      ENDIF
+!
+!     2018/04: USE DPEXW3 INSTEAD OF DPEXWO SO THAT
+!              THE STRING IS EXTRACTED IS TO THE END
+!              OF THE COMMAND LINE INSTEAD OF JUST A
+!              SINGLE WORD.  SO "SEARCH REFERENCE MEAN PLOT"
+!              WILL MATCH "MEAN PLOT" INSTEAD OF JUST
+!              "MEAN".
+!
+      CALL DPEXW3(ICANS,ISTART,ISTOP,IWORD,   &
+                  ICOLS1,ICOLS2,ITAST,NCTAST,   &
+                  IBUGS2,ISUBRO,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+!
+      NMAX=MAXSTR
+      CALL DPUP80(ITAST,ITASTU,NMAX,IBUGS2,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+!
+      IF(NCTAST.LT.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1211)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1442)
+ 1442   FORMAT('      A TARGET STRING IS REQUIRED IN THE SEARCH ',   &
+               'COMMAND')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1444)
+ 1444   FORMAT('      (FOR EXAMPLE,    SEARCH PHONE.TEX JONES)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1445)
+ 1445   FORMAT('      BUT NONE WAS GIVEN HERE.')
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,1377)(IANSLC(I),I=1,MIN(80,IWIDTH))
+          CALL DPWRST('XXX','BUG ')
+        ELSE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        GO TO 9000
+      ENDIF
+!
+!               *****************************************
+!               **  STEP 21--                          **
+!               **  CHECK TO SEE THE TYPE CASE--       **
+!               **    1) UNQUALIFIED (THAT IS, FULL);  **
+!               **    2) SUBSET/EXCEPT; OR             **
+!               **    3) FOR.                          **
+!               *****************************************
+!
+      ISTEPN='21'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ICASEQ='FULL'
+      ILOCQ=NUMARG+1
+      IF(NUMARG.LT.1)GO TO 2190
+      DO 2100 J=1,NUMARG
+        J1=J
+        IF(IHARG(J).EQ.'SUBS'.AND.IHARG2(J).EQ.'ET  ')THEN
+          ICASEQ='SUBS'
+          ILOCQ=J1
+          GO TO 2190
+        ELSEIF(IHARG(J).EQ.'EXCE'.AND.IHARG2(J).EQ.'PT  ')THEN
+          ICASEQ='SUBS'
+          ILOCQ=J1
+          GO TO 2190
+        ELSEIF(IHARG(J).EQ.'FOR '.AND.IHARG2(J).EQ.'    ')THEN
+          ICASEQ='FOR'
+          ILOCQ=J1
+          GO TO 2190
+        ENDIF
+ 2100 CONTINUE
+ 2190 CONTINUE
+!
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')THEN
+        WRITE(ICOUT,2191)NUMARG,ILOCQ,NCFILE
+ 2191   FORMAT('NUMARG,ILOCQ,NCFILE = ',3I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NCFILE.GT.0)THEN
+          WRITE(ICOUT,2192)IFILE(1:NCFILE)
+ 2192     FORMAT('IFILE(1:NCFILE) = ',A80)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+!
+!               *********************************************
+!               **  STEP 22--                              **
+!               **  BRANCH    TO THE APPROPRIATE SUBCASE   **
+!               **  (FULL, SUBSET, OR FOR).                **
+!               *********************************************
+!
+      ISTEPN='22'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(ICASEQ.EQ.'FULL')THEN
+        DO 2215 I=1,MAXN
+          ISUB(I)=1
+ 2215   CONTINUE
+        NQ=MAXN
+      ELSEIF(ICASEQ.EQ.'SUBS')THEN
+        NIOLD=MAXN
+        CALL DPSUBS(NIOLD,ILOCS,NS,IBUGQ,IERROR)
+        NQ=NIOLD
+      ELSEIF(ICASEQ.EQ.'FOR')THEN
+        NIOLD=MAXN
+        CALL DPFOR(NIOLD,NFOR,IROW1,IROWN,   &
+                   NLOCAL,ILOCS,NS,IBUGQ,IERROR)
+        NQ=NFOR
+        NMXFOR=IROWN
+      ENDIF
+!
+      IF(NQ.LT.MINN2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1211)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2272)
+ 2272   FORMAT('      AFTER THE APPROPRIATE SUBSET HAS BEEN EXTRACTED,')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2273)
+ 2273   FORMAT('      THE NUMBER OF SPECIFIED FILE LINES TO BE LISTED')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2276)MINN2
+ 2276   FORMAT('      MUST BE ',I8,' OR LARGER;  SUCH WAS NOT THE ',   &
+               'CASE HERE.')
+        CALL DPWRST('XXX','BUG ')
+        IF(IWIDTH.GE.1)THEN
+          WRITE(ICOUT,1377)(IANSLC(I),I=1,MIN(80,IWIDTH))
+          CALL DPWRST('XXX','BUG ')
+        ELSE
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+      NS=NQ
+!
+!               **************************
+!               **  STEP 51--           **
+!               **  OPEN  THE FILE      **
+!               **************************
+!
+      ISTEPN='31'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')THEN
+        CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+        WRITE(ICOUT,3111)IFILE
+ 3111   FORMAT('IFILE = ',A80)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IREWIN='ON'
+      CALL DPOPFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IPROT,ICURST,   &
+                  IREWIN,ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+      IF(IERRFI.EQ.'YES')GO TO 9000
+!
+!               *************************************
+!               **  STEP 41--                      **
+!               **  READ A GENERAL FILE.           **
+!               **  SEARCH FOR THE STRING.         **
+!               **  IF FOUND, PRINT THE LINE OUT.  **
+!               **  PRINT ALL LINES ON WHICH THE   **
+!               **  STRING OCCURS.                 **
+!               *************************************
+!
+      ISTEPN='41'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IMAX=1000000
+      IF(ICASEQ.EQ.'SUBS')IMAX=MAXN
+      IF(ICASEQ.EQ.'FOR')IMAX=IROWN
+!
+      ILISAV=-1
+!
+      NMAX=MAXLEN
+      IF(MAXLEN.GT.255)NMAX=255
+!CCCC NMAX=100
+      DO 4110 I=1,IMAX
+!
+        ILICUR=I
+!
+        ISTRIN=' '
+        READ(IOUNIT,4111,END=4190)(ISTRIN(J:J),J=1,NMAX)
+ 4111   FORMAT(255A1)
+!
+        IF(IFLAGZ.EQ.1)THEN
+          DO 44111 JJ=NMAX,1,-1
+            IF(ISTRIN(JJ:JJ).NE.' ')THEN
+              WRITE(ICOUT,4117)(ISTRIN(J:J),J=1,JJ)
+              CALL DPWRST('XXX','BUG ')
+              GO TO 4110
+            ENDIF
+44111     CONTINUE
+          WRITE(ICOUT,'(A1)')ISTRIN(1:1)
+          CALL DPWRST('XXX','BUG ')
+          GO TO 4110
+        ENDIF
+!
+        CALL DPDB80(ISTRIN,JMAX,NMAX,IBUGS2,ISUBRO,IERROR)
+        NCSTRI=JMAX
+!
+        CALL DPUP80(ISTRIN,ISTRIU,NMAX,IBUGS2,IERROR)
+!
+        IF(NCSTRI.EQ.3.AND.ISTRIN(1:3).EQ.'EOF')GO TO 4190
+        IF(ICASEQ.EQ.'FULL' .OR.   &
+          (ICASEQ.EQ.'SUBS' .OR.ICASEQ.EQ.'FOR'.AND.ISUB(I).EQ.1))THEN
+           IHIT='NO'
+           IF(ISEART.EQ.'1LIN')IGO='NO'
+           IF(ISEART.EQ.'FIRS')IGO='NO'
+           IF(ISEART.EQ.'BLAN'.AND.NCSTRI.LE.0)IGO='NO'
+           IF(ISEART.EQ.'----'.AND.ISTRIN(1:4).EQ.'----')IGO='NO'
+           IF(IGO.EQ.'YES')GO TO 4129
+!
+           IF(NCSTRI.LE.0)GO TO 4129
+           DO 4120 I1=1,NCSTRI
+             I2=I1+NCTAST-1
+             IF(I2.GT.NCSTRI)GO TO 4129
+             IF(ISTRIN(I1:I2).EQ.ITAST(1:NCTAST))IHIT='YES'
+             IF(ISTRIU(I1:I2).EQ.ITASTU(1:NCTAST))IHIT='YES'
+             IF(IHIT.EQ.'YES')IGO='YES'
+             IF(IHIT.EQ.'YES'.AND.ILISAV.LT.0)ILISAV=ILICUR
+             IF(IHIT.EQ.'YES')GO TO 4129
+ 4120      CONTINUE
+ 4129      CONTINUE
+!
+           IF(IHIT.EQ.'YES'.OR.IGO.EQ.'YES')THEN
+             WRITE(ICOUT,4117)(ISTRIN(J:J),J=1,MIN(100,NCSTRI))
+ 4117        FORMAT(100A1)
+             CALL DPWRST('XXX','BUG ')
+           ENDIF
+!
+           IF(IHIT.EQ.'YES'.AND.ISEART.EQ.'FIRS')GO TO 4190
+        ENDIF
+!
+ 4110 CONTINUE
+!
+ 4190 CONTINUE
+!
+      IH='LINE'
+      IH2='NUMB'
+      VALUE0=REAL(ILISAV)
+      CALL DPADDP(IH,IH2,VALUE0,IHOST1,ISUBN0,   &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                  IANSLC,IWIDTH,IBUGS2,IERROR)
+!
+!               **************************
+!               **  STEP 51--           **
+!               **  CLOSE THE FILE      **
+!               **************************
+!
+      ISTEPN='51'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')   &
+      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IENDFI='OFF'
+      IREWIN='ON'
+      CALL DPCLFI(IOUNIT,IFILE,ISTAT,IFORM,IACCES,IPROT,ICURST,   &
+      IENDFI,IREWIN,ISUBN0,IERRFI,IBUGS2,ISUBRO,IERROR)
+!
+!               ****************
+!               **  STEP 90-- **
+!               **  EXIT.     **
+!               ****************
+!
+ 9000 CONTINUE
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'SEAR')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSEAR--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR,IERRFI,IOUNIT
+ 9012   FORMAT('IERROR,IERRFI,IOUNIT = ',2(A4,2X),I5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9022)IFILE(1:80)
+ 9022   FORMAT('IFILE  = ',A80)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9023)ISTAT,IFORM,IACCES,IPROT,ICURST
+ 9023   FORMAT('ISTAT,IFORM,IACCES,IPROT,ICURST  = ',4(A12,2X),A12)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9028)IENDFI,IREWIN
+ 9028   FORMAT('IENDFI,IREWIN = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9041)ICASEQ,NQ,NS,JMAX,NCSTRI
+ 9041   FORMAT('ICASEQ,NQ,NS,JMAX,NCSTRI = ',A4,4I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSEAR
+      SUBROUTINE DPSECL(IHARG,IHARG2,IARGT,IARG,ARG,NUMARG,   &
+                        IDEFCO,MAXSEG,ISEGCO,ISEGC2,IRGBMX,   &
+                        IBUGP2,ISUBRO,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE THE COLOR FOR A SEGMENT.  THE COLOR FOR SEGMENT I
+!              WILL BE PLACED IN THE I-TH ELEMENT OF THE CHARACTER
+!              VECTOR ISEGCO(.).
+!     INPUT  ARGUMENTS--IHARG  (A CHARACTER VECTOR)
+!                     --IARGT  (A CHARACTER VECTOR)
+!                     --IARG   (A CHARACTER VECTOR)
+!                     --NUMARG
+!                     --IDEFCO
+!                     --MAXSEG
+!     OUTPUT ARGUMENTS--ISEGCO (A CHARACTER VECTOR WHOSE I-TH ELEMENT
+!                              CONTAINS THE COLOR FOR SEGMENT I.
+!                     --IFOUND ('YES' OR 'NO' )
+!                     --IERROR ('YES' OR 'NO' )
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABOARATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--SEPTEMBER 1980.
+!     UPDATED         --MAY       1982.
+!     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IDEFCO
+      CHARACTER*4 IBUGP2
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+      CHARACTER*4 IHARG(*)
+      CHARACTER*4 IHARG2(*)
+      CHARACTER*4 IARGT(*)
+      CHARACTER*4 ISEGCO(*)
+      DIMENSION IARG(*)
+      DIMENSION ARG(*)
+      DIMENSION ISEGC2(MAXSEG,3)
+!
+      CHARACTER*4 IHOLD
+      CHARACTER*4 ICASCL
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+      ICASCL='STAN'
+      ISUBN1='DPSE'
+      ISUBN2='CL  '
+      IHOLD='    '
+      JHOLD1=-1
+      JHOLD2=-1
+      JHOLD3=-1
+!
+      IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'SECL')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPSECL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGP2,ISUBRO,IFOUND,IERROR
+   52   FORMAT('IBUGP2,ISUBRO,IFOUND,IERROR = ',3(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IDEBCO,MAXSEG,NUMSEG,NUMARG,IRGBMX
+   53   FORMAT('IDEBCO,MAXSEG,NUMSEG,NUMARG,IRGBMX = ',A4,2X,4I8)
+        CALL DPWRST('XXX','BUG ')
+        DO 65 I=1,NUMARG
+          WRITE(ICOUT,66)I,IARG(I),IHARG(I)
+   66     FORMAT('I,IARG(I),IHARG(I) = ',2I8,2X,A4)
+          CALL DPWRST('XXX','BUG ')
+   65   CONTINUE
+        DO 75 I=1,10
+          WRITE(ICOUT,76)I,ISEGCO(I),ISEGC2(I,1),ISEGC2(I,2),ISEGC2(I,3)
+   76     FORMAT('I,ISEGCO(I),ISEGC2(I,1),ISEGC2(I,2),ISEGC2(I,3) = ',   &
+                 I8,2X,A4,2X,3I5)
+          CALL DPWRST('XXX','BUG ')
+   75   CONTINUE
+      ENDIF
+!
+      ISTEPN='1'
+      IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'SECL')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(NUMARG.EQ.0)GO TO 9000
+      IF(IHARG(1).EQ.'RGB ' .AND. IHARG(2).EQ.'COLO')THEN
+        ICASCL='RGB '
+        ISHIFT=1
+        CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,   &
+                    IBUGP2,IERROR)
+      ELSEIF(IHARG(2).EQ.'RGB ' .AND. IHARG(3).EQ.'COLO')THEN
+        ICASCL='RGB '
+        DO 45 II=2,NUMARG-1
+          IHARG(II)=IHARG(II+1)
+          IHARG2(II)=IHARG2(II+1)
+          IARGT(II)=IARGT(II+1)
+          IARG(II)=IARG(II+1)
+          ARG(II)=ARG(II+1)
+  45    CONTINUE
+        IHARG(NUMARG)=IHARG(II+1)
+        IHARG2(NUMARG)=IHARG2(II+1)
+        IARGT(NUMARG)=IARGT(II+1)
+        IARG(NUMARG)=IARG(II+1)
+        ARG(NUMARG)=ARG(II+1)
+        NUMARG=NUMARG-1
+      ENDIF
+!
+      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'COLO')THEN
+!
+      ISTEPN='2'
+      IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'SECL')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+        IF(NUMARG.LE.1        .OR. IHARG(2).EQ.'ON'   .OR.   &
+           IHARG(2).EQ.'OFF'  .OR. IHARG(2).EQ.'AUTO' .OR.   &
+           IHARG(2).EQ.'DEFA')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            IF(NUMARG.GE.4)THEN
+              JHOLD1=IARG(2)
+              JHOLD2=IARG(3)
+              JHOLD3=IARG(4)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ELSE
+              JHOLD1=-1
+              JHOLD2=-1
+              JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(2)
+          ENDIF
+        ENDIF
+!
+        IFOUND='YES'
+        IF(ICASCL.EQ.'RGB ')THEN
+          DO 1138 I=1,MAXSEG
+            ISEGC2(I,1)=JHOLD1
+            ISEGC2(I,2)=JHOLD2
+            ISEGC2(I,3)=JHOLD3
+ 1138     CONTINUE
+!
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            I=1
+            WRITE(ICOUT,1139)ISEGC2(I,1),ISEGC2(I,2),ISEGC2(I,3)
+ 1139       FORMAT('ALL SEGMENT RGB COLORS HAVE JUST BEEN SET TO ',3I5)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          DO 1135 I=1,MAXSEG
+            ISEGCO(I)=IHOLD
+ 1135     CONTINUE
+!
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            I=1
+            WRITE(ICOUT,1136)ISEGCO(I)
+ 1136       FORMAT('ALL SEGMENT COLORS HAVE JUST BEEN SET TO ',A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
+        GO TO 9000
+!
+      ELSEIF(NUMARG.GE.2.AND.IHARG(2).EQ.'COLO')THEN
+!
+      ISTEPN='3'
+      IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'SECL')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+        IF(IARGT(1).NE.'NUMB')THEN
+          IERROR='YES'
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1141)
+ 1141     FORMAT('***** ERROR IN SEGMENT COLOR (DPSECL)--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1142)
+ 1142     FORMAT('      IN THE SEGMENT ... COLOR COMMAND,')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1143)
+ 1143     FORMAT('      THE SEGMENT IS IDENTIFIED BY A NUMBER, AS IN--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1144)
+ 1144     FORMAT('      SEGMENT 3 COLOR GREEN')
+          CALL DPWRST('XXX','BUG ')
+          GO TO 9000
+        ENDIF
+!
+        I=IARG(1)
+        IF(I.LT.1 .OR. I.GT.MAXSEG)THEN
+          IERROR='YES'
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1141)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1152)
+ 1152     FORMAT('      IN THE SEGMENT ... COLOR COMMAND,THE NUMBER ',   &
+                 'OF SEGMENTS')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1154)MAXSEG
+ 1154     FORMAT('      MUST BE BETWEEN 1 AND ',I8,' (INCLUSIVELY);')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1155)
+ 1155     FORMAT('      SUCH WAS NOT THE CASE HERE--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1156)I
+ 1156     FORMAT('      A REFERENCE WAS MADE TO THE ',I8,'-TH SEGMENT.')
+          CALL DPWRST('XXX','BUG ')
+          GO TO 9000
+        ENDIF
+!
+        IF(NUMARG.LE.2        .OR. IHARG(3).EQ.'ON'   .OR.   &
+           IHARG(3).EQ.'OFF'  .OR. IHARG(3).EQ.'AUTO' .OR.   &
+           IHARG(3).EQ.'DEFA')THEN
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ELSE
+            IHOLD=IDEFCO
+          ENDIF
+        ELSE
+          IF(ICASCL.EQ.'RGB ')THEN
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+            IF(NUMARG.GE.5)THEN
+              JHOLD1=IARG(3)
+              JHOLD2=IARG(4)
+              JHOLD3=IARG(5)
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+            ENDIF
+          ELSE
+            IHOLD=IHARG(3)
+          ENDIF
+        ENDIF
+!
+        IFOUND='YES'
+        IF(ICASCL.EQ.'RGB ')THEN
+          ISEGC2(I,1)=JHOLD1
+          ISEGC2(I,2)=JHOLD2
+          ISEGC2(I,3)=JHOLD3
+!
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1286)I,ISEGC2(I,1),ISEGC2(I,2),ISEGC2(I,3)
+ 1286       FORMAT('THE RGB COLOR FOR SEGMENT ',I8,   &
+                   ' HAS JUST BEEN SET TO ',3I5)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ELSE
+          ISEGCO(I)=IHOLD
+!
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,1186)I,ISEGCO(I)
+ 1186       FORMAT('THE COLOR FOR SEGMENT ',I8,' HAS JUST BEEN SET TO ',   &
+                   A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+        ENDIF
+      ENDIF
+!
+ 9000 CONTINUE
+!
+      IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'SECL')THEN
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPSECL--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUND,IERROR,NUMSEG
+ 9012   FORMAT('IFOUND,IERROR,NUMSEG = ',2(A4,2X),I5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)IHOLD,JHOLD1,JHOLD2,JHOLD3
+ 9014   FORMAT('IHOLD,JHOLD1,JHOLD2,JHOLD3 = ',A4,2X,3I5)
+        CALL DPWRST('XXX','BUG ')
+        DO 9075 I=1,10
+          WRITE(ICOUT,76)I,ISEGCO(I),ISEGC2(I,1),ISEGC2(I,2),ISEGC2(I,3)
+          CALL DPWRST('XXX','BUG ')
+ 9075   CONTINUE
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPSECL
+      SUBROUTINE DPSECO(IHARG,IHARG2,IARGT,IARG,ARG,NUMARG,   &
+      IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,IANS,IWIDTH,   &
+      MAXSEG,PSEGXC,PSEGYC,NUMSEG,IBUGP2,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE THE 2 PAIRS OF (X,Y) COORDINATES
+!              FOR A LINE SEGMENT.
+!              THE FIRST PAIR WILL BE FOR THE TAIL OF THE SEGMENT;
+!              THE SECOND PAIR WILL BE FOR THE HEAD OF THE SEGMENT.
+!              THE (X1,Y1), (X2,Y2) COORDINATES WILL BE PLACED IN THE
+!              FIRST AND SECOND ELEMENTS (RESPECTIVELY) OF
+!              THE 2 SEGAYS PSEGXC(.,.) AND PSEGYC(.,.)
+!     INPUT  ARGUMENTS--IHARG  (A  HOLLERITH VECTOR)
+!                     --IARGT  (A HOLLERITH VECTOR)
+!                     --IARG   (A HOLLERITH VECTOR)
+!                     --ARG    (A HOLLERITH VECTOR)
+!                     --NUMARG
+!                     --MAXSEG
+!     OUTPUT ARGUMENTS--PSEGXC (A FLOATING POINT VECTOR
+!                              WHOSE (I,1)-TH ELEMENT CONTAINS THE
+!                              X COORDINATE FOR THE TAIL OF SEGMENT I;
+!                              WHOSE (I,2)-TH ELEMENT CONTAINS THE
+!                              X COORDINATE FOR THE HEAD OF SEGMENT I;
+!                     --PSEGYC (A FLOATING POINT VECTOR
+!                              WHOSE (I,1)-TH ELEMENT CONTAINS THE
+!                              Y COORDINATE FOR THE TAIL OF SEGMENT I;
+!                              WHOSE (I,2)-TH ELEMENT CONTAINS THE
+!                              Y COORDINATE FOR THE HEAD OF SEGMENT I;
+!                     --NUMSEG = THE NUMBER OF SEGMENTS DEFINED SO FAR
+!                              (ACTUALLY, THE HIGHEST REFERENCED SEGMENT SO FAR)
+!                     --IFOUND ('YES' OR 'NO' )
+!                     --IERROR ('YES' OR 'NO' )
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--SEPTEMBER 1980.
+!     UPDATED         --MARCH     1981.
+!     UPDATED         --MAY       1982.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IHARG
+      CHARACTER*4 IHARG2
+      CHARACTER*4 IARGT
+      CHARACTER*4 IHNAME
+      CHARACTER*4 IHNAM2
+      CHARACTER*4 IUSE
+      CHARACTER*4 IANS
+      CHARACTER*4 IBUGP2
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 IHWUSE
+      CHARACTER*4 MESSAG
+      CHARACTER*4 IHWORD
+      CHARACTER*4 IHWOR2
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IHARG(*)
+      DIMENSION IHARG2(*)
+      DIMENSION IARGT(*)
+      DIMENSION IARG(*)
+      DIMENSION ARG(*)
+!
+      DIMENSION IHNAME(*)
+      DIMENSION IHNAM2(*)
+      DIMENSION IUSE(*)
+      DIMENSION IN(*)
+      DIMENSION IVALUE(*)
+      DIMENSION VALUE(*)
+      DIMENSION IANS(*)
+!
+      DIMENSION PSEGXC(100,2)
+      DIMENSION PSEGYC(100,2)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPAR'
+      ISUBN2='CO  '
+      IFOUND='NO'
+      IERROR='NO'
+!
+      HOLD1=0.0
+      HOLD2=0.0
+      HOLD3=0.0
+      HOLD4=0.0
+!
+      IF(NUMARG.EQ.0)GO TO 9000
+      IF(NUMARG.GE.1.AND.IHARG(1).EQ.'COOR')GO TO 1110
+      IF(NUMARG.GE.2.AND.IHARG(2).EQ.'COOR')GO TO 1140
+      GO TO 9000
+!
+ 1110 CONTINUE
+      IF(NUMARG.LE.1)GO TO 1120
+      IF(IHARG(2).EQ.'ON')GO TO 1120
+      IF(IHARG(2).EQ.'OFF')GO TO 1120
+      IF(IHARG(2).EQ.'AUTO')GO TO 1120
+      IF(IHARG(2).EQ.'DEFA')GO TO 1120
+      IF(NUMARG.GE.5)GO TO 1125
+!
+      IERROR='YES'
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1111)
+ 1111 FORMAT('***** ERROR IN DPSECO--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1112)
+ 1112 FORMAT('      IN THE SEGMENT ... COORDINATES COMMAND,')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1113)
+ 1113 FORMAT('      THE COORDINATES ARE SPECIFIED BY 4 NUMBERS, ',   &
+      'AS IN--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1114)
+ 1114 FORMAT('      SEGMENT 3 COORDINATES 30 80 31 79')
+      CALL DPWRST('XXX','BUG ')
+      GO TO 9000
+!
+ 1120 CONTINUE
+      HOLD1=CPUMIN
+      HOLD2=CPUMIN
+      HOLD3=CPUMIN
+      HOLD4=CPUMIN
+      NUMSEG=0
+      GO TO 1130
+!
+ 1125 CONTINUE
+      DO 1126 J=2,5
+      IF(IARGT(J).EQ.'NUMB')GO TO 1127
+      GO TO 1128
+ 1127 CONTINUE
+      IF(J.EQ.2)HOLD1=ARG(J)
+      IF(J.EQ.3)HOLD2=ARG(J)
+      IF(J.EQ.4)HOLD3=ARG(J)
+      IF(J.EQ.5)HOLD4=ARG(J)
+      GO TO 1126
+ 1128 CONTINUE
+      IHWORD=IHARG(J)
+      IHWOR2=IHARG2(J)
+      IHWUSE='P'
+      MESSAG='YES'
+      CALL CHECKN(IHWORD,IHWOR2,IHWUSE,   &
+      IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+      ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOC,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+      IF(J.EQ.2)HOLD1=VALUE(ILOC)
+      IF(J.EQ.3)HOLD2=VALUE(ILOC)
+      IF(J.EQ.4)HOLD3=VALUE(ILOC)
+      IF(J.EQ.5)HOLD4=VALUE(ILOC)
+ 1126 CONTINUE
+      NUMSEG=MAXSEG
+      GO TO 1130
+!
+ 1130 CONTINUE
+      IFOUND='YES'
+      DO 1135 I=1,MAXSEG
+      PSEGXC(I,1)=HOLD1
+      PSEGYC(I,1)=HOLD2
+      PSEGXC(I,2)=HOLD3
+      PSEGYC(I,2)=HOLD4
+ 1135 CONTINUE
+!
+      IF(IFEEDB.EQ.'OFF')GO TO 1139
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      I=1
+      WRITE(ICOUT,1136)
+ 1136 FORMAT('ALL SEGMENT COORDINATES HAVE JUST BEEN SET TO--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1137)PSEGXC(I,1),PSEGYC(I,1)
+ 1137 FORMAT('    (X,Y) FOR TAIL OF SEGMENT = ',2E15.7)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1138)PSEGXC(I,2),PSEGYC(I,2)
+ 1138 FORMAT('    (X,Y) FOR HEAD OF SEGMENT = ',2E15.7)
+      CALL DPWRST('XXX','BUG ')
+ 1139 CONTINUE
+      GO TO 9000
+!
+ 1140 CONTINUE
+      IF(IARGT(1).EQ.'NUMB')GO TO 1150
+      IERROR='YES'
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1141)
+ 1141 FORMAT('***** ERROR IN DPSECO--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1142)
+ 1142 FORMAT('      IN THE SEGMENT ... COORDINATES COMMAND,')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1143)
+ 1143 FORMAT('      THE SEGMENT IS IDENTIFIED BY A NUMBER, AS IN--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1144)
+ 1144 FORMAT('      SEGMENT 3 COORDINATES 30 80 31 79')
+      CALL DPWRST('XXX','BUG ')
+      GO TO 9000
+!
+ 1150 CONTINUE
+      I=IARG(1)
+      IF(1.LE.I.AND.I.LE.MAXSEG)GO TO 1160
+      IERROR='YES'
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1151)
+ 1151 FORMAT('***** ERROR IN DPSECO--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1152)
+ 1152 FORMAT('      IN THE SEGMENT ... COORDINATES COMMAND,')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1153)
+ 1153 FORMAT('      THE NUMBER OF SEGMENTS MUST BE ')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1154)MAXSEG
+ 1154 FORMAT('      BETWEEN 1 AND ',I8,' (INCLUSIVELY);')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1155)
+ 1155 FORMAT('      SUCH WAS NOT THE CASE HERE--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1156)I
+ 1156 FORMAT('      A REFERENCE WAS MADE TO THE ',I8,'-TH ',   &
+      'SEGMENT.')
+      CALL DPWRST('XXX','BUG ')
+      GO TO 9000
+!
+ 1160 CONTINUE
+      IF(NUMARG.LE.2)GO TO 1170
+      IF(IHARG(3).EQ.'ON')GO TO 1170
+      IF(IHARG(3).EQ.'OFF')GO TO 1170
+      IF(IHARG(3).EQ.'AUTO')GO TO 1170
+      IF(IHARG(3).EQ.'DEFA')GO TO 1170
+      IF(NUMARG.GE.6)GO TO 1175
+      IERROR='YES'
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1111)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1112)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1113)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1114)
+      CALL DPWRST('XXX','BUG ')
+      GO TO 9000
+!
+ 1170 CONTINUE
+      HOLD1=CPUMIN
+      HOLD2=CPUMIN
+      HOLD3=CPUMIN
+      HOLD4=CPUMIN
+      IF(I.EQ.NUMSEG)NUMSEG=I-1
+      GO TO 1180
+!
+ 1175 CONTINUE
+      DO 1176 J=3,6
+      IF(IARGT(J).EQ.'NUMB')GO TO 1177
+      GO TO 1178
+ 1177 CONTINUE
+      IF(J.EQ.3)HOLD1=ARG(J)
+      IF(J.EQ.4)HOLD2=ARG(J)
+      IF(J.EQ.5)HOLD3=ARG(J)
+      IF(J.EQ.6)HOLD4=ARG(J)
+      GO TO 1176
+ 1178 CONTINUE
+      IHWORD=IHARG(J)
+      IHWOR2=IHARG2(J)
+      IHWUSE='P'
+      MESSAG='YES'
+      CALL CHECKN(IHWORD,IHWOR2,IHWUSE,   &
+      IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+      ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOC,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+      IF(J.EQ.3)HOLD1=VALUE(ILOC)
+      IF(J.EQ.4)HOLD2=VALUE(ILOC)
+      IF(J.EQ.5)HOLD3=VALUE(ILOC)
+      IF(J.EQ.6)HOLD4=VALUE(ILOC)
+ 1176 CONTINUE
+      IF(I.GT.NUMSEG)NUMSEG=I
+      GO TO 1180
+!
+ 1180 CONTINUE
+      IFOUND='YES'
+      PSEGXC(I,1)=HOLD1
+      PSEGYC(I,1)=HOLD2
+      PSEGXC(I,2)=HOLD3
+      PSEGYC(I,2)=HOLD4
+!
+      IF(IFEEDB.EQ.'OFF')GO TO 1189
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1186)I
+ 1186 FORMAT('THE COORDINATES FOR SEGMENT ',I8,   &
+      ' HAVE JUST BEEN SET TO--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1137)PSEGXC(I,1),PSEGYC(I,1)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1138)PSEGXC(I,2),PSEGYC(I,2)
+      CALL DPWRST('XXX','BUG ')
+ 1189 CONTINUE
+      GO TO 9000
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGP2.EQ.'OFF')GO TO 9090
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9011)
+ 9011 FORMAT('***** AT THE END       OF DPSECO--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9012)IFOUND,IERROR
+ 9012 FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+      CALL DPWRST('XXX','BUG ')
+ 9090 CONTINUE
+!
+      RETURN
+      END SUBROUTINE DPSECO
+      SUBROUTINE DPSEED(IHARG,IARGT,IARG,NUMARG,IDEFSE,   &
+      ISEED,IFOUND,IERROR)
+!
+!     PURPOSE--DEFINE THE SEED (AN INTEGER)
+!              WHICH IS USED AS INPUT IN UNIFORM RANDOM NUMBER GENERATION AND
+!              WHICH IN TURN SERVES AS THE BASIS FOR ALL RANDOM NUMBER GENERATIO
+!              THE SPECIFIED SEED VALUE WILL BE PLACED
+!              IN THE INTEGER VARIABLE ISEED.
+!     INPUT  ARGUMENTS--IHARG  (A  HOLLERITH VECTOR)
+!                     --IARGT  (A  HOLLERITH VECTOR)
+!                     --ARG    (A  FLOATING POINT VECTOR)
+!                     --NUMARG (AN INTEGER VARIABLE)
+!                     --IDEFSE (A  FLOATING POINT VARIABLE)
+!     OUTPUT ARGUMENTS--ISEED  (AN INTEGER VARIABLE)
+!                     --IFOUND ('YES' OR 'NO' )
+!                     --IERROR ('YES' OR 'NO' )
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--APRIL     1982.
+!     UPDATED         --MAY       1982.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IHARG
+      CHARACTER*4 IARGT
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION IHARG(*)
+      DIMENSION IARGT(*)
+      DIMENSION IARG(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IFOUND='NO'
+      IERROR='NO'
+!
+      IF(NUMARG.LE.0)GO TO 1150
+      IF(IHARG(NUMARG).EQ.'ON')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'OFF')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'AUTO')GO TO 1150
+      IF(IHARG(NUMARG).EQ.'DEFA')GO TO 1150
+      IF(IARGT(NUMARG).EQ.'NUMB')GO TO 1160
+      GO TO 1120
+!
+ 1120 CONTINUE
+      IERROR='YES'
+      WRITE(ICOUT,999)
+  999 FORMAT(1X)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1121)
+ 1121 FORMAT('***** ERROR IN DPSEED--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1122)
+ 1122 FORMAT('      ILLEGAL FORM FOR SEED ',   &
+      'COMMAND.')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1124)
+ 1124 FORMAT('      TEST EXAMPLE TO DEMONSTRATE THE ',   &
+      'PROPER FORM--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1125)
+ 1125 FORMAT('      SUPPOSE THE ANALYST DESIRES THE  ')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1126)
+ 1126 FORMAT('      SEED VALUE FOR RANDOM NUMBER GENERATION')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1127)
+ 1127 FORMAT('      TO BE 735679238,')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1129)
+ 1129 FORMAT('      THEN THE ALLOWABLE FORM IS--')
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1130)
+ 1130 FORMAT('      SEED 735679238 ')
+      CALL DPWRST('XXX','BUG ')
+      GO TO 1199
+!
+ 1150 CONTINUE
+      IHOLD=IDEFSE
+      GO TO 1180
+!
+ 1160 CONTINUE
+      IHOLD=IARG(NUMARG)
+      GO TO 1180
+!
+ 1180 CONTINUE
+      IFOUND='YES'
+      ISEED=IHOLD
+!
+      IF(IFEEDB.EQ.'OFF')GO TO 1189
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,1181)ISEED
+ 1181 FORMAT('THE RANDOM NUMBER SEED HAS JUST BEEN SET TO ',   &
+      I11)
+      CALL DPWRST('XXX','BUG ')
+ 1189 CONTINUE
+      GO TO 1199
+!
+ 1199 CONTINUE
+      RETURN
+      END SUBROUTINE DPSEED

@@ -1,0 +1,451 @@
+      BLOCK DATA INITD1
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INITD20
+!              THIS INITIALIZES THE REAL DATA ARRAYS (ONCE).  USE BLOCK
+!              DATA FOR SPEED (DONE AT LOAD TIME, NOT AT RUN TIME)
+!              THIS SUBROUTINE INITIALIZES DATA VARIABLES
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     UPDATED         --OCTOBER   1993.  DIFFERENT SYNTAX (SGI VERSION
+!                                        BOMBS ON OLD SYNTAX)
+!
+!---------------------------------------------------------------------
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!CCCC DATA (ISUB(I),I=1,MAXOBV) /MAXOBV*0/
+!CCCC DATA (I1DATA(I),I=1,100) /100*0/
+!
+!CCCC DATA (PARLIM(I),I=1,100) /100*0./
+!
+      DATA ISUB /MAXOBV*0/
+      DATA I1DATA /100*0/
+!
+      DATA PARLIM /100*0./
+!
+      END BLOCK DATA INITD1 
+      BLOCK DATA INITD2
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INITD20
+!              THIS INITIALIZES THE REAL DATA ARRAYS (ONCE).  USE BLOCK
+!              DATA FOR SPEED (DONE AT LOAD TIME, NOT AT RUN TIME)
+!              THIS SUBROUTINE INITIALIZES DATA VARIABLES
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--OCTOBER   1991.
+!     UPDATED         --OCTOBER   1993.  DIFFERENT SYNTAX (SGI VERSION
+!                                        BOMBS ON OLD SYNTAX)
+!
+!---------------------------------------------------------------------
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!CCCC DATA (PRED(I),I=1,MAXOBV) /MAXOBV*0./
+!CCCC DATA (RES(I),I=1,MAXOBV) /MAXOBV*0./
+!
+      DATA PRED /MAXOBV*0./
+      DATA RES /MAXOBV*0./
+!
+      END BLOCK DATA INITD2 
+      BLOCK DATA INITD3
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INITD21
+!              THIS INITIALIZES THE REAL DATA ARRAYS (ONCE).  USE BLOCK
+!              DATA FOR SPEED (DONE AT LOAD TIME, NOT AT RUN TIME)
+!              THIS SUBROUTINE INITIALIZES DATA VARIABLES
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--OCTOBER   1991.
+!     UPDATED         --OCTOBER   1993.  DIFFERENT SYNTAX (SGI VERSION
+!                                        BOMBS ON OLD SYNTAX)
+!
+!---------------------------------------------------------------------
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!CCCC DATA (X(I),I=1,MAXPOP) /MAXPOP*0./
+      DATA X /MAXPOP*0./
+!
+      END BLOCK DATA INITD3
+      BLOCK DATA INITD4
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INITD22
+!              THIS INITIALIZES THE REAL DATA ARRAYS (ONCE).  USE BLOCK
+!              DATA FOR SPEED (DONE AT LOAD TIME, NOT AT RUN TIME)
+!              THIS SUBROUTINE INITIALIZES DATA VARIABLES
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--OCTOBER   1991.
+!     UPDATED         --OCTOBER   1993.  DIFFERENT SYNTAX (SGI VERSION
+!                                        BOMBS ON OLD SYNTAX)
+!
+!---------------------------------------------------------------------
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!
+!CCCC DATA (YPLOT(I),I=1,MAXPOP) /MAXPOP*0./
+      DATA YPLOT /MAXPOP*0./
+!
+      END BLOCK DATA INITD4
+      BLOCK DATA INITD5
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INITD23
+!              THIS INITIALIZES THE REAL DATA ARRAYS (ONCE).  USE BLOCK
+!              DATA FOR SPEED (DONE AT LOAD TIME, NOT AT RUN TIME)
+!              THIS SUBROUTINE INITIALIZES DATA VARIABLES
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--OCTOBER   1991.
+!     UPDATED         --OCTOBER   1993.  DIFFERENT SYNTAX (SGI VERSION
+!                                        BOMBS ON OLD SYNTAX)
+!
+!---------------------------------------------------------------------
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!CCCC DATA ((AMATR1(I,J),I=1,100),J=1,100) /10000*0./
+      DATA AMATR1 /10000*0./
+!
+      END BLOCK DATA INITD5
+      BLOCK DATA INITD6
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INITD21
+!              THIS INITIALIZES THE REAL DATA ARRAYS (ONCE).  USE BLOCK
+!              DATA FOR SPEED (DONE AT LOAD TIME, NOT AT RUN TIME)
+!              THIS SUBROUTINE INITIALIZES DATA VARIABLES
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--OCTOBER   1991.
+!     UPDATED         --OCTOBER   1993.  DIFFERENT SYNTAX (SGI VERSION
+!                                        BOMBS ON OLD SYNTAX)
+!
+!---------------------------------------------------------------------
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!CCCC DATA (X3D(I),I=1,MAXPOP) /MAXPOP*0./
+      DATA X3D /MAXPOP*0./
+!
+      END BLOCK DATA INITD6
+      BLOCK DATA INID7A
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INID7A
+!              THIS INITIALIZES THE REAL DATA ARRAY D(.).
+!              BLOCK DATA IS USED FOR SPEED
+!              SINCE DONE AT LOAD TIME--NOT AT RUN TIME.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--92/10
+!     ORIGINAL VERSION--SEPTEMBER 1992.
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!CCCC DATA (D(I),I=1,MAXPOP) /MAXPOP*0./
+      DATA D /MAXPOP*0./
+!
+      END BLOCK DATA INID7A
+      BLOCK DATA INID7B
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INID7B
+!              THIS INITIALIZES THE REAL DATA ARRAY DSIZE(.).
+!              BLOCK DATA IS USED FOR SPEED
+!              SINCE DONE AT LOAD TIME--NOT AT RUN TIME.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--92/10
+!     ORIGINAL VERSION--SEPTEMBER 1992.
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!CCCC DATA (DSIZE(I),I=1,MAXPOP) /MAXPOP*0./
+      DATA DSIZE /MAXPOP*0./
+!
+      END BLOCK DATA INID7B 
+      BLOCK DATA INID7C
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INID7C
+!              THIS INITIALIZES THE REAL DATA ARRAY DSYMB(.).
+!              BLOCK DATA IS USED FOR SPEED
+!              SINCE DONE AT LOAD TIME--NOT AT RUN TIME.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--92/10
+!     ORIGINAL VERSION--SEPTEMBER 1992.
+!     UPDATED         --OCTOBER   1993.  DIFFERENT SYNTAX (SGI VERSION
+!                                        BOMBS ON OLD SYNTAX)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!CCCC DATA (DSYMB(I),I=1,MAXPOP) /MAXPOP*0./
+      DATA DSYMB /MAXPOP*0./
+!
+      END BLOCK DATA INID7C
+      BLOCK DATA INID7D
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INID7D
+!              THIS INITIALIZES THE REAL DATA ARRAY DCOLOR(.).
+!              BLOCK DATA IS USED FOR SPEED
+!              SINCE DONE AT LOAD TIME--NOT AT RUN TIME.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--92/10
+!     ORIGINAL VERSION--SEPTEMBER 1992.
+!     UPDATED         --OCTOBER   1993.  DIFFERENT SYNTAX (SGI VERSION
+!                                        BOMBS ON OLD SYNTAX)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!CCCC DATA (DCOLOR(I),I=1,MAXPOP) /MAXPOP*0./
+      DATA DCOLOR /MAXPOP*0./
+!
+      END BLOCK DATA INID7D
+      BLOCK DATA INID7E
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INID7E
+!              THIS INITIALIZES THE REAL DATA ARRAY DFILL(.).
+!              BLOCK DATA IS USED FOR SPEED
+!              SINCE DONE AT LOAD TIME--NOT AT RUN TIME.
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--92/10
+!     ORIGINAL VERSION--SEPTEMBER 1992.
+!     UPDATED         --OCTOBER   1993.  DIFFERENT SYNTAX (SGI VERSION
+!                                        BOMBS ON OLD SYNTAX)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!CCCC DATA (DFILL(I),I=1,MAXPOP) /MAXPOP*0./
+      DATA DFILL /MAXPOP*0./
+!
+      END BLOCK DATA INID7E
+      BLOCK DATA INITD8
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INITD22
+!              THIS INITIALIZES THE REAL DATA ARRAYS (ONCE).  USE BLOCK
+!              DATA FOR SPEED (DONE AT LOAD TIME, NOT AT RUN TIME)
+!              THIS SUBROUTINE INITIALIZES DATA VARIABLES
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--OCTOBER   1991.
+!     UPDATED         --OCTOBER   1993.  DIFFERENT SYNTAX (SGI VERSION
+!                                        BOMBS ON OLD SYNTAX)
+!
+!---------------------------------------------------------------------
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!
+!CCCC DATA (X2PLOT(I),I=1,MAXPOP) /MAXPOP*0./
+      DATA X2PLOT /MAXPOP*0./
+!
+      END BLOCK DATA INITD8
+      BLOCK DATA INITD9
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INITD22
+!              THIS INITIALIZES THE REAL DATA ARRAYS (ONCE).  USE BLOCK
+!              DATA FOR SPEED (DONE AT LOAD TIME, NOT AT RUN TIME)
+!              THIS SUBROUTINE INITIALIZES DATA VARIABLES
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--OCTOBER   1991.
+!     UPDATED         --OCTOBER   1993.  DIFFERENT SYNTAX (SGI VERSION
+!                                        BOMBS ON OLD SYNTAX)
+!
+!---------------------------------------------------------------------
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!
+!CCCC DATA (XPLOT(I),I=1,MAXPOP) /MAXPOP*0./
+      DATA XPLOT /MAXPOP*0./
+!
+      END BLOCK DATA INITD9
+      BLOCK DATA INITDZ
+!
+!     PURPOSE--THIS IS BLOCK DATA ROUTINE INITD22
+!              THIS INITIALIZES THE REAL DATA ARRAYS (ONCE).  USE BLOCK
+!              DATA FOR SPEED (DONE AT LOAD TIME, NOT AT RUN TIME)
+!              THIS SUBROUTINE INITIALIZES DATA VARIABLES
+!     WRITTEN BY--JAMES J. FILLIBEN
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2855
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--82/7
+!     ORIGINAL VERSION--OCTOBER   1991.
+!     UPDATED         --OCTOBER   1993.  DIFFERENT SYNTAX (SGI VERSION
+!                                        BOMBS ON OLD SYNTAX)
+!
+!---------------------------------------------------------------------
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCODA.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+!
+!CCCC DATA (TAGPLO(I),I=1,MAXPOP) /MAXPOP*0./
+      DATA TAGPLO /MAXPOP*0./
+!
+      END BLOCK DATA INITDZ

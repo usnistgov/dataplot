@@ -13,6 +13,8 @@
  *                               Aquaterm, need to modify how real numbers
  *                               are passed between the Fortran,
  *                               aqua.c, and the Aquaterm library.
+ *  UPDATED  - March      2026.  Add prototypes, also use ISO_C_BINDING
+ *                               in the Fortran.
  *
  *  The purpose of this library is to provide easy access from
  *  a Fortran 77 program to the AquaTerm library on MacOSX.
@@ -110,11 +112,11 @@
  *  aqsec2      - set foreground color (based on RGB triplet)
  *  aqsepa      - set line pattern
  *  aqpoin      - draw a point (i.e., a pixel)
- *  aqcirc      - draw a circle
+ *  aqrect      - solid fill of a rectangle
  *  aqrgfl      - solid fill of a region
+ *  aqsesi      - set character size
  *  aqtxth      - draw a horizontal character string
  *  aqtxtv      - draw a vertical character string
- *  aqrelo      - read mouse position
  *  i_to_s_4    - utility routine to convert array of ADE's to string
  *                array
  *
@@ -124,17 +126,6 @@
 /*  Default is an underscore and lower case.  The compiler specified
  *  definitions -DNOUNDERSCORE and -DUPPERCASE can be specified to
  *  override these defaults. */
-
-#ifdef NOUNDERSCORE
-#define APPEND_UNDERSCORE 0
-#else
-#define APPEND_UNDERSCORE 1
-#endif
-#ifdef UPPERCASE
-#define SUBROUTINE_CASE 0
-#else
-#define SUBROUTINE_CASE 1
-#endif
 
 /*  include files */
 
@@ -152,42 +143,31 @@ int decodeEvent(char *event, int *x, int *y);
 /* flags for current attribute settings */
 static int    OPEN_FLAG_AQUA = 0;          /* 0 - closed, 1 - open */
 
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void  aqend_(), aqdraw_(), aqpoin_(), aqcirc_(), aqrgfl_();
-void  aqinit_(), aqeras_(), aqtxth_(), aqtxtv_();
-void  aqseco_(), aqsec2(), aqsepa_(), aqrend_(), aaqrelo_();
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void  AQEND_(), AQINIT_(), AQDRAW_(), AQPOIN_(), AQCIRC_(), AQRGFL_();
-void  AQINIT_(), AQERAS_(), AQTXTH_(), AQTXTV_();
-void  AQSECO_(), AQSEC2(), AQSEPA_(), AQREND_(), AQRELO_(),;
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void  aqend(), aqdraw(), aqpoin(), aqcirc(), aqrgfl();
-void  aqinit(), aqeras(), aqtxth(), aqtxtv(),gdtatt();
-void  aqseco(), aqsec2(), aqsepa(), aqrend(), aqrelo();
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void  AQEND(),  AQDRAW(), AQPOIN(), AQCIRC(), AQRGFL();
-void  AQINIT(), AQERAS(), AQTXTH(), AQTXTV();
-void  AQSECO(), AQSEC2(), AQSEPA(), AQRELO();
-#endif
-void  i_to_s_4();
+void aqend();
+void aqdraw(int xpts[], int ypts[], int *npts, int *icap);
+void aqmove(double *x1, double *y1);
+void aqpoin(int *ix, int *iy, int *ired, int *igreen, int *iblue);
+void aqrgfl(int xpts[], int ypts[], int *npts);
+void aqrect(int *ix1, int *iy1, int *ix2, int *iy2);
+void aqinit(int *nplot,int *anumhp,int *anumvp,
+            int ired[],int igreen[],int iblue[],int *maxclr);
+void aqeras(int *nplot, int *anumhp, int *anumvp, int *iback);
+void aqsesi(double *pheigh);
+void aqtxth(int string[], int *ixpos, int *iypos, int *ijusth,
+            int *ijustv, int font[], int *error);
+void aqtxtv(int string[], int *ixpos, int *iypos,
+            int *ijusth, int *ijustv, int font[], int *error);
+void aqseco(int *jcol);
+void aqsec2(float *jred,float *jgreen,float *jblue);
+void aqsepa(double xpatt[],int *npatt,double *pthick,int *iopt);
+void aqrend();
+void i_to_s_4(int string1[], char string2[], int maxlen, int *ilen);
 
 /* AQINIT  - routine to initialize Aquaterm.
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqinit_(nplot,anumhp,anumvp,ired,igreen,iblue,maxclr)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQINIT_(nplot,anumhp,anumvp,ired,igreen,iblue,maxclr)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqinit(nplot,anumhp,anumvp,ired,igreen,iblue,maxclr)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQINIT(nplot,anumhp,anumvp,ired,igreen,iblue,maxclr)
-#endif
-int  ired[];
-int  igreen[];
-int  iblue[];
-int  *maxclr;
-int  *nplot, *anumhp, *anumvp;
+void aqinit(int *nplot,int *anumhp,int *anumvp,
+            int ired[],int igreen[],int iblue[],int *maxclr)
 
 {
 int    nplot_temp, anumhp_temp, anumvp_temp;
@@ -237,16 +217,7 @@ float  val1, val2, val3;
  *
  */
 
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqeras_(nplot, anumhp, anumvp, iback)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQERAS_(nplot, anumhp, anumvp, iback)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqeras(nplot, anumhp, anumvp, iback)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQERAS(nplot, anumhp, anumvp, iback)
-#endif
-int  *nplot, *anumhp, *anumvp, *iback;
+void aqeras(int *nplot, int *anumhp, int *anumvp, int *iback)
 {
 
    int   nplot_temp, anumhp_temp, anumvp_temp, iback_temp;
@@ -276,15 +247,7 @@ int  *nplot, *anumhp, *anumvp, *iback;
 /* AQEND   - routine to end Aquaterm display and close the display
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqend_()
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQEND_()
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
 void aqend()
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQEND()
-#endif
 
 {
    if (OPEN_FLAG_AQUA > 0) {
@@ -297,15 +260,7 @@ void AQEND()
 /* AQREND   - routine to render current plot
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqrend_()
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQREND_()
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
 void aqrend()
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQREND()
-#endif
 
 {
    if (OPEN_FLAG_AQUA > 0) {
@@ -326,18 +281,7 @@ void AQREND()
  *          Calling routine should send points in increments of
  *          1,000.
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqdraw_(xpts, ypts, npts, icap)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQDRAW_(xpts, ypts, npts, icap)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqdraw(xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQDRAW(xpts, ypts, npts)
-#endif
-double   xpts[], ypts[];
-int   *npts;
-int   *icap;
+void aqdraw(int xpts[], int ypts[], int *npts, int *icap)
 {
    int     i;
    int     iindx;
@@ -381,16 +325,7 @@ int   *icap;
  * ay1    - contains the y coordinate
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqmove_(ax1, ay1)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQMOVE_(ax1,a1)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqmove(ax1,ay1)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQMOVE(ax1,ay1)
-#endif
-double   *ax1, *ay1;
+void aqmove(double *ax1, double *ay1)
 {
    float   ax1_temp;
    float   ay1_temp;
@@ -407,16 +342,7 @@ double   *ax1, *ay1;
  * jcol   - index for desired color
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqseco_(jcol)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQSECO_(jcol)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqseco(jcol)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQSECO(jcol)
-#endif
-int   *jcol;
+void aqseco(int *jcol)
 {
    int    jcol_temp;
    float  avalue;
@@ -441,18 +367,7 @@ int   *jcol;
  * jblue  - index for blue component
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqsec2_(jred,jgreen,jblue)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQSEC2_(jred,jgreen,jblue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqsec2(jred,jgreen,jblue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQSEC2(jred,jgreen,jblue)
-#endif
-float   *jred;
-float   *jgreen;
-float   *jblue;
+void aqsec2(float *jred,float *jgreen,float *jblue)
 {
    float    avalue1;
    float    avalue2;
@@ -493,19 +408,7 @@ float   *jblue;
  * pthick  - the line thickness (in points)
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqsepa_(xpatt,npatt,pthick,iopt)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQSEPA_(xpatt,npatt,pthick,iopt)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqsepa(xpatt,npatt,pthick,iopt)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQSEPA(xpatt,npatt,pthick,iopt)
-#endif
-double  xpatt[];
-double *pthick;
-int    *npatt;
-int    *iopt;
+void aqsepa(double xpatt[],int *npatt,double *pthick,int *iopt)
 {
    int     npatt_temp;
    int     iopt_temp;
@@ -547,16 +450,7 @@ int    *iopt;
  * pheigh   - the desired point size
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqsesi_(pheigh)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQSESI_(pheigh)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqsesi(pheigh)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQSESI(pheigh)
-#endif
-double *pheigh;
+void aqsesi(double *pheigh)
 {
    float   pheigh_temp;
 
@@ -575,17 +469,7 @@ double *pheigh;
  * jcol   - color to use in drawing the point
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqpoin_(ix, iy, ired, igreen, iblue)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQPOIN_(ix, iy, ired, igreen, iblue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqpoin(ix, iy, ired, igreen, iblue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQPOIN(ix, iy, ired, igreen, iblue)
-#endif
-int   *ix, *iy;
-int   *ired, *igreen, *iblue;
+void aqpoin(int *ix, int *iy, int *ired, int *igreen, int *iblue)
 {
 
    unsigned char rgbImage[3] = {255, 255, 255};
@@ -618,19 +502,7 @@ int   *ired, *igreen, *iblue;
  *          otherwise, a convex polygon)
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqrect_(ix1, iy1, ix2, iy2)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQRECT_(ix1, iy1, ix2, iy2)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqrect(ix1, iy1, ix2, iy2)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQRECT(ix1, iy1, ix2, iy2)
-#endif
-int   *ix1;
-int   *iy1;
-int   *ix2;
-int   *iy2;
+void aqrect(int *ix1, int *iy1, int *ix2, int *iy2)
 {
    int     ix1_temp;
    int     iy1_temp;
@@ -662,17 +534,7 @@ int   *iy2;
  *
  */
 #define MAX_REG_POINTS  100
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqrgfl_(xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQRGFL_(xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqrgfl(xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQRGFL(xpts, ypts, npts)
-#endif
-double   xpts[], ypts[];
-int   *npts;
+void aqrgfl(int xpts[], int ypts[], int *npts)
 {
    int     i;
    int     iindx;
@@ -714,22 +576,8 @@ int   *npts;
  * error  - error flag
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqtxth_(string, ixpos, iypos, ijusth, ijustv, font, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQTXTH_(string, ixpos, iypos, ijusth, ijustv, font, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqtxth(string, ixpos, iypos, ijusth, ijustv, font, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQTXTH(string, ixpos, iypos, ijusth, ijustv, font, error)
-#endif
-int    string[];
-int    font[];
-int    *ixpos;
-int    *iypos;
-int    *ijusth;
-int    *ijustv;
-int    *error;
+void aqtxth(int string[], int *ixpos, int *iypos, int *ijusth,
+            int *ijustv, int font[], int *error)
 {
 
    int    len;                     /* number of characters in string */
@@ -801,22 +649,8 @@ int    *error;
  * error  - error flag
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqtxtv_(string, ixpos, iypos, ijusth, ijustv, font, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQTXTV_(string, ixpos, iypos, ijusth, ijustv, font, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqtxtv(string, ixpos, iypos, ijusth, ijustv, font, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQTXTV(string, ixpos, iypos, ijusth, ijustv, font, error)
-#endif
-int    string[];
-int    font[];
-int    *ixpos;
-int    *iypos;
-int    *ijusth;
-int    *ijustv;
-int    *error;
+void aqtxtv(int string[], int *ixpos, int *iypos,
+            int *ijusth, int *ijustv, int font[], int *error)
 {
 
    int    len;                     /* number of characters in string */
@@ -943,9 +777,7 @@ int  *ixret, *iyret, *error;
  * ilen    - length of character string
  *
  */
-void i_to_s_4(string1, string2, maxlen, ilen)
-int   string1[], maxlen, *ilen;
-char  string2[];
+void i_to_s_4(int string1[], char string2[], int maxlen, int *ilen)
 
 {
      int  i;

@@ -140,7 +140,7 @@
  *  gdsec2      - set foreground color (for "true" option)
  *  gdsepa      - set line pattern
  *  gdpoin      - draw a point (i.e., a pixel)
- *  gdcirc      - draw a circle
+ *  gdcirc      - draw a circle (not currently used)
  *  gdrgfl      - solid fill of a region
  *  gdtxth      - draw a horizontal character string
  *  gdtxtv      - draw a vertical character string
@@ -157,25 +157,10 @@
  *  definitions -DNOUNDERSCORE and -DUPPERCASE can be specified to
  *  override these defaults. */
 
-#ifdef NOUNDERSCORE
-#define APPEND_UNDERSCORE 0
-#else
-#define APPEND_UNDERSCORE 1
-#endif
-#ifdef UPPERCASE
-#define SUBROUTINE_CASE 0
-#else
-#define SUBROUTINE_CASE 1
-#endif
 #ifdef DOUBLE
 #define PRECISION 1
 #else
 #define PRECISION 0
-#endif
-#ifdef INTEGER8
-#define INTEGER_PRECISION 1
-#else
-#define INTEGER_PRECISION 0
 #endif
 #ifdef NO_GIF
 #define GIF 0
@@ -302,62 +287,51 @@ int           DEVICE_TYPE_GD = 0;     /* define device */
                                       /* 2 - png */
                                       /* 3 - windows bmp */
 
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void  gdend_(), gddraw_(), gdpoin_(), gdcirc_(), gdrgfl_();
-void  gdinit_(), gderas_(), gdtxth_(), gdtxtv_();
-void  gdseco_(), gdsec2_(), gdsepa_();
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void  GDEND_(), GDINIT_(), GDDRAW_(), GDPOIN_(), GDCIRC_(), GDRGFL_();
-void  GDINIT_(), GDERAS_(), GDTXTH_(), GDTXTV_();
-void  GDSECO_(), GDSEC2_(), GDSEPA_();
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void  gdend(), gddraw(), gdpoin(), gdcirc(), gdrgfl();
-void  gdinit(), gderas(), gdtxth(), gdtxtv(),gdtatt();
-void  gdseco(), gdsec2(), gdsepa();
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void  GDEND(),  GDDRAW(), GDPOIN(), GDCIRC(), GDRGFL();
-void  GDINIT(), GDERAS(), GDTXTH(), GDTXTV();
-void  GDSECO(), GDSEC2(), GDSEPA();
-#endif
-void  i_to_s_2();
+void gdend(int file_name[]);
+void gddraw(int *ix1,int *iy1,int *ix2,int *iy2);
+void gdpoin(int *ix, int *iy, int *jcol);
+void gdcirc(int *ix, int *iy, int *irad, int *ifill, int *jcol);
+void gdrgfl(int xpts[], int ypts[], int *npts, int *jcol);
+void gdinit(int *itype);
+void gderas(int *xpixels, int *ypixels, int *back_col, int *icol_type,
+            int file_name[]);
+void gdtxth(int font[], int string[], int *ifontz, int *ixpos, int *iypos,
+            int *ijusth, int *ijustv, int *jcol, int *jheigh, int *error);
+void gdtxtv(int font[], int string[], int *ifontz, int *ixpos, int *iypos,
+            int *ijusth, int *ijustv, int *jcol, int *jheigh, int *error);
+void gdseco(int *jcol);
+void gdsec2(int *jred,int *jgreen,int *jblue,int *iretco);
+void gdsepa(int *jpatt);
+void i_to_s_2(int string1[], char string2[], int maxlen, int *ilen);
+void gdload(int *itype, int *xpixels, int *ypixels, int file_name[],
+            int *ierror);
+void gdunlo();
+void gdpixe(int *ix, int *iy, int *ired, int *igreen, int *iblue);
 
 /* GDINIT  - routine to initialize GD.
  *           For GD device, simply set flag saying this routine
  *           has been called, initialize a few variables.
  *
- *           DEVICE_TYPE_GD = 1 -- jpeg
- *           DEVICE_TYPE_GD = 2 -- png
- *           DEVICE_TYPE_GD = 3 -- wbmp
- *           DEVICE_TYPE_GD = 4 -- gif
- *           DEVICE_TYPE_GD = 5 -- tiff (requires Tiff library)
- *           DEVICE_TYPE_GD = 6 -- bmp
- *           DEVICE_TYPE_GD = 7 -- webp (requires VPX library)
- *           DEVICE_TYPE_GD = 8 -- tga (this code currently not active)
+ *           DEVICE_TYPE_GD =  1 -- jpeg
+ *           DEVICE_TYPE_GD =  2 -- png
+ *           DEVICE_TYPE_GD =  3 -- wbmp
+ *           DEVICE_TYPE_GD =  4 -- gif
+ *           DEVICE_TYPE_GD =  5 -- tiff (requires Tiff library)
+ *           DEVICE_TYPE_GD =  6 -- bmp
+ *           DEVICE_TYPE_GD =  7 -- webp (requires VPX library)
+ *           DEVICE_TYPE_GD =  8 -- tga (this code currently not active)
+ *           DEVICE_TYPE_GD =  9 -- xpm (this code currently not active)
+ *           DEVICE_TYPE_GD = 10 -- avif (requires libavif library)
+ *           DEVICE_TYPE_GD = 11 -- heif (requires libheif library)
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdinit_(itype)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDINIT_(itype)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gdinit(itype)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDINIT(itype)
-#endif
-#if INTEGER_PRECISION == 0
-int  *itype;
-#else
-int  itype[2];
-#endif
+void gdinit(int *itype)
 {
 
    int   itype_temp;
 
-#if INTEGER_PRECISION == 0
    itype_temp = *itype;
-#else
-   itype_temp = itype[0];
-#endif
+
     DEVICE_TYPE_GD = itype_temp;
     OPEN_FLAG_GD = 0;
 
@@ -389,30 +363,14 @@ int  itype[2];
  *
  */
 
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gderas_(xpixels, ypixels, back_col, icol_type, file_name)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDERAS_(xpixels, ypixels, back_col, icol_type, file_name)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gderas(xpixels, ypixels, back_col, icol_type, file_name)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDERAS(xpixels, ypixels, back_col, icol_type, file_name)
-#endif
-#if INTEGER_PRECISION == 0
-int  *xpixels, *ypixels, *back_col;
-int  *icol_type;
-int file_name[];
-#else
-int  xpixels[2], ypixels[2], back_col[2];
-int  icol_type[2];
-int file_name[];
-#endif
+void gderas(int *xpixels, int *ypixels, int *back_col, int *icol_type,
+            int file_name[])
 {
 
    int   back_col_temp, temp_color, temp_color_2;
    int   xpixels_temp, ypixels_temp;
    int   len;
-   int   itemp, quality;
+   int   itemp, quality, speed;
    int   i;
    int   itemp1, itemp2;
    int   icol_temp;
@@ -421,17 +379,10 @@ int file_name[];
    int   compression;
    float ai, atemp2;
 
-#if INTEGER_PRECISION == 0
    back_col_temp = *back_col;
    xpixels_temp = *xpixels;
    ypixels_temp = *ypixels;
    icol_temp = *icol_type;
-#else
-   back_col_temp = back_col[0];
-   xpixels_temp = xpixels[0];
-   ypixels_temp = ypixels[0];
-   icol_temp = icol_type[0];
-#endif
 
    /* First, check if a graph is currently open, if so write it
       to the current file name. */
@@ -443,6 +394,11 @@ int file_name[];
     *    5 - TIFF
     *    6 - BMP
     *    7 - WEBP
+    *    8 - TGA (currently not activated)
+    *    9 - XPM (GD only seems to support reading Xpm format
+    *             image, not writing, so don't activate this)
+    *   10 - AVIF
+    *   11 - HEIF
     */
    if (OPEN_FLAG_GD == 1) {
       /* interlaced images load faster on web, but leave for now */
@@ -487,6 +443,22 @@ int file_name[];
           * printf("%s \n","gd.c: Before TGA");
           * gdImageTga(im,jpegout);
           */
+      }
+      else if (DEVICE_TYPE_GD == 9) {
+         /*
+          */
+      }
+      else if (DEVICE_TYPE_GD == 10) {
+#ifdef HAVE_GD_AVIF
+          quality = -1;
+          speed = 5;
+          gdImageAvifEx(im,jpegout,quality,speed);
+#endif
+      }
+      else if (DEVICE_TYPE_GD == 11) {
+#ifdef HAVE_GD_HEIF
+          gdImageHeif(im,jpegout);
+#endif
       }
       else {
          quality = -1;
@@ -554,29 +526,18 @@ int file_name[];
 /* GDEND   - routine to end GD.  Close the display.
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdend_(file_name)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDEND_(file_name)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gdend(file_name)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDEND(file_name)
-#endif
-int file_name[];
+void gdend(int file_name[])
 
 {
    int     quality;
+   int     speed;
    int     itemp;
    int     len;
    int     bitdepth;
    int     compression;
 
-#if INTEGER_PRECISION == 0
      i_to_s_2(file_name, file_string, 80, &len);
-#else
-     i_to_s_2(file_name, file_string, 160, &len);
-#endif
+
    /*  Currently supported image formats:
     *    1 - JPEG
     *    2 - PNG
@@ -586,6 +547,8 @@ int file_name[];
     *    6 - BMP
     *    7 - WEBP
     *    8 - TGA
+    *   10 - AVIF
+    *   11 - HEIF
     */
    if (OPEN_FLAG_GD == 1) {
       /* interlaced images load faster on web, but leave for now */
@@ -606,7 +569,6 @@ int file_name[];
          gdImageGif(im,jpegout);
       }
       else if (DEVICE_TYPE_GD == 5) {
-         /* If libtiff not installed, default to jpeg */
 #ifdef HAVE_GD_TIFF
          gdImageTiff(im,jpegout);
 #endif
@@ -631,6 +593,18 @@ int file_name[];
           * gdImageTga(im,jpegout);
           */
       }
+      else if (DEVICE_TYPE_GD == 10) {
+#ifdef HAVE_GD_AVIF
+          quality = -1;
+          speed = 5;
+          gdImageAvifEx(im,jpegout,quality,speed);
+#endif
+      }
+      else if (DEVICE_TYPE_GD == 11) {
+#ifdef HAVE_GD_HEIF
+          gdImageHeif(im,jpegout);
+#endif
+      }
       else {
          quality = -1;
          gdImageJpeg(im,jpegout,quality);
@@ -652,37 +626,17 @@ int file_name[];
  *
  */
 #define MAX_LINE_POINTS  500
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gddraw_(ix1,iy1,ix2,iy2)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDDRAW_(ix1,iy1,ix2,iy2)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gddraw(ix1,iy1,ix2,iy2)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDDRAW(ix1,iy1,ix2,iy2)
-#endif
-#if INTEGER_PRECISION == 0
-int   *ix1, *iy1, *ix2, *iy2;
-#else
-int   ix1[2], iy1[2], ix2[2], iy2[2];
-#endif
+void gddraw(int *ix1,int *iy1,int *ix2,int *iy2)
 {
    int     ix1_temp;
    int     iy1_temp;
    int     ix2_temp;
    int     iy2_temp;
 
-#if INTEGER_PRECISION == 0
    ix1_temp = *ix1;
    iy1_temp = *iy1;
    ix2_temp = *ix2;
    iy2_temp = *iy2;
-#else
-   ix1_temp = ix1[0];
-   iy1_temp = iy1[0];
-   ix2_temp = ix2[0];
-   iy2_temp = iy2[0];
-#endif
 
    if (NPTS_STYLE_GD <= 0) {            /* Solid Line */
       if (COLOR_OPTION_GD == 0) {
@@ -705,31 +659,14 @@ int   ix1[2], iy1[2], ix2[2], iy2[2];
  * jcol   - index for desired color
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdseco_(jcol)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDSECO_(jcol)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gdseco(jcol)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDSECO(jcol)
-#endif
-#if INTEGER_PRECISION == 0
-int   *jcol;
-#else
-int   jcol[2];
-#endif
+void gdseco(int *jcol)
 {
    int     jcol_temp;
    int     jred_temp;
    int     jgreen_temp;
    int     jblue_temp;
 
-#if INTEGER_PRECISION == 0
    jcol_temp = *jcol;
-#else
-   jcol_temp = jcol[0];
-#endif
 
    if (COLOR_OPTION_GD == 0) {
       if (jcol_temp >= 0 ) {
@@ -764,37 +701,16 @@ int   jcol[2];
  * the range 0 - 255.
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdsec2_(jred,jgreen,jblue,iretco)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDSEC2_(jred,jgreen,jblue,iretco)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gdsec2(jred,jgreen,jblue,iretco)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDSEC2(jcol,iretco)
-#endif
-#if INTEGER_PRECISION == 0
-int   *jred, *jgreen, *jblue;
-int   *iretco;
-#else
-int   jred[2], jgreen[2], jblue[2];
-int   iretco[2];
-#endif
+void gdsec2(int *jred,int *jgreen,int *jblue,int *iretco)
 {
    int     jred_temp;
    int     jgreen_temp;
    int     jblue_temp;
    int     jcol_temp;
 
-#if INTEGER_PRECISION == 0
    jred_temp = *jred;
    jgreen_temp = *jgreen;
    jblue_temp = *jblue;
-#else
-   jred_temp = jred[0];
-   jgreen_temp = jgreen[0];
-   jblue_temp = jblue[0];
-#endif
 
    if (jred_temp < 0) {
       jred_temp = 0;
@@ -822,11 +738,7 @@ int   iretco[2];
          jcol_temp = gdImageColorClosest(im,jred_temp,jgreen_temp,jblue_temp);
       }
       CURRENT_COLOR_GD = jcol_temp;
-#if INTEGER_PRECISION == 0
-       *iretco = jcol_temp;
-#else
-       iretco[0] = jcol_temp;
-#endif
+      *iretco = jcol_temp;
    }
 
 }
@@ -836,28 +748,11 @@ int   iretco[2];
  * jpatt  - the line pattern
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdsepa_(jpatt)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDSEPA_(jpatt)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gdsepa(jpatt)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDSEPA(jpatt)
-#endif
-#if INTEGER_PRECISION == 0
-int   *jpatt;
-#else
-int   jpatt[2];
-#endif
+void gdsepa(int *jpatt)
 {
    int     jpatt_temp;
 
-#if INTEGER_PRECISION == 0
    jpatt_temp = *jpatt;
-#else
-   jpatt_temp = jpatt[0];
-#endif
 
    if (jpatt_temp == 1) {            /* Solid Line */
       CURRENT_LINE_STYLE_GD[0] = 0;
@@ -954,34 +849,13 @@ int   jpatt[2];
  * jcol   - color to use in drawing the point
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdpoin_(ix, iy, jcol)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDPOIN_(ix, iy, jcol)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gdpoin(ix, iy, jcol)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDPOIN(ix, iy, jcol)
-#endif
-#if INTEGER_PRECISION == 0
-int   *ix, *iy, *jcol;
-#else
-int   ix[2], iy[2], jcol[2];
-#endif
+void gdpoin(int *ix, int *iy, int *jcol)
 {
-#if INTEGER_PRECISION == 0
    if (COLOR_OPTION_GD == 0) {
       gdImageSetPixel(im, *ix, *iy, color_table[*jcol]);
    } else {
       gdImageSetPixel(im, *ix, *iy, CURRENT_COLOR_GD);
    }
-#else
-   if (COLOR_OPTION_GD == 0) {
-      gdImageSetPixel(im, ix[0], iy[0], color_table[jcol[0]]);
-   } else {
-      gdImageSetPixel(im, ix[0], iy[0], CURRENT_COLOR_GD);
-   }
-#endif
 
 }
 
@@ -995,37 +869,17 @@ int   ix[2], iy[2], jcol[2];
  * ifill  - 0 for unfilled circle, 1 for filled circle
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdcirc_(ix, iy, irad, ifill, jcol)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDCIRC_(ix, iy, irad, ifill, jcol)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gdcirc(ix, iy, irad, ifill, jcol)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDCIRC(ix, iy, irad, ifill, jcol)
-#endif
-#if INTEGER_PRECISION == 0
-int   *ix, *iy, *irad, *ifill, *jcol;
-#else
-int   ix[2], iy[2], irad[2], ifill[2], jcol[2];
-#endif
+void gdcirc(int *ix, int *iy, int *irad, int *ifill, int *jcol)
 {
 
    int   xpos, ypos, iwidth, iheight, iang1, iang2, ir, jcol_t;
 
    iang1 = 0;
    iang2 = 360;
-#if INTEGER_PRECISION == 0
    ir = *irad;
    jcol_t = *jcol;
    xpos = *ix - *irad;
    ypos = *iy - *irad;
-#else
-   ir = irad[0];
-   jcol_t = jcol[0];
-   xpos = ix[0] - irad[0];
-   ypos = iy[0] - irad[0];
-#endif
    iwidth = 2 * ir;
    iheight = 2 * ir;
    if (COLOR_OPTION_GD == 0) {
@@ -1052,21 +906,7 @@ int   ix[2], iy[2], irad[2], ifill[2], jcol[2];
  *
  */
 #define MAX_REG_POINTS  1000
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdrgfl_(xpts, ypts, npts, jcol)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDRGFL_(xpts, ypts, npts, jcol)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gdrgfl(xpts, ypts, npts, jcol)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDRGFL(xpts, ypts, npts, jcol)
-#endif
-int   xpts[], ypts[];
-#if INTEGER_PRECISION == 0
-int   *npts, *jcol;
-#else
-int   npts[2], jcol[2];
-#endif
+void gdrgfl(int xpts[], int ypts[], int *npts, int *jcol)
 {
    int     points[MAX_REG_POINTS];
    int     npts_temp, jcol_temp, indx;
@@ -1074,18 +914,9 @@ int   npts[2], jcol[2];
    int     jgreen_temp;
    int     jblue_temp;
 
-#if INTEGER_PRECISION == 0
    npts_temp = *npts;
    jcol_temp = *jcol;
-#else
-   npts_temp = npts[0];
-   jcol_temp = jcol[0];
-#endif
-#if INTEGER_PRECISION == 0
-    indx = 1;
-#else
-    indx = 2;
-#endif
+   indx = 1;
 
    /* Color set separately (just use CURRENT_COLOR_GD) 
    if (COLOR_OPTION_GD == 0) {
@@ -1137,13 +968,8 @@ int   npts[2], jcol[2];
       temp = npts_temp;
       if(npts_temp > MAX_REG_POINTS) temp = MAX_REG_POINTS;
       for (i = 0; i < temp; i++) {
-#if INTEGER_PRECISION == 0
          points[i].x = xpts[i];
          points[i].y = ypts[i];
-#else
-         points[i].x = xpts[2*i];
-         points[i].y = ypts[2*i];
-#endif
       }
       if (COLOR_OPTION_GD == 0) {
          gdImageFilledPolygon(im,points,temp,color_table[CURRENT_COLOR_GD]);
@@ -1172,19 +998,8 @@ int   npts[2], jcol[2];
  * error  - error flag
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdtxth_(font, string, ifontz, ixpos, iypos, ijusth, ijustv, jcol,
-             jheigh,error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDTXTH_(font, string, ifontz, ixpos, iypos, ijusth, ijustv, jcol,
-             jheigh, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gdtxth(font, string, ifontz, ixpos, iypos, ijusth, ijustv, jcol,
-            jheigh, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDTXTH(font, string, ifontz, ixpos, iypos, ijusth, ijustv, jcol,
-            jheigh, error)
-#endif
+void gdtxth(int font[], int string[], int *ifontz, int *ixpos, int *iypos,
+            int *ijusth, int *ijustv, int *jcol, int *jheigh, int *error)
 /*
  *  ijusth  = 0  =>  left justified
  *  ijusth  = 1  =>  center justified
@@ -1193,15 +1008,6 @@ void GDTXTH(font, string, ifontz, ixpos, iypos, ijusth, ijustv, jcol,
  *  ijustv  = 1  =>  center justified
  *  ijustv  = 2  =>  right justified
  */
-int    font[];
-int    string[];
-#if INTEGER_PRECISION == 0
-int    *ixpos, *iypos, *ijusth, *ijustv, *jcol, *jheigh, *error;
-int    *ifontz;
-#else
-int    ixpos[2], iypos[2], ijusth[2], ijustv[2], jcol[2], error[2];
-int    jheigh[2], ifontz[2];
-#endif
 {
 
    int    itest, itempx, itempy;   /* temporary variables */
@@ -1221,7 +1027,6 @@ int    jheigh[2], ifontz[2];
    char   *err;
    int    ifontz_temp;
 
-#if INTEGER_PRECISION == 0
    ixpos_temp = *ixpos;
    iypos_temp = *iypos;
    ijusth_temp = *ijusth;
@@ -1229,23 +1034,9 @@ int    jheigh[2], ifontz[2];
    jcol_temp = *jcol;
    ptsize = *jheigh;
    ifontz_temp = *ifontz;
-#else
-   ixpos_temp = ixpos[0];
-   iypos_temp = iypos[0];
-   ijusth_temp = ijusth[0];
-   ijustv_temp = ijustv[0];
-   jcol_temp = jcol[0];
-   ptsize = jheigh[0];
-   ifontz_temp = ifontz[0];
-#endif
 
-#if INTEGER_PRECISION == 0
    i_to_s_2(string, string2, 130, &len);
    i_to_s_2(font, font_name, 255, &len2);
-#else
-   i_to_s_2(string, string2, 260, &len);
-   i_to_s_2(font, font_name, 510, &len2);
-#endif
 
    if (ifontz_temp == 1) {
       im_font = gdFontGetSmall();
@@ -1425,19 +1216,8 @@ int    jheigh[2], ifontz[2];
  * error  - error flag
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdtxtv_(font, string, ifontz, ixpos, iypos, ijusth, ijustv, jcol,
-             jheigh,error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDTXTV_(font, string, ifontz, ixpos, iypos, ijusth, ijustv, jcol,
-             jheigh, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gdtxtv(font, string, ifontz, ixpos, iypos, ijusth, ijustv, jcol,
-            jheigh, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDTXTV(font, string, ifontz, ixpos, iypos, ijusth, ijustv, jcol,
-            jheigh, error)
-#endif
+void gdtxtv(int font[], int string[], int *ifontz, int *ixpos, int *iypos,
+            int *ijusth, int *ijustv, int *jcol, int *jheigh, int *error)
 /*
  *  ijusth  = 0  =>  left justified
  *  ijusth  = 1  =>  center justified
@@ -1446,15 +1226,6 @@ void GDTXTV(font, string, ifontz, ixpos, iypos, ijusth, ijustv, jcol,
  *  ijustv  = 1  =>  center justified
  *  ijustv  = 2  =>  right justified
  */
-int    font[];
-int    string[];
-#if INTEGER_PRECISION == 0
-int    *ixpos, *iypos, *ijusth, *ijustv, *jcol, *jheigh, *error;
-int    *ifontz;
-#else
-int    ixpos[2], iypos[2], ijusth[2], ijustv[2], jcol[2], error[2];
-int    jheigh[2], ifontz[2];
-#endif
 {
 
    int    itest, itempx, itempy;   /* temporary variables */
@@ -1474,7 +1245,6 @@ int    jheigh[2], ifontz[2];
    char   *err;
    int    ifontz_temp;
 
-#if INTEGER_PRECISION == 0
    ixpos_temp = *ixpos;
    iypos_temp = *iypos;
    ijusth_temp = *ijusth;
@@ -1482,23 +1252,9 @@ int    jheigh[2], ifontz[2];
    jcol_temp = *jcol;
    ptsize = *jheigh;
    ifontz_temp = *ifontz;
-#else
-   ixpos_temp = ixpos[0];
-   iypos_temp = iypos[0];
-   ijusth_temp = ijusth[0];
-   ijustv_temp = ijustv[0];
-   jcol_temp = jcol[0];
-   ptsize = jheigh[0];
-   ifontz_temp = ifontz[0];
-#endif
 
-#if INTEGER_PRECISION == 0
    i_to_s_2(string, string2, 130, &len);
    i_to_s_2(font, font_name, 80, &len2);
-#else
-   i_to_s_2(string, string2, 260, &len);
-   i_to_s_2(font, font_name, 160, &len2);
-#endif
 
    if (ifontz_temp == 1) {
       im_font = gdFontGetSmall();
@@ -1667,26 +1423,8 @@ int    jheigh[2], ifontz[2];
  *            image and the GDUNLO routine is used to close
  *            the image that is open for reading.
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdload_(itype, xpixels, ypixels, file_name, ierror)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDLOAD_(itype, xpixels, ypixels, file_name, ierror)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gdload(itype, xpixels, ypixels, file_name, ierror)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDLOAD(itype, xpixels, ypixels, file_name, ierror)
-#endif
-#if INTEGER_PRECISION == 0
-int  *xpixels, *ypixels;
-int  *itype;
-int  *ierror;
-int file_name[];
-#else
-int  xpixels[2], ypixels[2];
-int  itype[2];
-int  ierror[2];
-int file_name[];
-#endif
+void gdload(int *itype, int *xpixels, int *ypixels, int file_name[],
+            int *ierror)
 {
 
    int   xpixels_temp, ypixels_temp;
@@ -1697,23 +1435,12 @@ int file_name[];
    int   i;
    int   itemp1, itemp2;
 
-#if INTEGER_PRECISION == 0
    xpixels_temp = *xpixels;
    ypixels_temp = *ypixels;
    itype_temp = *itype;
    ierror_temp = *ierror;
-#else
-   xpixels_temp = xpixels[0];
-   ypixels_temp = ypixels[0];
-   itype_temp = itype[0];
-   ierror_temp = ierror[0];
-#endif
 
-#if INTEGER_PRECISION == 0
      i_to_s_2(file_name, file_string_2, 80, &len);
-#else
-     i_to_s_2(file_name, file_string_2, 160, &len);
-#endif
      jpegin = fopen(file_string_2,"rb");
      if (!jpegin) {
         ierror_temp = 1;                /*  Unable to open file */
@@ -1723,43 +1450,53 @@ int file_name[];
          *
          *   1  - JPEG
          *   2  - PNG
-         *   3  - GIF
-         *   4  - BMP
-         *   5  - WBMP
-         *   6  - WEBP
-         *   7  - TGA (or TARGA)
-         *   8  - TIFF
+         *   3  - WBMP
+         *   4  - GIF
+         *   5  - TIFF
+         *   6  - BMP
+         *   7  - WEBP
+         *   8  - TGA (or TARGA)
          *   9  - XPM (X Pixmap)
+         *  10  - AVIF
+         *  11  - HEIF
          */
         if (itype_temp == 1) {
            im2 = gdImageCreateFromJpeg(jpegin);
         } else if (itype_temp == 2) {
            im2 = gdImageCreateFromPng(jpegin);
         } else if (itype_temp == 3) {
-           im2 = gdImageCreateFromGif(jpegin);
+           im2 = gdImageCreateFromWBMP(jpegin);
         } else if (itype_temp == 4) {
+           im2 = gdImageCreateFromGif(jpegin);
+        } else if (itype_temp == 5) {
+#ifdef HAVE_GD_TIFF
+           im2 = gdImageCreateFromTiff(jpegin);
+#endif
+        } else if (itype_temp == 6) {
 #ifdef HAVE_GD_BMP
            im2 = gdImageCreateFromBmp(jpegin);
 #endif
-        } else if (itype_temp == 5) {
-           im2 = gdImageCreateFromWBMP(jpegin);
-        } else if (itype_temp == 6) {
-#ifdef HAVE_GD_VPX
-           im2 = gdImageCreateFromWBMP(jpegin);
-#endif
         } else if (itype_temp == 7) {
-#ifdef HAVE_GD_TGA
-           im2 = gdImageCreateFromTga(jpegin);
+#ifdef HAVE_GD_VPX
+           im2 = gdImageCreateFromWebp(jpegin);
 #endif
         } else if (itype_temp == 8) {
-#ifdef HAVE_GD_TIFF
-           im2 = gdImageCreateFromTiff(jpegin);
+#ifdef HAVE_GD_TGA
+           im2 = gdImageCreateFromTga(jpegin);
 #endif
         } else if (itype_temp == 9) {
            /* File name has to be specified differently
             * for this device.
             * im2 = gdImageCreateFromXpm(jpegin);
            */
+        } else if (itype_temp == 10) {
+#ifdef HAVE_GD_AVIF
+           im2 = gdImageCreateFromAvif(jpegin);
+#endif
+        } else if (itype_temp == 11) {
+#ifdef HAVE_GD_HEIF
+           im2 = gdImageCreateFromHeif(jpegin);
+#endif
         }
         fclose(jpegin);
         if (!im2) {
@@ -1769,30 +1506,16 @@ int file_name[];
            ypixels_temp = im2->sy;
         }
      }
-#if INTEGER_PRECISION == 0
      *ierror = ierror_temp;
      *xpixels = xpixels_temp;
      *ypixels = ypixels_temp;
-#else
-     ierror[0] = ierror_temp;
-     xpixels[0] = xpixels_temp;
-     ypixels[0] = ypixels_temp;
-#endif
 
 }
 
 /* GDUNLO  - routine to unload an image that was loaded for reading.
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdunlo_()
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDUNLO_()
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
 void gdunlo()
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDUNLO()
-#endif
 
 {
    gdImageDestroy(im2);
@@ -1807,20 +1530,7 @@ void GDUNLO()
  * igreen - value of green component
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void gdpixe_(ix, iy, ired, igreen, iblue)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void GDPIXE_(ix, iy, ired, igreen, iblue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void gdpixe(ix, iy, ired, igreen, iblue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void GDPIXE(ix, iy, ired, igreen, iblue)
-#endif
-#if INTEGER_PRECISION == 0
-int   *ix, *iy, *ired, *igreen, *iblue;
-#else
-int   ix[2], iy[2], ired[2], igreen[2], iblue[2];
-#endif
+void gdpixe(int *ix, int *iy, int *ired, int *igreen, int *iblue)
 
 {
    int ix_temp;
@@ -1830,13 +1540,8 @@ int   ix[2], iy[2], ired[2], igreen[2], iblue[2];
    int iblue_temp;
    int jcol;
 
-#if INTEGER_PRECISION == 0
    ix_temp = *ix;
    iy_temp = *iy;
-#else
-   ix_temp = ix[0];
-   iy_temp = iy[0];
-#endif
 
    jcol = gdImageGetPixel(im2, ix_temp, iy_temp);
    /* jcol = gdImageGetPixel(im2, iy_temp, ix_temp); */
@@ -1844,15 +1549,9 @@ int   ix[2], iy[2], ired[2], igreen[2], iblue[2];
    igreen_temp = gdImageGreen(im2,jcol);
    iblue_temp = gdImageBlue(im2,jcol);
 
-#if INTEGER_PRECISION == 0
    *ired = ired_temp;
    *igreen = igreen_temp;
    *iblue = iblue_temp;
-#else
-   ired[0] = ired_temp;
-   igreen[0] = igreen_temp;
-   iblue[0] = iblue_temp;
-#endif
 
 }
 
@@ -1870,15 +1569,12 @@ int   ix[2], iy[2], ired[2], igreen[2], iblue[2];
  * ilen    - length of character string
  *
  */
-void i_to_s_2(string1, string2, maxlen, ilen)
-int   string1[], maxlen, *ilen;
-char  string2[];
+void i_to_s_2(int string1[], char string2[], int maxlen, int *ilen)
 
 {
      int  i;
      int  itemp;
      i = 0;
-#if INTEGER_PRECISION == 0
      while (string1[i] != 0 && i < (maxlen - 1) ) {
          itemp = string1[i];
          string2[i] = string1[i];
@@ -1887,13 +1583,3 @@ char  string2[];
      *ilen = i;
      string2[i]='\0';
 }
-#else
-     while (string1[2*i] != 0 && i < (maxlen - 1) ) {
-         itemp = string1[2*i];
-         string2[i] = string1[2*i];
-         i++;
-     }
-     *ilen = i;
-     string2[i]='\0';
-}
-#endif

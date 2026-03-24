@@ -1,35 +1,35 @@
-C-----THIS IS COMMON/INCLUDE FILE DPCODA.INC-----
-C     THIS IS COMMON FOR DATA
-C
-C     UPDATED--AUGUST     1992. ADD DSIZE, DSYMB, DCOLOR, DFILL (ALAN)
-C     UPDATED--JANUARY    1998. ADD MAXROM, MAXCOM
-C     UPDATED--JULY       2019. USE A SINGLE COMMON BLOCK FOR A NUMBER
-C                               OF THESE ARRAYS.  THIS CAN ALLOW FOR
-C                               USING THIS SPACE AS SCRATCH SPACE FOR
-C                               A FEW COMMANDS WITH LARGE MEMORY
-C                               REQUIREMENTS
-C     UPDATED--JANUARY    2024. TWEAK COMMON BLOCKS FOR COMPILATION ON
-C                               MACOS WITH M1 CHIPS
-C
-C     NOTE--THE PARAMETER SETTINGS FOR
-C           MAXOBV, MAXOBW, AND MAXPOP
-C           ARE DONE IN FILE DPCOPA.INC
-C
-C               **************************************
-C               **************************************
-C               **  DEFINE AND EQUIVALENCE INTEGER  **
-C               **  DATA                            **
-C               **  VARIABLES AND ARRAYS            **
-C               **************************************
-C               **************************************
-C
+!-----THIS IS COMMON/INCLUDE FILE DPCODA.INC-----
+!     THIS IS COMMON FOR DATA
+!
+!     UPDATED--AUGUST     1992. ADD DSIZE, DSYMB, DCOLOR, DFILL (ALAN)
+!     UPDATED--JANUARY    1998. ADD MAXROM, MAXCOM
+!     UPDATED--JULY       2019. USE A SINGLE COMMON BLOCK FOR A NUMBER
+!                               OF THESE ARRAYS.  THIS CAN ALLOW FOR
+!                               USING THIS SPACE AS SCRATCH SPACE FOR
+!                               A FEW COMMANDS WITH LARGE MEMORY
+!                               REQUIREMENTS
+!     UPDATED--JANUARY    2024. TWEAK COMMON BLOCKS FOR COMPILATION ON
+!                               MACOS WITH M1 CHIPS
+!
+!     NOTE--THE PARAMETER SETTINGS FOR
+!           MAXOBV, MAXOBW, AND MAXPOP
+!           ARE DONE IN FILE DPCOPA.INC
+!
+!               **************************************
+!               **************************************
+!               **  DEFINE AND EQUIVALENCE INTEGER  **
+!               **  DATA                            **
+!               **  VARIABLES AND ARRAYS            **
+!               **************************************
+!               **************************************
+!
       DIMENSION ISUB(MAXOBV)
-C
+!
       COMMON /IDATA/I1DATA(100)
-C
+!
       EQUIVALENCE (I1DATA(1) ,IDEMXN)
       EQUIVALENCE (I1DATA(2) ,IDEMXC)
-C
+!
       EQUIVALENCE (I1DATA(11),MAXNK)
       EQUIVALENCE (I1DATA(12),NK)
       EQUIVALENCE (I1DATA(13),MAXCOL)
@@ -46,17 +46,17 @@ C
       EQUIVALENCE (I1DATA(24),MAXCON)
       EQUIVALENCE (I1DATA(25),MAXROM)
       EQUIVALENCE (I1DATA(26),MAXCOM)
-C
+!
       COMMON /ISUCBL/ISUB
-C
-C               ****************************************
-C               ****************************************
-C               **  DEFINE AND EQUIVALENCE CHARACTER  **
-C               **  DATA                              **
-C               **  VARIABLES AND ARRAYS              **
-C               ****************************************
-C               ****************************************
-C
+!
+!               ****************************************
+!               ****************************************
+!               **  DEFINE AND EQUIVALENCE CHARACTER  **
+!               **  DATA                              **
+!               **  VARIABLES AND ARRAYS              **
+!               ****************************************
+!               ****************************************
+!
       CHARACTER*4 IPARNC
       CHARACTER*4 IPANC2
       CHARACTER*4 IPAROP
@@ -64,9 +64,9 @@ C
       CHARACTER*4 IFUNC
       CHARACTER*4 IFUNC2
       CHARACTER*4 IFUNC3
-C
+!
       CHARACTER*4 IH1DAT
-C
+!
       DIMENSION IPARNC(MAXFN2)
       DIMENSION IPANC2(MAXFN2)
       DIMENSION IPAROP(MAXFN2)
@@ -74,7 +74,7 @@ C
       DIMENSION IFUNC(MAXF1)
       DIMENSION IFUNC2(MAXF1)
       DIMENSION IFUNC3(MAXF1)
-C
+!
       COMMON/IP1CBL/ IPARNC
       COMMON/IP2CBL/ IPANC2
       COMMON/IP3CBL/ IPAROP
@@ -83,26 +83,26 @@ C
       COMMON/IF2CBL/ IFUNC2
       COMMON/IF3CBL/ IFUNC3
       COMMON/IH1CBL/ IH1DAT
-C
-C               ********************************************************
-C               ********************************************************
-C               **  DEFINE AND EQUIVALENCE REAL (SINGLE PRECISION FLOATI
-C               **  DATA
-C               **  VARIABLES AND ARRAYS
-C               ********************************************************
-C               ********************************************************
-C
+!
+!               ********************************************************
+!               ********************************************************
+!               **  DEFINE AND EQUIVALENCE REAL (SINGLE PRECISION FLOATI
+!               **  DATA
+!               **  VARIABLES AND ARRAYS
+!               ********************************************************
+!               ********************************************************
+!
       DIMENSION PARLIM(100)
       DIMENSION PARLLM(100)
       DIMENSION PARULM(100)
-C
-C     2019/07: USE A SINGLE COMMON BLOCK FOR FOLLOWING SET OF ARRAYS
-C     2024/01: BREAK INTO SEVERAL ARRAYS FOR COMPILATION ON MACOS WITH
-C              M1 CHIPS
-C
+!
+!     2019/07: USE A SINGLE COMMON BLOCK FOR FOLLOWING SET OF ARRAYS
+!     2024/01: BREAK INTO SEVERAL ARRAYS FOR COMPILATION ON MACOS WITH
+!              M1 CHIPS
+!
       DIMENSION PRED(MAXOBV)
       DIMENSION RES(MAXOBV)
-C
+!
       DIMENSION Y(MAXPOP)
       DIMENSION X(MAXPOP)
       DIMENSION X3D(MAXPOP)
@@ -111,41 +111,41 @@ C
       DIMENSION DSYMB(MAXPOP)
       DIMENSION DCOLOR(MAXPOP)
       DIMENSION DFILL(MAXPOP)
-C
+!
       DIMENSION YPLOT(MAXPOP)
       DIMENSION XPLOT(MAXPOP)
       DIMENSION X2PLOT(MAXPOP)
       DIMENSION TAGPLO(MAXPOP)
-C
+!
       DIMENSION V(MAXOBW)
-C
+!
       DIMENSION AMATR1(100,100)
-C
-C     -----
-C
+!
+!     -----
+!
       COMMON /PARCBL/PARLIM,PARLLM,PARULM
-C
-CCCCC COMMON /YCBL/PRED,RES,Y,X,X3D,D,DSIZE,DSYMB,DCOLOR,DFILL,
-CCCCC1             YPLOT,XPLOT,X2PLOT,TAGPLO
+!
+!CCCC COMMON /YCBL/PRED,RES,Y,X,X3D,D,DSIZE,DSYMB,DCOLOR,DFILL,
+!CCCC1             YPLOT,XPLOT,X2PLOT,TAGPLO
       COMMON /PRECBL/PRED
       COMMON /RESCBL/RES
-C
+!
       COMMON /YCBL/Y
       COMMON /XCBL/X
       COMMON /X3DCBL/X3D
-C
+!
       COMMON /DCBL1/D
       COMMON /DCBL2/DSIZE
       COMMON /DCBL3/DSYMB
       COMMON /DCBL4/DCOLOR
       COMMON /DCBL5/DFILL
-C
+!
       COMMON /YPLCBL/YPLOT
       COMMON /XPLCBL/XPLOT
       COMMON /X2PCBL/X2PLOT
       COMMON /TAGCBL/TAGPLO
-C
+!
       COMMON /VCBL/V
-C
+!
       COMMON /AM1CBL/AMATR1
-C
+!

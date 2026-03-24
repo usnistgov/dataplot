@@ -1,5 +1,5 @@
 9.
-                                                     July 2024
+                                                     February 2025
 This is the DATAPLOT News file DPNEWF.TEX.  This NEWS file contains a
 list of DATAPLOT enhancements.  Some commands may be documented here
 that are not yet available in the standard documentation.
@@ -10,58 +10,116 @@ The complete news file can be viewed at
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
-February 2024 - July 2024.
+August 2024 - March 2026.
 -----------------------------------------------------------------------
 
- 1. Made the following updates to Analysis commands.
+ 1. Converted the Fortran source code from fixed format to free
+    format syntax.  This should not change how Dataplot operates.
+    The motivation for this is a first step to making the source
+    code more Fortan90 compliant and to make the incorporation of
+    libraries that are free format easier.
 
-    a. Added the command
+ 2. Added the following Analysis commands
 
-         JONCKHEERE TERPSTRA TEST Y X
+        DEMING FIT Y X
+        WEIGHTED DEMING FIT Y X
+        REPLICATED DEMING FIT Y1 X1 Y2 X2
+        WEIGHTED REPLICATED DEMING FIT Y1 X1 Y2 X2
 
-    b. Updated the E691 command to support unbalanced data.
+ 3. Added the following graphics commands
 
-    c. Added the command
+        COMMUTABILITY DIFFERENCE PLOT
+        COMMUTABILITY PLOT
 
-         RANDOMIZED COMPLETE BLOCK  Y TREAT BLOCK
+        DUMBBELL PLOT Y1 Y2
+        WATERFALL CHART Y
+        BULLET PLOT Y YTARG YRANGE
+        VARIABLE WIDTH BAR PLOT Y1 Y2 TAG
+        CANDLESTICK PLOT YOPEN YCLOSE YLOW YHIGH
+        OPEN CLOSE LOW HIGH PLOT YOPEN YCLOSE YLOW YHIGH
 
-       This command will perform the standard F-test.  In addition,
-       it will optionally perform a permutation test.  This command
-       is for the case without replication.
+        DOT MATRIX PLOT                  GROUP CATEGORY
+        DOT MATRIX PLOT            COUNT GROUP CATEGORY
+        DOT MATRIX PROPORTION PLOT       GROUP CATEGORY
+        DOT MATRIX PROPORTION PLOT COUNT GROUP CATEGORY
 
- 2. Made the following updates to Graphics commands.
+        RIDGELINE PLOT Y X
 
-    a. Update the H CONSISTENCY PLOT and K CONSISTENCY PLOT commands
-       to support unbalanced data.
+ 4. Added the following LET statistic commands
 
-    b. Added the commands
+        LET XPERC = <percentile> GROUPED PERCENTILE FREQ XMID
+        LET XPERC = <percentile> GROUPED PERCENTILE FREQ XLOW XHIGH
+        LET XQUAN = <quantile>   GROUPED QUANTILE   FREQ XMID
+        LET XQUAN = <quantile>   GROUPED QUANTILE   FREQ XLOW XHIGH
 
-          FISHER DISCRIMINANT PLOT X1 ... XK TAG
-          K NEAREST NEIGHBORS CLASSIFICATION PLOT X1 ... XK TAG
+        LET YPERC = PERCENT ACCEPTABLE Y
 
- 3. Made the following updates to the Mathematics LET sub-commands.
+ 5. Added the following LET math commands
 
-       LET Y2 = H CONSISTENCY STATISTIC Y LABID
-       LET Y2 = K CONSISTENCY STATISTIC Y LABID
+        LET Y2 X2 = DEMING FIT Y X
 
-       LET Y = <dist> ORDER STATISTIC <stat> FOR I = 1 1 N
+ 6. Added the following LET string commands
 
- 4. Changed the default plot file names from dppl1f.dat and dppl2f.dat
-    to dppl1f.ps and dppl2f.ps.  This was done since many Postscript
-    viewers expect a ".ps" extension for the file.  In particular,
-    the Windows Ghostview 5.0 program (which did not require this)
-    is no longer working under current versions of Windows 10 and
-    Windows 11. The Ghostview 6.0 and Evince alternatives require
-    a ".ps" extension for Postscript files.
+        LET SOUT = NUMBER TO CURRENCY VALUE
 
-    Made a few corrections so that the automatic conversion of
-    Postscript files to PDF (when the SET POSTSCRIPT CONVERT PDF
-    command is used) is now working again as expected.
+ 7. On occassion, data files may contain leading "<" or ">" characters
+    that signify the data is less than or greater than the given value.
+    To ignore these characters, enter one of the following
 
- 5. For the GD device, if the font name given on the SET GD FONT
-    command does not exist as given, Dataplot will check the Dataplot
-    fonts directory for the font name.  If the font is not found or
-    if no font is specified, the MEDIUMBOLD font will be used.
+       SET READ LEADING LESS THAN IGNORE <MISSING VALUE/ON/OFF>
+       SET READ LEADING GREATER THAN IGNORE <MISSING VALUE/ON/OFF>
+       SET READ LEADING LESS THAN GREATER THAN IGNORE <MISING VALUE/ON/OFF>
+
+    Note that these are synonyms.  Any of the these will process both the
+    "<" or the ">" case.
+
+    The default is MISSING VALUE.  For this setting, data values with a
+    leading "<" or ">" are set to the value defined by the command
+
+        SET READ MISSING VALUE <value>
+
+    In order to allow you to identify which data values contain the "<"
+    or ">" characters, Dataplot writes variables to "dpst5f.dat" that
+    correspond to the columnns read (that is, if you read six variables,
+    the dpst5f.dat file will contain six columns).  The dpst5f.dat columns
+    will contain either 0.0, 1.0 or 2.0 values.  A value of 0.0 indicates
+    "<" or ">" are not present, a value of 1.0 indicates a "<" and a value
+    of 2.0 indicates a ">".
+
+    If you enter SET READ TRAILING PLUS MINUS IGNORE ON, this will also
+    create the dpst5f.dat file with 1.0 indicating a trailing "-" and
+    a 2.0 indicating a trailing "+".
+
+    For the ON setting, the leading "<" or ">" is simply ignored.  For the
+    OFF setting, the leading "<" and ">" characters and trailing "-" and
+    "+" characters will be treated as errors.
+
+    Note that there should be no space between the leading "<" or ">"  or
+    the trailing "-" or "+" and the data value since Dataplot treats the
+    space character as a delimiter.
+
+ 8. The TIC MARK OFFSET UNITS command was updated to allow the
+    offset units to be specified separately for each of the four
+    frame lines.  So you can use the following commands
+
+        X1TIC MARK OFFSET UNITS <DATA/ABSOLUTE> - bottom frame
+        X2TIC MARK OFFSET UNITS <DATA/ABSOLUTE> - top frame
+        Y1TIC MARK OFFSET UNITS <DATA/ABSOLUTE> - left frame
+        Y2TIC MARK OFFSET UNITS <DATA/ABSOLUTE> - right frame
+
+        XTIC MARK OFFSET UNITS <DATA/ABSOLUTE>  - bottom and top frames
+        YTIC MARK OFFSET UNITS <DATA/ABSOLUTE>  - left and right frames
+        TIC MARK OFFSET UNITS <DATA/ABSOLUTE>   - all 4 frames
+
+ 9. The READ EXCEL command was updated to allow Powershell rather than
+    Python/Pandas to be used to read Excel files.  This option is
+    currently only supported for Windows platforms.  Enter HELP READ
+    EXCEL for details.
+
+    Updated the Python script for READ EXCEL to support specifying
+    the first and last column to read (inclusive).
+
+10. Fixed several bugs.
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT

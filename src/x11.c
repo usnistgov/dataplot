@@ -92,6 +92,8 @@
  *  UPDATED  - NOVEMBER 2023.  Remove "xfetch" routine (Linux cut and
  *                             paste implemented via xclip command
  *                             line rather than xclip library)
+ *  UPDATED  - SEPTEMBER 2025. Add prototypes, also use ISO_C_BINDING
+ *                             in the Fortran.
  */
 /*  This driver has been tested on Suns (both monochrome and color),
  *  Silicon Graphics Iris, HP-9000, a Cray Y-MP, DEC workstation, 
@@ -211,26 +213,11 @@
  *  definitions -DNOUNDERSCORE and -DUPPERCASE can be specified to override
  *  these defaults. */
 
-#ifdef NOUNDERSCORE
-#define APPEND_UNDERSCORE 0
-#else
-#define APPEND_UNDERSCORE 1
-#endif
-#ifdef UPPERCASE
-#define SUBROUTINE_CASE 0
-#else
-#define SUBROUTINE_CASE 1
-#endif
 /* Following 5 lines added June, 1996.  */
 #ifdef DOUBLE
 #define PRECISION 1
 #else
 #define PRECISION 0
-#endif
-#ifdef INTEGER8
-#define INTEGER_PRECISION 1
-#else
-#define INTEGER_PRECISION 0
 #endif
 #ifdef XCLIP
 #define HAVE_XCLIP 1
@@ -649,44 +636,36 @@ int           PIXMAP_CURRENT_2;       /* 0 - repeat graph closed, 1 - open */
 int           ORIENTATION_CURRENT;    /* current orientation */
 char          SCALABLE_FONT_CURRENT[80];  /* name of current scalable font */
 
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void  xclear_(), xend_(),    xcheck_();
-void  xinit_(),  xlattr_(),  xdraw_();
-void  xpoint_(), xcirc_(),   xregfl_(), xrdloc_();
-void  xfore_(),  xerase_(),  xupdat_();
-void  xsaveg_(), xrestg_(),  xcycle_();
-void  xtexth_(), xtexth2_(), xtextv_(), xtattr_();
-void  xtextv2_();
-/* void  xfetch_(); */
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void  XCLEAR_(), XEND_(),   XCHECK_();
-void  XINIT_(),  XLATTR_(), XDRAW_();
-void  XPOINT_(), XCIRC_(),  XREGFL_(),  XRDLOC_();
-void  XFORE_(),  XERASE_(), XUPDAT_();
-void  XSAVEG_(), XRESTG_(), XCYCLE_();
-void  XTEXTH_(), XTEXTH2(), XTEXTV_(),  XTATTR_();
-void  XTEXTV2_();
-/* void  XFETCH_(); */
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void  xclear(), xend(),    xcheck();
-void  xinit(),  xlattr(),  xdraw();
-void  xpoint(), xcirc(),   xregfl(),  xrdloc();
-void  xfore(),  xerase(),  xupdat();
-void  xsaveg(), xrestg(),  xcycle();
-void  xtexth(), xtexth2(), xtextv(),  xtattr();
-void  xtextv2();
-/* void  xfetch(); */
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void  XCLEAR(), XEND(),    XCHECK();
-void  XINIT(),  XLATTR(),  XDRAW();
-void  XPOINT(), XCIRC(),   XREGFL(),  XRDLOC();
-void  XFORE(),  XERASE(),  XUPDAT();
-void  XSAVEG(), XRESTG(),  XCYCLE();
-void  XTEXTH(), XTEXTH2(), XTEXTV(),  XTATTR();
-void  XTEXTV2();
-/* void  XFETCH(); */
-#endif
-void  i_to_s(), set_screen(), xback();
+void xclear();
+void xend();
+void xcheck(int *expose_flag_2, int *error_flag);
+void xinit(int *xp, int *yp, int *or, int *ixret, int *iyret,
+           int display_name[], int iwind[], int *iwindn, int *error_flag);
+void xlattr(int *index, int *icode);
+void xdraw(int xpts[], int ypts[], int *npts);
+void xpoint(int *ix, int *iy);
+void xcirc(int *ix, int *iy, int *irad, int *ifill);
+void xregfl(int xpts[], int ypts[], int *npts);
+void xrdloc(int *ixret, int *iyret, int *error);
+void xfore(int *index);
+void xerase(int *xpixels, int *ypixels, int *orien, int *ixret, int *iyret,
+            int *back_col, int *pix_flag);
+void xupdat(int *frontend);
+void xsaveg(int file_name[], int *error_flag);
+void xrestg(int file_name[], int title[], int iwind[], int *iwindn, int *error_flag);
+void xcycle(int *error_flag, int *ibutton);
+void xtexth(int string[], int *ixpos, int *iypos, int *ijusth, int *ijustv,
+            int *error);
+void xtexth2(int font[], int string[], int *ixpos, int *iypos,
+             int *ijusth, int *ijustv, int *error);
+void xtextv(int string[], int *ixpos, int *iypos, int *ijusth,
+            int *ijustv, int *error);
+void xtattr(int font[], int *error);
+void xtextv2(int font[], int string[], int *ixpos, int *iypos,
+             int *ijusth, int *ijustv, int *error);
+void i_to_s(int string1[], char string2[], int maxlen, int *ilen);
+void set_screen(int xpixels, int ypixels, int orien);
+void xback(int index);
 
 /* XCHECK  - routine to check for X expose and configuration events.
  *           Specifically, resizing of the graphics window by the window
@@ -705,35 +684,15 @@ void  i_to_s(), set_screen(), xback();
  *           were found.  It is the calling programs option as to what
  *           should be done about them.
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xcheck_(expose_flag_2, error_flag)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XCHECK_(expose_flag_2, error_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xcheck(expose_flag_2, error_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XCHECK(expose_flag_2, error_flag)
-#endif
-#if INTEGER_PRECISION == 0
-int  *error_flag;
-int  *expose_flag_2;
-#else
-int  error_flag[2];
-int  expose_flag_2[2];
-#endif
+void xcheck(int *expose_flag_2, int *error_flag)
 {
      XEvent   event;            /* holds Xserver events */
 
      *error_flag = 0;
      *expose_flag_2 = 0;
 /*
-#if INTEGER_PRECISION == 0
      *error_flag = 0;
      *expose_flag_2 = 0;
-#else
-     error_flag[0] = 0;
-     expose_flag_2[0] = 0;
-#endif
  */
      while (XEventsQueued(display, QueuedAfterReading) != 0) {/* check queue */
           XNextEvent(display, &event);        /* get next event from queue */
@@ -752,11 +711,7 @@ int  expose_flag_2[2];
                 OPEN_FLAG_2 = 0;
               }
               *error_flag = 1;
-#if INTEGER_PRECISION == 0
               *error_flag = 1;
-#else
-              error_flag[0] = 1;
-#endif
               break;
           case Expose:          /* portion of window has become visible */
               if (event.xexpose.window == window2) {
@@ -770,11 +725,7 @@ int  expose_flag_2[2];
                 }
               }
               *expose_flag_2 = 1;
-#if INTEGER_PRECISION == 0
               *expose_flag_2 = 1;
-#else
-              expose_flag_2[0] = 1;
-#endif
               break;
           case ConfigureNotify: /* window has been reconfigured */
               configure_flag = 1;
@@ -804,20 +755,7 @@ int  expose_flag_2[2];
  * error   - error flag (for window destroy event)
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xrdloc_(ixret, iyret, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XRDLOC_(ixret, iyret, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xrdloc(ixret, iyret, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XRDLOC(ixret, iyret, error)
-#endif
-#if INTEGER_PRECISION == 0
-int  *ixret, *iyret, *error;
-#else
-int  ixret[2], iyret[2], error[2];
-#endif
+void xrdloc(int *ixret, int *iyret, int *error)
 {
      XEvent   event;            /* holds Xserver events */
      int      x, y;             /* the last X pointer position */
@@ -832,15 +770,9 @@ int  ixret[2], iyret[2], error[2];
        ButtonMotionMask |             /* Pointer moves with button pressed */
        PointerMotionMask);            /* Pointer moves in window */
 
-#if INTEGER_PRECISION == 0
        *ixret = -1;
        *iyret = -1;
        *error = 0;
-#else
-       ixret[0] = -1;
-       iyret[0] = -1;
-       error[0] = 0;
-#endif
        done = 0;
        while (done == 0) {               /* loop until button press event */
 
@@ -850,11 +782,7 @@ int  ixret[2], iyret[2], error[2];
               XFreeGC(display, gc);
               XDestroyWindow(display,window);
               XCloseDisplay(display);
-#if INTEGER_PRECISION == 0
               *error = 1;
-#else
-              error[0] = 1;
-#endif
               done = 1;
               break;
           case Expose:                   /* expose event */
@@ -875,13 +803,8 @@ int  ixret[2], iyret[2], error[2];
               y = new_y;    */
               break;
           case ButtonPress:     /* Button event */
-#if INTEGER_PRECISION == 0
               *ixret = event.xbutton.x;
               *iyret = event.xbutton.y;
-#else
-              ixret[0] = event.xbutton.x;
-              iyret[0] = event.xbutton.y;
-#endif
               done = 1;
               break;
           default:
@@ -911,30 +834,8 @@ int  ixret[2], iyret[2], error[2];
  *               1 - unable to open display connection
  *               2 - X11 already open
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xinit_(xp, yp, or, ixret, iyret, display_name, iwind, iwindn,
-            error_flag) 
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XINIT_(xp, yp, or, ixret, iyret, display_name, iwind, iwindn,
-            error_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xinit(xp, yp, or, ixret, iyret, display_name, iwind, iwindn,
-            error_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XINIT(xp, yp, or, ixret, iyret, display_name, iwind, iwindn,
-            error_flag)
-#endif
-#if INTEGER_PRECISION == 0
-int    *xp, *yp, *or;
-int    *error_flag, *ixret, *iyret;
-int    display_name[];
-int    iwind[], iwindn[2];
-#else
-int    xp[2], yp[2], or[2];
-int    error_flag[2], ixret[2], iyret[2];
-int    display_name[];
-int    iwind[], iwindn[2];
-#endif
+void xinit(int *xp, int *yp, int *or, int *ixret, int *iyret,
+           int display_name[], int iwind[], int *iwindn, int *error_flag)
 {
      XTextProperty  WindowName, IconName;
      char *window_name = "Dataplot";
@@ -951,59 +852,32 @@ int    iwind[], iwindn[2];
      int          counter;
      double       atemp1;
      int          window_flag;
-#if INTEGER_PRECISION == 1
-     int          iplace;
-#endif
 
-#if INTEGER_PRECISION == 0
      *error_flag = 0;
      xpixels = *xp;
      ypixels = *yp;
      orien = *or;
      iwindn_temp = *iwindn;
-#else
-     error_flag[0] = 0;
-     xpixels = xp[0];
-     ypixels = yp[0];
-     orien = or[0];
-     iwindn_temp = iwindn[0];
-#endif
      strcpy(FONT_NULL,"ZZZZ");
      strcpy(FONT_NAME_DEFAULT,"8X13");
      if(OPEN_FLAG != 0) {                         /* X11 already open */
-#if INTEGER_PRECISION == 0
        *error_flag = 2;
-#else
-       error_flag[0] = 2;
-#endif
        return;
      }
 
      strcpy(display_string," ");
-#if INTEGER_PRECISION == 0
      i_to_s(display_name, display_string, 80, &len);
-#else
-     i_to_s(display_name, display_string, 160, &len);
-#endif
      itest = strncmp(display_string, "DEFAULT", 7);
      if (itest == 0) {          /* default display name */
        if((display = XOpenDisplay(NULL)) == NULL) { /*open display connection*/
-#if INTEGER_PRECISION == 0
          *error_flag = 1;
-#else
-         error_flag[0] = 1;
-#endif
          OPEN_FLAG = 0;
          return;
         }
      }
      else {           /* user specified display name */
        if((display = XOpenDisplay(display_string)) == NULL) {
-#if INTEGER_PRECISION == 0
          *error_flag = 1;
-#else
-         error_flag[0] = 1;
-#endif
          OPEN_FLAG = 0;
          return;
         }
@@ -1031,21 +905,11 @@ int    iwind[], iwindn[2];
      window_flag = 0;
      if ( iwindn_temp > 0 ) {
        window_flag = 1;
-#if INTEGER_PRECISION == 0
        itemp = 0;
        for ( counter = 0; counter < iwindn_temp; counter++ ) {
           atemp1 = pow(16., (double) counter);
           itemp = itemp + (long) iwind[counter]* (long) atemp1;
        }
-#else
-       iplace = 0;
-       itemp = 0;
-       for ( counter = 0; counter < iwindn_temp; counter++ ) {
-          atemp1 = pow(16., (double) counter);
-          itemp = itemp + (long) iwind[iplace]* (long) atemp1;
-          iplace = iplace + 2;
-       }
-#endif
        window = (Window) itemp;
        goto frontend;
      }
@@ -1089,19 +953,11 @@ int    iwind[], iwindn[2];
      XSetClassHint(display, window, &xch);
 #else  /* X11R4 or later */
      if (XStringListToTextProperty(&window_name, 1, &WindowName) == 0) {
-#if INTEGER_PRECISION == 0
         *error_flag = 1;
-#else
-        error_flag[0] = 1;
-#endif
         return;
      }
      if (XStringListToTextProperty(&icon_name, 1, &IconName) == 0) {
-#if INTEGER_PRECISION == 0
         *error_flag = 1;
-#else
-        error_flag[0] = 1;
-#endif
         return;
      }
      XSetWMProperties(display, window, &WindowName, &IconName, 
@@ -1121,13 +977,8 @@ int    iwind[], iwindn[2];
     XGetWindowAttributes(display, window, &returned_attributes);
     width = returned_attributes.width;
     height = returned_attributes.height;
-#if INTEGER_PRECISION == 0
     *ixret = width;
     *iyret = height;
-#else
-    ixret[0] = width;
-    iyret[0] = height;
-#endif
 
     if (window_flag == 0 ) {
       do {
@@ -1311,15 +1162,7 @@ int    iwind[], iwindn[2];
     BACKGROUND_CURRENT = -1;
     COLOR_CURRENT = -1;
     temp = 0;
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-    xfore_(&temp);
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-    XFORE_(&temp);
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
     xfore(&temp);
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-    XFORE(&temp);
-#endif
     BACKGROUND_CURRENT = 1;
 
 }
@@ -1347,54 +1190,26 @@ int    iwind[], iwindn[2];
  *
  */
 
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xerase_(xpixels, ypixels, orien, ixret, iyret, back_col, pix_flag)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XERASE_(xpixels, ypixels, orien, ixret, iyret, back_col, pix_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xerase(xpixels, ypixels, orien, ixret, iyret, back_col, pix_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XERASE(xpixels, ypixels, orien, ixret, iyret, back_col, pix_flag)
-#endif
-#if INTEGER_PRECISION == 0
-int  *xpixels, *ypixels, *orien, *back_col, *pix_flag;
-int  *ixret, *iyret;
-#else
-int  xpixels[2], ypixels[2], orien[2], back_col[2], pix_flag[2];
-int  ixret[2], iyret[2];
-#endif
+void xerase(int *xpixels, int *ypixels, int *orien, int *ixret, int *iyret,
+            int *back_col, int *pix_flag)
 {
 
    int   temp_color, temp_color_2;
    int   xpixels_temp, ypixels_temp, orien_temp, back_col_temp;
    int   pix_flag_temp;
 
-#if INTEGER_PRECISION == 0
    xpixels_temp = *xpixels;
    ypixels_temp = *ypixels;
    orien_temp = *orien;
    back_col_temp = *back_col;
    pix_flag_temp = *pix_flag;
-#else
-   xpixels_temp = xpixels[0];
-   ypixels_temp = ypixels[0];
-   orien_temp = orien[0];
-   back_col_temp = back_col[0];
-   pix_flag_temp = pix_flag[0];
-#endif
    if (configure_flag == 1) {    /* graphics window re-configured by user */
       /* Get actual height and width set by the window manager */
       XGetWindowAttributes(display, window, &returned_attributes);
       width = returned_attributes.width;
       height = returned_attributes.height;
-#if INTEGER_PRECISION == 0
       *ixret = width;
       *iyret = height;
-#else
-      ixret[0] = width;
-      iyret[0] = height;
-#endif
-
 
    }
    else if (    /* calling program changing width or height of window */
@@ -1417,23 +1232,13 @@ int  ixret[2], iyret[2];
       XGetWindowAttributes(display, window, &returned_attributes);
       width = returned_attributes.width;
       height = returned_attributes.height;
-#if INTEGER_PRECISION == 0
       *ixret = width;
       *iyret = height;
-#else
-      ixret[0] = width;
-      iyret[0] = height;
-#endif
 
    }
    else {
-#if INTEGER_PRECISION == 0
      *ixret = width;
      *iyret = height;
-#else
-     ixret[0] = width;
-     iyret[0] = height;
-#endif
    }
    configure_flag = 0;
 
@@ -1462,15 +1267,7 @@ int  ixret[2], iyret[2];
    temp_color = BACKGROUND_CURRENT;
    temp_color_2 = COLOR_CURRENT;
    BACKGROUND_CURRENT = -1;
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-   xfore_(&temp_color);
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-   XFORE_(&temp_color);
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
    xfore(&temp_color);
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-   XFORE(&temp_color);
-#endif
 
    XFillRectangle(display, window, gc, 0, 0, width, height);
 /* January 1992.  Follwoing 3 lines added.  */
@@ -1479,15 +1276,7 @@ int  ixret[2], iyret[2];
    }
 /* End change.  */
    BACKGROUND_CURRENT = temp_color;
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-   xfore_(&temp_color_2);
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-   XFORE_(&temp_color_2);
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
    xfore(&temp_color_2);
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-   XFORE(&temp_color_2);
-#endif
 /* January 1992.  Following 5 lines commented out */
 /* if (PIXMAP_CURRENT == 1) {   */             /* set pixmap to background */
 /*   XSetForeground(display, gc, colors[BACKGROUND_CURRENT].pixel); */
@@ -1510,30 +1299,13 @@ int  ixret[2], iyret[2];
  * window with the pixmap (if calling program has requested it).
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xupdat_(frontend)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XUPDAT_(frontend)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xupdat(frontend)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XUPDAT(frontend)
-#endif
-#if INTEGER_PRECISION == 0
-int     *frontend;
-#else
-int     frontend[2];
-#endif
+void xupdat(int *frontend)
 {
 /*  July 1995.  Add frontend argument.  If frontend active,
  *  automatically update graphics window regardless of expose_flag.
  */
 
-#if INTEGER_PRECISION == 0
    if (*frontend == 0) {
-#else
-   if (frontend[0] == 0) {
-#endif
      if (expose_flag == 1 &&         /* update screen  if expose event */
          PIXMAP_CURRENT == 1) {      /* copy pixmap to screen to update */
          XCopyArea(display, pixmap, window, gc, 0, 0, width, height, 0, 0);
@@ -1542,11 +1314,7 @@ int     frontend[2];
      }
    }
 
-#if INTEGER_PRECISION == 0
    if (*frontend == 1) {
-#else
-   if (frontend[0] == 1) {
-#endif
      if (PIXMAP_CURRENT == 1 &&
          GRAPH_FLAG == 1) {      /* copy pixmap to screen to update */
          XCopyArea(display, pixmap, window, gc, 0, 0, width, height, 0, 0);
@@ -1554,11 +1322,7 @@ int     frontend[2];
      }
    }
 
-#if INTEGER_PRECISION == 0
    if (*frontend == 0) {
-#else
-   if (frontend[0] == 0) {
-#endif
      if (expose_flag_aux == 1 &&       /* update second screen  if expose event */
          PIXMAP_CURRENT_2 == 1) {    /* copy pixmap to screen to update */
          XCopyArea(display, pixmap2, window2, gc2, 0, 0, width2, height2, 0, 0);
@@ -1572,15 +1336,7 @@ int     frontend[2];
 /* XCLEAR  - routine to flush the buffer
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xclear_()
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XCLEAR_()
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
 void xclear()
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XCLEAR()
-#endif
 {
    XFlush(display);
 }
@@ -1589,46 +1345,19 @@ void XCLEAR()
  *
  * Save the current pixmap to the specified file.
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xsaveg_(file_name, error_flag)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XSAVEG_(file_name, error_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xsaveg(file_name, error_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XSAVEG(file_name, error_flag)
-#endif
-#if INTEGER_PRECISION == 0
-int     *error_flag;
-int     file_name[];
-#else
-int     *error_flag[2];
-int     file_name[];
-#endif
+void xsaveg(int file_name[], int *error_flag)
 {
-#if INTEGER_PRECISION == 0
 #define MAX_STRING_LEN  128
-#else
-#define MAX_STRING_LEN  256
-#endif
    int      len, istatus;
    char     file_name_string[MAX_STRING_LEN];
 
    if ( OPEN_FLAG == 0 ){
-#if INTEGER_PRECISION == 0
      *error_flag = 3;
-#else
-     error_flag[0] = 3;
-#endif
      return;
    }
 
    if ( PIXMAP_CURRENT == 0 ){
-#if INTEGER_PRECISION == 0
      *error_flag = 2;
-#else
-     error_flag[0] = 2;
-#endif
      return;
    }
 
@@ -1637,11 +1366,7 @@ int     file_name[];
 
    istatus = XWriteBitmapFile(display, file_name_string, pixmap, width, height, -1, -1);
    XFlush(display);           /* do copy immediately */
-#if INTEGER_PRECISION == 0
    if (istatus != BitmapSuccess) *error_flag = 2;
-#else
-   if (istatus != BitmapSuccess) error_flag[0] = 2;
-#endif
 
 }
 
@@ -1650,33 +1375,11 @@ int     file_name[];
  *
  * Save the current pixmap to the specified file.
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xrestg_(file_name, title, iwind, iwindn, error_flag)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XRESTG_(file_name, title, iwind, iwindn, error_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xrestg(file_name, title, iwind, iwindn, error_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XRESTG(file_name, title, iwind, iwindn, error_flag)
-#endif
-#if INTEGER_PRECISION == 0
-int     *error_flag;
-int     file_name[];
-int     iwind[], iwindn[2], title[];
-#else
-int     *error_flag[2];
-int     file_name[];
-int     iwind[], iwindn[2];
-int     title[];
-#endif
+void xrestg(int file_name[], int title[], int iwind[], int *iwindn, int *error_flag)
 
 {
 
-#if INTEGER_PRECISION == 0
 #define MAX_STRING_LEN  128
-#else
-#define MAX_STRING_LEN  256
-#endif
    XTextProperty  WindowName, IconName;
    XWindowAttributes     window_attributes_tmp;
    int      len, istatus;
@@ -1692,21 +1395,10 @@ int     title[];
    double       atemp1;
    int          window_flag;
    FILE          *ijunk;
-#if INTEGER_PRECISION == 1
-   int          iplace;
-#endif
 
-#if INTEGER_PRECISION == 0
   iwindn_temp = *iwindn;
-#else
-  iwindn_temp = iwindn[0];
-#endif
    if ( OPEN_FLAG == 0 ){
-#if INTEGER_PRECISION == 0
      *error_flag = 3;
-#else
-     error_flag[0] = 3;
-#endif
      return;
    }
 
@@ -1723,17 +1415,10 @@ int     title[];
    istatus = XReadBitmapFile(display, window, file_name_string,
              &width2, &height2, &pixmap3, &x_hot, &y_hot);
    XFlush(display);           /* do copy immediately */
-#if INTEGER_PRECISION == 0
    if (istatus != BitmapSuccess) {
       *error_flag = 2;
       return;
    }
-#else
-   if (istatus != BitmapSuccess) {
-      error_flag[0] = 2;
-      return;
-   }
-#endif
 
    pixmap2 = XCreatePixmap(display, window, width, height, depth);
    PIXMAP_CURRENT_2 = 1;
@@ -1745,21 +1430,11 @@ int     title[];
       window_flag = 0;
       if ( iwindn_temp > 0 ) {
         window_flag = 1;
-#if INTEGER_PRECISION == 0
         itemp = 0;
         for ( counter = 0; counter < iwindn_temp; counter++ ) {
            atemp1 = pow(16., (double) counter);
            itemp = itemp + (long) iwind[counter]* (long) atemp1;
         }
-#else
-        iplace = 0;
-        itemp = 0;
-        for ( counter = 0; counter < iwindn_temp; counter++ ) {
-           atemp1 = pow(16., (double) counter);
-           itemp = itemp + (long) iwind[iplace]* (long) atemp1;
-           iplace = iplace + 2;
-        }
-#endif
         window2 = (Window) itemp;
 
         xsh2 =xsh;
@@ -1818,11 +1493,7 @@ int     title[];
     
 /*     *title_string_2 = &title_string;  */
        if (XStringListToTextProperty(&window_name, 1, &WindowName) == 0) {
-#if PRECISION == 0
           *error_flag = 1;
-#else
-          error_flag[0] = 1;
-#endif
           return;
        }
        XSetWMProperties(display, window2, &WindowName, &WindowName, 
@@ -1887,22 +1558,7 @@ int     title[];
  *          calling routine reads ibutton and either redraws another
  *          pixmap or exits.
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xcycle_(error_flag, ibutton)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XCYCLE_(error_flag, ibutton)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xcycle(error_flag, ibutton)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XCYCLE(error_flag, ibuttton)
-#endif
-#if INTEGER_PRECISION == 0
-int     *error_flag;
-int     *ibutton;
-#else
-int     *error_flag[2];
-int     *ibutton[2];
-#endif
+void xcycle(int *error_flag, int *ibutton)
 {
      XEvent   event;        /* holds Xserver events */
      int      x, y;         /* the last X pointer position */
@@ -1911,20 +1567,12 @@ int     *ibutton[2];
      int      done;
 
    if ( OPEN_FLAG == 0 ){
-#if INTEGER_PRECISION == 0
      *error_flag = 3;
-#else
-     error_flag[0] = 3;
-#endif
      return;
    }
 
    if ( PIXMAP_CURRENT == 0 ){
-#if INTEGER_PRECISION == 0
      *error_flag = 2;
-#else
-     error_flag[0] = 2;
-#endif
      return;
    }
 
@@ -1943,11 +1591,7 @@ int     *ibutton[2];
           case DestroyNotify:            /* window has been destroyed */
               XFreeGC(display, gc2);
               XDestroyWindow(display,window2);
-#if INTEGER_PRECISION == 0
               *error_flag = 1;
-#else
-              error_flag[0] = 1;
-#endif
               done = 1;
               break;
           case Expose:                   /* expose event */
@@ -1967,15 +1611,9 @@ int     *ibutton[2];
               y = new_y;    */
               break;
           case ButtonPress:     /* Button event */
-#if INTEGER_PRECISION == 0
               *ibutton = event.xbutton.button;
         /*    *ixret = event.xbutton.x;
               *iyret = event.xbutton.y;   */
-#else
-              ibutton[0] = event.xbutton.button;
-       /*     ixret[0] = event.xbutton.x;
-              iyret[0] = event.xbutton.y; */
-#endif
               done = 1;
               break;
           default:
@@ -1992,15 +1630,7 @@ int     *ibutton[2];
 /* XEND   - routine to end X11.  Close the display.
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xend_()
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XEND_()
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
 void xend()
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XEND()
-#endif
 
 {
      if (OPEN_FLAG_2 != 0) {
@@ -2090,30 +1720,13 @@ void XEND()
  *          65 -                       wheat 
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xfore_(index)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XFORE_(index)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xfore(index)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XFORE(index)
-#endif
-#if INTEGER_PRECISION == 0
-int   *index;
-#else
-int   index[2];
-#endif
+void xfore(int *index)
 {
       unsigned long  temp;
       int            temp2;
       int            index_temp;
 
-#if INTEGER_PRECISION == 0
       index_temp = *index;
-#else
-      index_temp = index[0];
-#endif
       if (index_temp == COLOR_CURRENT) return;
       COLOR_CURRENT = index_temp;
 
@@ -2207,8 +1820,7 @@ int   index[2];
  *       (setting the foreground color to the background color).
  *
  */
-void xback(index)
-int  index;
+void xback(int index)
 {
 
       unsigned long temp;
@@ -2304,20 +1916,7 @@ int  index;
  *
  */
 #define MAX_WIDTH  15
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xlattr_(index, icode)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XLATTR_(index, icode)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xlattr(index, icode)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XLATTR(index, icode)
-#endif
-#if INTEGER_PRECISION == 0
-int    *index, *icode;
-#else
-int    index[2], icode[2];
-#endif
+void xlattr(int *index, int *icode)
 {
 unsigned long  valuemask;
 int            dash_offset;
@@ -2330,13 +1929,8 @@ static char    dash3 [] = {3,3};
 static char    dash4 [] = {2,4};
 static char    dash_dot [] = {9,3,3,3};
 
-#if INTEGER_PRECISION == 0
    icode_temp = *icode;
    index_temp = *index;
-#else
-   icode_temp = icode[0];
-   index_temp = index[0];
-#endif
    switch (icode_temp) {
       case 1:         /* set the line width */
           if (index_temp == WIDTH_CURRENT) break;
@@ -2446,43 +2040,18 @@ static char    dash_dot [] = {9,3,3,3};
  *
  */
 #define MAX_LINE_POINTS  500
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xdraw_(xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XDRAW_(xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xdraw(xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XDRAW(xpts, ypts, npts)
-#endif
-int   xpts[], ypts[];
-#if INTEGER_PRECISION == 0
-int   *npts;
-#else
-int   npts[2];
-#endif
+void xdraw(int xpts[], int ypts[], int *npts)
 {
    XPoint  points[MAX_LINE_POINTS];
    int     npts_temp;
-#if INTEGER_PRECISION == 0
    npts_temp = *npts;
-#else
-   npts_temp = npts[0];
-#endif
 
    if (npts_temp == 2) {      /* draw 2 points */
       int  x1, y1, x2, y2;
-#if INTEGER_PRECISION == 0
       x1 = xpts[0];
       x2 = xpts[1];
       y1 = ypts[0];
       y2 = ypts[1];
-#else
-      x1 = xpts[0];
-      x2 = xpts[2];
-      y1 = ypts[0];
-      y2 = ypts[2];
-#endif
       XDrawLine(display, window, gc, x1, y1, x2, y2);
       if (PIXMAP_CURRENT == 1) {
         XDrawLine(display, pixmap, gc, x1, y1, x2, y2);
@@ -2490,7 +2059,6 @@ int   npts[2];
       return;
    }
    else if (npts_temp > 2) {     /* more than 2 points */
-#if INTEGER_PRECISION == 0
      int  i, ilower, iupper, nloops, temp, itimes;
      iupper = 0;
      nloops = 0;
@@ -2514,31 +2082,6 @@ int   npts[2];
         }
      }  /* end while loop */
    }    /* end of npts loop */
-#else
-     int  i, ilower, iupper, nloops, temp, itimes;
-     iupper = 0;
-     nloops = 0;
-     while (nloops != 1) {  /* do MAX_LINE_POINTS per loop */
-        ilower = iupper;
-        iupper = ilower + MAX_LINE_POINTS - 1;
-        if (iupper > npts_temp) {
-          iupper = npts_temp;
-          nloops = 1;
-        }
-        temp = 0;
-        itimes = iupper - ilower;
-        for (i = 0; i < itimes; i++) {
-           points[i].x = xpts[2*(i + ilower)];
-           points[i].y = ypts[2*(i + ilower)];
-           temp = temp + 1;
-        }
-        XDrawLines(display, window, gc, points, temp, CoordModeOrigin);
-        if (PIXMAP_CURRENT == 1) {
-          XDrawLines(display, pixmap, gc, points, temp, CoordModeOrigin);
-        }
-     }  /* end while loop */
-   }    /* end of npts loop */
-#endif
 
 }
 
@@ -2549,30 +2092,11 @@ int   npts[2];
  * iy     - contains the y coordinate
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xpoint_(ix, iy)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XPOINT_(ix, iy)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xpoint(ix, iy)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XPOINT(ix, iy)
-#endif
-#if INTEGER_PRECISION == 0
-int   *ix, *iy;
-#else
-int   ix[2], iy[2];
-#endif
+void xpoint(int *ix, int *iy)
 {
-#if INTEGER_PRECISION == 0
    XDrawPoint(display, window, gc, *ix, *iy);
    if (PIXMAP_CURRENT == 1) {
      XDrawPoint(display, pixmap, gc, *ix, *iy);
-#else
-   XDrawPoint(display, window, gc, ix[0], iy[0]);
-   if (PIXMAP_CURRENT == 1) {
-     XDrawPoint(display, pixmap, gc, ix[0], iy[0]);
-#endif
    }
 
 }
@@ -2587,46 +2111,23 @@ int   ix[2], iy[2];
  * ifill  - 0 for unfilled circle, 1 for filled circle
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xcirc_(ix, iy, irad, ifill)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XCIRC_(ix, iy, irad, ifill)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xcirc(ix, iy, irad, ifill)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XCIRC(ix, iy, irad, ifill)
-#endif
-#if INTEGER_PRECISION == 0
-int   *ix, *iy, *irad, *ifill;
-#else
-int   ix[2], iy[2], irad[2], ifill[2];
-#endif
+void xcirc(int *ix, int *iy, int *irad, int *ifill)
 {
 
    int   xpos, ypos, iwidth, iheight, iang1, iang2, ir;
 
    iang1 = 0;
    iang2 = 23040;
-#if INTEGER_PRECISION == 0
    ir = *irad;
    xpos = *ix - *irad;
    ypos = *iy - *irad;
-#else
-   ir = irad[0];
-   xpos = ix[0] - irad[0];
-   ypos = iy[0] - irad[0];
-#endif
    iwidth = 2 * ir;
    iheight = 2 * ir;
    XDrawArc(display, window, gc, xpos, ypos, iwidth, iheight, iang1, iang2);
    if (PIXMAP_CURRENT == 1) {
      XDrawArc(display, pixmap, gc, xpos, ypos, iwidth, iheight, iang1, iang2);
    }
-#if INTEGER_PRECISION == 0
    if (*ifill != 0) {
-#else
-   if (ifill[0] != 0) {
-#endif
      XFillArc(display, window, gc, xpos, ypos, iwidth, iheight, iang1, iang2);
      if (PIXMAP_CURRENT == 1) {
        XDrawArc(display, pixmap, gc, xpos, ypos, iwidth, iheight, iang1, iang2);
@@ -2649,70 +2150,32 @@ int   ix[2], iy[2], irad[2], ifill[2];
  *
  */
 #define MAX_REG_POINTS  1000
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xregfl_(xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XREGFL_(xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xregfl(xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XREGFL(xpts, ypts, npts)
-#endif
-int   xpts[], ypts[];
-#if INTEGER_PRECISION == 0
-int   *npts;
-#else
-int   npts[2];
-#endif
+void xregfl(int xpts[], int ypts[], int *npts)
 {
    XPoint  points[MAX_REG_POINTS];
    int     npts_temp;
 
-#if INTEGER_PRECISION == 0
    npts_temp = *npts;
-#else
-   npts_temp = npts[0];
-#endif
    if (npts_temp == 2) {      /* rectangle */
       int  x1, y1, x2, y2, rect_height, rect_width;
       if (xpts[0] <= xpts[1]) {
-#if INTEGER_PRECISION == 0
         x1 = xpts[0];
         x2 = xpts[1];
-#else
-        x1 = xpts[0];
-        x2 = xpts[2];
-#endif
         rect_width = x2 - x1 + 1;
       }
       else {
-#if INTEGER_PRECISION == 0
         x1 = xpts[1];
         x2 = xpts[0];
-#else
-        x1 = xpts[2];
-        x2 = xpts[0];
-#endif
         rect_width = x2 - x1 + 1;
       }
       if (ypts[0] <= ypts[1]) {
-#if INTEGER_PRECISION == 0
         y1 = ypts[0];
         y2 = ypts[1];
-#else
-        y1 = ypts[0];
-        y2 = ypts[2];
-#endif
         rect_height = y2 - y1 + 1;
       }
       else {
-#if INTEGER_PRECISION == 0
         y1 = ypts[1];
         y2 = ypts[0];
-#else
-        y1 = ypts[2];
-        y2 = ypts[0];
-#endif
         rect_height = y2 - y1 + 1;
       }
       XFillRectangle(display, window, gc, x1, y1, rect_width, rect_height);
@@ -2725,13 +2188,8 @@ int   npts[2];
       temp = npts_temp;
       if( npts_temp > MAX_REG_POINTS) temp = MAX_REG_POINTS;
       for (i = 0; i < temp; i++) {
-#if INTEGER_PRECISION == 0
          points[i].x = xpts[i];
          points[i].y = ypts[i];
-#else
-         points[i].x = xpts[2*i];
-         points[i].y = ypts[2*i];
-#endif
       }
       /* June 1994.  Use Complex instead of Convex (for possibly
          self-intersecting polygons.  X11 has problem with
@@ -2769,21 +2227,7 @@ int   npts[2];
  *               2 - invalid font, set default
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xtattr_(font, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XTATTR_(font, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xtattr(font, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XTATTR(font, error)
-#endif
-int    font[];
-#if INTEGER_PRECISION == 0
-int    *error;
-#else
-int    error[2];
-#endif
+void xtattr(int font[], int *error)
 {
 
    int          itest;          /* temporary variables */
@@ -2795,11 +2239,7 @@ int    error[2];
    XCharStruct  overall;
 
    strcpy(font_name," ");
-#if INTEGER_PRECISION == 0
    i_to_s(font, font_name, 80, &len);
-#else
-   i_to_s(font, font_name, 160, &len);
-#endif
 
    /* Check current font against requested font */
    itest = strcmp(font_name, FONT_NAME_CURRENT);
@@ -2812,19 +2252,11 @@ int    error[2];
      if (font_struct == 0) {
        if (strcmp(FONT_NAME_CURRENT,FONT_NULL) == 0)  { 
           strcpy(font_name,FONT_NAME_DEFAULT); /* load default font */
-#if INTEGER_PRECISION == 0
          *error = 2;
-#else
-         error[0] = 2;
-#endif
        }
        else {                              /* leave current font */
          strcpy(font_name, FONT_NAME_CURRENT);
-#if INTEGER_PRECISION == 0
          *error = 1;
-#else
-         error[0] = 1;
-#endif
        }
        font_name_2 = &font_name[0];
        font_struct = XLoadQueryFont(display, font_name_2);
@@ -2859,21 +2291,8 @@ int    error[2];
  * error  - error flag
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xtexth_(string, ixpos, iypos, ijusth, ijustv, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XTEXTH_(string, ixpos, iypos, ijusth, ijustv, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xtexth(string, ixpos, iypos, ijusth, ijustv, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XTEXTH(string, ixpos, iypos, ijusth, ijustv, error)
-#endif
-int    string[];
-#if INTEGER_PRECISION == 0
-int    *ixpos, *iypos, *ijusth, *ijustv, *error;
-#else
-int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
-#endif
+void xtexth(int string[], int *ixpos, int *iypos, int *ijusth, int *ijustv,
+            int *error)
 {
 
    int          itest, itempx, itempy;   /* temporary variables */
@@ -2883,23 +2302,12 @@ int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
    int          i;
    int          ixpos_temp, iypos_temp, ijusth_temp, ijustv_temp;
 
-#if INTEGER_PRECISION == 0
    ixpos_temp = *ixpos;
    iypos_temp = *iypos;
    ijusth_temp = *ijusth;
    ijustv_temp = *ijustv;
-#else
-   ixpos_temp = ixpos[0];
-   iypos_temp = iypos[0];
-   ijusth_temp = ijusth[0];
-   ijustv_temp = ijustv[0];
-#endif
 
-#if INTEGER_PRECISION == 0
    i_to_s(string, string2, 130, &len);
-#else
-   i_to_s(string, string2, 260, &len);
-#endif
    string_width = XTextWidth(font_struct, string2, len);
 
    switch (ijusth_temp) {
@@ -2959,22 +2367,8 @@ int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
  * error  - error flag
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xtexth2_(font, string, ixpos, iypos, ijusth, ijustv, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XTEXTH2_(font, string, ixpos, iypos, ijusth, ijustv, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xtexth2(font, string, ixpos, iypos, ijusth, ijustv, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XTEXTH2(font, string, ixpos, iypos, ijusth, ijustv, error)
-#endif
-int    font[];
-int    string[];
-#if INTEGER_PRECISION == 0
-int    *ixpos, *iypos, *ijusth, *ijustv, *error;
-#else
-int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
-#endif
+void xtexth2(int font[], int string[], int *ixpos, int *iypos,
+             int *ijusth, int *ijustv, int *error)
 {
 
    int          itest, itempx, itempy;   /* temporary variables */
@@ -2986,17 +2380,10 @@ int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
    int          i;
    int          ixpos_temp, iypos_temp, ijusth_temp, ijustv_temp;
 
-#if INTEGER_PRECISION == 0
    ixpos_temp = *ixpos;
    iypos_temp = *iypos;
    ijusth_temp = *ijusth;
    ijustv_temp = *ijustv;
-#else
-   ixpos_temp = ixpos[0];
-   iypos_temp = iypos[0];
-   ijusth_temp = ijusth[0];
-   ijustv_temp = ijustv[0];
-#endif
 
 XftFont *font_name;
 XftDraw *drawxft;
@@ -3004,13 +2391,8 @@ XftColor color;
 XGlyphInfo extents;
 
 /* Step 1: convert the text and font to C strings */
-#if INTEGER_PRECISION == 0
    i_to_s(string, string2, 130, &len);
    i_to_s(font,   font2,   130, &len2);
-#else
-   i_to_s(string, string2, 260, &len);
-   i_to_s(font,   font2,   260, &len2);
-#endif
 
    /* Step 2: Open the font and set the color */
    itest = strcmp(font2, SCALABLE_FONT_CURRENT);
@@ -3018,21 +2400,13 @@ XGlyphInfo extents;
       font_name = XftFontOpenName(display, screen, font2);
       /* font_name = XftFontOpenName(display, screen, "Arial-8"); */
       if (!font_name) {
-         #if INTEGER_PRECISION == 0
             *error = 1;
-         #else
-            error[0] = 1;
-         #endif
          return;
       }
    }
 
    if (!XftColorAllocName(display,vis,color_map,color_names[COLOR_CURRENT],&color)) {
-      #if INTEGER_PRECISION == 0
           *error = 2;
-      #else
-          error[0] = 2;
-      #endif
       return;
    }
 
@@ -3103,21 +2477,8 @@ XGlyphInfo extents;
  * error  - error flag
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xtextv_(string, ixpos, iypos, ijusth, ijustv, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XTEXTV_(string, ixpos, iypos, ijusth, ijustv, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xtextv(string, ixpos, iypos, ijusth, ijustv, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XTEXTV(string, ixpos, iypos, ijusth, ijustv, error)
-#endif
-int    string[];
-#if INTEGER_PRECISION == 0
-int    *ixpos, *iypos, *ijusth, *ijustv, *error;
-#else
-int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
-#endif
+void xtextv(int string[], int *ixpos, int *iypos, int *ijusth,
+            int *ijustv, int *error)
 {
 
    int          itest, itempx, itempy;   /* temporary variables */
@@ -3126,31 +2487,15 @@ int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
    int          string_width;            /* width of string in pixels */
    char         string2[130];            /* converted string */
    int          i, ijunk;
-#if INTEGER_PRECISION == 0
    int          string3[2];              /* one character at a time */
-#else
-   int          string3[4];              /* one character at a time */
-#endif
    int          ixpos_temp, iypos_temp, ijusth_temp, ijustv_temp;
 
-#if INTEGER_PRECISION == 0
    ixpos_temp = *ixpos;
    iypos_temp = *iypos;
    ijusth_temp = *ijusth;
    ijustv_temp = *ijustv;
-#else
-   ixpos_temp = ixpos[0];
-   iypos_temp = iypos[0];
-   ijusth_temp = ijusth[0];
-   ijustv_temp = ijustv[0];
-#endif
 
-
-#if INTEGER_PRECISION == 0
    i_to_s(string, string2, 130, &len);
-#else
-   i_to_s(string, string2, 260, &len);
-#endif
    y_pix_len = len * (FONT_HEIGHT_CURRENT + FONT_GAP_CURRENT);
 
    switch (ijustv_temp) {
@@ -3169,7 +2514,6 @@ int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
     }
     itempy = iypos_temp + itempy;
 
-#if INTEGER_PRECISION == 0
    string3[1] = 0;
    for (i = 0; i < len; i++) {  /* plot each character one at a time */
       string3[0] = string[i];
@@ -3199,58 +2543,11 @@ int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
      itempy = itempy + (FONT_HEIGHT_CURRENT + FONT_GAP_CURRENT);
 
    }
-#else
-   string3[1] = 0;
-   string3[2] = 0;
-   string3[3] = 0;
-   for (i = 0; i < len; i++) {  /* plot each character one at a time */
-      string3[0] = string[2*i];
-      i_to_s(string3,string2, 4, &ijunk);
-      string_width = XTextWidth(font_struct, string2, 1);
-
-     switch (ijusth_temp) {
-        case 0:                       /* Left justified string */
-            itempx = 0;
-            break;
-        case 1:                       /* Center justified string */
-            itempx = (string_width/2);
-            break;
-        case 2:                       /* Right justified string */
-            itempx = string_width;
-            break;
-        default:
-            itempx = ixpos_temp;
-            break;
-     }
-
-     itempx = ixpos_temp - itempx;
-     XDrawString(display, window, gc, itempx, itempy, string2, 1);
-     if (PIXMAP_CURRENT) {
-       XDrawString(display, pixmap, gc, itempx, itempy, string2, 1);
-     }
-     itempy = itempy + (FONT_HEIGHT_CURRENT + FONT_GAP_CURRENT);
-
-   }
-#endif
 
 }
 
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void xtextv2_(font, string, ixpos, iypos, ijusth, ijustv, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void XTEXTV2_(font, string, ixpos, iypos, ijusth, ijustv, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void xtextv2(font, string, ixpos, iypos, ijusth, ijustv, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void XTEXTV2(font, string, ixpos, iypos, ijusth, ijustv, error)
-#endif
-int    font[];
-int    string[];
-#if INTEGER_PRECISION == 0
-int    *ixpos, *iypos, *ijusth, *ijustv, *error;
-#else
-int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
-#endif
+void xtextv2(int font[], int string[], int *ixpos, int *iypos,
+             int *ijusth, int *ijustv, int *error)
 {
 
    int          itest, itempx, itempy;   /* temporary variables */
@@ -3262,24 +2559,13 @@ int    ixpos[2], iypos[2], ijusth[2], ijustv[2], error[2];
    char         string2[130];            /* converted string */
    char         font2[130];              /* converted font name */
    int          i, ijunk;
-#if INTEGER_PRECISION == 0
    int          string3[2];              /* one character at a time */
-#else
-   int          string3[4];              /* one character at a time */
-#endif
    int          ixpos_temp, iypos_temp, ijusth_temp, ijustv_temp;
 
-#if INTEGER_PRECISION == 0
    ixpos_temp = *ixpos;
    iypos_temp = *iypos;
    ijusth_temp = *ijusth;
    ijustv_temp = *ijustv;
-#else
-   ixpos_temp = ixpos[0];
-   iypos_temp = iypos[0];
-   ijusth_temp = ijusth[0];
-   ijustv_temp = ijustv[0];
-#endif
 
 XftFont *font_name;
 XftDraw *drawxft;
@@ -3287,34 +2573,21 @@ XftColor color;
 XGlyphInfo extents;
 
 /* Step 1: convert the text and font to C strings */
-#if INTEGER_PRECISION == 0
    i_to_s(string, string2, 130, &len);
    i_to_s(font,   font2,   130, &len2);
-#else
-   i_to_s(string, string2, 260, &len);
-   i_to_s(font,   font2,   260, &len2);
-#endif
 
    /* Step 2: Open the font and set the color */
    itest = strcmp(font2, SCALABLE_FONT_CURRENT);
    if (itest != 0) {
       font_name = XftFontOpenName(display, screen, font2);
       if (!font_name) {
-         #if INTEGER_PRECISION == 0
             *error = 1;
-         #else
-            error[0] = 1;
-         #endif
          return;
       }
    }
 
    if (!XftColorAllocName(display,vis,color_map,color_names[COLOR_CURRENT],&color)) {
-      #if INTEGER_PRECISION == 0
           *error = 2;
-      #else
-          error[0] = 2;
-      #endif
       return;
    }
 
@@ -3349,7 +2622,6 @@ XGlyphInfo extents;
     }
     itempy = iypos_temp + itempy;
 
-#if INTEGER_PRECISION == 0
    string3[1] = 0;
    for (i = 0; i < len; i++) {  /* plot each character one at a time */
       string3[0] = string[i];
@@ -3383,42 +2655,6 @@ XGlyphInfo extents;
      itempy = itempy + string_height;
 
    }
-#else
-   string3[1] = 0;
-   string3[2] = 0;
-   string3[3] = 0;
-   for (i = 0; i < len; i++) {  /* plot each character one at a time */
-      string3[0] = string[2*i];
-      i_to_s(string3,string2, 4, &ijunk);
-      XftTextExtents8(display, font_name, string2, 1, &extents);
-      string_width = extents.width;
-
-     switch (ijusth_temp) {
-        case 0:                       /* Left justified string */
-            itempx = 0;
-            break;
-        case 1:                       /* Center justified string */
-            itempx = (string_width/2);
-            break;
-        case 2:                       /* Right justified string */
-            itempx = string_width;
-            break;
-        default:
-            itempx = ixpos_temp;
-            break;
-     }
-
-     itempx = ixpos_temp - itempx;
-     XftDrawStringUtf8(drawxft, &color, font_name, itempx, itempy, string2, 1);
-     /* Skip pixmap for now
-     if (PIXMAP_CURRENT) {
-       XDrawString(display, pixmap, gc, itempx, itempy, string2, 1);
-     }
-     */
-     itempy = itempy + string_height;
-
-   }
-#endif
 
 }
 
@@ -3436,15 +2672,12 @@ XGlyphInfo extents;
  * ilen    - length of character string
  *
  */
-void i_to_s(string1, string2, maxlen, ilen)
-int   string1[], maxlen, *ilen;
-char  string2[];
+void i_to_s(int string1[], char string2[], int maxlen, int *ilen)
 
 {
      int  i;
      int  itemp;
      i = 0;
-#if INTEGER_PRECISION == 0
      while (string1[i] != 0 && i < (maxlen - 1) ) {
          itemp = string1[i];
          string2[i] = string1[i];
@@ -3453,16 +2686,6 @@ char  string2[];
      *ilen = i;
      string2[i]='\0';
 }
-#else
-     while (string1[2*i] != 0 && i < (maxlen - 1) ) {
-         itemp = string1[2*i];
-         string2[i] = string1[2*i];
-         i++;
-     }
-     *ilen = i;
-     string2[i]='\0';
-}
-#endif
 
 /* Set the screen size, use following steps:
  *
@@ -3498,10 +2721,10 @@ char  string2[];
  * 0.3 times root width/height to 0.1 time root width/height.
  */
 
-void set_screen(xpixels, ypixels, orien)
-int   xpixels;  /* suggested width in pixels */
-int   ypixels;  /* suggested height in pixels */
-int   orien;    /* orientation (landscape, portrait) */
+void set_screen(int xpixels, int ypixels, int orien)
+/*   xpixels:  suggested width in pixels */
+/*   ypixels:  suggested height in pixels */
+/*   orien:    orientation (landscape, portrait) */
 
 {
    int   temp;

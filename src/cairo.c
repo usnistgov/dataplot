@@ -59,11 +59,9 @@
  *  caseco      - set foreground color (based on RGB triplet)
  *  casepa      - set line pattern
  *  capoin      - draw a point (i.e., a pixel)
- *  cacirc      - draw a circle
  *  cargfl      - solid fill of a region
  *  catxth      - draw a horizontal character string
  *  catxtv      - draw a vertical character string
- *  carelo      - read mouse position
  *  i_to_s_5    - utility routine to convert array of ADE's to string
  *                array
  *
@@ -74,25 +72,10 @@
  *  definitions -DNOUNDERSCORE and -DUPPERCASE can be specified to
  *  override these defaults. */
 
-#ifdef NOUNDERSCORE
-#define APPEND_UNDERSCORE 0
-#else
-#define APPEND_UNDERSCORE 1
-#endif
-#ifdef UPPERCASE
-#define SUBROUTINE_CASE 0
-#else
-#define SUBROUTINE_CASE 1
-#endif
 #ifdef DOUBLE
 #define PRECISION 1
 #else
 #define PRECISION 0
-#endif
-#ifdef INTEGER8
-#define INTEGER_PRECISION 1
-#else
-#define INTEGER_PRECISION 0
 #endif
 #ifdef CAIRO_QUARTZ
 #define CAIRO_HAS_QUARTZ_SURFACE
@@ -211,24 +194,51 @@ static int    OPEN_FLAG_1 = 0;        /* 0 - closed, 1 - open */
 static int    OPEN_FLAG_2 = 0;        /* 0 - closed, 1 - open */
 static int    OPEN_FLAG_3 = 0;        /* 0 - closed, 1 - open */
 
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void  caend_(),  cadraw_(), capoin_(), cacirc_(), cargfl_();
-void  cainit_(), caeras_(), catxth_(), catxtv_();
-void  caseco_(), casepa_(), carend_(), caqrelo_();
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void  CAEND_(),  CAINIT_(), CADRAW_(), CAPOIN_(), CACIRC_(), CARGFL_();
-void  CAINIT_(), CAERAS_(), CATXTH_(), CATXTV_();
-void  CASECO_(), CASEPA_(), CAREND_(), CARELO_(),;
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void  caend(),  cadraw(), capoin(), cacirc(), cargfl();
-void  cainit(), caeras(), catxth(), catxtv(), catatt();
-void  caseco(), casepa(), carend(), carelo();
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void  CAEND(),  CADRAW(), CAPOIN(), CACIRC(), CARGFL();
-void  CAINIT(), CAERAS(), CATXTH(), CATXTV();
-void  CASECO(), CASEPA(), CARELO();
+void caend(int *idev,int *imodel);
+#if PRECISION == 0
+void cadraw(int *idev, double xpts[], double ypts[], int *npts, int *icap,
+            int *ijoin, int *ipatt, double *pthick);
+void cainit(int *idev,int *imodel,int file_name[],
+            double *anumhp,double *anumvp,
+            double *jred,double *jgreen,double *jblue,int *error_flag);
+void caeras(int *idev, int *imodel, double *anumhp, double *anumvp,
+            double *jred, double *jgreen, double *jblue,
+            int *ixret, int *iyret);
+void catxth(int *idev,int string[],double *ixpos,double *iypos,
+            int *ijusth,int *ijustv,double *fontsize,int font[],
+            int *islant,int *iweight,int *error);
+void catxtv(int *idev,int string[],double *ixpos,double *iypos,
+            int *ijusth,int *ijustv,double *fontsize,int font[],
+            int *islant,int *iweight,int *error);
+void caseco(int *idev,double *jred,double *jgreen,double *jblue);
+void casepa(int *idev,float xpatt[],int *npatt,float *pthick,int *iopt);
+void camove(int *idev,double *ax1,double *ay1);
+#else
+void cadraw(int *idev, double xpts[], double ypts[], int *npts, int *icap,
+            int *ijoin, int *ipatt, double pthick[2]);
+void cainit(int *idev,int *imodel,int file_name[],
+            double anumhp[2],double anumvp[2],
+            double jred[2],double jgreen[2],double jblue[2],int *error_flag);
+void caeras(int *idev, int *imodel, double anumhp[2], double anumvp[2],
+            double jred[2], double jgreen[2], double jblue[2],
+            int *ixret, int *iyret);
+void catxth(int *idev,int string[],double ixpos[2],double iypos[2],
+            int *ijusth,int *ijustv,double fontsize[2],int font[],
+            int *islant,int *iweight,int *error);
+void catxtv(int *idev,int string[],double ixpos[2],double iypos[2],
+            int *ijusth,int *ijustv,double fontsize[2],int font[],
+            int *islant,int *iweight,int *error);
+void caseco(int *idev,double jred[2],double jgreen[2],double jblue[2]);
+void casepa(int *idev,float xpatt[],int *npatt,float pthick[2],int *iopt);
+void camove(int *idev,double ax1[2],double ay1[2]);
 #endif
-void  i_to_s_5();
+void capoin(int *idev, int *ix, int *iy);
+void cargfl(int *idev, double xpts[], double ypts[], int *npts);
+void carend(int *idev,int *imodel);
+void cachec(int *expose_flag_cairo_2, int *error_flag);
+void caflsh(int *idev,int *imodel);
+void cardlo(int *idev, int *imodel, int *ixret, int *iyret, int *error);
+void i_to_s_5();
 
 /* CACHEC  - routine to check for X expose and configuration events.
  *           Specifically, resizing of the graphics window by the window
@@ -247,22 +257,7 @@ void  i_to_s_5();
  *           were found.  It is the calling programs option as to what
  *           should be done about them.
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void cachec_(expose_flag_cairo_2, error_flag)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CACHEC_(expose_flag_cairo_2, error_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void cachec(expose_flag_cairo_2, error_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CACHEC(expose_flag_cairo_2, error_flag)
-#endif
-#if INTEGER_PRECISION == 0
-int  *error_flag;
-int  *expose_flag_cairo_2;
-#else
-int  error_flag[2];
-int  expose_flag_cairo_2[2];
-#endif
+void cachec(int *expose_flag_cairo_2, int *error_flag)
 {
 #ifdef HAVE_X11
      /* XEvent   event; */           /* holds Xserver events */
@@ -270,15 +265,6 @@ int  expose_flag_cairo_2[2];
 
      *error_flag = 0;
      *expose_flag_cairo_2 = 0;
-/*
-#if INTEGER_PRECISION == 0
-     *error_flag = 0;
-     *expose_flag_cairo_2 = 0;
-#else
-     error_flag[0] = 0;
-     expose_flag_cairo_2[0] = 0;
-#endif
- */
 #ifdef HAVE_X11
      while (XEventsQueued(dsp, QueuedAfterReading) != 0) {/* check queue */
           XNextEvent(dsp, &event_cairo);        /* get next event from queue */
@@ -289,22 +275,14 @@ int  expose_flag_cairo_2[2];
               XCloseDisplay(dsp);
               OPEN_FLAG_2 = 0;
               *error_flag = 1;
-#if INTEGER_PRECISION == 0
               *error_flag = 1;
-#else
-              error_flag[0] = 1;
-#endif
               break;
           case Expose:          /* portion of window has become visible */
               if(event_cairo.xexpose.count == 0) {
                 expose_flag_cairo = 1;
               }
               *expose_flag_cairo_2 = 1;
-#if INTEGER_PRECISION == 0
               *expose_flag_cairo_2 = 1;
-#else
-              expose_flag_cairo_2[0] = 1;
-#endif
               break;
           case ConfigureNotify: /* window has been reconfigured */
               configure_flag_cairo = 1;
@@ -336,38 +314,14 @@ int  expose_flag_cairo_2[2];
  *  range, then set it to 1).  The imodel parameter identifies
  *  which device is being opened.
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void cainit_(idev,imodel,file_name,anumhp,anumvp,jred,jgreen,jblue,error_flag)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CAINIT_(idev,imodel,file_name,anumhp,anumvp,jred,jgreen,jblue,error_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void cainit(idev,imodel,file_name,anumhp,anumvp,jred,jgreen,jblue,error_flag)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CAINIT(idev,imodel,fname,anumhp,anumvp,jred,jgreen,jblue,error_flag)
-#endif
-
-int  file_name[];
-#if INTEGER_PRECISION == 0
-int  *idev;
-int  *imodel;
-int  *error_flag;
-#else
-int   idev[2];
-int   imodel[2];
-int   ierror_flag[2];
-#endif
 #if PRECISION == 0
-double  *anumhp;
-double  *anumvp;
-double  *jred;
-double  *jblue;
-double  *jgreen;
+void cainit(int *idev,int *imodel,int file_name[],
+            double *anumhp,double *anumvp,
+            double *jred,double *jgreen,double *jblue,int *error_flag)
 #else
-double  anumhp[2];
-double  anumvp[2];
-double  jred[2];
-double  jblue[2];
-double  jgreen[2];
+void cainit(int *idev,int *imodel,int file_name[],
+            double anumhp[2],double anumvp[2],
+            double jred[2],double jgreen[2],double jblue[2],int *error_flag)
 #endif
 
 {
@@ -390,17 +344,10 @@ double  jgreen[2];
 WindowRef    gTestWindow;
 #endif
 
-#if INTEGER_PRECISION == 0
    idev_temp   = *idev;
    imodel_temp = *imodel;
    *error_flag = 0;
    i_to_s_5(file_name, file_string, 80, &len);
-#else
-   idev_temp   = idev[0];
-   imodel_temp = imodel[0];
-   error_flag[0] = 0;
-   i_to_s_2(file_name, file_string, 160, &len);
-#endif
 
 #if PRECISION == 0
    anumhp_temp = *anumhp;
@@ -447,11 +394,7 @@ WindowRef    gTestWindow;
 #ifdef HAVE_X11
              if ((dsp = XOpenDisplay(NULL)) == NULL) {
                 OPEN_FLAG_1 = 0;
-#if INTEGER_PRECISION == 0
                 *error_flag = 1;
-#else
-                error_flag[0] = 1;
-#endif
              } else {
                 double  x1, y1, width, height;
                 screen_cairo = DefaultScreen(dsp);
@@ -531,11 +474,7 @@ WindowRef    gTestWindow;
              cairo_fill(cr1);
              */
           } else {
-#if INTEGER_PRECISION == 0
      *error_flag = 2;
-#else
-     error_flag[0] = 2;
-#endif
           }
        }
     } else if (idev_temp == 2) {           /*  Device 2 */
@@ -636,11 +575,7 @@ WindowRef    gTestWindow;
              cairo_stroke_preserve(cr2);
              cairo_fill(cr2);
           } else {
-#if INTEGER_PRECISION == 0
      *error_flag = 2;
-#else
-     error_flag[0] = 1;
-#endif
           }
        }
     } else if (idev_temp == 3) {          /*  Device 2 */
@@ -741,11 +676,7 @@ WindowRef    gTestWindow;
              cairo_stroke_preserve(cr3);
              cairo_fill(cr3);
           } else {
-#if INTEGER_PRECISION == 0
      *error_flag = 2;
-#else
-     error_flag[0] = 1;
-#endif
           }
        }
     }
@@ -770,38 +701,14 @@ WindowRef    gTestWindow;
  *
  */
 
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void caeras_(idev, imodel, anumhp, anumvp, jred, jgreen, jblue, ixret, iyret)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CAERAS_(idev, imodel, anumhp, anumvp, jred, jgreen, jblue, ixret, iyret)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void caeras(idev, imodel, anumhp, anumvp, jred, jgreen, jblue, ixret, iyret)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CAERAS(idev, imodel, anumhp, anumvp, jred, jgreen, jblue, ixret, iyret)
-#endif
-#if INTEGER_PRECISION == 0
-int  *idev;
-int  *imodel;
-int  *ixret;
-int  *iyret;
-#else
-int   idev[2];
-int   imodel[2];
-int   ixret[2];
-int   iyret[2];
-#endif
 #if PRECISION == 0
-double  *anumhp;
-double  *anumvp;
-double  *jred;
-double  *jblue;
-double  *jgreen;
+void caeras(int *idev, int *imodel, double *anumhp, double *anumvp,
+            double *jred, double *jgreen, double *jblue,
+            int *ixret, int *iyret)
 #else
-double  anumhp[2];
-double  anumvp[2];
-double  jred[2];
-double  jblue[2];
-double  jgreen[2];
+void caeras(int *idev, int *imodel, double anumhp[2], double anumvp[2],
+            double jred[2], double jgreen[2], double jblue[2],
+            int *ixret, int *iyret)
 #endif
 {
 
@@ -819,14 +726,8 @@ double  jgreen[2];
    double   avalue2;
    double   avalue3;
 
-#if INTEGER_PRECISION == 0
    idev_temp   = *idev;
    imodel_temp = *imodel;
-#else
-   idev_temp   = idev[0];
-   imodel_temp = imodel[0];
-   iback_temp  = iback[0];
-#endif
 
 #if PRECISION == 0
    anumhp_temp = *anumhp;
@@ -929,35 +830,15 @@ double  jgreen[2];
 /* CAEND   - routine to end Cairo display and close the display
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void caend_(idev,imodel)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CAEND_(idev,imodel)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void caend(idev,imodel)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CAEND(idev,imodel)
-#endif
-#if INTEGER_PRECISION == 0
-int  *idev;
-int  *imodel;
-#else
-int  idev[2];
-int  imodel[2];
-#endif
+void caend(int *idev,int *imodel)
 
 {
 
    int   idev_temp;
    int   imodel_temp;
 
-#if INTEGER_PRECISION == 0
    idev_temp   = *idev;
    imodel_temp = *imodel;
-#else
-   idev_temp   = idev[0];
-   imodel_temp = imodel[0];
-#endif
 
    if (idev_temp == 1) {
       if (OPEN_FLAG_1 > 0) {
@@ -991,35 +872,15 @@ int  imodel[2];
  *          use to make sure current plot is completed)
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void caflsh_(idev,imodel)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CAFLSH_(idev,imodel)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void caflsh(idev,imodel)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CAFLSH(idev,imodel)
-#endif
-#if INTEGER_PRECISION == 0
-int  *idev;
-int  *imodel;
-#else
-int  idev[2];
-int  imodel[2];
-#endif
+void caflsh(int *idev,int *imodel)
 
 {
 
    int   idev_temp;
    int   imodel_temp;
 
-#if INTEGER_PRECISION == 0
    idev_temp   = *idev;
    imodel_temp = *imodel;
-#else
-   idev_temp   = idev[0];
-   imodel_temp = imodel[0];
-#endif
 
    if (idev_temp == 1) {
       if (OPEN_FLAG_1 > 0) {
@@ -1041,36 +902,15 @@ int  imodel[2];
 /* CAREND   - routine to render current plot
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void carend_(idev,imodel)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CAREND_(idev,imodel)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void carend(idev,imodel)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CAREND(idev,imodel)
-#endif
-
-#if INTEGER_PRECISION == 0
-int  *idev;
-int  *imodel;
-#else
-int  idev[2];
-int  imodel[2];
-#endif
+void carend(int *idev,int *imodel)
 
 {
 
    int   idev_temp;
    int   imodel_temp;
 
-#if INTEGER_PRECISION == 0
    idev_temp   = *idev;
    imodel_temp = *imodel;
-#else
-   idev_temp   = idev[0];
-   imodel_temp = imodel[0];
-#endif
 
    if (idev_temp == 1) {
       if (OPEN_FLAG_1 > 0) {
@@ -1132,33 +972,12 @@ int  imodel[2];
  * pthick - line thickness
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void cadraw_(idev, xpts, ypts, npts, icap, ijoin, ipatt, pthick)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CADRAW_(idev, xpts, ypts, npts, icap, ijoin, ipatt, pthick)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void cadraw(idev, xpts, ypts, npts, icap, ijoin, ipatt, pthick)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CADRAW(idev, xpts, ypts, npts, icap, ijoin, ipatt, pthick)
-#endif
-double   xpts[], ypts[];
-#if INTEGER_PRECISION == 0
-int   *idev;
-int   *npts;
-int   *icap;
-int   *ijoin;
-int   *ipatt;
-#else
-int   idev[2];
-int   npts[2];
-int   icap[2];
-int   ijoin[2];
-int   ipatt[2];
-#endif
 #if PRECISION == 0
-double  *pthick;
+void cadraw(int *idev, double xpts[], double ypts[], int *npts, int *icap,
+            int *ijoin, int *ipatt, double *pthick)
 #else
-double  pthick[2];
+void cadraw(int *idev, double xpts[], double ypts[], int *npts, int *icap,
+            int *ijoin, int *ipatt, double pthick[2])
 #endif
 {
    int     npts_temp;
@@ -1173,19 +992,11 @@ double  pthick[2];
    float   ypts_temp[1000];
    double  pthick_temp;
 
-#if INTEGER_PRECISION == 0
    npts_temp  = *npts;
    icap_temp  = *icap;
    ijoin_temp = *ijoin;
    ipatt_temp = *ipatt;
    idev_temp  = *idev;
-#else
-   npts_temp  = *npts[0];
-   icap_temp  = *icap[0];
-   ijoin_temp = *ijoin[0];
-   ipatt_temp = *ipatt[0];
-   idev_temp = *idev[0];
-#endif
 
    nlast = npts_temp;
    if (nlast > 1000) nlast = 1000;
@@ -1448,24 +1259,10 @@ double  pthick[2];
  * ay1    - contains the y coordinate
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void camove_(idev, ax1, ay1)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CAMOVE_(idev, ax1,a1)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void camove(idev, ax1,ay1)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CAMOVE(idev, ax1,ay1)
-#endif
 #if PRECISION == 0
-double   *ax1, *ay1;
+void camove(int *idev,double *ax1,double *ay1)
 #else
-double ax1[2], ay1[2];
-#endif
-#if INTEGER_PRECISION == 0
-int   *idev;
-#else
-int   idev[2];
+void camove(int *idev,double ax1[2],double ay1[2])
 #endif
 {
    double   ax1_temp;
@@ -1480,11 +1277,7 @@ int   idev[2];
    ay1_temp = ay1[0];
 #endif
 
-#if INTEGER_PRECISION == 0
    idev_temp = *idev;
-#else
-   idev_temp = *idev[0];
-#endif
 
    if (idev_temp == 1) {
       if (OPEN_FLAG_1 > 0) {
@@ -1513,28 +1306,10 @@ int   idev[2];
  * jblue  - value for blue component (0 to 1)
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void caseco_(idev, jred,jgreen,jblue)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CASECO_(idev, jred,jgreen,jblue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void caseco(idev, jred,jgreen,jblue)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CASECO(idev, jred,jgreen,jblue)
-#endif
 #if PRECISION == 0
-double   *jred;
-double   *jgreen;
-double   *jblue;
+void caseco(int *idev,double *jred,double *jgreen,double *jblue)
 #else
-double   jred[2];
-double   jgreen[2];
-double   jblue[2];
-#endif
-#if INTEGER_PRECISION == 0
-int   *idev;
-#else
-int   idev[2];
+void caseco(int *idev,double jred[2],double jgreen[2],double jblue[2])
 #endif
 {
    float    avalue1;
@@ -1552,11 +1327,7 @@ int   idev[2];
    avalue3 = jblue[0];
 #endif
 
-#if INTEGER_PRECISION == 0
    idev_temp = *idev;
-#else
-   idev_temp = *idev[0];
-#endif
 
    if (avalue1 < 0) {
       avalue1 = 0.0;
@@ -1599,29 +1370,10 @@ int   idev[2];
  * pthick  - the line thickness (in points)
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void casepa_(idev,xpatt,npatt,pthick,iopt)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CASEPA_(idev,xpatt,npatt,pthick,iopt)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void casepa(idev,xpatt,npatt,pthick,iopt)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CASEPA(idev,xpatt,npatt,pthick,iopt)
-#endif
-float  xpatt[];
 #if PRECISION == 0
-float *pthick;
+void casepa(int *idev,float xpatt[],int *npatt,float *pthick,int *iopt)
 #else
-float pthick[2];
-#endif
-#if INTEGER_PRECISION == 0
-int   *npatt;
-int   *iopt;
-int   *idev;
-#else
-int   npatt[2];
-int   iopt[2];
-int   idev[2];
+void casepa(int *idev,float xpatt[],int *npatt,float pthick[2],int *iopt)
 #endif
 {
    int     npatt_temp;
@@ -1634,15 +1386,9 @@ int   idev[2];
 #else
    pthick_temp = pthick[0];
 #endif
-#if INTEGER_PRECISION == 0
    npatt_temp  = *npatt;
    iopt_temp   = *iopt;
    idev_temp   = *idev;
-#else
-   npatt_temp  = npatt[0];
-   iopt_temp   = iopt[0];
-   idev_temp   = idev[0];
-#endif
 
    if (idev_temp == 1) {
       if (OPEN_FLAG_1 > 0) {
@@ -1717,37 +1463,16 @@ int   idev[2];
  * jcol   - color to use in drawing the point
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void capoin_(idev, ix, iy)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CAPOIN_(idev, ix, iy)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void capoin(idev, ix, iy)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CAPOIN(idev, ix, iy)
-#endif
-#if INTEGER_PRECISION == 0
-int   *ix, *iy;
-int   *idev;
-#else
-int   ix[2], iy[2];
-int   idev[2];
-#endif
+void capoin(int *idev, int *ix, int *iy)
 {
 
    int    ixtemp;
    int    iytemp;
    int    idev_temp;
 
-#if INTEGER_PRECISION == 0
    ixtemp      = *ix;
    iytemp      = *iy;
    idev_temp   = *idev;
-#else
-   ixtemp = ix[0];
-   iytemp = iy[0];
-   idev_temp == ired[0];
-#endif
 
    if (idev_temp == 1) {
       if (OPEN_FLAG_1 > 0) {
@@ -1785,37 +1510,15 @@ int   idev[2];
  *
  */
 #define MAX_REG_POINTS  1000
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void cargfl_(idev, xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CARGFL_(idev, xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void cargfl(idev, xpts, ypts, npts)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CARGFL(idev, xpts, ypts, npts)
-#endif
-double   xpts[], ypts[];
-#if INTEGER_PRECISION == 0
-int   *npts;
-int   *idev;
-#else
-int   npts[2];
-int   idev[2];
-#endif
+void cargfl(int *idev, double xpts[], double ypts[], int *npts)
 {
    int     npts_temp;
    int     idev_temp;
    int     indx;
 
-#if INTEGER_PRECISION == 0
    npts_temp = *npts;
    idev_temp = *idev;
    indx = 1;
-#else
-   npts_temp = npts[0];
-   idev_temp = idev[0];
-   indx = 2;
-#endif
 
    if (idev_temp == 1) {
       if (OPEN_FLAG_1 > 0) {
@@ -1851,13 +1554,8 @@ int   idev[2];
             iy = ypts[0];
             cairo_move_to(cr1,ix,iy);
             for (i = 1; i < temp; i++) {
-#if INTEGER_PRECISION == 0
                 ix = xpts[i];
                 iy = ypts[i];
-#else
-                ix = xpts[2*i];
-                iy = ypts[2*i];
-#endif
                 cairo_line_to(cr1,ix,iy);
             }
             cairo_close_path(cr1);
@@ -1946,13 +1644,8 @@ int   idev[2];
             iy = ypts[0];
             cairo_move_to(cr3,ix,iy);
             for (i = 1; i < temp; i++) {
-#if INTEGER_PRECISION == 0
                 ix = xpts[i];
                 iy = ypts[i];
-#else
-                ix = xpts[2*i];
-                iy = ypts[2*i];
-#endif
                 cairo_line_to(cr3,ix,iy);
             }
             cairo_close_path(cr3);
@@ -1981,40 +1674,14 @@ int   idev[2];
  * error  - error flag
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void catxth_(idev, string, ixpos, iypos, ijusth, ijustv, fontsize, font, islant, iweight, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CATXTH_(idev, string, ixpos, iypos, ijusth, ijustv, fontsize, font, islant, iweight, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void catxth(idev, string, ixpos, iypos, ijusth, ijustv, fontsize, font, islant, iweight, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CATXTH(idev, string, ixpos, iypos, ijusth, ijustv, fontsize, font, islant, iweight, error)
-#endif
-int    string[];
-int    font[];
 #if PRECISION == 0
-double    *ixpos;
-double    *iypos;
-double    *fontsize;
+void catxth(int *idev,int string[],double *ixpos,double *iypos,
+            int *ijusth,int *ijustv,double *fontsize,int font[],
+            int *islant,int *iweight,int *error)
 #else
-double    ixpos[2];
-double    iypos[2];
-double    fontsize[2];
-#endif
-#if INTEGER_PRECISION == 0
-int    *idev;
-int    *ijusth;
-int    *ijustv;
-int    *islant;
-int    *iweight;
-int    *error;
-#else
-int    idev[2];
-int    ijusth[2];
-int    ijustv[2];
-int    islant[2];
-int    iweight[2];
-int    error[2];
+void catxth(int *idev,int string[],double ixpos[2],double iypos[2],
+            int *ijusth,int *ijustv,double fontsize[2],int font[],
+            int *islant,int *iweight,int *error)
 #endif
 {
 
@@ -2050,7 +1717,6 @@ int    error[2];
    size_temp  = fontsize[0];
 #endif
 
-#if INTEGER_PRECISION == 0
    ijusth_temp  = *ijusth;
    ijustv_temp  = *ijustv;
    islant_temp  = *islant;
@@ -2058,15 +1724,6 @@ int    error[2];
    idev_temp    = *idev;
    i_to_s_5(string, string2, 130, &len);
    i_to_s_5(font, font2, 33, &len2);
-#else
-   ijusth_temp  = ijusth[0];
-   ijustv_temp  = ijustv[0];
-   islant_temp  = islant[0];
-   iweight_temp = iweight[0];
-   idev_temp    = *idev[0];
-   i_to_s_5(string, string2, 260, &len);
-   i_to_s_5(font, font2, 66, &len2);
-#endif
 
    if (islant_temp == 1) {
       ival1 = CAIRO_FONT_SLANT_NORMAL;
@@ -2167,40 +1824,14 @@ int    error[2];
  * error  - error flag
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void catxtv_(idev, string, ixpos, iypos, ijusth, ijustv, fontsize, font, islant, iweight, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CATXTV_(idev, string, ixpos, iypos, ijusth, ijustv, fontsize, font, islant, iweight, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void catxtv(idev, string, ixpos, iypos, ijusth, ijustv, fontsize, font, islant, iweight, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CATXTV(idev, string, ixpos, iypos, ijusth, ijustv, fontsize, font, islant, iweight, error)
-#endif
-int    string[];
-int    font[];
 #if PRECISION == 0
-double    *ixpos;
-double    *iypos;
-double    *fontsize;
+void catxtv(int *idev,int string[],double *ixpos,double *iypos,
+            int *ijusth,int *ijustv,double *fontsize,int font[],
+            int *islant,int *iweight,int *error)
 #else
-double    ixpos[2];
-double    iypos[2];
-double    fontsize[2];
-#endif
-#if INTEGER_PRECISION == 0
-int    *idev;
-int    *ijusth;
-int    *ijustv;
-int    *islant;
-int    *iweight;
-int    *error;
-#else
-int    idev[2];
-int    ijusth[2];
-int    ijustv[2];
-int    islant[2];
-int    iweight[2];
-int    error[2];
+void catxtv(int *idev,int string[],double ixpos[2],double iypos[2],
+            int *ijusth,int *ijustv,double fontsize[2],int font[],
+            int *islant,int *iweight,int *error)
 #endif
 {
 
@@ -2237,7 +1868,6 @@ int    error[2];
    size_temp = fontsize[0];
 #endif
 
-#if INTEGER_PRECISION == 0
    ijusth_temp = *ijusth;
    ijustv_temp = *ijustv;
    islant_temp = *islant;
@@ -2245,13 +1875,6 @@ int    error[2];
    idev_temp = *idev;
    i_to_s_5(string, string2, 130, &len);
    i_to_s_5(font, font2, 33, &len2);
-#else
-   ijusth_temp = ijusth[0];
-   ijustv_temp = ijustv[0];
-   idev_temp = *idev[0];
-   i_to_s_5(string, string2, 260, &len);
-   i_to_s_5(font, font2, 66, &len2);
-#endif
 
    if (islant_temp == 1) {
       ival1 = CAIRO_FONT_SLANT_NORMAL;
@@ -2362,28 +1985,7 @@ int    error[2];
  * error   - error flag (for window destroy event)
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void cardlo_(idev, imodel, ixret, iyret, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CARDLO_(idev, inodel, ixret, iyret, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void cardlo(idev, imodel, ixret, iyret, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CARDLO(idev, imodel, ixret, iyret, error)
-#endif
-#if INTEGER_PRECISION == 0
-int  *idev;
-int  *imodel;
-int  *ixret;
-int  *iyret;
-int  *error;
-#else
-int  idev[2];
-int  imodel[2];
-int  ixret[2];
-int  iyret[2];
-int  error[2];
-#endif
+void cardlo(int *idev, int *imodel, int *ixret, int *iyret, int *error)
 {
 #ifdef HAVE_X11
      XEvent   event_cairo;            /* holds Xserver events */
@@ -2412,19 +2014,11 @@ int  error[2];
        PointerMotionMask);
 #endif
 
-#if INTEGER_PRECISION == 0
        idev_temp   = *idev;
        imodel_temp = *imodel;
        *ixret      = -1;
        *iyret      = -1;
        *error      = 0;
-#else
-       idev_temp   = idev[0];
-       imodel_temp = imodel[0];
-       ixret[0] = -1;
-       iyret[0] = -1;
-       error[0] = 0;
-#endif
 
        if (idev_temp == 1) {
           if (OPEN_FLAG_1 > 0) {
@@ -2440,11 +2034,7 @@ int  error[2];
                    cairo_destroy(cr1);
                    XCloseDisplay(dsp);
                    OPEN_FLAG_2 = 0;
-#if INTEGER_PRECISION == 0
                    *error = 1;
-#else
-                   error[0] = 1;
-#endif
                   break;
                 case Expose:          /* portion of window has become visible */
                    if (event_cairo.xexpose.count == 0) {
@@ -2455,13 +2045,8 @@ int  error[2];
                    configure_flag_cairo = 1;
                    break;
                 case ButtonPress:     /* Button event */
-#if INTEGER_PRECISION == 0
                    *ixret = event_cairo.xbutton.x;
                    *iyret = event_cairo.xbutton.y;
-#else
-                   ixret[0] = event_cairo.xbutton.x;
-                   iyret[0] = event_cairo.xbutton.y;
-#endif
                    done = 1;
                    break;
                 default:
@@ -2494,15 +2079,12 @@ int  error[2];
  * ilen    - length of character string
  *
  */
-void i_to_s_5(string1, string2, maxlen, ilen)
-int   string1[], maxlen, *ilen;
-char  string2[];
+void i_to_s_5(int string1[],char string2[],int maxlen,int *ilen)
 
 {
      int  i;
      int  itemp;
      i = 0;
-#if INTEGER_PRECISION == 0
      while (string1[i] != 0 && i < (maxlen - 1) ) {
          itemp = string1[i];
          string2[i] = string1[i];
@@ -2510,15 +2092,6 @@ char  string2[];
      }
      *ilen = i;
      string2[i]='\0';
-#else
-     while (string1[2*i] != 0 && i < (maxlen - 1) ) {
-         itemp = string1[2*i];
-         string2[i] = string1[2*i];
-         i++;
-     }
-     *ilen = i;
-     string2[i]='\0';
-#endif
 }
 
 /* int decodeEvent(char *event, int *x, int *y)

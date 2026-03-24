@@ -2,8 +2,9 @@ FC = gfortran
 CC = gcc
 
 # FEATURES to enable during compilation
-# all: READLINE NCURSES GD TIFF VPX CAIRO X11 GKS OPENGL PLOT XCLIP CYGWIN MACOSX TCL DISABLE_SYSTEM_COMMAND STACK_SIZE DEBUG
-FEATURES = GD TIFF CAIRO X11 READLINE NCURSES XCLIP STACK_SIZE DEBUG
+# all: READLINE NCURSES GD TIFF VPX AVIF HEIF CAIRO X11 GKS OPENGL PLOT XCLIP CYGWIN MACOSX TCL DISABLE_SYSTEM_COMMAND STACK_SIZE DEBUG ISOCLINE
+#FEATURES = GD TIFF VPX AVIF HEIF CAIRO X11 READLINE NCURSES XCLIP STACK_SIZE DEBUG ISOCLINE
+FEATURES = GD TIFF CAIRO X11 READLINE NCURSES XCLIP STACK_SIZE
 
 # PREFIX is the parent of where are installed
 # for non-root install, consider PREFIX=$(HOME) or /var/tmp
@@ -29,19 +30,24 @@ endif
 
 # object files sorted by size for fastest parallel compilation; dp2.o first as it takes the longest
 # ls -S *.F | egrep -v 'msfort_intel' | sed 's/\.F/.o/g' | xargs
-OBJS = dp40.o dp36.o dp42.o dp19.o dp11.o dp38.o dp20.o dp21.o dp2.o dp3.o dp43.o dp18.o dp29.o dp4.o dp37.o dp16.o dp22.o dp9.o dp32.o dp8.o dp41.o dp17.o dp31.o dp15.o dp6.o dp45.o dp12.o dp5.o dp13.o dp30.o dp44.o dp10.o dp25.o starpac.o edsub.o dp27.o dp14.o dp33.o optimi.o dp28.o fit3b.o odrpck.o dp23.o dp26.o dp1.o dp35.o dp7.o dp34.o cluster.o dp24.o dp39.o main.o dpdds3.o edsear.o compgeom.o edmai2.o dpdds.o dpdds2.o edinit.o edwrst.o
+OBJS = dp40.o dp36.o dp42.o dp19.o dp11.o dp38.o dp20.o dp21.o dp2.o dp3.o dp43.o dp18.o dp29.o dp4.o dp37.o dp16.o dp22.o dp9.o dp32.o dp8.o dp41.o dp17.o dp31.o dp15.o dp6.o dp45.o dp12.o dp5.o dp13.o dp30.o dp44.o dp10.o dp25.o starpac.o fed.o dp27.o dp14.o dp33.o optimi.o dp28.o fit3b.o odrpck.o dp23.o dp26.o dp1.o dp35.o dp7.o dp34.o cluster.o dp24.o dp39.o main.o dpddsall.o compgeom.o block_data.o
 
 
 ifneq (,$(findstring READLINE,$(FEATURES)))
 OBJS += rldp.o
-CFLAGS += -I/usr/include/readline
+CFLAGS4 = -I/usr/include/readline
 FFLAGS4 = -DHAVE_READLINE
 LDFLAGS += -lreadline
 endif
 
+ifneq (,$(findstring ISOCLINE,$(FEATURES)))
+OBJS += isocdp.c isocline.o
+FFLAGS4 += -DHAVE_ISOCLINE
+endif
+
 # Some versions of gfortran may require following line to avoid compiler warnings
 ifneq (,$(findstring STACK_SIZE,$(FEATURES)))
-FFLAGS += -fmax-stack-var-size=1000000
+FFLAGS += -fmax-stack-var-size=1500000
 endif
 
 # Turn on following to activate the "-g" compile option for more detailed
@@ -58,6 +64,18 @@ ifneq (,$(findstring TIFF,$(FEATURES)))
 FEATURES += GD
 CFLAGS += -DHAVE_GD_TIFF
 LDFLAGS += -ltiff
+endif
+
+ifneq (,$(findstring AVIF,$(FEATURES)))
+FEATURES += GD
+CFLAGS += -DHAVE_GD_AVIF
+LDFLAGS += -lavif
+endif
+
+ifneq (,$(findstring HEIF,$(FEATURES)))
+FEATURES += GD
+CFLAGS += -DHAVE_GD_HEIF
+LDFLAGS += -lheif
 endif
 
 ifneq (,$(findstring VPX,$(FEATURES)))
@@ -92,9 +110,9 @@ endif
 
 ifneq (,$(findstring X11,$(FEATURES)))
 OBJS += x11.o
-CFLAGS  += -I/usr/include/freetype2
 FFLAGS4 += -DHAVE_X11
 LDFLAGS += -lX11 -lXft
+CFLAGS  += -I/usr/include/freetype2
 endif
 
 ifneq (,$(findstring XCLIP,$(FEATURES)))
@@ -133,28 +151,187 @@ all: xdataplot dataplot
 dataplot: $(OBJS)
 	$(FC) -o $@  $(OBJS)  $(LDFLAGS)
 
-dp1.o: dp1.F
+dp1.o: dp1.F90
 	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
 
-dp11.o: dp11.F
+dp2.o: dp2.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp3.o: dp3.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp4.o: dp4.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp5.o: dp5.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp6.o: dp6.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp7.o: dp7.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp8.o: dp8.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp9.o: dp9.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) $(DP1FLAGS) -c -o $@ $<
+
+dp10.o: dp10.F90
 	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-dp16.o: dp16.F
+dp11.o: dp11.F90
 	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-dp18.o: dp18.F
+dp12.o: dp12.F90
 	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-dp24.o: dp24.F
+dp13.o: dp13.F90
 	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-dp32.o: dp32.F
+dp14.o: dp14.F90
 	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
-dp38.o: dp38.F
+dp15.o: dp15.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp16.o: dp16.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp17.o: dp17.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp18.o: dp18.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp19.o: dp19.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp20.o: dp20.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp21.o: dp21.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp22.o: dp22.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp23.o: dp23.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp24.o: dp24.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp25.o: dp25.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp26.o: dp26.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp27.o: dp27.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp28.o: dp28.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp29.o: dp29.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp30.o: dp30.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp31.o: dp31.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp32.o: dp32.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp33.o: dp33.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp34.o: dp34.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp35.o: dp35.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp36.o: dp36.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp37.o: dp37.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp38.o: dp38.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp39.o: dp39.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp40.o: dp40.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp41.o: dp41.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp42.o: dp42.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp43.o: dp43.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp44.o: dp44.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dp45.o: dp45.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+dpddsall.o: dpddsall.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+cluster.o: cluster.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+compgeom.o: compgeom.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+fit3b.o: fit3b.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+odrpck.o: odrpck.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+optimi.o: optimi.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+starpac.o: starpac.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+fed.o: fed.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+block_data.o: block_data.F90
+	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
+
+main.o: main.F90
 	$(FC) $(FFLAGS) $(FFLAGS4) -c -o $@ $<
 
 gd.o: gd.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+cairo.o: cairo.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+libplot.o: libplot.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+rldp.o: rldp.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+isocdp.o: isocdp.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+x11.o: x11.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 xdataplot:

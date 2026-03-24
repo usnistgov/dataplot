@@ -66,17 +66,6 @@
  *
  */
 
-#ifdef NOUNDERSCORE
-#define APPEND_UNDERSCORE 0
-#else
-#define APPEND_UNDERSCORE 1
-#endif
-#ifdef UPPERCASE
-#define SUBROUTINE_CASE 0
-#else
-#define SUBROUTINE_CASE 1
-#endif
-
 #ifdef INTEGER8
 #define INTEGER_PRECISION 1
 #else
@@ -93,7 +82,7 @@
 #ifdef HAVE_STDLIB_H
 #  include <stdlib.h>
 #else 
-extern void exit();
+   extern void exit();
 #endif
 
 #if defined (READLINE_LIBRARY)
@@ -116,15 +105,7 @@ extern char *strrchr();
 static char *progname;
 static char *deftext;
 
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void  rldp_();
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void  RLDP_();
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void  rldp();
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void  RLDP();
-#endif
+void rldp(int *nchar,int *ierror,int istring[]);
 
 static int set_deftext ()
 {
@@ -169,32 +150,11 @@ static void usage()
  *  ierror     - an integer with the status (0 = normal status,
  *               1 = error)
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void rldp_(nchar,ierror,istring)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void RLDP_(nchar,ierror,istring)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void rldp(nchar,ierror,istring)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void RLDP(nchar,ierror,istring)
-#endif
+void rldp(int *nchar,int *ierror,int istring[])
 
-int istring[];
-#if INTEGER_PRECISION == 0
-int *nchar;
-int *ierror;
-#else
-int nchar[2];
-int ierror[2];
-#endif
 {
-#if INTEGER_PRECISION == 0
-     *ierror = 0;
-     *nchar = 0;
-#else
-     ierror[0] = 0;
-     nchar[0] = 0;
-#endif
+ *ierror = 0;
+ *nchar = 0;
 
   char *temp, *prompt;
   struct stat sb;
@@ -222,29 +182,16 @@ int ierror[2];
 
   int i;
   int itemp;
-#if INTEGER_PRECISION == 0
   *nchar = 0;
-#else
-  nchar[0] = 0;
-#endif
   i = 0;
   while (temp[i] != 0 && i < nchmax) {
        itemp = temp[i];
        istring[i] = itemp;
-#if INTEGER_PRECISION == 0
        *nchar=i+1;
-#else
-       nchar[0]=i+1;
-#endif
        i++;
   }
 
-#if INTEGER_PRECISION == 0
  if (*nchar > 0)
     add_history(temp);
-#else
- if (nchar[0] > 0)
-    add_history(temp);
-#endif
 
 }
