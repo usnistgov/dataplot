@@ -240,6 +240,7 @@ BREV()                      CH/SY Write/draw breve
 BROWN                       AR-CO Set color to brown
 BS() <make work>            CH/SY Move 1 backspace
 BUGS                        SU-CO List known bugs
+BULLET PLOT                 GR-CO Generate a bullet plot
 BUILT-IN CHAR/SYMBOL (ANY)  AR-CH All b-i char/sym may be used for plot char
 BYE                         SU-CO Exit from DATAPLOT (= EXIT, STOP, etc.)
 
@@ -255,6 +256,7 @@ CALCOMP WIDTH               SC-SE Specify pen width of Calcomp
 CALENDAR.TEX                RE-FI Calendars for the years 1988 and 1989
 CALIBRATION                 AN-CO Perform a linear or quadratic calibration
 CALL                        SU-CO Execute a DATAPLOT subprgm from file
+CANDLESTICK PLOT            GR-CO Generate a candlestick plot
 CANTOR                      SC-LE Generate Cantor numbers
 CAPABILITY ANALYSIS         AN-CO Perform a capability analysis
 CAPACITOR                   WC-CO Draw a capacitor
@@ -388,6 +390,7 @@ CONSENSUS MEAN PLOT         GR-CO Generate a consensus mean plot
 CONSTANT.TEX                RE-FI Math, physical, & engineering constants
 CONSUMPR.DAT                DA-FI Yearly consumer price index relative to 1974
 CONTINUE CHARACTER          SU-CO Specify the command continuation character
+CONTINUE LOOP               SU-CO Go to next iteration of a LOOP
 CONTINUOUS                  GD-CO Define device continuity switch (ON/OFF)
 CONTOUR PLOT                GR-CO Generate contour plot
 CONTOUR.DP                  PR-FI Generate a contour plot (BRAIN.DAT)
@@ -480,6 +483,8 @@ DEHAAN                      AN-CO Generalized Pareto estimation using DeHaan met
 DEL()                       CH/SY Write/draw vector product
 DELETE                      SU-CO Delete variable or elements of a variable
 DELT()                      CH/SY Write/draw Greek delta
+DEMING FIT                  AN-CO Perform a Deming regression
+DEMING REGRESSION           AN-CO Perform a Deming regression
 DEMING7.TEX                 RE-FI Demings's 7 "dreadful diseases" (ind. qual.)
 DEMING14.TEX                RE-FI Demings's 14 "deadly diseases" (ind. qual.)
 DEMODF                      RESW  Param with updated complex demodulation freq
@@ -620,6 +625,8 @@ DIXON TEST                  AN-CO Perform Dixon's test for univariate outliers
 DMGR                        AR-CO Set color to dim gray
 DOGR                        AR-CO Set color to dark olive green
 DORC                        AR-CO Set color to dark orhid
+DOT MATRIX PLOT             GR-CO Generate a dot matrix plot
+DOT MATRIX PROPORTION PLOT  GR-CO Generate a dot matrix plot
 DOTP()                      CH/SY Write/draw dot product
 DOTTED                      AR-LI Set line type to dotted
 DOUBLE EXPO PROB PLOT       GR-CO Generate double exponential probability plot
@@ -631,6 +638,7 @@ DRAW SYMBOL                 WC-CO Draw characters at specified positions
 DSBL                        AR-CO Set color to dark slate blue
 DTUR                        AR-CO Set color to dark turquoise
 DUANE PLOT                  GR-CO Generate a Duane plot
+DUMBBELL PLOT               GR-CO Generate a Dumbbell plot
 DUPLEX                      AR-FO Set font to duplex
 DURBIN TEST                 AN-CO Perform Durbin's test for two-way incomplete block designs
 DUTTON.DAT                  DA-FI Dutton coherency plot data (Time Series)
@@ -718,6 +726,7 @@ FILL                        WC-CO Set fill switch (ON/OFF) for TEXT figure
 FILTER WIDTH                SU-CO Set filter width for SMOOTH
 FILTER.DP                   PR-FI Prog to assess filter stabil. (Complex Root)
 FIRE                        AR-CO Set color to firebrick
+FISHER DISCRIMINATION PLOT  GR-CO Generate a Fisher discrimination plot
 FISHER EXACT TEST           AN-CO Perform Fisher's exact test for two-way contingency tables
 FISHER TWO SAMP RAND TEST   AN-CO Perform Fisher's two sample randomization test
 ... FIT                     AN-CO Perform least squares fits (various kinds)
@@ -811,6 +820,9 @@ GRID COLOR                  PC-CO Set color for grid on plots
 GRID PATTERN                PC-CO Set line type for grid on plots
 GRID THICKNESS              PC-CO Set line thickness for grid on plots
 GROUND                      WC-CO Darw a ground
+GROUPED CORRELATION         SC-LE Compute the correlation for grouped data
+GROUPED PERCENTILE          SC-LE Compute a percentile for grouped data
+GROUPED QUANTILE            SC-LE Compute a quantile for grouped data
 GRUBBS TEST                 AN-CO Perform Grubb's test for a single outlier in univariate data
 GT()                        CH/SY Write/draw greater than
 GTEQ()                      CH/SY Write/draw greater than or equal to
@@ -933,6 +945,7 @@ JAPANW.TEX                  RE-FI Japan's 5 W's (& 1 H) for component analysis
 JAPAN6.TEX                  RE-FI Japan's 6-point program for quality manufac.
 JAPAN3.TEX                  RE-FI The 3 modern concepts in Japanese industry
 JARQUE BERA TEST            AN-CO Perform Jarque-Bera test for normality
+JONCKHEERE TERPSTRA TEST    AN-CO Perform Jonckheere-Terpstra one factor test
 JOBS.TEX                    RE-FI Fastest growing jobs requiring a college deg
 JULIA                       SC-LE Generate Julia numbers
 JUSTIFICATION               WC-CO Set text justification (LEFT, CENTER, RIGHT)
@@ -953,6 +966,12 @@ KHAK                        AR-CO Set the color to khaki
 KIM.DAT                     DA-FI Electron mobility analysis (Fitting)
 KIRBY2.DAT                  DA-FI Electron microsc line width stan (Regression)
 KLOTZ TEST                  AN-CO Perform Klotz's test for equal variances
+K NEAREST NEIGHBOR CLAS PLOTGR-CO Generate a K nearest neighbor classification plot
+K NEAREST NEIGHBOR DISC PLOTGR-CO Generate a K nearest neighbor classification plot
+K NEAREST NEIGHBOR PLOT     GR-CO Generate a K nearest neighbor classification plot
+KNN PLOT                    GR-CO Generate a K nearest neighbor classification plot
+KNN CLASSIFICATION PLOT     GR-CO Generate a K nearest neighbor classification plot
+KNN DISCRIMINATION PLOT     GR-CO Generate a K nearest neighbor classification plot
 KNOTS                       SU-CO Set knots variable for SPLINE
 KOLMOGOROV SMIRNOV PLOT     GR-CO Generate a Kolmogorov-Smirnov <dist> goodness of fit plot
 KOLM SMIR GOOD OF FIT TEST  AN-CO Perform Kolmogorov Smirnov goodness of fit test
@@ -1249,6 +1268,8 @@ NOT EXIST                   RESW  In IF command, check for variable existence
 NP CHART                    GR-CO Generate Np control chart
 NP CONTROL CHART            GR-CO Generate Np control chart
 NU()                        CH/SY Write/draw Greek nu
+NUMBER TO CURRENCY          SC-LE Convert a number to a string in currency format
+NUMBER TO STRING            SC-LE Convert a number to a string
 NUT.DAT                     DA-FI Strength of a component (3 factors)
 NWF11.DAT                   DA-FI Niwot Ridge freon-11 (1977-86) (Time Series)
 NWF12.DAT                   DA-FI Niwot Ridge freon-12 (1977-86) (Time Series)
@@ -1265,6 +1286,7 @@ OLDTOOLS.TEX                RE-FI The "7 Old Tools" for quality control
 OMEG()                      CH/SY Write/draw Greek omega
 OMIC()                      CH/SY Write/draw Greek omicon
 ON                          RESW  Set a switch to "on" position
+OPEN CLOSE LOW HIGH PLOT    GR-CO Generate an open close low high plot
 OPERATOR     [not work]     SU-CO Send a message to host console operator
 OR                          WC-CO Draw an or box
 ORANGE                      AR-CO Set color to orange
@@ -1273,6 +1295,10 @@ ORA2                        AR-CO Set color to orange2
 ORA3                        AR-CO Set color to orange3
 ORA4                        AR-CO Set color to orange4
 ORCH                        AR-CO Set color to orchid
+ORDER STATISTIC MEANS       SC-LE Generate order statistic means
+ORDER STATISTIC MEDIANS     SC-LE Generate order statistic medians
+ORDER STATISTIC STAND DEVI  SC-LE Generate order statistic standard deviations
+ORDER STATISTIC             SC-LE Generate order statistics
 ORD PLOT                    GR-CO Generate an Ord plot
 ORED                        AR-CO Set color to orange red
 ORIENTATION                 PC-CO Specify page orientation (landscape/portrait)
@@ -1319,6 +1345,8 @@ PEDESTAL COLOR  [not work]  PC-CO Set color of pedestal on 3d-plots
 PEDESTAL HEIGHT             PC-CO Set height for 3-d pedestal
 PEDESTAL SIZE   [not work]  PC-CO Set size for pedestal on 3d-plots
 PENTAGON.DAT                DA-FI Pentagon yearly expenditures (1-factor ANOVA)
+PERCENT ACCEPTABLE          SC-LE Compute the percentage of acceptables 
+PERCENT DEFECTIVE           SC-LE Compute the percentage of defectives 
 PERCENT DEFECTIVE PLOT      GR-CO Generate a percent defective (vs. subset) plot
 PERCENT POINT PLOT          GR-CO Generate percent point plot
 PERDEF                      SC-LE Compute the percentage of defectives
@@ -1525,6 +1553,8 @@ REPAIR PLOT                 GR-CO Generate a repair plot over groups with censor
 REPEAT PLOT                 PC-CO Draw a plot created with SAVE PLOT
 REPDF                       RESW  Param with rep deg of freedom from FIT etc
 REPEAT (or R)               SU-CO Re-execute one previous command
+REPLICATED WEIG DEMING FIT  AN-CO Perform a weighted Deming regression
+REPLICATED WEIG DEMING REGR AN-CO Perform a weighted Deming regression
 REPLOT                      PC-CO Regenerate the most recently created plot
 REPSD                       RESW  Param with replic. sd from FIT, ANOVA, etc
 RES                         RESW  Var with residuals from FIT, ANOVA, etc
@@ -1538,6 +1568,7 @@ RETAIN                      SU-CO Retain var or elements of a var
 REVTRI                      AR-CH Set plot character to reverse triangle
 RF SPREAD PLOT              GR-CO Generate a residuals-fitted (RF)  plot
 RHO()                       CH/SY Write/draw Greek rho
+RIDGELINE PLOT              GR-CO Generate a ridgeline plot
 RING BELL                   WC-CO Ring the bell
 RIPKEN.DAT                  DA-FI Cal Ripken batting average (ANOVA)
 ROC CURVE                   GR-CO Generate a ROC curve
@@ -1888,6 +1919,8 @@ VALU()                      CH/SY Write actual value of succeeding param
 VAN DER WAERDEN TEST        AN-CO Perform a Van Der Waerden (normal scores) test
 VARI()                      CH/SY Write/draw varies
 VARIABLE LABEL              PC-CO Define long labels associated with variable names
+VARIABLE TO MATRIX          SC-LE Convert a variable to a matrix
+VARIABLE WIDTH BAR PLOT     GR-CO Generate a variable width bar plot
 VARIANCE                    SC-LE Compute sample variance
 VARIANCE OF THE MEAN PLOT   GR-CO Generate var. of mean (vs. subset) plot
 VARIANCE PLOT               GR-CO Generate variance (vs. subset) plot
@@ -1918,8 +1951,10 @@ VRED                        AR-CO Set color to violet red
 
 -----W--------------------------------------------------
 
+WAFFLE PLOT                 GR-CO Generate a dot matrix plot
 WAMPLER1.DAT                DA-FI Polynomial fitting test data (Regression)
 WAMPLER2.DAT                DA-FI Multilinear fitting test data (Regression)
+WATERFALL CHART             GR-CO Generate a waterfall chart
 WEB                         SU-CO Initiate browser at specific URL/file location
 WEBER.DAT                   DA-FI Hospital energy consumption (5 factors)
 WEB HANDBOOK                SU-CO Initiate browser at e-Handbook page (handbk.tex)
@@ -1934,6 +1969,10 @@ WEIBULL PROBABILITY PLOT    GR-CO Generate Weibull probability plot
 WEIBULL RANDOM NUMBERS      SC-LE Generate Weibull random numbers
 WEICDF(X,GAMMA)             FUNC  Compute Weibull cum distribution func
 WEIGHTS                     SU-CO Set weights variable for FIT, PRE-FIT, etc
+WEIGHTED DEMING FIT         AN-CO Perform a weighted Deming regression
+WEIGHTED DEMING REGRESSION  AN-CO Perform a weighted Deming regression
+WEIGHTED REPL DEMING FIT    AN-CO Perform a weighted Deming regression
+WEIGHTED REPL DEMING REGR   AN-CO Perform a weighted Deming regression
 WEIGHTED MEAN               SC-LE Compute a weighted mean
 WEIGHTED MEDIAN             SC-LE Compute a weighted median
 WEIGHTED SD                 SC-LE Compute a weighted standard deviation

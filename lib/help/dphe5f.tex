@@ -1,9 +1,9 @@
-68900.      (VERSION 2024.06)  total number of lines in file (including this line)
+69500.      (VERSION 2026.03)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
-22600.    Q                  first line number of Q section
-25700.    R                  first line number of R section
-44500.    S                  first line number of S section
+22700.    Q                  first line number of Q section
+25800.    R                  first line number of R section
+45000.    S                  first line number of S section
  
 ----------------------------------------------------------
  
@@ -7351,6 +7351,70 @@ Program 2:
     TEXT PERCENTAGE BEND MIDVARIANCE BOOTSTRAP: NORMAL
     MOVE 50 46
     TEXT PERCENTAGE BEND MIDVARIANCE BOOTSTRAP: CAUCHY
+ 
+-----PERCENT ACCEPTABLE (LET)----------------------------------------
+ 
+PERCENT ACCEPTABLE
+ 
+Name:
+    PERCENT ACCEPTABLE (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the percentage of acceptable values for a variable.
+ 
+Description:
+    The percent defective is the number of values of a variable
+    (expressed as a percentage) that fall outside some user specified
+    tolerance limits.  Similiarly, the percent acceptable is the number
+    of values (expressed as a percentage) that fall within some user
+    specified tolerance limits.
+ 
+Syntax:
+    LET <par> = PERCENT ACCEPTABLE <x> <SUBSET/EXCEPT/FOR qualification>
+    where <x> is the variable for which the percent acceptable is
+              computed;
+          <par> is a parameter where the computed percentage acceptable
+              is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    LET A = PERCENT ACCEPTABLE Y1
+    LET A = PERCENT ACCEPTABLE Y1  SUBSET TAG > 2
+ 
+Note:
+    The upper and lower specification limits must be specified by the
+    user as follows:
+
+        LET LSL = <value>
+        LET USL = <value>
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    PERCENT DEFECTIVE    = Compute the percentage of defective values.
+    CONTROL CHART        = Generate a control chart.
+    CP (LET)             = Compute the CP index.
+    CPK (LET)            = Compute the CPK index.
+    EXPECTED LOSS (LET)  = Compute the expected loss of a sample.
+ 
+Applications:
+    Quality Control
+ 
+Implementation Date:
+    2025/11
+ 
+Program:
+    LET Y = NORMAL RANDOM NUMBERS FOR I = 1 1 100
+    LET LSL = -2
+    LET USL = 2
+    LET A = PERCENT ACCEPTABLE Y
  
 -----PERCENT DEFECTIVE (LET)------------------------------------------
  
@@ -22597,6 +22661,42 @@ Program 2:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -------------------------  *Q*  ZZZZZ--------------------
  
 -----Q QUANTILE RANGE (LET)-------------------------------
@@ -30532,12 +30632,14 @@ Description:
 
     This command assumes that Python and the Python package Pandas
     are already installed on your local platform.  Dataplot does not
-    check if Python is installed and it does not initiate the
-    Python installation if it is not already installed.
+    check if Python and Pandas are installed on your system and it does
+    not initiate the Python installation if it is not already installed.
 
     As Python is used by many popular applications on Linux platforms,
     most Linux platforms will already have Python installed.  However,
-    this is not the case for Windows and MacOS platforms.
+    this is not the case for Windows and MacOS platforms.  See the Notes
+    section below for alternatively using Power Shell on Windows
+    platofrms.
 
     If you need to install Python, there are a number of Python
     distributions (see https://wiki.python.org/moin/PythonDistributions).
@@ -30581,12 +30683,13 @@ Description:
             a viable alternative to READ EXCEL when you do not have Python
             installed on your platform and do not wish to install it.
 
-         2. You can also use Copy and Paste.  On Windows platforms,
-            you can Copy the desired data to the clipboard and then use
-            the READ CLIPBOARD command.  Alternatively, you can paste
-            the data into an ASCII editor (e.g., Notepad or Wordpad on
-            Windows, vi or Emacs on Linux), save the file and then use
-            the Dataplot READ command.
+         2. You can also use Copy and Paste.  You can Copy the desired
+            data to the clipboard and then use the READ CLIPBOARD
+            command in Dataplot (READ CLIPBOARD is system dependent, but
+            should be available on most installations).  Alternatively,
+            you can paste the data into an ASCII editor (e.g., Notepad
+            or Wordpad on Windows, vi or Emacs on Linux), save the file
+            and then use the Dataplot READ command.
 
             This option is particularly useful when your spreadsheet is
             not a clean rectangular data set.
@@ -30605,42 +30708,23 @@ Examples:
     READ EXCEL FILE.XLSX Y1 Y2 Y3 X
 
 Note:
+    Dataplot does not search for the Excel file in the Dataplot auxiliary
+    files directories as it does for the READ for ASCII files.  It also
+    does not check for all lower case or all upper case versions of the
+    file name.  You need to enter the case sensitive version of the
+    file name and include the full path name if the Excel file is not
+    in the currrent directory.
+
+Note:
     This command will not work successfully on all Excel files.
-    Spreadsheets commonly contain external information such as
-    cross tabulations and graphs.
-    It tends to work reasonably well for 
+    Spreadsheets commonly contain information such as cross tabulations
+    and graphs.  Dataplot is not a spreadsheet, so cells containing
+    graphs, tables, cross tabulations and so on will have unpredictable
+    results.
 
 Note:
     The Pandas pandas.to_csv function will add a row id variable to
-    the ASCII file.
-
-Note:
-    The python script will currently read the entire spreadsheet.
-    Additional commands to specify columns and rows in the spreadsheet
-    to read are under development but not yet available.
-
-    Also, Dataplot will not search for the Excel file in the
-    Dataplot auxiliary files directories as it does for the
-    READ for ASCII files.
-
-    Note: The 2020/05 version of Dataplot now supports specifying the
-          first and last rows of the Excel file to read with the
-          following commands 
-
-              SET EXCEL START ROW <value>
-              SET EXCEL STOP  ROW <value>
-
-          Python/Pandas start row numbers with 0.  Also, the first
-          line read is assumed to contain the variable names.  So if
-          the first good line is row 3 in the Excel file, use
-
-              SET EXCEL START ROW 1
-
-          Currently you need to specify both the START ROW and the
-          STOP row.  Otherwise, Pandas will include all rows in the
-          Excel sheet.
-
-          One use of this is to skip over header lines in the Excel file.
+    the ASCII file.  This is not the case if Power Shell is used.
 
 Note:
     Pandas by default assumes that the first row of the Excel file
@@ -30653,8 +30737,39 @@ Note:
 
         SET EXCEL HEADER ON
 
-    This command was added 2021/07.  The "read_python.py" script
-    was also updated at this time to support this option.
+Note:
+    The python script will by default read the entire spreadsheet.
+
+    To specify the first and last rows of the Excel file to read, enter
+    the following commands
+
+        SET EXCEL START ROW <value>
+        SET EXCEL STOP  ROW <value>
+
+    You can specify the start row only if you simply want to skip over
+    the beginning lines of the Excel file.  For example, if you
+    want to skip the first five rows, enter
+
+        SET EXCEL START ROW 6
+
+    If you specify only the last row, the first row is assumed to be 1.
+
+    Note that although Python/Pandas starts row indexing as row 0, you
+    should start the row index at 1.  Dataplot will automatically
+    adjust the row number to use the Python/Pandas convention.
+
+    Likewise, you can specify the first and last columns to read
+    with the commands
+
+        SET EXCEL START COLUMN <value>
+        SET EXCEL STOP  COLUMN <value>
+
+     For columns, if you specify either the start or stop column,
+     then you need to enter both the start and the stop column.  If
+     only one of these is entered, Dataplot will try to read all
+     the columns in the spreadsheet.
+
+     You should start the column indexing with 1 rather than 0.
 
 Note:
     Excel (or some other spreadsheet program) does not need to be
@@ -30676,8 +30791,100 @@ Note:
     or for all users. 
 
 Note:
+    Both Python 2 and Python 3 are available.  The Dataplot python
+    script for reading Excel files assumes you are running Python 3.
+    On some systems, you may need to enter the following command to run
+    version 3 of Python
+
+        SET PYTHON VERSION 3
+
+    This will use the command "python3" rather than "python".
+
+Note:
     On Windows platforms, the "read_excel.py" script will be copied to
     the current directory.
+
+Note:
+    The 2026/01 version added the option for using PowerShell rather
+    than Python on Windows platforms.  Although Python is likely to be
+    installed on most Linux and MacOS platforms, this is less likely on
+    Windows platforms.
+
+    To specify that PowerShell be used rather than Python/Pandas, enter
+    the command
+
+         SET EXCEL METHOD POWERSHELL
+
+    To reset the default to Python, enter
+
+         SET EXCEL METHOD PYTHON
+
+    Dataplot utilizes the freely importable module Import-Excel.  To
+    install this module, open up a PowerShell terminal and enter the
+    command
+
+         Install-Module -Name ImportExcel -Scope CurrentUser
+
+    In order to run this command, you may need to set your PowerShell
+    execution policy by entering the command
+
+         Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+    Note that this only needs to be done once.  Dataplot does not check
+    to see if this module has been installed and it does not initiate the
+    installation.
+
+    When using PowerShell, Dataplot dynamically creates the script
+    "read_excel.ps1" in the current directory.  This will look something
+    like
+
+        $excelFilePath = "C:\consult\ALAN_TEST.XLSX"
+        $worksheetName = "Sheet1"
+        $csvFilePath = "C:\consult\dpst1f.dat"
+        $startRow =      3
+        $endRow =     77
+        $startColumn =      1  
+        $endColumn =      3
+        Import-Excel -Path $excelFilePath -worksheetName $worksheetName -StartRow $startRow
+                     -EndRow $endRow -StartColumn $startColumn -EndColumn $endColumn |
+                      Export-Csv -Path $csvFilePath -NoTypeInformation -Encoding UTF8
+        exit
+
+    You can specify the starting and stopping rows and columns in the Excel
+    sheet with the commands
+
+         SET EXCEL START ROW <value>
+         SET EXCEL STOP  ROW <value>
+         SET EXCEL START COLUMN <value>
+         SET EXCEL STOP  COLUMN <value>
+
+    If these are not entered, Dataplot will try to read all rows and
+    columns.  The PowerShell option does not automatically account for
+    a header line, so you may need to enter the start and stop rows to
+    skip over a header line.  Alternatively, you can enter a SKIP 1
+    before entering the READ EXCEL command.
+
+    For convenience, the start and stop columns can also be entered as
+    A, B, and so on up to ZZ (i.e., this works for the first 52 columns).
+
+    PowerShell exports the data to the comma separated file "dpst1f.dat"
+    in the current working directory.  PowerShell encloses all fields in
+    double quotes (").  The command 
+
+        SET READ REMOVE QUOTES ON
+
+    was added to specify that all quotes on a line being read should be
+    removed before parsing that line.  Dataplot sets this automatically
+    for the READ EXCEL command, so you do not have to enter it.  However,
+    you can enter this command manually if you have a file that also uses
+    this syntax.  Set this to OFF to revert back to the default of not
+    removing quotes.
+
+    As with the Python version, Dataplot does not search its
+    sub-directories for the Excel file.  So you should enter the full
+    path name for the Excel file unless the the file is in the current
+    working directory (if Dataplot does not detect a full path name, it
+    will pre-pend the current working directory name to the file name).
 
 Default:
     None
@@ -30707,6 +30914,8 @@ Implementation Date:
     2020/02
     2020/05: Added SET EXCEL START ROW and SET EXCEL STOP ROW
     2021/07: Added SET EXCEL HEADER
+    2026/03: Added SET EXCEL METHOD
+    2026/03: Added SET EXCEL START COLUMN and SET EXCEL STOP COLUMN
 
 Program 1:
     dimension 40 columns
@@ -30747,6 +30956,17 @@ Program 2:
     .
     set write decimals 2
     print rowid labid y1 y2 for i = 1 1 10
+
+Program 3:
+    set read excel method power shell
+    set excel start row 3
+    set excel stop row 77
+    . set excel start column a
+    . set excel stop column c
+    set excel start column 1
+    set excel stop column 3
+    read excel "C:\Program Files (x86)\NIST\DATAPLOT\TEST.XLSX" labid y1 y2
+.
 
 -----READ FORMAT (SET)-------------------------------------------
  
@@ -37268,6 +37488,65 @@ Program:
     TITLE AUTOMATIC
     RELSD PLOT DIAMETER BATCH
  
+-----REMOVE (LET)-------------------------------------
+ 
+REMOVE
+ 
+Name:
+    REMOVE (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Remove rows of a variable based on the values in another
+    variable.
+ 
+Description:
+    With this command, we define a variable that contains
+    values to be deleted from another variable.
+
+    Although this can be accomplished with the RETAIN command and SUBSET
+    clauses, the REMOVE command may be more convenient if the list of
+    values to delete is long and not contiguous.
+
+Syntax:
+    LET <y> = REMOVE <x>  <xlist>
+    where <x> is a response variable;
+          <xlist> is a variable containing values to remove from <x>;
+    and   <y> is a variable that contains the results after removing
+             the specified values.
+
+Examples:
+    LET Y = REMOVE X XDELETE
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    GATHER    = Extract rows from a variable based on an index variable.
+    SUBSET    = Specifies a subset to be included in a plot, analysis, or
+                LET command.
+    RETAIN    = Retain specified rows or a subset of a variable.
+ 
+Applications:
+    Data Transformation
+ 
+Implementation Date:
+    2025/12
+ 
+Program 1:
+    let x = data   0.75750 -0.90033 2.52521 0.41734 -1.13290 0.58353 ...
+            0.47807 -0.64190 -1.09908 1.86310 0.86764 0.71655 -1.06700 ...
+            -1.13660 0.51409 0.84443 0.77619 -0.83486 1.44312 0.02013
+    let xdelete = data -0.90033 1.86310 0.51409 -1.13290
+    .
+    let y = remove x xdelete
+    print y
+
 -----RENAME-------------------------------------------------------
  
 RENAME
@@ -39833,6 +40112,227 @@ Program:
     MOVE 50 97
     TEXT Reflected Generalized Topp and Leone PPF Functions
  
+-----RIDGELINE PLOT--------------------------------
+ 
+RIDGELINE PLOT
+ 
+Name:
+    RIDGELINE PLOT
+ 
+Type:
+    Graphics Command
+ 
+Purpose:
+    Generates a ridgeline plot.
+ 
+Description:
+    A ridgeline plot displays kernel density plot (or alternatively
+    histograms) for multiple data sets on a single plot.  A common
+    scale is used for the horizontal axis and the plots may overlap
+    on the vertical axis.
+
+    The degree of overlap can be controlled with the command
+
+       SET RIDGELINE PLOT HEIGHT <inc>
+
+    where <inc> is a positive value.  The default value is 1.  You may
+    need to generate several iterations of the plot to find a value that
+    works best.  The desired degree of overlap is a matter of personal
+    preference, so Dataplot does not try to automatically determine an
+    optimal value.
+
+    To specify the desired type of plot, enter the command
+
+       SET RIDGELINE PLOT TYPE <DENSITY/CUMULATIVE DENSITY/HISTOGRAM/
+                                CUMULATIVE HISTOGRAM>
+
+    The default, DENSITY, generates a kernel density plot.  The HISTOGRAM
+    option generates a relative histogram.  The DENSITY and HISTOGRAM
+    options are estimating the probability densities of the data sets.
+    Selecting the CUMULATIVE DENSITY and CUMULATIVE HISTOGRAM will plot
+    estimates of the cumulative distribution functions.
+
+    This plot works best when there is a clear pattern in the density
+    estimates.
+
+Syntax 1:
+    RIDGELINE PLOT <y> <x>     <SUBSET/EXCEPT/FOR qualification>
+    where <y> is a response variable;
+          <x> is a group-id variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Syntax 2:
+    MULTIPLE RIDGELINE PLOT <y1> ... <yk>
+                            <SUBSET/EXCEPT/FOR qualification>
+    where <y1> ... <yk> is a list of one or more response variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Examples:
+    RIDGELINE PLOT Y X
+    RIDGELINE PLOT Y X  SUBSET X > 2
+    MULTIPLE RIDGELINE PLOT Y1 Y2 Y3 Y4 Y5
+ 
+Note:
+    The KERNEL DENSITY PLOT has the option of overlaying the density
+    traces on a single plot.  
+
+Note:
+    The Program examples below show how to control the appearance of the
+    plot.
+
+Note:
+    The HORIZONTAL SWITCH command can be used to draw these graphs
+    vertically rather than horizontally.  This is demonstrated in the
+    program example below.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    NORMAL KERNEL DENSITY MIXTURE PLOT = Generate plots for a normal kernel
+                                         density mixture for a set of means
+                                         and associated standard deviations.
+    KERNEL DENSITY PLOT                = Generate a kernel density plot.
+    HISTOGRAM                          = Generate a kernel density plot.
+ 
+Reference:
+    Wilke, C. O.(2019), "Fundamentals of data visualization: a primer on
+    making informative and compelling figures," O'Reilly Media (see
+    pages 39, 43 88-91, 196).
+
+Applications:
+    Distributional Analysis
+ 
+Implementation Date:
+    2025/06
+ 
+Program 1:
+    . Step 1:   Read yearly Freon and CO-2 data
+    .
+    SET READ FORMAT 3F4.0,F5.0,F6.0,F3.0,2F9.0
+    SKIP 50
+    READ PBF11.DAT YEAR DAY J1 J2 FREON FLAG WV CO2
+    retain year co2 subset co2 > 0
+    let y = co2
+    let yeardist = distinct year
+    let nyears = size yeardist
+    loop for k = 1 1 nyears
+        let aval = yeardist(k)
+        let string s^k = ^aval
+    end of loop
+    let ig = group label s1 to s^nyears
+    .
+    . Step 2:   Set basic plot control features
+    .
+    case asis
+    title case asis
+    label case asis
+    tic mark label case asis
+    title offset 1
+    title size 1.8
+    .
+    let inc = 0.1
+    let xmax = (nyears-1)*inc
+    xlimits 0 xmax
+    major xtic mark number nyears
+    minor xtic mark number 0
+    tic mark offset units data
+    x1tic mark offset 0.05  0.2
+    x1tic mark label format group label
+    x1tic mark label content ig
+    ylimits 320 360
+    horizontal switch on
+    .
+    . Step 3:   Generate the plot for kernel density
+    .
+    y1label CO2 Level
+    x1label Year
+    title Kernel Density Traces for CO2 (Point Barrow)
+    set ridgeline plot height inc
+    ridgeline plot y year
+    .
+    . Step 4:   Now generate using histograms rather than density traces
+    .
+    class lower 320
+    class upper 360
+    class width 2
+    bar fill on all
+    bar fill color cyan red cyan red cyan red cyan red cyan red
+    .
+    let inc = 0.15
+    let xmax = (nyears-1)*inc
+    xlimits 0 xmax
+    major xtic mark number nyears
+    minor xtic mark number 0
+    tic mark offset units data
+    x1tic mark offset 0.05  0.2
+    .
+    title Histograms for CO2 (Point Barrow)
+    set ridgeline plot height inc
+    set ridgeline plot type histogram
+    ridgeline plot y year
+
+Program 2:
+    . Step 1:   Read yearly Freon and CO-2 data
+    .
+    SET READ FORMAT 3F4.0,F5.0,F6.0,F3.0,2F9.0
+    SKIP 50
+    READ PBF11.DAT YEAR DAY J1 J2 FREON FLAG WV CO2
+    retain year co2 subset co2 > 0
+    let y = co2
+    let yeardist = distinct year
+    let nyears = size yeardist
+    loop for k = 1 1 nyears
+        let aval = yeardist(k)
+        let string s^k = ^aval
+    end of loop
+    let ig = group label s1 to s^nyears
+    .
+    . Step 2:   Set basic plot control features
+    .
+    case asis
+    title case asis
+    label case asis
+    tic mark label case asis
+    title offset 1
+    title size 1.8
+    .
+    let inc = 1
+    let xmax = (nyears-1)*inc
+    xlimits 0 xmax
+    major xtic mark number nyears
+    minor xtic mark number 0
+    tic mark offset units data
+    x1tic mark offset 0.1  1.1
+    x1tic mark label format group label
+    x1tic mark label content ig
+    ylimits 320 360
+    horizontal switch on
+    .
+    . Step 3:   Generate the plot for cumulative kernel density
+    .
+    y1label CO2 Level
+    x1label Year
+    title Cumulative Kernel Density Traces for CO2 (Point Barrow)
+    set ridgeline plot type cumulative density
+    set ridgeline plot height inc
+    ridgeline plot y year
+    .
+    . Step 4:   Generate the plot for cumulative histogram
+    .
+    class lower 320
+    class upper 360
+    class width 2
+    bar fill on all
+    bar fill color cyan red cyan red cyan red cyan red cyan red
+    .
+    title Cumulative Histograms for CO2 (Point Barrow)
+    set ridgeline plot type cumulative histogram
+    ridgeline plot y year
+
 -----RIGCDF (LET)--------------------------------
  
 RIGCDF
@@ -67008,6 +67508,113 @@ Program:
     move 20 79
     text PPCC = ^ppcc
 
+-----SUBSTITUTE FORMAT (SET)---------------------------------------
+ 
+SUBSTITUTE FORMAT
+ 
+Name:
+    SUBSTITUTE FORMAT (SET)
+ 
+Type:
+    Set Subcommand
+ 
+Purpose:
+    When using the substitution character (^ by default) to substitute
+    the value of a parameter in a command line, specify a Fortran style
+    format specification for the parameter.
+ 
+Description:
+    The substitution character, "^", is used to substitute the value of a
+    parameters into a command line.  If you want to specify the maximum
+    level of control over how that parameter is expanded, you can use
+    command to specify a Fortran style format specification.  This will
+    either be a F format (e.g., F7.2) or a an E format (E12.5).  The
+    format is for a single parameter and is limited to eight characters.
+    If a command line has multiple parameters to substitute, they will all
+    use the same format specification.  The format specification is not
+    used when substituting the values of character strings.
+
+    The F format has the syntax Fw.d where w is the width of the field
+    and d is the number of digits to the right of the decimal point.  The
+    E format is Ew.d where w is the width of the field and d is the
+    number of digits.  For example,
+
+         let a = 876213.762
+         set substitute format e15.7
+         let string b = a: ^a
+
+    will result in the string
+
+         a: 0.8762138E+06
+
+Syntax:
+    SET SUBSTITUTE FORMAT <string>
+    where <string> is a character string of 1 to 8 characters.
+ 
+    To turn this option off, enter
+
+       SET SUBSTITUTE FORMAT OFF
+
+Examples:
+    SET SUBSTITUTE FORMAT F7.2
+    SET SUBSTITUTE FORMAT E12.5
+ 
+Note:
+    Dataplot uses the specified format with an internal Fortran WRITE
+    statement. That is 
+
+        WRITE(ISTR,IFORMT,ERR=statement)VAL
+
+    where IFORMT is the specified format and VAL is the value of the
+    parameter. Dataplot does no parsing or error checking on the
+    specified format. Typically, only F, E, or G formats should be used.
+    If there is an error using the Fortran format specification, Dataplot
+    will revert to its default parameter expansion (no error message will
+    be generated). The format string is limited to a maximum of 8
+    characters and the maximum number of characters for the expanded
+    parameter is 20.
+
+Note:
+    If you want to use different format specifications on a single
+    command line, you can do something like the following
+
+        SET SUBSTITUTE FORMAT F7.4
+        LET STRING S1 = ^a
+        SET SUBSTITUTE FORMAT F5.1
+        LET STRING S2 = ^b
+        TITLE A: ^S1, B: ^S2
+
+Note:
+    The SET PARAMETER EXPAND DIGITS and SET PARAMETER EXPANSION are
+    alternative ways to control how parameters are expanded.
+
+Default:
+    No format specification will be used
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    ^                            = Substitution character.
+    SET PARAMETER EXPAND DIGITS  = Specify the number of digits to the
+                                   right of the decimal point when
+                                   parameters are substituted.
+    SET PARAMETER EXPANSION      = Specify whether parameters are
+                                   expanded into a numeric or exponential
+                                   format.
+ 
+Applications:
+    Presentation Graphics
+ 
+Implementation Date:
+    2019/01
+
+Program:
+    LET A = 23.46789
+    SET SUBSTITUTE FORMAT F7.2
+    LET STRING B = A: ^A
+    PRINT B
+
 -----SUBSTRING-----------------------------------------------------
  
 SUBSTRING
@@ -68856,13 +69463,6 @@ Program 2:
     feedback on
 
 ---------------------------------------------------------
-
-
-
-
-
-
-
 
 
 

@@ -1,8 +1,8 @@
- 68700.   (VERSION 2023.07)  total number of lines in file (including this line)
+ 69000.   (VERSION 2025.07)  total number of lines in file (including this line)
  3.                          number of     sections below
   100.    A                  first line number of A section
  8400.    B                  first line number of B section
-33300.    C                  first line number of C section
+33700.    C                  first line number of C section
  
 ----------------------------------------------------------
  
@@ -30942,6 +30942,182 @@ Program:
     MOVE 50 97
     TEXT Burr Type 9 Percent Point Functions
  
+-----BULLET PLOT-------------------------------------------------------
+ 
+BULLET PLOT
+ 
+Name:
+    BULLET PLOT
+ 
+Type:
+    Graphics Command
+ 
+Purpose:
+    Generates a bullet plot.
+ 
+Description:
+    A bullet chart is a variant of the bar chart suggested by Stephen
+    Few.  The plot consists of
+
+      1. A response variable.
+      2. A target variable.
+      3. One or more background regions.
+
+    The appearance of the plot is controlled by the settings for the bar
+    and character commands.  This is demonstrated in the Program examples
+    below.  Specifically,
+
+       1. The first trace is the response value.  This is typically
+          drawn as a narrow bar.
+
+       2. The second trace is the target value.  This is typically
+          drawn as either a character or a narrow bar.
+
+       3. Traces 3 and higher draw the background regions.  This often
+          delineate qualitative regions (e.g., "poor", "good",
+          "excellent").  These are typically drawn as wide bars.
+
+Syntax:
+    BULLET PLOT <y> <ytarg> <yback>  <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <ytarg> is a variable containing the target value;
+          <yback> is a variable that contains the levels for the
+              background bars;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    The <y> and <ytarg> variables must have the same number of
+    observations.
+
+Example:
+    BULLET PLOT Y YTARGET YBACK
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    BAR             = Sets the type for plot bars.
+    CHARACTERS      = Sets the type for plot characters.
+    PLOT            = Generates a data or function plot.
+    WATERFALL CHART = Generates a waterfall chart.
+ 
+Reference:
+    Few, Stephen (2006), "Information Dashboard Design: The Effective
+    Visual Communication of Data," 2006, ISBN 0-596-10016-7.
+
+Applications:
+    Presentation Graphics
+ 
+Implementation Date:
+    2025/06
+
+Program 1:
+    . Step 1:   Create the data
+    .
+    skip 25
+    read gear.dat y x
+    skip 0
+    set let cross tabulate collapse
+    let ymean = cross tabulate mean y x
+    let n = size ymean
+    .
+    . Step 2:   Plot control
+    .
+    title case asis
+    label case asis
+    legend case asis
+    .
+    horizontal switch on
+    ylimits 1 n
+    major ytic mark number n
+    minor ytic mark number 0
+    tic mark offset units data
+    y1tic mark offset 0.8 0.8
+    y1label Batch
+    x1label Mean Diameter
+    xlimits 0.98 1.01
+    x1tic mark offset 0 0.005
+    .
+    line blank all
+    character blank all
+    character blank circle
+    character color black red
+    character hw 1.0 0.75 all
+    character fill off on
+    .
+    bar on off on on on
+    bar fill on off on on on
+    bar fill color black black g90 g60 g30
+    bar width 0.6 all
+    bar width 0.3
+    bar base 0.98 0.98 0.98
+    .
+    let ytarg = 1 for i = 1 1 n
+    let yrange = data 0.99 1.0 1.01
+    .
+    title Bullet Plot (GEAR.DAT)
+    bullet plot ymean ytarg yrange
+
+Program 2:
+    . Step 1:   Create the data - example from Wikipedia
+    .
+    let y     = data 270
+    let ytarg = data 260
+    let yback = data 200 250 300
+    .
+    . Step 2:   Plot control
+    .
+    title case asis
+    label case asis
+    legend case asis
+    .
+    horizontal switch on
+    ylimits 0 2
+    y1tic marks off
+    y1tic mark labels off
+    xlimits 0 300
+    major xtic mark number 7
+    minor xtic mark number 0
+    tic mark offset units data
+    x1tic mark offset 0 10
+    .
+    multiplot corner coordinates 5 5 90 90
+    multiplot scale factor 2
+    multiplot 2 1
+    frame corner coordinates 30 20 95 90
+    x2frame off
+    yframe off
+    .
+    line blank all
+    character blank all
+    .
+    bar on on on on on
+    bar fill on on on on on
+    bar fill color black black red orange green
+    bar width 1.0 all
+    bar width 0.3 0.8
+    let ytarg = ytarg + 2
+    bar base 0 258
+    .
+    legend justification center
+    legend 1 coordinates 15 55
+    legend 1 Revenue 2024 YTD
+    legend 1 size 3
+    legend 2 coordinates 15 45
+    legend 2 (US$ in Millions)
+    legend 2 size 1.5
+    .
+    bullet plot y ytarg yback
+    bar fill color black black g30 g60 g90
+    bullet plot y ytarg yback
+    .
+    end of multiplot
+    justification center
+    move 50 95
+    text Example of Bullet Plot
+
 -----BVNCDF (LET)--------------------------------
  
 BVNCDF
@@ -33497,6 +33673,30 @@ Program:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -------------------------  *C*  ZZZZZ--------------------
 
 -----C CHART-----------------------------------------------------
@@ -34856,6 +35056,168 @@ Program:
     TITLE Canberra Distance (IRIS.DAT)
     Y1LABEL Canberra Distance
     CANBERRA DISTANCE PLOT Y1 Y2 X
+
+-----CANDLESTICK PLOT-------------------------------------------------------
+ 
+CANDLESTICK PLOT
+ 
+Name:
+    CANDLESTICK PLOT
+ 
+Type:
+    Graphics Command
+ 
+Purpose:
+    Generates a candlestick plot.
+ 
+Description:
+    Candlestick plots are used to display data where there is an
+    opening value and a closing value for a given time unit. For example,
+    it can be used to display daily stock prices over a period of time.
+    However, it can be applied to any data where there are start and end
+    values for each time unit.
+
+    Specifically, it draws a box between the opening and closing values.
+    In addition, it draws a line from the open/close values to the
+    minimum and maximum values for the time unit.
+
+    The appearance of the plot can be controlled by settings for the
+    LINE and REGION and their associated attribute setting commands.
+    Specifically,
+
+       Trace 1 - this is the box between the open and close values for
+                 the case where the close is higher than the open
+       Trace 2 - this is the box between the open and close values for
+                 the case where the close is lower than the open
+       Trace 3 - this is the line from the minimum of the open and close
+                 values to the minimum value
+       Trace 4 - this is the line from the maximum of the open and close
+                 values to the maximum value
+
+    Note that the REGION FILL switch is automatically set to ON for the
+    first 2 traces.
+
+    Two common choices are:
+
+        1. Draw the boxes in green for the case where the close value is
+           greater than the open value and draw the boxes in red for the
+           case where the close value is less than the open value.
+
+        2. Draw the boxes in white (i.e., empty) for the case where the
+           close value is greater than the open value and draw the boxes
+           in black for the case where the close value is less than the
+           open value.
+
+    This is demonstrated in the Program example below.
+
+Syntax 1:
+    CANDLESTICK PLOT  <yopen> <yclose> <ylow> yhigh>
+                      <SUBSET/EXCEPT/FOR qualification>
+    where <yopen> is the response variable containing the opening values;
+          <yclose> is the response variable containing the closing values;
+          <ylow> is the response variable containing the minimum values;
+          <yhigh> is the response variable containing the maximum values;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    For this syntax, the x-axis value is set to the sequence number.
+
+Syntax 2:
+    CANDLESTICK PLOT  <yopen> <yclose> <ylow> yhigh>  <x>
+                      <SUBSET/EXCEPT/FOR qualification>
+    where <yopen> is the response variable containing the opening values;
+          <yclose> is the response variable containing the closing values;
+          <ylow> is the response variable containing the minimum values;
+          <yhigh> is the response variable containing the maximum values;
+          <x> is the horizontal axis variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Examples:
+    CANDLESTICK PLOT YOPEN YCLOSE YLOW YHIGH
+    CANDLESTICK PLOT YOPEN YCLOSE YLOW YHIGH X
+
+Note:
+    The width of the box can be controlled by entering the command
+
+          SET CANDLESTICK PLOT BAR WIDTH <value>
+
+    The default value is -1 which means Dataplot will use
+
+          (X(2) - X(1))/2
+
+    where X is the horizontal axis value.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    LINES           = Sets the type for plot lines.
+    REGION FILL     = Sets the type for plot regions.
+    WATERFALL CHART = Generates a waterfall chart.
+    DUMBBELL PLOT   = Generate a dumbbell plot.
+    I PLOT          = Generate an i-plot.
+    BOX PLOT        = Generate a box plot.
+    PLOT            = Generates a data or function plot.
+ 
+Reference:
+    Gregory M., Morris (2006), "Candlestick Charting Explained: Timeless
+    Techniques for Trading Stocks and Futures," McGraw-Hill,
+    ISBN 9780071461542.
+
+Applications:
+    Financial Graphics
+ 
+Implementation Date:
+    2025/06
+
+Program:
+    . Step 1:   Read the data
+    .
+    skip 25
+    column limits 13 80
+    read candlestick.dat yclose yopen ylow yhigh
+    skip 0
+    let n = size yopen
+    .
+    column limits 1 12
+    loop for k = 1 1 n
+        let irow = 25 + k
+        row limits irow irow
+        read string candlestick.dat s^k
+    end of loop
+    column limits
+    row limits
+    .
+    . Step 2:   Set some plot control
+    .
+    case asis
+    title case asis
+    label case asis
+    tic mark label case asis
+    .
+    xlimits 1 27
+    major x1tic mark number 9
+    minor x1tic mark number 2
+    x1tic mark label format alpha
+    x1tic mark label content ^s1 ^s4 ^s7 ^s10 ^s13 ^s16 ^s19 ^s22 ^s25
+    tic mark offset units data
+    x1tic mark offset 0.8 3.8
+    x1tic mark label size 1.5
+    .
+    region fill color green red
+    line blank blank solid solid
+    line color green red black black
+    .
+    . Step 3:   Generate the plot
+    .
+    title Candlestick Plot
+    y1label Price
+    x1label Date
+    x2label Green: Close > Open, Red: Close < Open
+    .
+    candlestick plot yopen yclose ylow yhigh
 
 -----CANTOR NUMBERS (LET)-----------------------------------------
  
@@ -68488,68 +68850,6 @@ Program:
     CYCLE PLOT
  
 -------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

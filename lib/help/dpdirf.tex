@@ -60,8 +60,10 @@ BOX-COX HOMO PLOT           GR-CO Generate a homosced. plot (Box-Cox family)
 BOX-COX LINEARITY PLOT      GR-CO Generate a linearity plot (Box-Cox family)
 BOX-COX NORMALITY PLOT      GR-CO Generate a normality plot (Box-Cox family)
 BOX PLOT                    GR-CO Generate a box plot
+BULLET PLOT                 GR-CO Generate a bullet plot
 
 C CHART                     GR-CO Generate a C control chart
+CANDLESTICK PLOT            GR-CO Generate a candlestick plot
 CAUCHY PROBABILITY PLOT     GR-CO Generate a Cauchy probability plot
 CCPR                        GR-CO Generate a CCPR plot 
 CHI-SQUARE PLOT             GR-CO Generate a chi-square goodness of fit plot
@@ -113,7 +115,10 @@ DISCRETE CONTOUR PLOT       GR-CO Generate a discrete contour plot
 DISTRIBUTIONAL BOOTSTRAP    GR-CO Generate a distributional bootstrap plot
 DISTRIBUTIONAL FIT PLOT     GR-CO Generate a distributional fit plot
 DOUBLE EXPO PROB PLOT       GR-CO Generate double exponential probability plot
+DOT MATRIX PLOT             GR-CO Generate a dot matrix plot
+DOT MATRIX PROPORTION PLOT  GR-CO Generate a dot matrix proportion plot
 DUANE PLOT                  GR-CO Generate a Duane plot
+DUMBBELL PLOT               GR-CO Generate a Dumbbell plot
 
 EMPIRICAL CDF PLOT          GR-CO Generate an empirical CDF plot
 EMPIRICAL QUANTILE PLOT     GR-CO Generate an empirical quantile plot
@@ -127,6 +132,7 @@ EXTR VALUE TYPE 2 PPCC PLOT GR-CO Generate ext. value type 2 prob plot cc plot
 EXTR VALUE TYPE 2 PROB PLOT GR-CO Generate ext. value type 2 probability plot
 
 FACTOR PLOT                 GR-CO Generate  a factor plot
+FISHER DISC PLOT            GR-CO Generate a Fisher discrimination plot
 FLUCTUATION PLOT            GR-CO Generate  a fluctuation plot
 F PROBABILITY PLOT          GR-CO Generate an F probability plot
 FRACTAL PLOT                GR-CO Generate a fractal plot
@@ -186,9 +192,16 @@ JACKNIFE LINEAR SLOPE PLOT  GR-CO Generate a jacknife linear slope plot
 JACKNIFE LINEAR RESSD PLOT  GR-CO Generate a jacknife linear resid. s.d. plot
 JACKNIFE LINEAR CORR PLOT   GR-CO Generate a jacknife linear correlation plot
 JACKNIFE TAGUCHI SN.. PLOT  GR-CO Generate a jacknife Taguchi S/N plot
+JONCKHEERE TERPSTRA TEST    AN-CO Perform Jonckheere-Terpstra one factor test
 
 K CONSISTENCY PLOT          GR-CO Generate a K consistency plot
 KERNEL DENSITY PLOT         GR-CO Generate a kernel density plot
+K NEAREST NEIGHBOR CLAS PLOTGR-CO Generate a K nearest neighbor classification plot
+K NEAREST NEIGHBOR DISC PLOTGR-CO Generate a K nearest neighbor classification plot
+K NEAREST NEIGHBOR PLOT     GR-CO Generate a K nearest neighbor classification plot
+KNN PLOT                    GR-CO Generate a K nearest neighbor classification plot
+KNN CLASSIFICATION PLOT     GR-CO Generate a K nearest neighbor classification plot
+KNN DISCRIMINATION PLOT     GR-CO Generate a K nearest neighbor classification plot
 KOLMOGOROV SMIRNOV PLOT     GR-CO Generate a Kolmogorov-Smirnov <dist> goodness of fit plot
 KS PLOT                     GR-CO Generate a Kolmogorov-Smirnov <dist> goodness of fit plot
 KURTOSIS PLOT               GR-CO Generate a kurtosis (vs. subset) plot
@@ -225,6 +238,7 @@ NORMAL PPCC PLOT            GR-CO Generate a normal ppcc (vs. subset) plot
 NP CHART                    GR-CO Generate a Np control chart
 NP CONTROL CHART            GR-CO Generate a Np control chart
 
+OPEN CLOSE LOW HIGH PLOT    GR-CO Generate an open close low high plot
 ORD PLOT                    GR-CO Generate an Ord plot
 
 PARALLEL COORDINATES PLOT   GR-CO Generate a parallel coordinates plot
@@ -271,6 +285,7 @@ RELATIVE VARIANCE PLOT      GR-CO Generate relative variance (vs. subset) plot
 RELATIVE SD PLOT            GR-CO Generate relative standard deviation (vs. subset) plot
 REPAIR PLOT                 GR-CO Generate a repair plot over groups with censoring times
 RF SPREAD PLOT              GR-CO Generate a residuals-fitted (RF)  plot
+RIDGELINE PLOT              GR-CO Generate a ridgeline plot
 ROC CURVE                   GR-CO Generate a ROC curve
 ROOTOGRAM                   GR-CO Generate a rootogram
 ROSE PLOT                   GR-CO Generate a Rose plot
@@ -328,11 +343,14 @@ UNIFORM PROBABILITY PLOT    GR-CO Generate a uniform probability plot
 UPPER HINGE PLOT            GR-CO Generate an upper hinge (vs. subset) plot
 UPPER QUARTILE PLOT         GR-CO Generate an upper quartile (vs. subset) plot
 
+VARIABLE WIDTH BAR PLOT     GR-CO Generate a variable width bar plot
 VARIANCE OF THE MEAN PLOT   GR-CO Generate variance of mean (vs. subset) plot
 VARIANCE PLOT               GR-CO Generate a variance (vs. subset) plot
 VECTOR PLOT                 GR-CO Generate a vector plot
 VIOLIN PLOT                 GR-CO Generate a violin plot
 
+WAFFLE PLOT                 GR-CO Generate a dot matrix proportion plot
+WATERFALL CHART             GR-CO Generate a Waterfall chart
 WEIBULL PLOT                GR-CO Generate a Weibull plot
 WEIBULL PPCC PLOT           GR-CO Generate a Weibull prob plot corr coef plot
 WEIBULL PROBABILITY PLOT    GR-CO Generate a Weibull probability plot
@@ -494,6 +512,8 @@ CUSUM TEST                  AN-CO Perform a cumulative sum test for randomness
 
 DAVID TEST                  AN-CO Perform the David outlier test.
 DEHAAN                      AN-CO Generalized Pareto estimation using DeHaan method
+DEMING FIT                  AN-CO Perform a Deming regression
+DEMING REGRESSION           AN-CO Perform a Deming regression
 DEX PHD                     AN-CO Perform Yates analysis with principal Hessian directions
 DIFF OF MEAN CONF LIMITS    AN-CO Generate confidence limits for the difference of means
 DIFF OF PROP CONF LIMITS    AN-CO Generate confidence limits for the difference of proportions
@@ -576,6 +596,8 @@ RATIO OF MEANS CONF INTE    AN-CO Generates a confidence interval for the ratio 
 RATIO OF VARIANCE CONF INTE AN-CO Generates a confidence interval for the ratio of two standard deviations (or variances).
 RECIPE                      AN-CO Compute REgression Confidence Intervals on PErcentiles
 RELIABILITY TREND TEST      AN-CO Perform a reliability trends test
+REPLICATED WEIG DEMING FIT  AN-CO Perform a Deming regression
+REPLICATED WEIG DEMING REGR AN-CO Perform a Deming regression
 RUNS                        AN-CO Carry out a runs analysis
 
 SEASONAL LOWESS             AN-CO Decompose time series into trend, seasonal, residual components
@@ -606,6 +628,10 @@ TWO SAMPLE PERMUTATION TEST AN-CO Perform a two sample permutation test for a sp
 
 VAN DER WAERDEN TEST        AN-CO Perform a Van Der Waerden (normal scores) test
 
+WEIGHTED DEMING FIT         AN-CO Perform a Deming regression
+WEIGHTED DEMING REGRESSION  AN-CO Perform a Deming regression
+WEIGHTED REPL DEMING FIT    AN-CO Perform a Deming regression
+WEIGHTED REPL DEMING REGR   AN-CO Perform a Deming regression
 WILKS SHAPIRO NORMAL TEST   AN-CO Perform a Wilks-Shapiro test for normality
 
 YATES ANALYSIS              AN-CO Carry out Yates analysis of 2**k design
@@ -1000,6 +1026,7 @@ COMMENT CHARACTER           SU-CO Define comment character for data files
 COMMENT CHECK               SU-CO Specify if data files checked for comments
 COMMUNICATIONS LINK         SU-CO Set link (phone, network, etc.) for host
 CONTINUE CHARACTER          SU-CO Specify the command continuation character
+CONTINUE LOOP               SU-CO Go to next iteration of a LOOP
 COPY                        SU-CO Copy all, or specified lines, of one file to another file
 COPY DELAY                  SU-CO Obsolete command for Tektronix 4014 terminals
 CPU TIME                    SU-CO Return the CPU time used by the current Dataplot session
@@ -1294,6 +1321,9 @@ FREQUENCY                   SC-LE Compute frequencies of distinct values
 GAMMA RANDOM NUMBERS        SC-LE Generate gamma random numbers
 GENERATOR MULTIPLICATION    SC-LE Generate ...
 GEOMETRIC RANDOM NUMBERS    SC-LE Generate geometric random numbers
+GROUPED CORRELATION         SC-LE Compute the correlation for grouped data
+GROUPED PERCENTILE          SC-LE Compute a percentile for grouped data
+GROUPED QUANTILE            SC-LE Compute a quantile for grouped data
 
 HALFNORMAL RANDOM NUMBERS   SC-LE Generate halfnormal random numbers
 
@@ -1352,10 +1382,17 @@ MIMIMUM                     SC-LE Compute the sample minimum
 NEGATIVE BINO RANDOM NUMBER SC-LE Generate negative binomial random numbers
 NORMAL ORDER STAT MEDIANS   SC-LE Generate normal order statistic medians
 NORMAL RANDOM NUMBERS       SC-LE Generate normal N(0,1) random numbers
+NUMBER TO CURRENCY          SC-LE Convert a number to a string in currency format
+NUMBER TO STRING            SC-LE Convert a number to a string in currency format
 
+ORDER STATISTIC MEANS       SC-LE Generate order statistic means
+ORDER STATISTIC MEDIANS     SC-LE Generate order statistic medians
+ORDER STATISTIC STAND DEVI  SC-LE Generate order statistic standard deviations
+ORDER STATISTIC             SC-LE Generate order statistics
 PARETO RANDOM NUMBERS       SC-LE Generate Pareto random numbers
 PATTERN                     SC-LE Generate a patterned sequence within a var
-PERDEF                      SC-LE Compute the percentage of defectives
+PERCENT ACCEPTABLE          SC-LE Compute the percentage of acceptables
+PERCENT DEFECTIVE           SC-LE Compute the percentage of defectives
 POISSON RANDOM NUMBERS      SC-LE Generate Poisson random numbers
 POLYNOMIAL ADDITION         SC-LE Carry out polynomial addition
 POLYNOMIAL DIVISION         SC-LE Carry out polynomial division
@@ -1414,6 +1451,7 @@ UNIFORM RANDOM NUMBERS      SC-LE Generate uniform (0,1) random numbers
 UPPER HINGE                 SC-LE Compute the sample upper hinge
 UPPER QUARTILE              SC-LE Compute the sample upper quartile
 
+VARIABLE TO MATRIX          SC-LE Convert a variable to a matrix
 VARIANCE                    SC-LE Compute the sample variance
 VARIANCE-COVARIANCE MATRIX  SC-LE Compute the sample variance-covariance matrix
 VECTOR ADDITION             SC-LE Carry out vector addition

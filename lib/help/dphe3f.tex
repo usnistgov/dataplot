@@ -1,13 +1,13 @@
- 81400.    (VERSION 2024.07)   total number of lines in file (including this line)
+ 82800.    (VERSION 2026.03)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    D                  first line number of D section
-18700.    E                  first line number of E section
-27800.    F                  first line number of F section
-38200.    G                  first line number of G section
-56200.    H                  first line number of H section
-63500.    I                  first line number of I section
-72800.    J                  first line number of J section
-75000.    K                  first line number of K section
+19900.    E                  first line number of E section
+29000.    F                  first line number of F section
+39400.    G                  first line number of G section
+57600.    H                  first line number of H section
+64900.    I                  first line number of I section
+74200.    J                  first line number of J section
+76400.    K                  first line number of K section
 
 ----------------------------------------------------------
  
@@ -351,8 +351,8 @@ Description:
        3. The David paper suggests the following formula (equation 6
           on page 485)
 
-             cv = SQRT[{2*(n-1)*t((1-alpha)/(n*(n-1)),n-2)}/
-                       {(n-2) + t((1-alpha)/(n*n-1)),n-2)}]
+             cv = SQRT[{2*(n-1)*t((1-alpha)/(n*(n-1)),n-2)**2}/
+                       {(n-2) + t((1-alpha)/(n*n-1)),n-2)**2}]
 
           with t denoting the percent point function of the t
           distribution.
@@ -1571,13 +1571,533 @@ Related Commands:
     FOR    = Allows row-specification of a subset.
  
 Applications:
-    XX
+    Data Management
  
 Implementation Date:
-    XX
+    Pre-1987
  
 Program:
     XX
+ 
+-----DEMING FIT---------------------------------
+ 
+DEMING FIT
+ 
+Name:
+    DEMING FIT
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Performs a Deming regression for two paired measurement processes.
+ 
+Description:
+    Deming regression is a special case of errors in variables
+    regression.  It is used for the case where we have n paired
+    measurements, (x(i),y(i)), where x and y denote measurements from
+    two measurement processes.  It is used to compare how comparable
+    the measurement processes are.  Specifically, it fits the model
+
+        y(i) = alpha + beta*x(i)
+
+    where y(i) has measurement error epsilon(i) and x(i) has measurement
+    error tau(i).  It is assumed that the epsilon and tau errors are
+    independent of each other and that both have normal distributions
+    with a mean of zero.
+
+    If the two measurement processes are equal, the slope should be
+    approximately equal to one and the intercept should be approximately
+    equal to zero.
+
+    Let delta equal the ratio of the variances of epsilon and tau.  This
+    ratio is typically assumed to be known (possibly from prior data).
+    If prior data is not available, estimates of these variances can be
+    determined if we have multiple measurements for each i.  In that
+    case, the variances can be estimated with
+
+        s(tau)**2 = SUM[i=1 to n][SUM[j=1 to k(i)]
+                    [(x(ij) - xbar(i)))**2/SUM[i=1 to n][(k(i)-1)]
+
+        s(epsilon)**2 = SUM[i=1 to n][SUM[j=1 to m(i)]
+                        [(y(ij) - ybar(i))**2/SUM[i=1 to n][(m(i)-1)]
+
+    with k(i) denoting the number of replications for x(i) and m(i)
+    the number of replications for y(i), respectively.  Then
+
+         delta = s(tau)**2/s(epsilon)**2
+
+    Note that k(i) does not need to equal m(i), but all k(i) and m(i)
+    should be greater than one.  Also, the means for x(i) and y(i) are
+    used in the DEMING FIT command.
+
+    If prior estimates of the variances are not available and we do not
+    have replicate measurements, the following ratio will be used by
+    default
+
+        delta = Sxx/Syy
+
+   where Sxx and Syy are defined below.  Alternatively, you can chose
+   to set delta to 1 (i.e., we assume equal error variances for both
+   measurement processes).
+
+   The estimates for beta and alpha are:
+
+         beta  = (delta*ssy - ssx +
+                 SQRT((delta*ssy - ssx)**2 + r*delta*ssxy))/(2*delta*ssxy)
+
+         alpha = ybar - beta*xbar
+
+    where
+
+         ssy  = SUM[i=1 to n][(y(i) - ybar)**2]
+         ssx  = SUM[i=1 to n][(x(i) - xbar)**2]
+         ssxy = SUM[i=1 to n][(x(i) - xbar)*(y(i) - ybar)]
+
+    The estimated "true" values for x(i) and y(i) are
+
+         xhat(i) = x(i) + (delta*beta*e(i))/(delta*beta**2 + 1)
+         yhat(i) = y(i) - e(i)/(delta*beta**2 + 1)
+
+    The e(i) are the "raw" residuals
+
+         e(i) = y(i) - (alpha + beta*x(i))
+
+    In addition to the raw residuals, the following residuals are
+    defined
+
+         x residual:         e(i)(x) = x(i) - xhat(i)
+         y residual:         e(i)(y) = y(i) - yhat(i)
+         optimized residual: e(i)(*) = sign(e(i))*
+                             SQRT((e(i)(x)**2 + delta*(e(i)(y))**2)
+
+    Dataplot generates the following outputs
+
+           1. Estimates for alpha and beta
+
+           2. Standard errors for alpha and beta
+
+              These standard errors are computed using the jacknife
+              procedure developed by Linnett (1990).  See the Note
+              section below for details.
+
+           3. Confidence limits for alpha and beta
+
+                 beta  +/- tppf(1-alpha/2,n-2)*SE(beta)
+                 alpha +/- tppf(1-alpha/2,n-2)*SE(alpha)
+
+              with SE(beta) and SE(alpha) denoting the standard
+              errors of beta and alpha, respectively, and tppf is the
+              percent point function of the t distribution (the alpha
+              in tppf is the significance level, not the estimate of
+              the intercept).
+
+           4. A hypothesis test that the slope is equal to one (i.e.,
+              the two measurement process are equivalenet with the
+              possible exception of a different of location).
+
+              The test statistic is
+
+                  t = (beta - 1)/SE(beta)
+
+              Reject the hypothesis if |t| > tppf(1-alpha/2,n-1)
+              where tppf is the t percent point function.
+
+           5. A hypothesis test that Ybar - Xbar = 0 (or Ybar = Xbar).
+
+              The test statistic is
+
+                  t = (Ybar - Xbar)/SE(Ybar - Xbar)
+
+              Reject the hypothesis if the |t| > tppf(1-alpha/2,n-1)
+              where tppf is the t percent point function.
+
+              The SE(Ybar - Xbar is obtained from the same jacknife
+              procedure that generates the standard errors for alpha and
+              beta.
+
+        If the hypothesis that the slope is equal to one and the means
+        of the two processes are equal, this provides evidence that the
+        two measurement processes can be considered equivalent.
+
+    Additional information is written to files.  Specifically,
+
+       1. The file dpst1f.dat contains
+
+              Column 1:   the Xhat values
+              Column 2:   the Yhat values
+              Column 3:   the raw residuals
+              Column 4:   the x residuals
+              Column 5:   the y residuals
+              Column 6:   the optimized residuals
+              Column 7:   the predicted values for Y given X
+
+       2. The files dpst2f.dat and dpst3f.dat contain information
+          related to the jacknife procedure.  These will typically
+          not be viewed and are primarily used for diagnostic
+          purposes.
+
+       3. The file dpst4f.dat contains
+
+              Column 1:   the X(i) values
+              Column 2:   the standard errors for the predicted values
+              Column 3:   the lower 90% confidence interval for the
+                          predicted value of Y given X
+              Column 4:   the upper 90% confidence interval for the
+                          predicted value of Y given X
+              Column 5:   the lower 95% confidence interval for the
+                          predicted value of Y given X
+              Column 6:   the upper 95% confidence interval for the
+                          predicted value of Y given X
+              Column 7:   the lower 99% confidence interval for the
+                          predicted value of Y given X
+              Column 8:   the upper 99% confidence interval for the
+                          predicted value of Y given X
+
+           The standard errors for the predicted values are obtained
+           from the jacknife procedure.  The confidence intervals are
+           obtained by
+
+                predicted value +/-
+                          tppf(1-alpha/2,n-2)*SE(predicted value)
+
+    The variables PRED and RES will contain the predicted values of Y
+    given X and the optimized residuals, respectively.
+
+    This procedure was popularized by Deming which is why it is commonly
+    referred to as Deming regression.  However, it was initially
+    developed by Adcock and Kummell.
+
+    The Deming regression assumes that the ratio of the variances (i.e.,
+    the delta) is constant across the range of the measurements.  If this
+    assumption is not met, then a weighted Deming regression may provide
+    a better fit.  Dataplot uses the weighting scheme recommended by
+    Linnet.  Specifically,
+
+       w(i) = 1/[(x(i) + delta*y(i))/(1 + delta)]**2
+
+    Then the formulas for ssy, ssx and ssxy are updated to use the
+    weights
+
+         ssy  = SUM[i=1 to n][w(i)*(y(i) - ybarw)**2]
+         ssx  = SUM[i=1 to n][w(i)*(x(i) - xbarw)**2]
+         ssxy = SUM[i=1 to n][w(i)*(x(i) - xbarw)*(y(i) - ybarw)]
+
+    where ybarw and xbarw are the weighted means.
+
+         ybarw = SUM[i=1 to n][w(i)*y(i)]/SUM[i=1 to n][w(i)]
+         xbarw = SUM[i=1 to n][w(i)*x(i)]/SUM[i=1 to n][w(i)]
+
+    Optionally, an iterative reweighting scheme can be be employed
+    to fine tune the weights.  The algorithm for this is
+
+       1. Generate predicted values using the unweighted Deming
+          regression.
+
+       2. Compute the weights using these predicted values.  If
+          delta is computed from the data, recalculate it using
+          these predicted values.
+
+       3. Use the weighted algorithm to generate an updated set of
+          predicted values for the X and Y measurements.  Note that the
+          original data, not the new predicted values, are used in
+          the weighted fit.  This will generate an updated set of 
+          predicted values.
+
+       4. Compare the coefficents from the new fit to the previous
+          fit.  If the change in coefficient values is below a
+          specified threshold, stop.  Otherwise, use the current
+          predicted values and go back to step 2.
+
+Syntax 1:
+    DEMING FIT <y> <x>     <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable for the first measurement process;
+          <x> is the response variable for the second measurement process;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs the unweighted Deming fit.
+
+Syntax 2:
+    WEIGHTED DEMING FIT <y> <x>     <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable for the first measurement process;
+          <x> is the response variable for the second measurement process;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax performs the weighted Deming fit.
+
+Syntax 3:
+    REPLICATED DEMING FIT <y1> <x1> <y2> <x2>
+                          <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the response variable for the first measurement
+               process;
+          <x1> is the group-id variable for the first measurement
+               process;
+          <y2> is the response variable for the second measurement
+               process;
+          <x2> is the group-id variable for the second measurement
+               process;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax is used when there is replication in the data.  The
+    advantage of replication is that a more accurate estimate of
+    delta can be obtained.
+
+    The <y1> and <x1> variables should be of the same length and the
+    <y2> and <x2> variables should be of the same length.  However,
+    <y1> and <y2> do not need to be the same length.  The <x1> and <x2>
+    group-id variables should have the same group-id's and each
+    group should have at least two values.
+ 
+    Note that average for each group is used in the Deming fit.
+
+Syntax 4:
+    WEIGHTED REPLICATED DEMING FIT <y1> <x1> <y2> <x2>
+                                   <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the response variable for the first measurement
+               process;
+          <x1> is the group-id variable for the first measurement
+               process;
+          <y2> is the response variable for the second measurement
+               process;
+          <x2> is the group-id variable for the second measurement
+               process;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax is similar to Syntax 3.  However, the weighted
+    Deming fit is used.
+
+Examples:
+    DEMING FIT Y X
+    DEMING FIT Y X SUBSET TAG > 1
+    WEIGHTED DEMING FIT Y X
+    REPLICATED DEMING FIT Y1 X1 Y2 X2
+
+Note:
+    The Deming regression is typically used to determine if two
+    measurements are equivalent.  If the confidence interval for the
+    slope contains the value 1, then the two measurement processes
+    can be considered equivalent with the possible exception of a
+    bias.  The intercept term is a measure of this bias.  If the
+    confidence limit for the intercept term contains the value 0,
+    then this indicates there is not a statistically signficant bias
+    between the two measurement processes.
+
+Note:
+    To specify the value for delta, enter the command
+
+       LET DELTA = <value>
+
+    To specify that delta should be computed from the data, enter a
+    negative value for DELTA.  Using a value of 1 specifies that
+    the variances from the two measurement processes are equal.
+
+Note:
+    If you would like the weighted Deming regression to perform the
+    iterative reweighting, enter the command
+
+       SET DEMING FIT ITERATIVE REWEIGHTING ON
+
+    To turn off the iterative reweighting, set this switch to OFF.
+    The default is OFF.
+
+    To specificy the threshold for determining convergence, enter the
+    command
+
+      SET DEMING FIT ITERATIVE THRESHOLD <value>
+
+    The default is 0.00005.
+
+Note:
+    The jacknife procedure for obtaining the standard error of a
+    statistic, theta, is as follows:
+
+       1. Compute the estimate of theta based on the full data set.
+          This will be thetahat.
+
+       2. Compute the estimate of theta based on omitting a single
+          row of the data.  Do this for all rows.  This will result
+          in n estimates of theta.  Call these n estimates thetahat(i).
+
+       3. Compute thetahat(i)* = n*thetahat - (n-1)*thetahat(i).  Note
+          that the thetahat(i) and thetahat(i)* values for alpha and
+          beta are written to dpst2f.dat (the thetahat(i)* values are
+          called the adjusted values and the thetahat(i) values are
+          called the unadjusted values).  The thetahat(i)* values for
+          the predicted values are written to dpst3f.dat.
+
+       4. Compute the mean of the thetahat(i)* values.  This is the
+          jacknife estimate of theta.  The difference between thetahat
+          and the jacknife estimate of theta is a measure of bias.
+
+       5. The jacknife estimate of the variance is
+
+              V(thetahat) = SUM[i=1 to n]
+                            [(thetahat(i)* - thetahat(jacknife)**2/(n-1)]
+
+          and the jacknife estimate of the standard error is
+
+              SEhat(thetahat) = SQRT(V(thetahat)/n)
+
+Note:
+    The following parameters are saved by the DEMING FIT command
+
+        ALPHA    = the estimate of the intercept parameter.
+        SDALPHA  = the estimate of the standard error of the intercept
+                   parameter.
+        ALPHAJN  = the Jacknife estimate of the intercept parameter.
+        BETA     = the estimate of the slope parameter.
+        SDBETA   = the estimate of the standard error of the slope
+                   parameter.
+        ALPHAJN  = the Jacknife estimate of the intercept parameter.
+        SDDIFF   = the standard error of the Ybar - Xbar statistic.
+        SSY      = the sum of squares for Y.
+        SSX      = the sum of squares for X.
+        SSXY     = the sum of squares for Y-X.
+
+Default:
+    None
+ 
+Synonyms:
+    DEMING REGRESSION
+    REPLICATED WEIGHTED DEMING FIT
+ 
+Related Commands:
+    FIT                      = Carry out a linear or non-linear fit.
+    ORTHOGONAL DISTANCE FIT  = Carry out an orthogonal distance linear or
+                               non-linear fit.
+    BLAND ALTMAN PLOT        = Generate a Bland-Altman plot.
+ 
+References:
+    Adcock (1878), "A problem in least square," The Analyst, Vol. 5,
+    No. 2, pp. 53-54.
+
+    Kummel (1879), "Reduction of observation equations which contain
+    more than one observed quantity," The Analyst, Vol. 6, No. 4,
+    pp. 97-105.
+
+    Deming (1943), "Statistical Adjustment of Data," John Wiley and Sons.
+
+    Linnet (1990), "Estimation of the linear relationship between the
+    measurements of two methods with proportional errors," Statistics in
+    Medicine, Vol. 9, No. 12, pp. 1463-1473.
+
+    Linnet (1993), "Evaluation of Regression Procedures for Method
+    Comparison Studies," Clinical Chemistry, 39 (3), pp. 424-432.
+
+    NCSS (2016), "Deming Regression,"
+    https://www.ncss.com/wp-content/themes/ncss/pdf/Procedures/NCSS/Deming_Regression.pdf.
+
+Applications:
+    Fitting
+ 
+Implementation Date:
+    2026/03
+ 
+Program 1:
+    . Step 1:   Define the Input Data, example from NCSS web site
+    .
+    read x y
+     7.0   7.9
+     8.3   8.2
+    10.5   9.6
+     9.0   9.0
+     5.1   6.5
+     8.2   7.3
+    10.2  10.2
+    10.3  10.6
+     7.1   6.3
+     5.9   5.2
+    end of data
+    let n = size x
+    .
+    . Step 2:   Perform the Deming Regression
+    .
+    set list new window off
+    let delta = 4
+    capture screen on
+    capture demfit3.out
+    deming fit y x
+    print " "
+    print " "
+    list dpst1f.dat
+    print " "
+    print " "
+    list dpst4f.dat
+    end of capture
+    .
+    . Step 3:   Generate some diagnostic plots
+    .
+    skip 2
+    set read format 60X,2e15.7
+    read dpst4f.dat pred95l pred95u
+    skip 0
+    set read format
+    .
+    let alpha = round(alpha,4)
+    let beta  = round(beta,4)
+    title offset 8
+    title Deming Fit of Y versus Xcr()Model: Y = ^alpha + ^beta*x
+    y1label Y
+    x1label X
+    .
+    line blank solid dotted dotted
+    character circle blank blank blank
+    character hw 1.0 0.75
+    character fill on
+    .
+    plot y       x and
+    plot pred    x and
+    plot pred95l x and
+    plot pred95u x
+    .
+    set 4plot multiplot on
+    multiplot corner coordinates 5 5 95 95
+    character hw 2 1.5
+    tic mark label size 4
+    label
+    title
+    .
+    4-plot res
+    justification center
+    move 50 98
+    text 4-Plot of Optimized Residuals
+
+Program 2:
+    . Step 1:   Define the Input Data
+    .
+    read x y
+     7.0   7.9
+     8.3   8.2
+    10.5   9.6
+     9.0   9.0
+     5.1   6.5
+     8.2   7.3
+    10.2  10.2
+    10.3  10.6
+     7.1   6.3
+     5.9   5.2
+    end of data
+    .
+    . Step 2:   Perform the Deming Regression
+    .
+    let delta = 4
+    deming fit y x
+    weighted deming fit y x
+    set deming fit iterative reweighting on
+    weighted deming fit y x
+ 
+Program 3:
+    . Step 1:   Read the data.  This data is from the
+    .           R package "deming".
+    .
+    skip 25
+    read ferritin.dat id period y1 y2
+    .
+    let delta = 1
+    deming fit y1 y2
+    weighted deming fit y1 y2
+    set deming fit iterative reweighting on
+    weighted deming fit y1 y2
  
 -----DEMODF-------------------------------------------------------
  
@@ -8017,7 +8537,7 @@ Purpose:
     means.
  
 Description:
-    The confidence interval for the difference between tow means
+    The confidence interval for the difference between two means
     is defined by:
 
        (Ybar1 - Ybar2) +/- SQRT[s1**2/n1 + s2**2/n2]*t(1-alpha/2,df)
@@ -8031,7 +8551,13 @@ Description:
        df    = the degrees of freedom
              = (s1**2/n1 + s2**2/n2)**2/
                [(s1**2/n1)**2*(n1-1) + (s2**2/n2)**2*(n2-1)]
-  
+
+    Note that this is the Welch-Satterthwaite formulation.  The confidence
+    interval for the difference of two means is often generated using
+    n1+n2-2 as the degrees of freedom.  The advantage of the
+    Welch-Satterthwaite approach is that it is more robust for unequal
+    variances and unequal sample sizes.
+
 Syntax:
     DIFFERENCE OF MEANS CONFIDENCE INTERVAL  <y1>  <y2>
                         <SUBSET/EXCEPT/FOR qualification>
@@ -8050,6 +8576,11 @@ Note:
     sizes, sample means, sample standard deviations, and the standard
     error are also printed.  The t-value and t-value X standard
     error are printed in the table.
+
+Note:
+    The BOOTSTRAP DIFFERENCE OF MEANS PLOT command provides an
+    alternative method for finding a confidence limit for the
+    difference of means.
  
 Default:
     None
@@ -8058,6 +8589,8 @@ Synonyms:
     None
  
 Related Commands:
+    BOOTSTRAP ... PLOT                  = Generate a bootstrap plot for a
+                                          specified statistic.
     CONFIDENCE LIMITS                   = Generate a confidence
                                           interval for the mean.
     T-TEST                              = Perform a two sample t-test.
@@ -8067,21 +8600,29 @@ Related Commands:
     KOLMOGOROV-SMIRNOV TWO SAMPLE TEST  = Generate a Kolmogorov-
                                           Smirnov two sample test.
  
-Reference:
+References:
+    Welch (1947), "The Generalization of 'Student's' Problem when
+    Several Different Population Variances are Involved," Biometrika,
+    Vol. 34, No. 1/2, pp. 28-35.
+
+    Welch (1951), "On the Comparison of Several Mean Values: An
+    Alternative Approach," Biometrika, Vol. 38, No. 3/4, pp. 330-336.
+
     Confidence intervals for the difference of two means are covered in
-    most introductory statistics books.
+    many introductory statistics books.  However, they typically provide
+    the non-Welch-Satterthwaite degrees of freedom.
  
 Applications:
     Confirmatory Data Analysis
  
 Implementation Date:
-    3/1999
+    1999/03
  
 Program:
     SKIP 25
     READ AUTO83B.DAT Y1 Y2
     RETAIN Y2 SUBSET Y2 >= 0
-    DIFFERENCE OF MEANS CONFIDENCE INTERVAL Y1
+    DIFFERENCE OF MEANS CONFIDENCE INTERVAL Y1 Y2
  
 -----DIFFERENCE OF MEDIAN (LET)--------------------------------------
  
@@ -16618,6 +17159,397 @@ Program:
     TITLE AUTOMATIC
     PLOT DNTPPF(P,10,10,5) FOR P = 0.01 0.01 0.99
  
+-----DOT MATRIX PLOT-------------------------------------------------------
+ 
+DOT MATRIX PLOT
+DOT MATRIX PROPORTION PLOT
+ 
+Name:
+    DOT MATRIX PLOT
+    DOT MATRIX PROPORTION PLOT
+ 
+Type:
+    Graphics Command
+ 
+Purpose:
+    Generates a dot matrix plot.
+ 
+Description:
+    The dot matrix plot uses a grid of dots to display the counts of the
+    cross tabulation of two categorial variables.  We will refer to the
+    first categorical variable as the "group" variable and the second
+    categorical variable as the "category" variable.
+
+    The group variable is used to define a grid of plots within the
+    plot frame.  For example, if there are nine distinct levels in the
+    group variable, a grid of three rows and three columns will be
+    defined (the ordering of the levels in the group variable is from
+    left to right horizontally and from bottom to top vertically.  The
+    grid is filled in row order (i.e., the first subplot is the bottom
+    row and the left most column, the second subplot is the bottom row
+    and the second column from the left and so on).
+
+    Within each group, the counts are obtained for each level of the
+    categorical variable.
+
+    For the first variation of this plot, each level of the category will
+    generate n filled circles (the actual symbol plotted is user settable)
+    where n is the count for that level.  The ordering is from left to
+    right and top to bottom in row order.  This variation is most useful
+    when the number of groups and categories is relatively modest and the
+    counts are relatively small.
+
+    For the second variation of this plot, for each subplot a fixed number
+    of rows and columns are specified (the default is 10 rows and 10
+    columns).  Instead of plotting the raw counts, the proportion for each
+    level of the category is computed.  The number of dots generated for a
+    level i of a category is then
+
+        INT(nrow*ncol*(count(i)/ntotal) + 0.5)
+
+    with nrow, ncol, count(i) and ntotal denoting the number of rows in
+    the subplot, the number of columns in the subpplot, the count for
+    level i of the category variable and the total count for all levels
+    of the category variable, respectively.  This version of the plot is
+    also known as a waffle plot.  It may be a better choice when the
+    number of counts is relatively large.
+
+Syntax 1:
+    DOT MATRIX PLOT  <group>  <cat>  <SUBSET/EXCEPT/FOR qualification>
+    where <group> is the group-id variable;
+          <cat> is the category-id variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs a cross tabulation to obtain the counts for the
+    group and category combinations.
+
+Syntax 2:
+    DOT MATRIX PLOT  <count> <group>  <cat>
+                     <SUBSET/EXCEPT/FOR qualification>
+    where <count> is a variable containing the counts for each
+              group/category combination;
+          <group> is the group-id variable;
+          <cat> is the category-id variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax is used for the case where the counts have already been
+    tabulated.
+
+Syntax 3:
+    DOT MATRIX PROPORTION PLOT  <group>  <cat>  <SUBSET/EXCEPT/FOR qualification>
+    where <group> is the group-id variable;
+          <cat> is the category-id variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax performs a cross tabulation to obtain the counts for the
+    group and category combinations.  In this case, the number of dots for a
+    specific level of the category is based on the proportion of the total count
+    for that level and the total number of dots is fixed.
+
+Syntax 4:
+    DOT MATRIX PLOT  <count> <group>  <cat>
+                     <SUBSET/EXCEPT/FOR qualification>
+    where <count> is a variable containing the counts for each
+              group/category combination;
+          <group> is the group-id variable;
+          <cat> is the category-id variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax is used for the case where the counts have already been
+    tabulated.  In this case, the number of dots for a specific level of
+    the category is based on the proportion of the total count for that
+    level and the total number of dots is fixed.
+
+Examples:
+    DOT MATRIX PLOT GROUP CATEGORY
+    DOT MATRIX PLOT COUNTS GROUP CATEGORY
+    DOT MATRIX PLOT GROUP CATEGORY  SUBSET CATEGORY > 2
+
+Note:
+    For Syntax 1 and Syntax 2, the number of group columns can be
+    specified with the command
+
+        SET DOT MATRIX PLOT NUMBER OF GROUP COLUMNS <value>
+
+    For Syntax 1 and Syntax 2, the number of category columns can be
+    specified with the command
+
+        SET DOT MATRIX PLOT NUMBER OF CATEGORY COLUMNS <value>
+
+    If these commands are not specified, Dataplot will determine a value
+    based on the number of groups and the maximum count of the groups.
+
+Note:
+    For Syntax 3 and Syntax 4, the number of rows and columns for a given
+    subplot can be specified with the commands
+
+       SET DOT MATRIX PLOT HORIZONTAL GRID VALUE <value>
+       SET DOT MATRIX PLOT VERTICAL   GRID VALUE <value>
+
+   The default is 10 rows and 10 columns.
+
+   Due to rounding of the proportions, the number of dots generated may
+   be slightly less than or slightly greater than the requested number.
+   For example, if there are three levels for a category and each level
+   has an equal count, this will result in 99 dots (assuming a 10x10
+   grid) as each level has a proportion of 0.33.
+
+Default:
+    None
+ 
+Synonyms:
+    WAFFLE PLOT is a synonym for DOT MATRIX PROPORTION PLOT
+ 
+Related Commands:
+    PLOT              = Generates a data or function plot.
+    WATERFALL PLOT    = Generate a waterfall plot.
+    BULLET PLOT       = Generate a bullet plot.
+    FLUCTUATION PLOT  = Generate a fluctuation plot.
+
+Applications:
+    Presentation Graphics
+ 
+Implementation Date:
+    2025/11
+
+Program 1:
+    . Step 1:   Read the data
+    .
+    skip 25
+    read alarm.dat inst src
+    skip 0
+    .
+    . Step 2:   Set some plot control
+    .
+    character circle all
+    character fill on all
+    character hw 1.0 0.75 all
+    character color blue red cyan black green magenta
+    .
+    limits 1 4
+    major tic mark number 4
+    minor tic mark number 0
+    tic mark offset units data
+    tic mark offset 0.8 0.8
+    .
+    . Step 3:   Generate the plot
+    .
+    title Sample Dot Matrix Plot
+    dot matrix plot inst src
+    .
+    .           Add labels for grid points
+    .
+    let ncol = 4
+    let ninst = unique inst
+    let ival = mod(ninst,ncol)
+    let nrow = int(ninst/ncol)
+    if ival > 0
+       let nrow = nrow + 1
+    end of if
+    .
+    justification center
+    height = 1.7
+    let irow = 1
+    let icol = 0
+    let icnt = 0
+    loop for k = 1 1 ninst
+        let icnt = icnt + 1
+        let icol = icol + 1
+        if icol > ncol
+           let icol = 1
+           let irow = irow + 1
+        end of if
+        let xcoor = icol
+        let ycoor = irow + 0.55
+        movedd xcoor ycoor
+        text Instrument ^k
+    end of loop
+    .
+    height 1.5
+    justification left
+    move 87 88
+    text Blue:    Source 1
+    move 87 85
+    text Red:     Source 2
+    move 87 82
+    text Cyan:    Source 3
+    move 87 79
+    text Black:   Source 4
+    move 87 76
+    text Green:   Source 5
+    move 87 73
+    text Magenta: Source 6
+    .
+    . Step 4:   Generate the proportion version of the plot
+    .
+    title Sample Dot Matrix Proportion Plot
+    dot matrix proportion plot inst src
+    .
+    .           Add labels for grid points
+    .
+    let ncol = 4
+    let ninst = unique inst
+    let ival = mod(ninst,ncol)
+    let nrow = int(ninst/ncol)
+    if ival > 0
+       let nrow = nrow + 1
+    end of if
+    .
+    justification center
+    height = 1.7
+    let irow = 1
+    let icol = 0
+    let icnt = 0
+    loop for k = 1 1 ninst
+        let icnt = icnt + 1
+        let icol = icol + 1
+        if icol > ncol
+           let icol = 1
+           let irow = irow + 1
+        end of if
+        let xcoor = icol
+        let ycoor = irow + 0.52
+        movedd xcoor ycoor
+        text Instrument ^k
+        write1 junk.out k irow icol xcoor ycoor
+    end of loop
+    .
+    height 1.5
+    justification left
+    move 87 88
+    text Blue:    Source 1
+    move 87 85
+    text Red:     Source 2
+    move 87 82
+    text Cyan:    Source 3
+    move 87 79
+    text Black:   Source 4
+    move 87 76
+    text Green:   Source 5
+    move 87 73
+    text Magenta: Source 6
+
+Program 2:
+    . Step 1:   Read the data
+    .
+    read y haircolo eyecolor
+      5  1  1
+     29  2  1
+     14  3  1
+     16  4  1
+     15  1  2
+     54  2  2
+     14  3  2
+     10  4  2
+     20  1  3
+     84  2  3
+     17  3  3
+     94  4  3
+     68  1  4
+    119  2  4
+     26  3  4
+      7  4  4
+    end of data
+    .
+    let string shair1 = Black
+    let string shair2 = Brown
+    let string shair3 = Red
+    let string shair4 = Blond
+    .
+    let string seye1  = Green
+    let string seye2  = Hazel
+    let string seye3  = Blue
+    let string seye4  = Brown
+    .
+    . Step 2:   Set some plot control
+    .
+    character circle all
+    character fill on all
+    character hw 1.0 0.75 all
+    character color blue red black magenta
+    .
+    limits 1 2
+    major tic mark number 2
+    minor tic mark number 0
+    tic mark offset units data
+    tic mark offset 0.8 0.8
+    .
+    . Step 3:   Generate the plot
+    .
+    title Sample Dot Matrix Plot from Precomuted Counts
+    dot matrix plot y haircolo eyecolor
+    .
+    .           Add labels for grid points
+    .
+    let ncol = 2
+    let nrow = 2
+    let nhair = unique haircolo
+    .
+    justification center
+    height = 1.7
+    let irow = 1
+    let icol = 0
+    let icnt = 0
+    loop for k = 1 1 nhair
+        let icnt = icnt + 1
+        let icol = icol + 1
+        if icol > ncol
+           let icol = 1
+           let irow = irow + 1
+        end of if
+        let xcoor = icol
+        let ycoor = irow + 0.55
+        movedd xcoor ycoor
+        text ^shair^k
+    end of loop
+    .
+    height 1.5
+    justification left
+    move 87 88
+    text Blue:    ^seye1
+    move 87 85
+    text Red:     ^seye2
+    move 87 82
+    text Black:   ^seye3
+    move 87 79
+    text Magenta: ^seye4
+    .
+    . Step 4:   Generate the proportion version of the plot
+    .
+    title Sample Dot Matrix Proportion Plot
+    dot matrix proportion plot y haircolo eyecolor
+    .
+    .           Add labels for grid points
+    .
+    justification center
+    height = 1.7
+    let irow = 1
+    let icol = 0
+    let icnt = 0
+    loop for k = 1 1 nhair
+        let icnt = icnt + 1
+        let icol = icol + 1
+        if icol > ncol
+           let icol = 1
+           let irow = irow + 1
+        end of if
+        let xcoor = icol
+        let ycoor = irow + 0.55
+        movedd xcoor ycoor
+        text ^shair^k
+    end of loop
+    .
+    height 1.5
+    justification left
+    move 87 88
+    text Blue:    ^seye1
+    move 87 85
+    text Red:     ^seye2
+    move 87 82
+    text Black:   ^seye3
+    move 87 79
+    text Magenta: ^seye4
+
 -----DOT PRODUCT (LET)-------------------------------------
  
 DOT PRODUCT
@@ -18056,6 +18988,201 @@ Program:
     MOVE 50 4
     TEXT INTERCEPT OF FITTED LINE = ^ALPHA 
 
+-----DUMBBELL PLOT-------------------------------------------------------
+ 
+DUMBBELL PLOT
+ 
+Name:
+    DUMBBELL PLOT
+ 
+Type:
+    Graphics Command
+ 
+Purpose:
+    Generates a dumbbell plot.
+ 
+Description:
+    Dumbbell plots are used to show the difference between two different
+    groups.  They are similar to, but distinct from, I plots.  The
+    I plot shows the minimum, the median and the maximum for one or
+    more groups of data.  The dumbbell plot shows the values for a set
+    of paired data observations.
+
+    The appearance of the plot is controlled by the first four settings
+    of the LINE and CHARACTER commands (and the associated attribute
+    setting commands).  Specifically, given the paired variables Y1 and
+    Y2
+
+       1. Trace 1 contains the observations from Y1.
+       2. Trace 2 contains the observations from Y2.
+       3. Trace 3 contains a line from the observations in Y1 to
+          the observations in Y2 for the cases where the Y1 value
+          is less than or equal to the Y2 value.
+       4. Trace 4 contains a line from the observations in Y1 to
+          the observations in Y2 for the cases where the Y1 value
+          is greter than the Y2 value.
+
+    This is demonstrated in the Program example below.
+
+    Note that dumbbell plots are often drawn horizontally rather than
+    vertically.  This can be controlled with the HORIZONTAL SWITCH
+    command.
+
+Syntax 1:
+    DUMBBELL PLOT  <y1>  <y2>   <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    For this syntax, the x-axis value is simply the sequence number.
+
+Syntax 2:
+    DUMBBELL PLOT  <y1>  <y2> <x>  <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+          <x> is the horizontal axis variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Examples:
+    DUMBBEL PLOT Y1 Y2
+    DUMBBEL PLOT Y1 Y2 X
+    DUMBBEL PLOT Y1 Y2  SUBSET Y1 > 0 SUBSET Y2 > 0
+
+Note:
+    The DUMBBELL PLOT can be used to generate range bar plots (also
+    called span plots or floating bar charts).  This plots a bar between
+    the minimum and maximum value.  These plots can be used to show how
+    a response varies over time.  They can also be used to show the
+    range for different categories (e.g., this can be used in project
+    management to show start and stop dates for different components of
+    the project).  This plot is demonstrated in the Program 2 example
+    below.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    CHARACTERS      = Sets the type for plot characters.
+    LINES           = Sets the type for plot lines.
+    I PLOT          = Generates an I plot.
+    BOX PLOT        = Generates a box plot.
+    PLOT            = Generates a data or function plot.
+ 
+Applications:
+    Data Analysis, Presentation Graphics
+ 
+Implementation Date:
+    2025/05
+
+Program 1:
+    . Step 1:   Create some data - from
+    .           https://inforiver.com/insights/dumbbell-charts-game-changer/
+    .
+    read gdp2021 gdp2022
+     4.60    4.70
+     6.20    2.40
+     4.20    2.20
+     3.80    5.10
+     5.70    1.60
+     6.80    2.50
+     7.40    3.60
+     4.90    6.20
+     1.50    2.80
+     3.00    2.10
+    end of data
+    .
+    let string s1  = Austria
+    let string s2  = Belgium
+    let string s3  = Switzerland
+    let string s4  = UAE
+    let string s5  = United States
+    let string s6  = France
+    let string s7  = United Kingdom
+    let string s8  = Portugal
+    let string s9  = Thailand
+    let string s10 = Finland
+    let ig = group label s1 to s10
+    .
+    . Step 2:   Define some plot control
+    .
+    title case asis
+    label case asis
+    tic mark label case asis
+    .
+    let n = size gdp2021
+    ylimits 1 n
+    major ytic mark number n
+    minor ytic mark number 0
+    tic mark offset units data
+    ytic mark offset 0.5 0.5
+    y1tic mark label format group label
+    y1tic mark label content ig
+    .
+    line blank blank solid solid
+    line thickness 0.3 all
+    line color black black red blue
+    character circle circle blank blank
+    character hw 1.0 0.75 all
+    character fill on on off off
+    character color red blue black black
+    .
+    . Step 3:   Generate the plot
+    .
+    horizontal switch on
+    title GDP Growth Rate for 2021 and 2022
+    dumbbell plot gdp2021 gdp2022
+
+Program 2:
+. Step 1:   Read data
+.
+skip 25
+read elkins11.dat x y1 y2 y3
+let x = int(x)
+set let cross tabulate collapse
+let y1min = cross tabulate minimum y1 x
+let y1max = cross tabulate maximum y1 x
+let xt    = cross tabulate group one  x
+.
+. Step 2:   Define some plot control
+.
+title case asis
+label case asis
+tic mark label case asis
+.
+let n = size xt
+loop for k = 1 1 n
+    let xval = xt(k)
+    let string s^k = ^xval
+    let xt2(k) = ^k
+end of loop
+let ig = group label s1 to s^n
+ylimits 1 n
+major ytic mark number n
+minor ytic mark number 0
+tic mark offset units data
+ytic mark offset 0.5 0.5
+y1label Year
+y1tic mark label format group label
+y1tic mark label content ig
+x1label Freon-11 Concentration (parts per trillion)
+xlimits 100 300
+.
+bar on all
+bar off off
+bar width 0.8 all
+bar fill on all
+bar color blue all
+line blank all
+.
+. Step 3:   Generate the plot
+.
+horizontal switch on
+title Range Bar Chart of Freon-11 Concentration
+dumbbell plot y1min y1max
+
 -----DURBIN TEST-----------------------------------------
  
 DURBIN TEST
@@ -18646,6 +19773,79 @@ Program:
     END OF MULTIPLOT
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -31087,7 +32287,7 @@ Purpose:
 Description:
     The two sample t-test is the standard test for the equality of the
     means from two samples.  This test is based on the following
-    aassumptions
+    assumptions
 
        1. the samples are randomly selected from infinite populations
           (equivalently the observations are independent)
@@ -54527,6 +55727,196 @@ Program:
     .
     box plot rank xcode
 
+-----GROUPED PERCENTILE (LET)--------------------------------
+ 
+GROUPED PERCENTILE
+GROUPED QUANTILE
+ 
+Name:
+    GROUPED PERCENTILE (LET)
+    GROUPED QUANTILE (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the percentile (or quantile) for grouped data.
+ 
+Description:
+    The PERCENTILE (QUANTILE) command is used to compute a specified
+    percentile (quantile) of a univariate response variable.  However,
+    there may be cases where your data is only available as a frequency
+    table.  For these cases, the GROUPED PERCENTILE (QUANTILE) command
+    can be used to compute a specified percentile (quantile).
+
+    If the groups are equi-spaced and the underlying data is continuous,
+    then the group-id variable may be given as the mid-points of the
+    group intervals.  If the groups are not equi-spaced or if the
+    underlying data is not continuous, then two group-id variables
+    should be given: the first specifies the lower limits for the
+    groups and the second specifies the upper limits for the groups.
+
+    To compute the i-th percentile for grouped data, Dataplot does the
+    following
+
+      1. If only the group mid-points are provided, these are first
+         converted to lower and upper class boundaries.   The class
+         width is computed as XMID(2) - XMID(1) (where XMID is the
+         variable containing the group mid-points).  Then the lower
+         boundary for class i is XMID(i) - (class width/2) and the
+         upper boundary for class i is XMID(i) + (class width/2).
+
+      2. The percentiles corresponding to the upper class boundaries
+         are computed (100*F(i)/NTOTAL where F(i) is the cumulative
+         frequency of class i and NTOTAL is the sum of the frequencies
+         for all classes).
+
+      3. Determine which class the specified percentile falls into.  Call
+         this ICLASS.
+
+      4. Then use the following formula to compute the specified
+         percentile
+
+             p(i) = l + {((i*N/100) - F(ICLASS-1))/f(ICLASS)}*C
+
+         where
+
+            i   = the specified percentile (a value between 0 and 100)
+            l   = the lower limit of the ICLASS group
+            N   = the sum of the frequencies for all groups
+            F   = the cumulative frequuency for the ICLASS - 1 group
+            f   = the frequuency for the ICLASS group
+            C   = the class width for the ICLASS group
+
+    Note that this formula implicitly assumes that the frequencies are
+    uniformly distributed within a class.  
+
+Syntax 1:
+    LET <par> = <percentile> GROUPED PERCENTILE <freq> <xmid>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <percentile> is a number or parameter with a value between
+               0 and 100 that specifies the desired percentile;
+          <freq> is the variable containing the frequencies;
+          <xmid> is the variable containing the mid-points of the groups;
+          <par> is a parameter where the computed percentile is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This is used for the case where you have equi-spaced intervals for the
+    groups and the underlying data is assumed to be continuous. The class
+    width is set to XMID(2) - XMID(1) (where XMID is the group-id
+    variable), the lower boundary is set to XMID(i) - (class width/2) and
+    the upper boundary is set to XMMID(i) + (class width/2).
+
+Syntax 2:
+    LET <par> = <percentile> GROUPED PERCENTILE <freq> <xlow> <xhigh>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <percentile> is a number or parameter with a value between
+               0 and 100 that specifies the desired percentile;
+          <freq> is the variable containing the frequencies;
+          <xlow> is the variable containing the mid-points of the groups;
+          <par> is a parameter where the computed percentile is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This is used for the case where you have unequally spaced intervals
+    or the underlying data may not be continuous.  The class width for the
+    i-th group is XHIGH(i) - XLOW(i) (where XHIGH and XLOW are the upper
+    and lower class boundaries, respectively).
+
+Syntax 3:
+    LET <par> = <quantile> GROUPED QUANTILE <freq> <xmid>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <quantile> is a number or parameter with a value between
+               0 and 1 that specifies the desired quantile;
+          <freq> is the variable containing the frequencies;
+          <xmid> is the variable containing the mid-points of the groups;
+          <par> is a parameter where the computed percentile is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This is used for the case where you have equi-spaced intervals for the
+    groups and the underlying data is assumed to be continuous. The class
+    width is set to XMID(2) - XMID(1) (where XMID is the group-id
+    variable), the lower boundary is set to XMID(i) - (class width/2) and
+    the upper boundary is set to XMMID(i) + (class width/2).
+
+Syntax 4:
+    LET <par> = <quantile> GROUPED QUANTILE <freq> <xlow> <xhigh>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <quantile> is a number or parameter with a value between
+               0 and 100 that specifies the desired percentile;
+          <freq> is the variable containing the frequencies;
+          <xlow> is the variable containing the mid-points of the groups;
+          <par> is a parameter where the computed quantile is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This is used for the case where you have unequally spaced intervals
+    or the underlying data may not be continuous.  The class width for the
+    i-th group is XHIGH(i) - XLOW(i) (where XHIGH and XLOW are the upper
+    and lower class boundaries, respectively).
+
+Examples:
+    LET XPERC = 70 GROUPED PERCENTILE FREQ XMID
+    LET XPERC = 70 GROUPED PERCENTILE FREQ XLOWER XUPPER
+
+    LET P = 70
+    LET XPERC = P GROUPED PERCENTILE Y X
+    LET XPERC = P GROUPED PERCENTILE Y X1 X2
+ 
+    LET XQUAN = 0.70 GROUPED QUANTILE FREQ XMID
+    LET XQUAN = 0.90 GROUPED QUANTILE FEEQ XLOWER XUPPER
+
+    LET QUANT = 0.80
+    LET XQUAN = P GROUPED QUANTILE Y X
+    LET XQUAN = P GROUPED QUANTILE Y X1 X2
+ 
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    The following can also be used
+
+    LET P100 = <percentile>
+    LET XPERRC = GROUPED PERCENTILE Y X
+    LET XPERRC = GROUPED PERCENTILE Y X1 X2
+ 
+    LET P100 = <quantile>
+    LET XQUAN = GROUPED QUANTILE Y X
+    LET XQUAN = GROUPED QUANTILE Y X1 X2
+ 
+Related Commands:
+    PERCENTILE  = Compute a specified percentile of a response variable.
+    QUANTILE    = Compute a specified quantile of a response variable.
+ 
+Reference:
+    Selby (1974), "CRC Standard Mathematical Tables", 22nd Edition,
+    CRC Press, p. 572.
+
+Applications:
+    Frequency Data
+ 
+Implementation Date:
+    2024/09
+ 
+Program:
+    let y = double exponential random numbers for i = 1 1 1000
+    set histogram empty bins off
+    set histogram class width normal corrected
+    let y2 x2 = binned y
+    .
+    LET P05  =  5 GROUPED PERCENTILE Y2 X2
+    LET P10  = 10 GROUPED PERCENTILE Y2 X2
+    LET P20  = 20 GROUPED PERCENTILE Y2 X2
+    LET P50  = 50 GROUPED PERCENTILE Y2 X2
+    LET P80  = 80 GROUPED PERCENTILE Y2 X2
+    LET P90  = 90 GROUPED PERCENTILE Y2 X2
+    LET P95  = 95 GROUPED PERCENTILE Y2 X2
+    PRINT P05 P10 P20 P50 P80 P90 P95
+ 
 -----GRUBBS TEST------------------------------------
  
 GRUBBS TEST
@@ -56121,6 +57511,16 @@ Program:
  
  
  
+
+
+
+
+
+
+
+
+
+
 
 
 

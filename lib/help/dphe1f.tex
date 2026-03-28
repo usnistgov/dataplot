@@ -1,4 +1,4 @@
-7200.       (VERSION 2024.06)  total number of lines in file (including this line)
+7200.       (VERSION 2025.07)  total number of lines in file (including this line)
 29.                          number of     sections below
    50.    OVERVIEW           first line number of OVERVIEW          section
   150.    GRAPHICS           first line number of GRAPHICS          section
@@ -2833,22 +2833,24 @@ Supported statistics can be used in the following commands:
   16. DEX <STAT> PARETO EFFECTS PLOT
   17. DEX <STAT> PARETO ABSOLUTE EFFECTS PLOT
   18. DEX <STAT> YOUDEN PLOT
-  19. CLASSIFICATION <STAT> CURVE
-  20. <STAT> INFLUENCE CURVE
-  21. CROSS TABULATE <STAT>
-  22. POSITIONAL TABULATION <STAT>
-  23. TWO SAMPLE <STAT> PERMUTATION TEST
-  24. LET V = MATRIX COLUMN <STAT>
-  25. LET V = MATRIX ROW <STAT>
-  26. LET A = MATRIX GRAND <STAT>
-  27. LET M = MATRIX PARTITION <STAT>
-  28. LET M = GENERATE MATRIX <STAT>
-  29. LET V = CROSS TABULATE <STAT>
-  30. LET V = CROSS TABULATE CUMULATIVE <STAT>
-  31. LET V = SORT BY <STAT>
-  32. LET YOUT = MOVING <STAT>
-  33. LET YOUT = CUMULATIVE <STAT>
-  34. <STAT> INTERACTION PLOT <STAT>
+  19. <STAT> INTERACTION PLOT <STAT>
+  20. CLASSIFICATION <STAT> CURVE
+  21. <STAT> INFLUENCE CURVE
+  22. CROSS TABULATE <STAT>
+  23. POSITIONAL TABULATION <STAT>
+  24. TWO SAMPLE <STAT> PERMUTATION TEST
+  25. K SAMPLE <STAT> PERMUTATION TEST
+  26. LET V = MATRIX COLUMN <STAT>
+  27. LET V = MATRIX ROW <STAT>
+  28. LET A = MATRIX GRAND <STAT>
+  29. LET M = MATRIX PARTITION <STAT>
+  30. LET M = GENERATE MATRIX <STAT>
+  31. LET V = CROSS TABULATE <STAT>
+  32. LET V = CROSS TABULATE CUMULATIVE <STAT>
+  33. LET V = SORT BY <STAT>
+  34. LET YOUT = MOVING <STAT>
+  35. LET YOUT = CUMULATIVE <STAT>
+  36. LET YOUT = WINDOW <STAT>
 
 Some of the above commands only support the case where the
 statistic is computed from a single response variable.
@@ -3423,7 +3425,11 @@ Difference of Scale:
    DIFFERENCE OF WINSORIZED VARIANCE
 
 Ratios
-   RATIO OF
+   RATIO OF <statistic>
+
+Percentile Statistics
+   GROUPED PERENCTILE
+   GROUPED QUANTILE
 
 Statistical Tests
    ANDERSON DARLING K SAMPLE TEST
@@ -3667,12 +3673,6 @@ Consensus Means
    SUMMARY GRAYBILL DEAL ZHANG TWO STANDARD ERROR
 
 ----------------------------------------------------------
-
-
-
-
-
-
 
 
 
@@ -5667,7 +5667,8 @@ topics are discussed:
   14. Reading date and time fields
   15. Reading IP addresses
   16. Reading monetary data (e.g., $23,461,58)
-  17. Reading numeric values with trailing "+" or "-"
+  17. Reading numeric values with trailing "+" or "-" or leading
+      "<" or "">"
   18. Commas withing character fields
   19. Reading binary data
   20. Reading image data
@@ -6189,10 +6190,10 @@ with <char> denoting the desired comment character.
 EXCEL FILES
 
 At the current time (2004/01), Dataplot does not support the
-direct reading of Excel data files.  We are planning to add
-this capability in a future release of Dataplot.  Until that
-time, you need to save the data in Excel to an ASCII file and
-read that ASCII file into Dataplot.
+direct reading of Excel data files.
+
+One method for reading data from Excel is to save the data in Excel to
+an ASCII file and read that ASCII file into Dataplot.
  
 Excel provides the following options for writing ASCII data
 files:
@@ -6403,7 +6404,7 @@ comma will no longer be treated as the delimiter.  Dataplot cannot
 currently handle the case where the comma is used both for monetary
 data and also as a field delimiter.
 
-READING NUMERIC VALUES WITH TRAILING "+" OR "-"
+READING NUMERIC VALUES WITH TRAILING "+" OR "-" OR LEADING "<" OR ">"
 
 On occassion, numeric fields may have a trailing "+" or a
 trailing "-".  The "+" is typically used to indicate that the
@@ -6421,6 +6422,43 @@ numeric value and simply ignore the "+" or "-".
 To reset the defualt, enter
 
     set read trailing plus minus ignore off
+
+Note: The 2025/04 version of Dataplot added a similar capability for
+leading "<" (to indicate "less than") or leading ">" (to indicate
+"greater than").  Specifically, the following commands were added
+
+    SET READ LEADING LESS THAN IGNORE <MISSING VALUE/ON/OFF>
+    SET READ LEADING GREATER THAN IGNORE <MISSING VALUE/ON/OFF>
+    SET READ LEADING LESS THAN GREATER THAN IGNORE <MISING VALUE/ON/OFF>
+
+Note that these are synonyms.  Any of the these will process both the
+"<" or the ">" case.
+
+For the ON setting, the leading "<" or ">" is simply ignored.  For the
+OFF setting, the leading "<" and ">" characters will be treated as errors.
+For the MISSING VALUE setting, data values with a leading "<" or ">" are
+set to the value defined by the command
+
+        SET READ MISSING VALUE <value>
+
+The default setting is MISSING VALUE.  Note that the MISSING VALUE option
+was added to the SET READ TRAILING PLUS MINUS IGNORE command as well.
+
+In order to allow you to identify which data values contain the "<" or ">"
+characters, Dataplot writes variables to "dpst5f.dat" that correspond to the
+columnns read (that is, if you read six variables, the dpst5f.dat file will
+contain six columns).  The dpst5f.dat columns will contain either 0.0, 1.0
+or 2.0 values.  A value of 0.0 indicates "<" or ">" are not present, a value
+of 1.0 indicates a "<" and a value of 2.0 indicates a ">".
+
+If you enter SET READ TRAILING PLUS MINUS IGNORE <ON/MISSING VALUE>, this
+will also create the dpst5f.dat file with 1.0 indicating a trailing "-"
+and a 2.0 indicating a trailing "+".
+
+Note that there should be no space between the leading "<" or ">"  or
+the trailing "-" or "+" and the data value since Dataplot treats the
+space character as a delimiter.
+
 
 COMMAS WITHIN CHARACTER FIELDS
 
@@ -6539,44 +6577,6 @@ several things that can potentially be done
       exploratory analyses on these large data sets.  
 
 ----------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

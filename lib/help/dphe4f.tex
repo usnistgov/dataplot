@@ -1,9 +1,9 @@
-50000.      (VERSION 2024.07)   total number of lines in file (including this line)
+50400.      (VERSION 2025.07)   total number of lines in file (including this line)
  4.                          number of     sections below
   100.    L                  first line number of L section
-20300.    M                  first line number of M section
-39200.    N                  first line number of N section
-45400.    O                  first line number of O section
+20400.    M                  first line number of M section
+39300.    N                  first line number of N section
+45600.    O                  first line number of O section
  
 ----------------------------------------------------------
  
@@ -16740,17 +16740,18 @@ Description:
     and stop can have real values (i.e., DATAPLOT is not limited to
     integer loops).  DATAPLOT loops can have either a positive or a
     negative increment.
+
+    The loop is terminated with and END OF LOOP (or END LOOP) command.
  
 Syntax:
-    LOOP  FOR <param> = <start>  <inc> <stop>
-    where <param> is a parameter that specifies the loop index
-               variable;
+    LOOP  FOR <par> = <start>  <inc> <stop>
+    where <par> is a parameter that specifies the loop index variable;
           <start> is a number or parameter that is the value for
-               <param> on the first iteration of the loop;
-          <inc> is a number or parameter that <param> is incremented by
+               <par> on the first iteration of the loop;
+          <inc> is a number or parameter that <par> is incremented by
                after each iteration is completed;
           <stop> is a number or parameter that determines when the loop
-               is terminated (i.e., when <param> exceeds this value, no
+               is terminated (i.e., when <par> exceeds this value, no
                more iterations are performed).
  
 Examples:
@@ -16764,27 +16765,13 @@ Note:
     <start>.
  
 Note:
-    Loops can be nested up to 7 levels.  A unique index variable should
+    Loops can be nested up to 20 levels.  A unique index variable should
     be used for each loop.
  
 Note:
-    A maximum of 200 commands can be contained in a loop.  If you need
-    more, put some of the commands in a macro file and use the CALL
-   command.
- 
-   Note: This maximum was upped to 500 commands 1998/5.
+    A maximum of 20,000 commands can be contained in a loop.  Each
+    command in the LOOP can have a maximum of 255 characters.
 
-Note:
-    Loops only save the first 80 characters of a command.  If you use
-    the continue character ("..."), this counts as a single command and
-    only the first 80 characters are stored.
- 
-Note:
-    There is currently no mechanism for exiting a loop other than
-    <param> exceeding <stop>.  That is, you can not break out of a loop
-    when some condition is met.  However, you can nest an IF block
-    inside the loop to inhibit execution of commands.
- 
 Note:
     IF blocks can be nested inside of a loop and a loop can be nested
     inside an IF block.
@@ -16800,26 +16787,54 @@ Note:
     can often be used to avoid writing loops.
  
 Note:
-    The command BREAK LOOP can be used to terminate a loop before
-    all iterations are completed.  Enter HELP BREAK LOOP for details.
+    Sometimes it is convenient to terminate a loop before the last
+    value has been incremented.  For example, a loop may be iterating
+    a calculation until some convergence criterion is reached.  The
+    BREAK LOOP command is used for this purpose.  The BREAK LOOP command
+    is almost always contained within an IF block.
+
+    Note that Dataplot does not support what are referred to as WHILE
+    (or DO WHILE or REPEAT UNTIL) loops in other languages.  However,
+    the BREAK LOOP command can be used to function much like a WHILE
+    loop.  So, although the following syntax is not supported
+
+        LOOP WHILE A > 3
+
+    a similar result can be obtained with
+
+        LOOP FOR K = 1 1 1000000
+            IF A > 3
+               BREAK LOOP
+            END OF IF
+
+    This is demonstrated in the Program 2 example.
+
+Note:
+    The command CONTINUE LOOP is used to go to the next iteration of
+    the loop (it does not terminate the loop).  That is, all commands
+    after the CONTINUE LOOP command are ignored.
+
+    This is demonstrated in the Program 3 example.
 
 Default:
     None
  
 Synonyms:
-    None
+    END LOOP is a synonym for END OF LOOP
  
 Related Commands:
     END OF LOOP    = Terminate a loop.
     IF             = Conditionally execute commands.
  
 Applications:
-    XX
+    Program Control
  
 Implementation Date:
-    XX
+    Pre-1987
+    1994/02: Added BREAK LOOP command
+    2018/10: Added CONTINUE LOOP command
  
-Program:
+Program 1:
     LET Y1 = NORMAL RANDOM NUMBER FOR I = 1 1 100
     LET Y2 = EXPONENTIAL RANDOM NUMBERS FOR I = 1 1 100
     LET Y3 = T RANDOM NUMBERS FOR I = 1 1 100
@@ -16838,6 +16853,55 @@ Program:
     END OF LOOP
     END OF MULTIPLOT
  
+Program 2:
+    FEEDBACK OFF
+    .  Computes Least Absolute Deviations fit using
+    .  using iteratively re-weighted least squares.
+    .  The following assumes that a string F has been defined before
+    .  calling this macro to define the type of fit.  E.g., 
+    .           LET STRING F = FIT Y X
+    WEIGHT
+    ^F
+    LET MAXITER = 10
+    LOOP FOR K = 1 1 MAXITER
+        LET RESOLD = RES
+        LET MED = MEDIAN RES
+        LET TEMP = ABS(RES - MED)
+        LET MAD = MEDIAN TEMP
+        LET S = MAD/0.6745
+        LET U = RES/S
+        LET TEMP = ABS(RES)
+        LET C = MEDIAN TEMP
+        LET TAG = ABS(Y - PRED)
+        LET WT = C/TAG  SUBSET TAG > C
+        LET WT = 1 SUBSET TAG <= C
+        WEIGHTS WT
+        ^F
+        .
+        LET DELTA = (RESOLD - RES)**2
+        LET NUM = SUM DELTA
+        LET NUM = SQRT(NUM)
+        LET DELTA2 = RESOLD*RESOLD
+        LET DENOM = SUM DELTA2
+        LET CONV = NUM/DENOM
+        IF CONV <= 0.0001 
+          BREAK LOOP
+        END OF IF
+    END OF LOOP
+
+Program 3:
+    let icnt = 0
+    loop for k = 1 1 10
+        let ival = mod(k,2)
+        if ival = 0
+           continue loop
+        end of if
+        let icnt = icnt + 1
+        let x(icnt) = k
+        let y(icnt) = k**2
+    end of loop
+    print x y
+
 -----LORENZ CURVE--------------------------------------------------
  
 LORENZ CURVE
@@ -20289,6 +20353,42 @@ Program:
  
  
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -45077,6 +45177,119 @@ Program:
     end of loop
     feedback on
 
+-----NUMBER TO CURRENCY-----------------------------------------
+ 
+NUMBER TO CURRENCY
+ 
+Name:
+    NUMBER TO CURRENCY (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Convert a parameter to a string where the number is represented in
+    currency format.
+ 
+Description:
+    When working with financial data, it may be useful for labeling
+    purposes to display numbers in a currency format.  For example,
+    given the number 32819.62, this command will created the string
+    containing $32,819.32.
+
+    If the number contains only zeros to the right of the decimal point,
+    then only the integer part of the number will be converted.  If the
+    number contains more than 2 digits to the right of the decimal point,
+    only the first two digits will be converted.  Currently, the number
+    can contain at most 17 characters to the left of the decimal point.
+
+Syntax:
+    LET <sout> = NUMBER TO CURRENCY  <a>
+    where <a> is a parameter or number;
+    and   <sout> is a string.
+ 
+    Although you can enter an explicit number with this command, it
+    is usually a parameter that is entered.
+
+Examples:
+    LET AVAL = 3211569.43
+    LET SOUT = NUMBER TO CURRENCY AVAL
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    ^                   = Substitute the value of a parameter or a string.
+    &                   = Concatenate two strings.
+    CHAR                = Convert a parameter or a variable to a string
+                          based on the ASCII collating sequence.
+    ICHAR               = Convert a string to numeric values based on
+                          the ASCII collating sequence.
+    LET STRING          = Defines a string.
+    NUMBER TO STRING    = Convert a number to a string.
+ 
+Applications:
+    Presentation Graphics
+ 
+Implementation Date:
+    2025/06
+ 
+Program:
+    . Step 1:   Create the data - this example from Wikipedia
+    .
+    read y
+     420
+     210
+    -170
+    -140
+    end of data
+    .
+    . Step 2:   Set plot control
+    .
+    case asis
+    title case asis
+    label case asis
+    tic mark label case asis
+    .
+    let n    = size y
+    let ntot = n + 2
+    xlimits 1 ntot
+    major x1tic mark number ntot
+    minor x1tic mark number 0
+    x1tic mark label format alpha
+    x1tic mark label content Productcr()Revenue Servicescr()Revenue Totalcr()Revenue ...
+          Fixedcr()Costs Variablecr()Costs Total
+    tic mark offset units data
+    x1tic mark offset 0.8 0.8
+    .
+    ylimits 0 700
+    major y1tic mark number 8
+    minor y1tic mark number 1
+    let icnt = 0
+    loop for k = 0 100 700
+        let icnt = icnt + 1
+        let s^icnt = number to currency k
+    end of loop
+    let ig = group label s1 to s8
+    y1tic mark label format group label
+    y1tic mark label content ig
+    .
+    set waterfall chart total positive on
+    set waterfall chart final value    on
+    set waterfall chart bar width     0.8
+    .
+    region fill on on on
+    region fill color green red blue
+    .
+    . Step 3:   Generate the plot
+    .
+    y1label Dollars
+    title Waterfall Chart (Wikipedia Example)
+    waterfall chart y
+
 -----NUMBER TO STRING-----------------------------------------
  
 NUMBER TO STRING
@@ -45320,19 +45533,6 @@ Program:
     PLOT Y VS X
 
 ---------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -47755,6 +47955,545 @@ Program 2:
     end of capture
     echo off
 
+-----OPEN CLOSE LOW HIGH PLOT-------------------------------------------------------
+ 
+OPEN CLOSE LOW HIGH PLOT
+ 
+Name:
+    OPEN CLOSE LOW HIGH PLOT
+ 
+Type:
+    Graphics Command
+ 
+Purpose:
+    Generates an open-close-low-high plot.
+ 
+Description:
+    Open-close-low-high plots are used to display data where there is an
+    opening value, a closing value  and minimum and maximum values for a
+    given time unit. For example, it can be used to display daily stock
+    prices over a period of time.  However, it can be applied to any data
+    where there are start and end values for each time unit.
+
+    Specifically, it draws a line between the minimum and maximum values.
+    It then adds horizontal lines at the opening and closing values (the
+    opening values are drawn to the left of minimum/maximum line and
+    closing values are drawn to the right of the minimum/maximum line.
+
+    The appearance of the plot can be controlled by settings for the
+    LINE command and its associated attribute setting commands.
+    Specifically,
+
+       Trace 1 - this is the line between the minimum and maximum value
+                 for cases where the closing value is higher than the
+                 opening value
+       Trace 2 - this is the line between the minimum and maximum value
+                 for cases where the closing value is lower than the
+                 opening value
+       Trace 3 - this is the horizontal line for the opening value for
+                 cases where the closing value is higher than the opening
+                 value
+       Trace 4 - this is the horizontal line for the closing value for
+                 cases where the closing value is higher than the opening
+                 value
+       Trace 5 - this is the horizontal line for the opening value for
+                 cases where the closing value is lower than the opening
+                 value
+       Trace 6 - this is the horizontal line for the closing value for
+                 cases where the closing value is lower than the opening
+                 value
+
+    A common color scheme is to use green when the closing price is
+    higher than the opening price and red when the closing pric is lower
+    than the opening price.
+
+    This is demonstrated in the Program example below.
+
+Syntax 1:
+    OPEN CLOSE LOW HIGH PLOT  <yopen> <yclose> <ylow> yhigh>
+                              <SUBSET/EXCEPT/FOR qualification>
+    where <yopen> is the response variable containing the opening values;
+          <yclose> is the response variable containing the closing values;
+          <ylow> is the response variable containing the minimum values;
+          <yhigh> is the response variable containing the maximum values;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    For this syntax, the x-axis value is set to the sequence number.
+
+Syntax 2:
+    OPEN CLOSE LOW HIGH PLOT  <yopen> <yclose> <ylow> yhigh>  <x>
+                              <SUBSET/EXCEPT/FOR qualification>
+    where <yopen> is the response variable containing the opening values;
+          <yclose> is the response variable containing the closing values;
+          <ylow> is the response variable containing the minimum values;
+          <yhigh> is the response variable containing the maximum values;
+          <x> is the horizontal axis variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Examples:
+    OPEN CLOSE LOW HIGH PLOT YOPEN YCLOSE YLOW YHIGH
+    OPEN CLOSE LOW HIGH PLOT YOPEN YCLOSE YLOW YHIGH X
+
+Note:
+    The width of the horizontal lines can be controlled by entering the
+    command
+
+          SET CANDLESTICK PLOT BAR WIDTH <value>
+
+    The default value is -1 which means Dataplot will use
+
+          (X(2) - X(1))/2
+
+    where X is the horizontal axis value.
+
+Note:
+    The CANDLESTICK PLOT displays the same information as the
+    OPEN CLOSE LOW HIGH PLOT command, but in a different format.
+
+Default:
+    None
+ 
+Synonyms:
+    OCLH PLOT
+ 
+Related Commands:
+    LINES             = Sets the type for plot lines.
+    CANDLESTICK PLOT  = Generate a candlestick plot.
+    WATERFALL CHART   = Generates a waterfall chart.
+    DUMBBELL PLOT     = Generate a dumbbell plot.
+    PLOT              = Generates a data or function plot.
+ 
+Reference:
+    Rockefeller, Barbara (2014), "Technical Analysis for Dummies,"
+    3rd Edition, Wiley Publishing, Inc.
+
+Applications:
+    Financial Graphics
+ 
+Implementation Date:
+    2025/07
+
+Program:
+    . Step 1:   Read the data
+    .
+    skip 25
+    column limits 13 80
+    read candlestick.dat yclose yopen ylow yhigh
+    skip 0
+    let n = size yopen
+    .
+    column limits 1 12
+    loop for k = 1 1 n
+        let irow = 25 + k
+        row limits irow irow
+        read string candlestick.dat s^k
+    end of loop
+    column limits
+    row limits
+    .
+    . Step 2:   Set some plot control
+    .
+    case asis
+    title case asis
+    label case asis
+    tic mark label case asis
+    .
+    xlimits 1 27
+    major x1tic mark number 9
+    minor x1tic mark number 2
+    x1tic mark label format alpha
+    x1tic mark label content ^s1 ^s4 ^s7 ^s10 ^s13 ^s16 ^s19 ^s22 ^s25
+    tic mark offset units data
+    x1tic mark offset 0.8 3.8
+    x1tic mark label size 1.5
+    .
+    line solid all
+    line color green red green red green red
+    .
+    . Step 3:   Generate the plot
+    .
+    title Open-Close-Low-High Plot
+    y1label Price
+    x1label Date
+    x2label Green: Close > Open, Red: Close < Open
+    .
+    open close low high plot yopen yclose ylow yhigh
+
+-----OPERATOR-------------------------------------------------------
+ 
+ 
+Note:
+    ***** This command is not currently operational *****
+OPERATOR
+ 
+Name:
+    OPERATOR
+ 
+Type:
+    Support Command
+ 
+Purpose:
+    Sends a message to the operator at the main console of the
+    host computer.
+ 
+Syntax:
+    OPERATOR   <message>
+    where <message> is the desired message.
+ 
+Examples:
+    OPERATOR WHEN WILL CALCOMP BE READY?
+    OPERATOR PLEASE USE LARGE PAPER FOR VERSATEC
+    OPERATOR PLEASE USE NYLON PEN FOR ZETA
+ 
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    HELP    = Lists portions of the help file.
+    NEWS    = Lists the news file.
+    BUGS    = Lists the bugs file.
+ 
+Applications:
+    XX
+ 
+Implementation Date:
+    XX
+ 
+Program:
+    XX
+ 
+-----OPTIMIZE (LET)-------------------------------------------------
+ 
+OPTIMIZE
+ 
+Name:
+    OPTIMIZE (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Determine the minimum of a function.
+ 
+Description:
+    Function minimization/maximization has many applications
+    in mathematics and statistics.
+
+    Minimization can be either unconstrained or constrained.
+    Constrained minimization limits the domain of the variables
+    that define the function.  The OPTIMIZE command currently
+    only supports unconstrained minimization.
+
+    Finding the maximum of a function is equivalent to finding
+    the minimum of the negative of a function.  Therefore, the
+    OPTIMIZE command can be used to find the maximum of a 
+    function as well (simply take the negative of the relevant
+    function).
+
+    Multivariate functions may have many local minimum and
+    maximum.  Although the goal is typically to find the
+    global minimum (or maximum), most numerical techniques
+    may in fact find a local minimum (or maximum) point.
+    If something is known about the function, specifying
+    better starting values can sometimes alleviate this
+    problem.  Specifying starting values is discussed below.
+    There are optimization techniques, such as simulated 
+    annealing, that attempt to avoid the problem of finding
+    a local rather than a global minimum.  Dataplot does not
+    currently support any of these global optimization
+    techniques.
+
+Syntax 1:
+    LET <par> = OPTIMIZE <func>  WRT <var>
+                FOR <var> = <lower> <upper>
+    where <func> is the name of a previously defined function or a
+              functional expression;
+          <var> is the variable for which the optimization is being
+              computed;
+          <lower> is a number or parameter defining the lower limit
+              for finding the minimum;
+          <upper> is a number or parameter defining the upper limit
+              for finding roots;
+          <par> is a parameter where the value of <var> at the
+              minimum is stored.
+ 
+     This syntax minimizes a univariate function.
+
+Syntax 2:
+    LET <var> = OPTIMIZE <func>  WRT <var-list>
+    where <func> is the name of a previously defined function or a
+              functional expression;
+          <var-list> is a list of variables for which the
+              minimization is being computed;
+          <var> is a variable where the values of <var-list> at
+              the minimum are stored.
+ 
+     This syntax minimizes a multivariate function.
+
+Examples:
+    LET A = OPTIMIZE X**2 + 2*X - 4 WRT X FOR X = -10 10
+
+    LET A = OPTIMIZE X**2 +Y**2 - X*Y WRT X Y
+
+    LET FUNCTION F1 = X**2 + Y**2 - X*Y
+    LET A = OPTIMIZE F1 WRT X Y
+ 
+Note:
+    Univariate optimization is implemented using the FMIN routine
+    from the "Numerical Methods and Software" book by Kahaner,
+    Moler, and Nash.  Multivariate optimization is implemented
+    using the UNCMIN package of Schnabel and Weiss.
+ 
+    The FMIN routine was written by R. Brent and uses a
+    combination of golden section search and successive
+    parabolic interpolation.
+
+    The UNCMIN package is designed to incorporate a number of
+    different variations of quasi-Newton (also known as
+    variable metric) approaches to unconstrained optimization.
+    See the Dennis and Schnabel or chapter 10 of Numerical
+    Recipes for a more detailed discussion of these
+    issues.
+
+    Specifically, the UNCMIN routines allow the following
+    variations of the method.
+
+    A. You can specify the global strategy to use at each
+       iteration.
+ 
+       1. Line search
+       2. Hookstep trust region
+       3. Dogleg trust region
+
+       Although these methods can vary in efficiency and
+       accuaracy for some problems, none of them is superior
+       in general.
+
+    B. You can specify the type of gradient (first derivative)
+       to compute.
+
+       1. Use an analytic gradient.
+       2. Use a numerical approximation based on finite
+          differences.
+
+    C. You can specify the type of updating for the Hessian
+       matrix at each step.
+
+       1. Use analytic derivatives.
+       2. Use a finite difference approximation.
+       3. Use BFGS (Broyden-Fletcher-Goldfarb-Shanno) updating
+          (a positive definite secant updating method).
+
+       Generally, BFGS is considered superior to using
+       finite difference approximation.
+
+    This results in 18 (3*2*3) methods.  This effectively
+    is 15, as using numerical first derivative with
+    analytic updating of the Hessian matrix is unrealistic.
+
+    Dataplot only supports numerical approximations for
+    the first derivatives and the Hessian matrix, so this
+    reduces to six methods (three types of global strategy and
+    two types of approximation for the Hessian matrix).
+
+    You can use the following command to specify which of
+    the six methods to use in Dataplot:
+
+        OPTIMIZATION METHOD <LINE/DOGLET/HOOK>  <FINITE/BFGS>
+
+    The default is LINE and FINITE.
+
+    Note that optimization of functions is an area of much
+    mathematical research and there are a number of other
+    approaches to optimization (e.g., Nelder-Meld simplex,
+    conjugate gradient methods) as well (not currently supported
+    in Dataplot).  Each of these methods have advantages and
+    disadvantages.
+
+    The UNCMIN procedures are intended for to small to
+    moderate size problems.  Problems with a large number of
+    variables typically require sparse matrix techniques which
+    are not currently implemented in Dataplot.  In general,
+    the UNCMIN routines provide good results for a broad
+    class of problems.  However, there will be some problems
+    for which they may not work well.
+
+Note:
+    By default, Dataplot finds the minimum of a function.  If you
+    want to find the maximum of a function, you can do one of the
+    following.
+
+        1. You can take the negative of your function.  That is,
+           if F is your original function, enter
+
+                LET FUNCTION G = -F
+
+           and then use G in the OPTIMIZE command.
+
+        2. The following command was added in the September 2015 version
+
+                SET OPTIMIZE <MINIMUM/MAXIMUM>
+
+            where MINIMUM specificies that the function is being minimized
+            and MAXIMUM specifies that the function is being maximized.
+            The default is to find the minimum of the function.
+
+Note:
+    Minimization routines can sometimes settle on a local rather
+    global minimum.  If you have some knowledge of the function,
+    you can sometimes solve this problem by setting the values
+    of the function parameters using the LET command.
+  
+    The followng example shows how to specify the starting
+    values.
+ 
+       LET FUNCTION F1 = X**2 + Y**2 - X*Y
+       LET X = 0.1
+       LET Y = 0.1
+       LET A = OPTIMIZE F1 WRT X Y
+
+Note:
+    The primary limitation of the OPTIMIZE command for statistical
+    applications is that Dataplot's function library does not
+    currently support a summation function.  This prevents the
+    OPTIMIZE command from being used for most maximum likelihood
+    problems.  Maximum likelihood estimation is the primary
+    application of function minimization in statistics.  This
+    limitation is currently under investigation.
+
+    The 2016/09 version of Dataplot introduced a new feature called
+    "function blocks".  This feature allows you to use various LET
+    subcommands in defining your function.  Specifically, this allows
+    us to now define many of the functions that are needed in many
+    statistical applications.  To see how function blocks are defined
+    and used, enter HELP FUNCTION BLOCKS.  This gives several examples
+    of using function blocks with the optimization command.
+
+Note:
+    Function minimization can be a numerically difficult
+    problem.  For this reason, a number of options can be
+    provided to help improve the performance of the minimization
+    code.  Dataplot will provide defaults for each of these.
+    However, if you have some knowledge of the function being
+    minimized, specifying one or more of these parameters may
+    help.
+
+    The following parameters can be specified when minimizing a
+    function:
+    
+       LET OPTSCALE = <value>   (default = 1.0)
+       OPTSCALE is used to provide an estimate of the scale of
+       the minimization function.  If know, Specifying the scalei
+       may help provide better numerical results 
+
+       LET OPTMSG   = <value>   (default = 8)
+       OPTMSG can be used to control the output and certain
+       checks.  Normally, this option is only used for
+       debugging purposes.
+
+       LET OPTITER  = <value>   (default = 150)
+       OPTITER is used to specify the maximum number of
+       iterations.
+
+       LET OPTDLT   = <value>   (default = 0)
+       OPTDLT specifies the trust region radius.
+
+       LET OPTRDTL  = <value>   (default = R1MACH(4)**(1/3))
+       OPTRDTL specifies the tolerance at which the gradient
+       is considered close enough to zero to terminate the
+       algorithm.
+
+       LET OPTSPMX  = <value>   (default = 0)
+       OPTSTPMX specifies the value of zero to trip default
+       maximum.
+
+       LET OPTSTPTL = <value>   (default = 0)
+       OPTSTPTL specifies the tolerance at which successive
+       iterations are considered close enough to terminate
+       the algorithm.
+
+    Note that default values of 0 imply that the UNCMIN will
+    determine the default and this default may be dependent
+    on the particular function being optimized.
+ 
+Note:
+    The optimized value of the function is saved in the internal
+    parameter OPTVALUE.
+
+    For multivariate optimization, the following information is
+    written to files.
+
+       DPST1F.DAT  - The gradients (derivatives) of each variable.
+       DPST2F.DAT  - The Hessian matrix.
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    3D-PLOT        = Generate a 3D plot.
+    CONTOUR PLOT   = Generate a countor plot.
+    SIMPLEX SOLU   = Solve linear programming problem using
+                     simplex algorithm.
+    ROOTS          = Find the roots of a univariate function.
+    DERIVATIVE     = Compute the derivative of a function.
+    INTEGRAL       = Compute the integral of a function.
+    RUNGE KUTTA    = Runge Kutta differential equation solver.
+    INTERPOLATE    = Interpolate a function.
+ 
+Reference:
+    Kahaner, Moler, and Nash (1989), "Numerical Methods and Software",
+    Prentice-Hall.
+
+    R. P. Brent (1973), "Algorithms for Minimization Without Derivatives",
+    Prentice-Hall.
+
+    J. E. Dennis, Jr. and Dennis B.  Schnabel (1996), "Numerical Methods
+    for Unconstrained Optimization and Nonlinear Equations", SIAM.
+
+    R. B. Schnabel, J. E. Koontz, and B. E. Weiss (1982), "A Modular
+    System of Algorithms for Unconstrained Optimization", Report
+    Cu-CS-240-82, Computer Science Department, University of Colorado.
+
+    Press, Teukolsky, Vetterling, and Flannery (1992), "Numerical Recipes
+    in Fortran: The Art of Scientific Programming", 2nd, ed., Cambridge
+    University Press.
+
+Applications:
+    Maximum Likelihood Estimation
+ 
+Implementation Date:
+    1996/05
+    2015/09: Added support for function blocks.
+    2015/09: Added the SET OPTIMIZE <MINIMUM/MAXIMUM> command.
+ 
+Program 1:
+    LET FUNCTION F = X**2 + 2*X - 4
+    PLOT F FOR X = -10 0.01 10
+    LET A = OPTIMIZE F WRT X FOR X = -10 10
+    LET X = DATA A
+    LET Y = F
+    LET OPTVALUE = Y(1)
+    JUSTIFICATION CENTER
+    MOVE 50 5
+    TEXT MINIMUM OF ^OPTVALUE AT X = ^A
+
+Program 2:
+    LET FUNCTION F = X**2 + Y**2 -X*Y
+    3D-PLOT F FOR X = -3 0.1 3 FOR Y = -3 0.1 3
+    OPTIMIZATION METHOD LINE BFGS
+    LET XPTS = OPTIMIZE F WRT X Y
+    LET X1 = XPTS(1)
+    LET Y1 = XPTS(2)
+    JUSTIFICATION CENTER
+    MOVE 50 5
+    TEXT MINIMUM OF ^OPTVALUE AT X = ^X1 AND Y = ^Y1
+ 
 -----OR-------------------------------------------------------
  
 OR
@@ -49243,381 +49982,6 @@ Program 4:
     .
     orthogonal distance fit y = f
 
------OPERATOR-------------------------------------------------------
- 
- 
-Note:
-    ***** This command is not currently operational *****
-OPERATOR
- 
-Name:
-    OPERATOR
- 
-Type:
-    Support Command
- 
-Purpose:
-    Sends a message to the operator at the main console of the
-    host computer.
- 
-Syntax:
-    OPERATOR   <message>
-    where <message> is the desired message.
- 
-Examples:
-    OPERATOR WHEN WILL CALCOMP BE READY?
-    OPERATOR PLEASE USE LARGE PAPER FOR VERSATEC
-    OPERATOR PLEASE USE NYLON PEN FOR ZETA
- 
-Default:
-    None
- 
-Synonyms:
-    None
- 
-Related Commands:
-    HELP    = Lists portions of the help file.
-    NEWS    = Lists the news file.
-    BUGS    = Lists the bugs file.
- 
-Applications:
-    XX
- 
-Implementation Date:
-    XX
- 
-Program:
-    XX
- 
------OPTIMIZE (LET)-------------------------------------------------
- 
-OPTIMIZE
- 
-Name:
-    OPTIMIZE (LET)
- 
-Type:
-    Let Subcommand
- 
-Purpose:
-    Determine the minimum of a function.
- 
-Description:
-    Function minimization/maximization has many applications
-    in mathematics and statistics.
-
-    Minimization can be either unconstrained or constrained.
-    Constrained minimization limits the domain of the variables
-    that define the function.  The OPTIMIZE command currently
-    only supports unconstrained minimization.
-
-    Finding the maximum of a function is equivalent to finding
-    the minimum of the negative of a function.  Therefore, the
-    OPTIMIZE command can be used to find the maximum of a 
-    function as well (simply take the negative of the relevant
-    function).
-
-    Multivariate functions may have many local minimum and
-    maximum.  Although the goal is typically to find the
-    global minimum (or maximum), most numerical techniques
-    may in fact find a local minimum (or maximum) point.
-    If something is known about the function, specifying
-    better starting values can sometimes alleviate this
-    problem.  Specifying starting values is discussed below.
-    There are optimization techniques, such as simulated 
-    annealing, that attempt to avoid the problem of finding
-    a local rather than a global minimum.  Dataplot does not
-    currently support any of these global optimization
-    techniques.
-
-Syntax 1:
-    LET <par> = OPTIMIZE <func>  WRT <var>
-                FOR <var> = <lower> <upper>
-    where <func> is the name of a previously defined function or a
-              functional expression;
-          <var> is the variable for which the optimization is being
-              computed;
-          <lower> is a number or parameter defining the lower limit
-              for finding the minimum;
-          <upper> is a number or parameter defining the upper limit
-              for finding roots;
-          <par> is a parameter where the value of <var> at the
-              minimum is stored.
- 
-     This syntax minimizes a univariate function.
-
-Syntax 2:
-    LET <var> = OPTIMIZE <func>  WRT <var-list>
-    where <func> is the name of a previously defined function or a
-              functional expression;
-          <var-list> is a list of variables for which the
-              minimization is being computed;
-          <var> is a variable where the values of <var-list> at
-              the minimum are stored.
- 
-     This syntax minimizes a multivariate function.
-
-Examples:
-    LET A = OPTIMIZE X**2 + 2*X - 4 WRT X FOR X = -10 10
-
-    LET A = OPTIMIZE X**2 +Y**2 - X*Y WRT X Y
-
-    LET FUNCTION F1 = X**2 + Y**2 - X*Y
-    LET A = OPTIMIZE F1 WRT X Y
- 
-Note:
-    Univariate optimization is implemented using the FMIN routine
-    from the "Numerical Methods and Software" book by Kahaner,
-    Moler, and Nash.  Multivariate optimization is implemented
-    using the UNCMIN package of Schnabel and Weiss.
- 
-    The FMIN routine was written by R. Brent and uses a
-    combination of golden section search and successive
-    parabolic interpolation.
-
-    The UNCMIN package is designed to incorporate a number of
-    different variations of quasi-Newton (also known as
-    variable metric) approaches to unconstrained optimization.
-    See the Dennis and Schnabel or chapter 10 of Numerical
-    Recipes for a more detailed discussion of these
-    issues.
-
-    Specifically, the UNCMIN routines allow the following
-    variations of the method.
-
-    A. You can specify the global strategy to use at each
-       iteration.
- 
-       1. Line search
-       2. Hookstep trust region
-       3. Dogleg trust region
-
-       Although these methods can vary in efficiency and
-       accuaracy for some problems, none of them is superior
-       in general.
-
-    B. You can specify the type of gradient (first derivative)
-       to compute.
-
-       1. Use an analytic gradient.
-       2. Use a numerical approximation based on finite
-          differences.
-
-    C. You can specify the type of updating for the Hessian
-       matrix at each step.
-
-       1. Use analytic derivatives.
-       2. Use a finite difference approximation.
-       3. Use BFGS (Broyden-Fletcher-Goldfarb-Shanno) updating
-          (a positive definite secant updating method).
-
-       Generally, BFGS is considered superior to using
-       finite difference approximation.
-
-    This results in 18 (3*2*3) methods.  This effectively
-    is 15, as using numerical first derivative with
-    analytic updating of the Hessian matrix is unrealistic.
-
-    Dataplot only supports numerical approximations for
-    the first derivatives and the Hessian matrix, so this
-    reduces to six methods (three types of global strategy and
-    two types of approximation for the Hessian matrix).
-
-    You can use the following command to specify which of
-    the six methods to use in Dataplot:
-
-        OPTIMIZATION METHOD <LINE/DOGLET/HOOK>  <FINITE/BFGS>
-
-    The default is LINE and FINITE.
-
-    Note that optimization of functions is an area of much
-    mathematical research and there are a number of other
-    approaches to optimization (e.g., Nelder-Meld simplex,
-    conjugate gradient methods) as well (not currently supported
-    in Dataplot).  Each of these methods have advantages and
-    disadvantages.
-
-    The UNCMIN procedures are intended for to small to
-    moderate size problems.  Problems with a large number of
-    variables typically require sparse matrix techniques which
-    are not currently implemented in Dataplot.  In general,
-    the UNCMIN routines provide good results for a broad
-    class of problems.  However, there will be some problems
-    for which they may not work well.
-
-Note:
-    By default, Dataplot finds the minimum of a function.  If you
-    want to find the maximum of a function, you can do one of the
-    following.
-
-        1. You can take the negative of your function.  That is,
-           if F is your original function, enter
-
-                LET FUNCTION G = -F
-
-           and then use G in the OPTIMIZE command.
-
-        2. The following command was added in the September 2015 version
-
-                SET OPTIMIZE <MINIMUM/MAXIMUM>
-
-            where MINIMUM specificies that the function is being minimized
-            and MAXIMUM specifies that the function is being maximized.
-            The default is to find the minimum of the function.
-
-Note:
-    Minimization routines can sometimes settle on a local rather
-    global minimum.  If you have some knowledge of the function,
-    you can sometimes solve this problem by setting the values
-    of the function parameters using the LET command.
-  
-    The followng example shows how to specify the starting
-    values.
- 
-       LET FUNCTION F1 = X**2 + Y**2 - X*Y
-       LET X = 0.1
-       LET Y = 0.1
-       LET A = OPTIMIZE F1 WRT X Y
-
-Note:
-    The primary limitation of the OPTIMIZE command for statistical
-    applications is that Dataplot's function library does not
-    currently support a summation function.  This prevents the
-    OPTIMIZE command from being used for most maximum likelihood
-    problems.  Maximum likelihood estimation is the primary
-    application of function minimization in statistics.  This
-    limitation is currently under investigation.
-
-    The 2016/09 version of Dataplot introduced a new feature called
-    "function blocks".  This feature allows you to use various LET
-    subcommands in defining your function.  Specifically, this allows
-    us to now define many of the functions that are needed in many
-    statistical applications.  To see how function blocks are defined
-    and used, enter HELP FUNCTION BLOCKS.  This gives several examples
-    of using function blocks with the optimization command.
-
-Note:
-    Function minimization can be a numerically difficult
-    problem.  For this reason, a number of options can be
-    provided to help improve the performance of the minimization
-    code.  Dataplot will provide defaults for each of these.
-    However, if you have some knowledge of the function being
-    minimized, specifying one or more of these parameters may
-    help.
-
-    The following parameters can be specified when minimizing a
-    function:
-    
-       LET OPTSCALE = <value>   (default = 1.0)
-       OPTSCALE is used to provide an estimate of the scale of
-       the minimization function.  If know, Specifying the scalei
-       may help provide better numerical results 
-
-       LET OPTMSG   = <value>   (default = 8)
-       OPTMSG can be used to control the output and certain
-       checks.  Normally, this option is only used for
-       debugging purposes.
-
-       LET OPTITER  = <value>   (default = 150)
-       OPTITER is used to specify the maximum number of
-       iterations.
-
-       LET OPTDLT   = <value>   (default = 0)
-       OPTDLT specifies the trust region radius.
-
-       LET OPTRDTL  = <value>   (default = R1MACH(4)**(1/3))
-       OPTRDTL specifies the tolerance at which the gradient
-       is considered close enough to zero to terminate the
-       algorithm.
-
-       LET OPTSPMX  = <value>   (default = 0)
-       OPTSTPMX specifies the value of zero to trip default
-       maximum.
-
-       LET OPTSTPTL = <value>   (default = 0)
-       OPTSTPTL specifies the tolerance at which successive
-       iterations are considered close enough to terminate
-       the algorithm.
-
-    Note that default values of 0 imply that the UNCMIN will
-    determine the default and this default may be dependent
-    on the particular function being optimized.
- 
-Note:
-    The optimized value of the function is saved in the internal
-    parameter OPTVALUE.
-
-    For multivariate optimization, the following information is
-    written to files.
-
-       DPST1F.DAT  - The gradients (derivatives) of each variable.
-       DPST2F.DAT  - The Hessian matrix.
-
-Default:
-    None
- 
-Synonyms:
-    None
- 
-Related Commands:
-    3D-PLOT        = Generate a 3D plot.
-    CONTOUR PLOT   = Generate a countor plot.
-    SIMPLEX SOLU   = Solve linear programming problem using
-                     simplex algorithm.
-    ROOTS          = Find the roots of a univariate function.
-    DERIVATIVE     = Compute the derivative of a function.
-    INTEGRAL       = Compute the integral of a function.
-    RUNGE KUTTA    = Runge Kutta differential equation solver.
-    INTERPOLATE    = Interpolate a function.
- 
-Reference:
-    Kahaner, Moler, and Nash (1989), "Numerical Methods and Software",
-    Prentice-Hall.
-
-    R. P. Brent (1973), "Algorithms for Minimization Without Derivatives",
-    Prentice-Hall.
-
-    J. E. Dennis, Jr. and Dennis B.  Schnabel (1996), "Numerical Methods
-    for Unconstrained Optimization and Nonlinear Equations", SIAM.
-
-    R. B. Schnabel, J. E. Koontz, and B. E. Weiss (1982), "A Modular
-    System of Algorithms for Unconstrained Optimization", Report
-    Cu-CS-240-82, Computer Science Department, University of Colorado.
-
-    Press, Teukolsky, Vetterling, and Flannery (1992), "Numerical Recipes
-    in Fortran: The Art of Scientific Programming", 2nd, ed., Cambridge
-    University Press.
-
-Applications:
-    Maximum Likelihood Estimation
- 
-Implementation Date:
-    1996/05
-    2015/09: Added support for function blocks.
-    2015/09: Added the SET OPTIMIZE <MINIMUM/MAXIMUM> command.
- 
-Program 1:
-    LET FUNCTION F = X**2 + 2*X - 4
-    PLOT F FOR X = -10 0.01 10
-    LET A = OPTIMIZE F WRT X FOR X = -10 10
-    LET X = DATA A
-    LET Y = F
-    LET OPTVALUE = Y(1)
-    JUSTIFICATION CENTER
-    MOVE 50 5
-    TEXT MINIMUM OF ^OPTVALUE AT X = ^A
-
-Program 2:
-    LET FUNCTION F = X**2 + Y**2 -X*Y
-    3D-PLOT F FOR X = -3 0.1 3 FOR Y = -3 0.1 3
-    OPTIMIZATION METHOD LINE BFGS
-    LET XPTS = OPTIMIZE F WRT X Y
-    LET X1 = XPTS(1)
-    LET Y1 = XPTS(2)
-    JUSTIFICATION CENTER
-    MOVE 50 5
-    TEXT MINIMUM OF ^OPTVALUE AT X = ^X1 AND Y = ^Y1
- 
 -----ORIGIN COORDINATES--------------------------------------------
  
 ORIGIN COORDINATES
@@ -49964,6 +50328,42 @@ Program:
  
  
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,13 +1,13 @@
-35500.      (VERSION 2023.11)   total number of lines in file (including this line)
+35900.      (VERSION 2025.11)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    T                  first line number of T section
 16700.    U                  first line number of U section
 18900.    V                  first line number of V section
-22100.    W                  first line number of W section
-29700.    X                  first line number of X section
-30500.    Y                  first line number of Y section
-32100.    Z                  first line number of Z section
-33500.    MISCELLANEOUS      first line number of MISCELLANEOUS section
+22300.    W                  first line number of W section
+30100.    X                  first line number of X section
+30900.    Y                  first line number of Y section
+32500.    Z                  first line number of Z section
+33900.    MISCELLANEOUS      first line number of MISCELLANEOUS section
  
 --------------------------------------------------------------
  
@@ -6836,61 +6836,105 @@ Purpose:
     in Dataplot 0 to 100 coordinates.
  
 Description:
-    The offset is the distance between the first or last tic mark and
-    the end of the frame.
+    Dataplot allows you to specify an offset to extend the frame line
+    from the first or last tic mark.  These offsets can be specified in
+    either data units of the current plot or in terms of Dataplot's
+    0 to 100 coordinate units.
  
 Syntax:
-    TIC OFFSET UNITS   <DATA/ABSOLUTE>
-    where DATA specifies data units and ABSOLUTE specifies Dataplot
-            screen coordinates.
+    <prefix>TIC OFFSET UNITS   <DATA/ABSOLUTE>
+    where
+         no prefix     refers to all 4 frame lines;
+         the prefix XY refers to all 4 frame lines;
+         the prefix YX refers to all 4 frame lines;
+         the prefix X  refers to both horizontal frame lines;
+         the prefix Y  refers to both vertical frame lines;
+         the prefix X1 refers to the lower horizontal frame line;
+         the prefix X2 refers to the upper horizontal frame line;
+         the prefix Y1 refers to the left  vertical   frame line;
+         the prefix Y2 refers to the right vertical   frame line.
+
+    DATA specifies that the tic offset is specified in data units and
+    ABSOLUTE specifies the tic offset is specified in Dataplot 0 to 100
+    screen coordinates.
  
 Examples:
     TIC OFFSET UNITS DATA
     TIC OFFSET UNITS ABSOLUTE
- 
-Note:
-    Only one offset unit can be effect at a time.  That is, you cannot
-    specify data units on the Y axis and absolute units on the X axis.
+    X1TIC OFFSET UNITS DATA
+    Y1TIC OFFSET UNITS ABSOLUTE
  
 Default:
     Tic offsets are specified in data units.
  
 Synonyms:
-    TIC MARK OFFSET UNITS is a synonym for TIC OFFSET UNITS, as in TIC
-    MARK OFFSET UNITS ABSOLUTE.
+    TIC MARK OFFSET UNITS is a synonym for TIC OFFSET UNITS
+    SCREEN is a synonym for ABSOLUTE
  
 Related Commands:
+    TIC MARK OFFSET     = Sets the offset for the first and last tic
+                          marks.
     TIC MARK            = Specifies whether or not tics are drawn.
     TIC MARK COLOR      = Sets the color for tic marks.
-    TIC MARK OFFSET     = Sets the offset for the first and last tic
-                           marks.
     TIC MARK POSITION   = Sets location of tic marks (inside/outside
                           through).
     TIC MARK SIZE       = Sets the size of tic marks.
     TIC MARK THICKNESS  = Sets the thickness of tic marks.
  
 Applications:
-    XX
+    Presentation Graphics
  
 Implementation Date:
-    XX
+    1990/05
+    2025/11: Allow offset units to be specified separately for each
+             frame line
  
 Program:
     SKIP 25
     READ GEAR.DAT Y X
+    .
     LINE BLANK DASH
     CHARACTER X BLANK
     XLIMITS 1 10
-    TIC OFFSET UNITS ABSOLUTE
-    XTIC OFFSET 2 2
-    Y1LABEL MEAN
-    X1LABEL SAMPLE ID
     YLIMITS 0.992 1.000
-    YTIC OFFSET 5 10
-    MAJOR YTIC MARK NUMBER 5; MINOR YTIC MARK NUMBER 1
-    TITLE AUTOMATIC
+    MAJOR YTIC MARK NUMBER 5
+    MINOR YTIC MARK NUMBER 1
+    .
+    MULTIPLOT CORNER COORDINATES 5 5 95 95
+    MULTIPLOT SCALE FACTOR 2 2
+    MULTIPLOT 2 2
+    .
+    TITLE NO TIC OFFSET
     MEAN PLOT Y X
- 
+    .
+    TIC OFFSET UNITS ABSOLUTE
+    TIC OFFSET 5 5
+    TITLE ABSOLUTE TIC OFFSET UNITS (5%)
+    MEAN PLOT Y X
+    .
+    TITLE SIZE 1.6
+    X1TIC OFFSET UNITS DATA
+    Y1TIC OFFSET UNITS ABSOLUTE
+    X1TIC OFFSET 0.5 0.5
+    Y1TIC OFFSET 5 5
+    TITLE X AXIS: DATA OFFSET UNITS, Y AXIS: ABSOLUTE OFFSET UNITS
+    MEAN PLOT Y X
+    .
+    X1TIC OFFSET UNITS ABSOLUTE
+    Y1TIC OFFSET UNITS DATA
+    X1TIC OFFSET 5 5
+    Y1TIC OFFSET 0.001 0.001
+    TITLE X AXIS: DATA OFFSET UNITS, Y AXIS: ABSOLUTE OFFSET UNITS
+    MEAN PLOT Y X
+    .
+    END OF MULTIPLOT
+    JUSTIFICATION CENTER
+    MOVE 50 5
+    TEXT SAMPLE ID
+    DIRECTION VERTICAL
+    MOVE 5 50
+    TEXT MEAN
+
 -----TIETJEN-MOORE TEST------------------------------------
  
 TIETJEN MOORE TEST
@@ -16653,50 +16697,6 @@ Program:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -------------------------  *U*  ZZZZZ--------------------
 
 -----U CHART-----------------------------------------------------
@@ -19303,7 +19303,7 @@ Examples:
     LET M = VARIABLE TO MATRIX Y NROW
  
 Note:
-    By default, the matrix is created in row order from the variable.
+    By default, the matrix is created in column order from the variable.
     To create the variable in row order, enter the command
 
         SET VARIABLE TO MATRIX ROW
@@ -19383,6 +19383,187 @@ Program 2:
     LET COV = VARIABLE TO MATRIX TEMP NROW
     SET WRITE DECIMALS -7
     PRINT COV
+
+-----VARIABLE WIDTH BAR PLOT-------------------------------------------------------
+ 
+VARIABLE WIDTH BAR PLOT
+ 
+Name:
+    VARIABLE WIDTH BAR PLOT
+ 
+Type:
+    Graphics Command
+ 
+Purpose:
+    Generates a variable width bar plot.
+ 
+Description:
+    The basic bar plot is based on a single response variable that
+    controls the height of the bar (basic bar plots are generated with
+    Dataplot by using the PLOT command with appropriate settings for
+    the BAR and related attribute setting commands for the bars).  The
+    variable width bar plot adds a second response variable that controls
+    the width of the bars.
+
+    Optionally, an additional tag variable can be specified.  Rows that
+    have the same value for the tag variable will use the same attributes
+    for the bars.  The lowest value of the tag variable will use the first
+    setting of the BAR attribute commands, the second lowest value will use
+    the second setting of the BAR attribute commands and so on.  This is
+    most typically used to control the color of the bars.  If no tag
+    variable is specified, then all bars will be drawn with the same
+    attributes.
+
+Syntax 1:
+    VARIABLE WIDTH BAR PLOT  <y1>  <y2>  <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the variable that controls the height of the bar;
+          <y2> is the variable that controls the width of the bar;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    With this syntax, all bars will be drawn with the same attributes.  The
+    <y1> and <y2> variables must have the same number of observations.
+
+Syntax 2:
+    VARIABLE WIDTH BAR PLOT  <y1>  <y2> <tag>
+                             <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the variable that controls the height of the bar;
+          <y2> is the variable that controls the width of the bar;
+          <tag> is a variable that specifies which bars are drawn with
+               the same attributes;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    With this syntax, bars that have the same value for the <tag>
+    variable will be drawn with the same attributes.  Most typically,
+    this is used to specify the fill color for the bars.  The <y1>, <y2>
+    and <tag> variables must have the same number of observations.
+
+    The use of the <tag> variable is demonstrated in the Program example
+    below.
+
+Examples:
+    VARIABLE WIDTH BAR PLOT Y1 Y2
+    VARIABLE WIDTH BAR PLOT Y1 Y2 TAG
+    VARIABLE WIDTH BAR PLOT Y1 Y2  SUBSET Y2 > 0
+
+Note:
+    Dataplot provides two options for the bar widths.
+
+       1. In the first option, the bar width is set to 1 for the maximum
+          value of the second response variable.  The remaining bar widths
+          are set proportional to this maximum width.  For example, if the
+          maximum value for the second response variable is 20, a value of
+          5 for the second response variable would result in a bar width
+          of 5/20 (= 0.25).  With this option the bars are not connected.
+          The advantage of this method is that it is easier to make the
+          axis labels legible.
+
+       2. In the second option, the total width is calculated as the sum
+          of the values in the second response variable plus one.  Then
+          the individual bar widths are set to proportional to the total
+          width. So if the total width is 100 and a given value of the
+          second response variable is 30, the bar width for that
+          observation will be 30/100 (= 0.3).  With this option, the bars
+          are connected.  This option may be preferred when there are a
+          large number of response values.
+
+    To set this option, enter the command
+
+       SET VARIABLE WIDTH BAR PLOT CONNECTED <ON/OFF>
+
+    The default is OFF (i.e., option 1).
+
+Default:
+    SET VARIABLE WIDTH BAR PLOT CONNECTED OFF
+ 
+Synonyms:
+    VARIABLE WIDTH BAR CHART
+ 
+Related Commands:
+    PLOT              = Generates a data or function plot.
+    WATERFALL PLOT    = Generate a waterfall plot.
+    BULLET PLOT       = Generate a bullet plot.
+    FLUCTUATION PLOT  = Generate a fluctuation plot.
+    BAR               = Sets the type for plot bars.
+    BAR FILL          = Sets the fill option for plot bars.
+    BAR FILL COLOR    = Sets the color the fill region for plot bars.
+
+Applications:
+    Presentation Graphics
+ 
+Implementation Date:
+    2025/06
+
+Program:
+    skip 25
+    column limits 1 29
+    read subject.dat number perwomen type
+    skip 0
+    let n = size number
+    column limits 30 80
+    loop for k = 1 1 n
+        let irow = 25 + k
+        row limits irow irow
+        read string subject.dat  subj^k
+    end of loop
+    column limits
+    row limits
+    let ig = group label subj1 to subj^n
+    .
+    . Step 2:   Set some plot control
+    .
+    case asis
+    title case asis
+    label case asis
+    tic mark label case asis
+    .
+    horizontal switch on
+    ylimits 1 n
+    major y1tic mark number n
+    minor y1tic mark number 0
+    tic mark offset units data
+    y1tic mark offset 0.8 0.8
+    y1tic mark label format group label
+    y1tic mark label content ig
+    y1label Subject
+    y1label displacement 21
+    .
+    x1limits 0  15000
+    x1label Number of Entrants
+    x2label Width of Bar: Percentage of Women
+    x3label Blue: Theoretical Subject, Red: Vocational Subject
+    .
+    frame corner coordinate 25 20 95 90
+    title Variable Width Bar Chart
+    bar fill color blue red
+    .
+    . Step 3:   Generate the plot
+    .
+    set variable width bar plot connected off
+    variable width bar plot number perwomen type
+    .
+    . Step 4:   Now generate with "connected" option ON
+    .
+    ylimits 1 n
+    major y1tic mark number n
+    minor y1tic mark number 0
+    tic mark offset units data
+    y1tic mark offset 1.0 2.2
+    y1tic marks off
+    y1tic mark labels off
+    .
+    set variable width bar plot connected on
+    variable width bar plot number perwomen type
+    .
+    .           Now generate the y-axis tic mark labels
+    .
+    justification rice
+    let xcoor = 23
+    .
+    loop for k = 1 1 n
+        let ycoor = xplot(k)
+        movesd xcoor ycoor
+        text ^subj^k
+    end of loop
 
 -----VARIANCE (LET)-----------------------------------------
  
@@ -22097,6 +22278,25 @@ Program:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -------------------------  *W*  ZZZZZ--------------------
  
 -----WALCDF (LET)--------------------------------
@@ -23761,6 +23961,223 @@ Program 2:
        PLOT WARPPF(X,P) FOR X = 0.1 0.1 .91
     END OF LOOP
     END OF MULTIPLOT
+
+-----WATERFALL CHART-------------------------------------------------------
+ 
+WATERFALL CHART
+ 
+Name:
+    WATERFALL CHART
+ 
+Type:
+    Graphics Command
+ 
+Purpose:
+    Generates a waterfall chart.
+ 
+Description:
+    A waterfall chart is a variant of the bar chart that shows how an
+    initial value changes over a series of positive and negative values.
+    Specifically, it draws a bar from the "before" value to the "after"
+    value.
+
+    Given a response variable Y, the first bar is drawn from zero to
+    Y(1), the second bar is drawn from Y(1) to (Y(1) + Y(2)), and so
+    on. You can optionally request that the final value be plotted from
+    zero the final value with the command (this is the default)
+
+         SET WATERFALL CHART FINAL VALUE ON
+
+    To turn this off, use the command
+
+         SET WATERFALL CHART FINAL VALUE OFF
+
+    It is sometimes desired to plot all the positive values and then
+    all the negative values.  In this case, you can optionally request
+    that after the positive values a bar be drawn from the sum of the
+    positive values to zero.  To request this, enter
+
+         SET WATERFALL CHART TOTAL POSITIVE ON
+
+    To turn this off, use the command
+
+         SET WATERFALL CHART TOTAL POSITIVE OFF
+
+    The default is ON.  Note that if the response variable is not
+    sorted so that all the positive values come before the negative
+    values, then this option will not be implemented.
+
+    By default, the x-axis value is simply the sequence number.  However,
+    you can optionally specify an x-axis variable.  For example, you
+    may want to leave a space to add your own bars for intermediate
+    sub-totals.
+
+    The width of the bars can be specified with the command
+
+        SET WATERFALL CHART BAR WIDTH <value>
+
+    The default is 1 with <value> typically in the range 0.5 to 1.
+
+    The appearance of the plot can be controlled with REGION commands.
+    Specifically,
+
+       1. The settings for trace 1 specify the attributes of the positive
+          value bars.
+
+       2. The settings for trace 2 specify the attributes of the negative
+          value bars.
+
+       3. The settings for trace 3 specify the attributes of the "total
+          positive" and "final value" bars.
+
+    This is demonstrated in the Program examples below.
+
+Syntax 1:
+    WATERFALL CHART  <y1>      <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    For this syntax, the x-axis value is simply the sequence number.
+
+Syntax 2:
+    WATERFALL CHART  <y>  <x>  <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <x> is the horizontal axis variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Examples:
+    WATERFALL CHART Y
+    WATERFALL CHART Y X
+
+Note:
+    The literature distinguishes between a waterfall plot and a
+    waterfall chart.  For that reason, we do not support WATERFALL PLOT
+    as a synonym for WATERFALL CHART.
+
+Default:
+    SET WATERFALL CHART TOTAL POSITIVE ON
+    SET WATERFALL CHART FINAL VALUE ON
+    SET WATERFALL CHART BAR WIDTH 1
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    CHARACTERS      = Sets the type for plot characters.
+    LINES           = Sets the type for plot lines.
+    REGION FILL     = Sets the type for plot regions.
+    PLOT            = Generates a data or function plot.
+ 
+Reference:
+    Ethan M. Rasiel, "The McKinsey Way," McGraw–Hill, 1999.
+
+Applications:
+    Presentation Graphics
+ 
+Implementation Date:
+    2025/06
+
+Program 1:
+    . Step 1:   Create the data - this example from Wikipedia
+    .
+    read y
+     420
+     210
+    -170
+    -140
+    end of data
+    .
+    . Step 2:   Set plot control
+    .
+    case asis
+    title case asis
+    label case asis
+    tic mark label case asis
+    .
+    let n    = size y
+    let ntot = n + 2
+    xlimits 1 ntot
+    major x1tic mark number ntot
+    minor x1tic mark number 0
+    x1tic mark label format alpha
+    x1tic mark label content Productcr()Revenue Servicescr()Revenue Totalcr()Revenue ...
+          Fixedcr()Costs Variablecr()Costs Total
+    tic mark offset units data
+    x1tic mark offset 0.8 0.8
+    .
+    set waterfall chart total positive on
+    set waterfall chart final value    on
+    set waterfall chart bar width     0.8
+    .
+    region fill on on on
+    region fill color green red blue
+    line blank all
+    .
+    . Step 3:   Generate the plot
+    .
+    y1label Dollars
+    title Waterfall Chart (Wikipedia Example)
+    waterfall chart y
+
+Program 2:
+    . Step 1:   Create the data - this example from Wikipedia
+    .
+    read y
+     217
+     -55
+      37
+    end of data
+    .
+    . Step 2:   Set plot control
+    .
+    case asis
+    title case asis
+    label case asis
+    tic mark label case asis
+    .
+    let n    = size y
+    let ntot = n + 1
+    xlimits 1 ntot
+    major x1tic mark number ntot
+    minor x1tic mark number 0
+    x1tic mark label format alpha
+    x1tic mark label content Unitssp()incr()Stock Damaged Refurbished Salablecr()Units
+    tic mark offset units data
+    x1tic mark offset 0.8 0.8
+    .
+    set waterfall chart final value    on
+    set waterfall chart bar width     0.5
+    .
+    region fill on on on
+    region fill color green red cyan
+    .
+    . Step 3:   Generate the plot
+    .
+    y1label Number of Units
+    title Waterfall Chart for Inventory Audit of Men's Tee-Shirts (Wikipedia Example)
+    waterfall chart y
+    .
+    justification center
+    let ycum = cumulative sum y
+    let nlast = ntot - 1
+    loop for k = 1 1 nlast
+        let xcoor = k
+        let aval = y(k)
+        if aval >= 0
+           let ycoor = ycum(k)
+           let ycoor = ycoor + 10
+        else
+           let km1 = k - 1
+           let ycoor = ycum(km1)
+           let ycoor = ycoor + 10
+        end of if
+        move data xcoor ycoor
+        text ^aval
+    end of loop
+    let aval = ycum(nlast)
+    let ycoor = aval + 10
+    move data ntot ycoor
+    text ^aval
 
 -----WCACDF (LET)--------------------------------
  
@@ -29671,23 +30088,6 @@ Program:
     XX
 
 ---------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
