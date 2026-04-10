@@ -54370,11 +54370,11 @@
 !
       RETURN
       END SUBROUTINE MAHDIS
-      SUBROUTINE MAINAN(ICASAN,ISEED,ANOPL1,ANOPL2,   &
-                        TEMP,TEMP2,XTEMP1,XTEMP2,MAXNXT,   &
+      SUBROUTINE MAINAN(ICASAN,ISEED,ANOPL1,ANOPL2,           &
+                        TEMP,TEMP2,XTEMP1,XTEMP2,MAXNXT,      &
                         IFTEXP,IFTORD,ALOWFR,ALOWDG,IBOOSS,   &
-                        ICAPSW,IFORSW,   &
-                        IBUGAN,IBUGA2,IBUGA3,   &
+                        ICAPSW,IFORSW,                        &
+                        IBUGAN,IBUGA2,IBUGA3,                 &
                         IBUGCO,IBUGEV,IBUGQ,ISUBRO,IFOUND,IERROR)
 !
 !     PURPOSE--THIS IS SUBROUTING MAINAN.
@@ -54451,6 +54451,7 @@
 !                  BOOTSTRAP FIT                               (HLR)
 !                  BEST CP Y X1 TO XK                          (HLR)
 !                  DEMING FIT                                  (HLR)
+!                  ORDINARY LEAST PRODUCTS FIT                 (HLR)
 !                  LOWESS                                      (HLR)
 !                  SEASONAL LOWESS
 !                  LINEAR CALIBRATION                          (HLR)
@@ -54834,6 +54835,7 @@
 !     UPDATED         --MAY       2024. RANDOMIZED COMPLETE BLOCK
 !     UPDATED         --NOVEMBER  2024. POSITION EFFECT TEST
 !     UPDATED         --FEBRUARY  2025. DEMING FIT
+!     UPDATED         --APRIL     2026. ORDINARY LEAST PRODUCTS FIT
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -55161,6 +55163,18 @@
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
       ENDIF
 !
+!               *********************************************
+!               **  TREAT THE ORDINARY LEAST PRODUCTS  FIT **
+!               *********************************************
+!
+      IF(ICOM.EQ.'ORDI'.AND.NUMARG.GE.3.AND.                         &
+         IHARG(1).EQ.'LEAS' .AND. IHARG(2).EQ.'PROD' .AND.           &
+         (IHARG(3).EQ.'FIT ' .OR. IHARG(3).EQ.'REGR'))THEN
+        ICASAN='OLPF'
+        CALL DPOLPF(ICAPSW,IFORSW,ISEED,IBOOSS,                      &
+                    IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
+      ENDIF
 !
 !CCCC THE FOLLOWING SECTION WAS COMMENTED OUT HERE    MAY 1992 (JJF)
 !CCCC AND MOVED UP TO THE TOP OF THIS SUBROUTINE      MAY 1992 (JJF)

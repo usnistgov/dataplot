@@ -21295,7 +21295,7 @@
 !
       RETURN
       END SUBROUTINE DPDTAP
-      SUBROUTINE DPDT11(CONF,T,TSDM,ALOWER,AUPPER,   &
+      SUBROUTINE DPDT11(CONF,T,TSDM,ALOWER,AUPPER,     &
                         ICASAN,ICAPSW,ICAPTY,NUMDIG,   &
                         ISUBRO,IBUGA3,IERROR)
 !
@@ -21316,6 +21316,10 @@
 !                11) CONFIDENCE LIMITS FOR THE TWO SAMPLE
 !                    PERMUTATION TEST
 !                12) CONFIDENCE LIMITS FOR DEMING REGRESSION
+!                13) CONFIDENCE LIMITS FOR ORDINARY LEAST PRODUCTS
+!                    REGRESSION (ANALYTIC)
+!                14) CONFIDENCE LIMITS FOR ORDINARY LEAST PRODUCTS
+!                    REGRESSION (BOOTSTRAP)
 !
 !     WRITTEN BY--ALAN HECKERT
 !                 STATISTICAL ENGINEERING DIVISION
@@ -21336,6 +21340,8 @@
 !     UPDATED         --JULY      2023. TWO SAMPLE LINEAR RANK SUM
 !     UPDATED         --AUGUST    2023. TWO SAMPLE PERMUATION TEST
 !     UPDATED         --FEBRUARY  2025. DEMING REGRESSION
+!     UPDATED         --APRIL     2026. ORDINARY LEAST PRODUCTS
+!                                       REGRESSION
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -21411,6 +21417,11 @@
       IF(ICASAN.EQ.'LRST')NUMROW=5
       IF(ICASAN.EQ.'DFIN')NUMROW=3
       IF(ICASAN.EQ.'DFSL')NUMROW=3
+      IF(ICASAN.EQ.'LPIN')NUMROW=4
+      IF(ICASAN.EQ.'LPSL')NUMROW=4
+      IF(ICASAN.EQ.'LPI2')NUMROW=4
+      IF(ICASAN.EQ.'LPS2')NUMROW=4
+      IF(ICASAN.EQ.'LPS3')NUMROW=4
       NUMCOL=5
 !
       IF(ICASAN.EQ.'QUC2')THEN
@@ -21430,6 +21441,10 @@
       ELSEIF(ICASAN.EQ.'PERM')THEN
         NUMCOL=4
         NUMROW=4
+      ELSEIF(ICASAN.EQ.'LPI2' .OR. ICASAN.EQ.'LPS2')THEN
+        NUMCOL=4
+      ELSEIF(ICASAN.EQ.'LPS3')THEN
+        NUMCOL=3
       ENDIF
       IF(ICASA2.EQ.'LOWE' .OR. ICASA2.EQ.'UPPE')NUMCOL=NUMCOL-1
 !
@@ -21469,6 +21484,7 @@
         NCTIT2(2,ICNT)=6
       ELSEIF(ICASAN.EQ.'CONF' .OR. ICASAN.EQ.'BWCO' .OR.   &
              ICASAN.EQ.'TMCO' .OR. ICASAN.EQ.'CON2' .OR.   &
+             ICASAN.EQ.'LPIN' .OR. ICASAN.EQ.'LPSL' .OR.   &
              ICASAN.EQ.'DFIN' .OR. ICASAN.EQ.'DFSL')THEN
         ICNT=ICNT+1
         ITITL2(1,ICNT)='t'
@@ -21531,6 +21547,12 @@
         NCTIT2(1,ICNT)=9
         ITITL2(2,ICNT)='Value'
         NCTIT2(2,ICNT)=5
+      ELSEIF(ICASAN.EQ.'LPI2' .OR. ICASAN.EQ.'LPS2')THEN
+        ICNT=ICNT+1
+        ITITL2(1,ICNT)='Standard'
+        NCTIT2(1,ICNT)=8
+        ITITL2(2,ICNT)='Error'
+        NCTIT2(2,ICNT)=5
       ENDIF
       IF(ICASA2.EQ.'TWOS' .OR. ICASA2.EQ.'LOWE')THEN
         ICNT=ICNT+1
@@ -21582,9 +21604,13 @@
           AMAT(I,JCNT)=TSDM(I)
         ELSEIF(ICASAN.EQ.'LRS2' .OR. ICASAN.EQ.'QUC2' .OR.    &
                ICASAN.EQ.'DFIN' .OR. ICASAN.EQ.'DFSL' .OR.    &
+               ICASAN.EQ.'LPIN' .OR. ICASAN.EQ.'LPSL' .OR.    &
                ICASAN.EQ.'CONF' .OR. ICASAN.EQ.'CON2')THEN
           JCNT=JCNT+1
           AMAT(I,JCNT)=T(I)
+          JCNT=JCNT+1
+          AMAT(I,JCNT)=TSDM(I)
+        ELSEIF(ICASAN.EQ.'LPI2' .OR. ICASAN.EQ.'LPS2')THEN
           JCNT=JCNT+1
           AMAT(I,JCNT)=TSDM(I)
         ENDIF
@@ -21610,12 +21636,12 @@
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'CNF2')   &
       CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 !
-      CALL DPDTA4(ITITL9,NCTIT9,   &
-                  ITITLE,NCTITL,ITITL2,NCTIT2,   &
-                  MAXLIN,NUMLIN,NUMCLI,NUMCOL,   &
-                  IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,NUMROW,   &
+      CALL DPDTA4(ITITL9,NCTIT9,                                &
+                  ITITLE,NCTITL,ITITL2,NCTIT2,                  &
+                  MAXLIN,NUMLIN,NUMCLI,NUMCOL,                  &
+                  IVALUE,NCVALU,AMAT,ITYPCO,MAXROW,NUMROW,      &
                   IDIGIT,NTOT,IWHTML,IWRTF,VALIGN,ALIGN,NMAX,   &
-                  ICAPSW,ICAPTY,IFRST,ILAST,   &
+                  ICAPSW,ICAPTY,IFRST,ILAST,                    &
                   ISUBRO,IBUGA3,IERROR)
 !
 !               *****************

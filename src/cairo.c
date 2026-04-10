@@ -57,7 +57,6 @@
  *  cadraw      - draw a polyline
  *  camove      - move to a point
  *  caseco      - set foreground color (based on RGB triplet)
- *  casepa      - set line pattern
  *  capoin      - draw a point (i.e., a pixel)
  *  cargfl      - solid fill of a region
  *  catxth      - draw a horizontal character string
@@ -72,11 +71,6 @@
  *  definitions -DNOUNDERSCORE and -DUPPERCASE can be specified to
  *  override these defaults. */
 
-#ifdef DOUBLE
-#define PRECISION 1
-#else
-#define PRECISION 0
-#endif
 #ifdef CAIRO_QUARTZ
 #define CAIRO_HAS_QUARTZ_SURFACE
 #endif
@@ -195,7 +189,6 @@ static int    OPEN_FLAG_2 = 0;        /* 0 - closed, 1 - open */
 static int    OPEN_FLAG_3 = 0;        /* 0 - closed, 1 - open */
 
 void caend(int *idev,int *imodel);
-#if PRECISION == 0
 void cadraw(int *idev, double xpts[], double ypts[], int *npts, int *icap,
             int *ijoin, int *ipatt, double *pthick);
 void cainit(int *idev,int *imodel,int file_name[],
@@ -211,34 +204,14 @@ void catxtv(int *idev,int string[],double *ixpos,double *iypos,
             int *ijusth,int *ijustv,double *fontsize,int font[],
             int *islant,int *iweight,int *error);
 void caseco(int *idev,double *jred,double *jgreen,double *jblue);
-void casepa(int *idev,float xpatt[],int *npatt,float *pthick,int *iopt);
 void camove(int *idev,double *ax1,double *ay1);
-#else
-void cadraw(int *idev, double xpts[], double ypts[], int *npts, int *icap,
-            int *ijoin, int *ipatt, double pthick[2]);
-void cainit(int *idev,int *imodel,int file_name[],
-            double anumhp[2],double anumvp[2],
-            double jred[2],double jgreen[2],double jblue[2],int *error_flag);
-void caeras(int *idev, int *imodel, double anumhp[2], double anumvp[2],
-            double jred[2], double jgreen[2], double jblue[2],
-            int *ixret, int *iyret);
-void catxth(int *idev,int string[],double ixpos[2],double iypos[2],
-            int *ijusth,int *ijustv,double fontsize[2],int font[],
-            int *islant,int *iweight,int *error);
-void catxtv(int *idev,int string[],double ixpos[2],double iypos[2],
-            int *ijusth,int *ijustv,double fontsize[2],int font[],
-            int *islant,int *iweight,int *error);
-void caseco(int *idev,double jred[2],double jgreen[2],double jblue[2]);
-void casepa(int *idev,float xpatt[],int *npatt,float pthick[2],int *iopt);
-void camove(int *idev,double ax1[2],double ay1[2]);
-#endif
 void capoin(int *idev, int *ix, int *iy);
 void cargfl(int *idev, double xpts[], double ypts[], int *npts);
 void carend(int *idev,int *imodel);
 void cachec(int *expose_flag_cairo_2, int *error_flag);
 void caflsh(int *idev,int *imodel);
 void cardlo(int *idev, int *imodel, int *ixret, int *iyret, int *error);
-void i_to_s_5();
+void i_to_s_5(int string1[],char string2[],int maxlen,int *ilen);
 
 /* CACHEC  - routine to check for X expose and configuration events.
  *           Specifically, resizing of the graphics window by the window
@@ -314,16 +287,9 @@ void cachec(int *expose_flag_cairo_2, int *error_flag)
  *  range, then set it to 1).  The imodel parameter identifies
  *  which device is being opened.
  */
-#if PRECISION == 0
 void cainit(int *idev,int *imodel,int file_name[],
             double *anumhp,double *anumvp,
             double *jred,double *jgreen,double *jblue,int *error_flag)
-#else
-void cainit(int *idev,int *imodel,int file_name[],
-            double anumhp[2],double anumvp[2],
-            double jred[2],double jgreen[2],double jblue[2],int *error_flag)
-#endif
-
 {
    double   anumhp_temp;
    double   anumvp_temp;
@@ -349,19 +315,11 @@ WindowRef    gTestWindow;
    *error_flag = 0;
    i_to_s_5(file_name, file_string, 80, &len);
 
-#if PRECISION == 0
    anumhp_temp = *anumhp;
    anumvp_temp = *anumvp;
    avalue1     = *jred;
    avalue2     = *jgreen;
    avalue3     = *jblue;
-#else
-   anumhp_temp = anumhp[0];
-   anumvp_temp = anumvp[0];
-   avalue1     = jred[0];
-   avalue2     = jgreen[0];
-   avalue3     = jblue[0];
-#endif
 
    if (avalue1 < 0) {
       avalue1 = 0.0;
@@ -701,15 +659,9 @@ WindowRef    gTestWindow;
  *
  */
 
-#if PRECISION == 0
 void caeras(int *idev, int *imodel, double *anumhp, double *anumvp,
             double *jred, double *jgreen, double *jblue,
             int *ixret, int *iyret)
-#else
-void caeras(int *idev, int *imodel, double anumhp[2], double anumvp[2],
-            double jred[2], double jgreen[2], double jblue[2],
-            int *ixret, int *iyret)
-#endif
 {
 
    int      idev_temp;
@@ -729,19 +681,11 @@ void caeras(int *idev, int *imodel, double anumhp[2], double anumvp[2],
    idev_temp   = *idev;
    imodel_temp = *imodel;
 
-#if PRECISION == 0
    anumhp_temp = *anumhp;
    anumvp_temp = *anumvp;
    avalue1     = *jred;
    avalue2     = *jgreen;
    avalue3     = *jblue;
-#else
-   anumhp_temp = anumhp[0];
-   anumvp_temp = anumvp[0];
-   avalue1     = jred[0];
-   avalue2     = jgreen[0];
-   avalue3     = jblue[0];
-#endif
 
    /* If the background is white, skip the filled rectangle
     * to set the background. */
@@ -779,13 +723,8 @@ void caeras(int *idev, int *imodel, double anumhp[2], double anumvp[2],
             width=anumhp_temp;
             height=anumvp_temp;
          }
-#if PRECISION == 0
          *ixret=(int)width;
          *iyret=(int)height;
-#else
-         ixret[0]=(int)width;
-         iyret[0]=(int)height;
-#endif
          /* if (iflag_white == 1) { */
             cairo_set_line_width(cr1,2.);
             cairo_set_source_rgb(cr1,avalue1,avalue2,avalue3);
@@ -972,13 +911,8 @@ void carend(int *idev,int *imodel)
  * pthick - line thickness
  *
  */
-#if PRECISION == 0
 void cadraw(int *idev, double xpts[], double ypts[], int *npts, int *icap,
             int *ijoin, int *ipatt, double *pthick)
-#else
-void cadraw(int *idev, double xpts[], double ypts[], int *npts, int *icap,
-            int *ijoin, int *ipatt, double pthick[2])
-#endif
 {
    int     npts_temp;
    int     icap_temp;
@@ -1000,21 +934,12 @@ void cadraw(int *idev, double xpts[], double ypts[], int *npts, int *icap,
 
    nlast = npts_temp;
    if (nlast > 1000) nlast = 1000;
-#if PRECISION == 0
    pthick_temp = *pthick;
    for (i=0; i < npts_temp; i++) {
        iindx=i;
        xpts_temp[i] = xpts[iindx];
        ypts_temp[i] = ypts[iindx];
    }
-#else
-   pthick_temp = *pthick[0];
-   for (i=0; i < npts_temp; i++) {
-       iindx=2*i;
-       xpts_temp[i] = xpts[iindx];
-       ypts_temp[i] = ypts[iindx];
-#endif
-
 
    if (idev_temp == 1) {
       if (OPEN_FLAG_1 > 0) {
@@ -1259,23 +1184,14 @@ void cadraw(int *idev, double xpts[], double ypts[], int *npts, int *icap,
  * ay1    - contains the y coordinate
  *
  */
-#if PRECISION == 0
 void camove(int *idev,double *ax1,double *ay1)
-#else
-void camove(int *idev,double ax1[2],double ay1[2])
-#endif
 {
    double   ax1_temp;
    double   ay1_temp;
    int      idev_temp;
 
-#if PRECISION == 0
    ax1_temp = *ax1;
    ay1_temp = *ay1;
-#else
-   ax1_temp = ax1[0];
-   ay1_temp = ay1[0];
-#endif
 
    idev_temp = *idev;
 
@@ -1306,26 +1222,16 @@ void camove(int *idev,double ax1[2],double ay1[2])
  * jblue  - value for blue component (0 to 1)
  *
  */
-#if PRECISION == 0
 void caseco(int *idev,double *jred,double *jgreen,double *jblue)
-#else
-void caseco(int *idev,double jred[2],double jgreen[2],double jblue[2])
-#endif
 {
    float    avalue1;
    float    avalue2;
    float    avalue3;
    int      idev_temp;
 
-#if PRECISION == 0
    avalue1 = *jred;
    avalue2 = *jgreen;
    avalue3 = *jblue;
-#else
-   avalue1 = jred[0];
-   avalue2 = jgreen[0];
-   avalue3 = jblue[0];
-#endif
 
    idev_temp = *idev;
 
@@ -1359,98 +1265,6 @@ void caseco(int *idev,double jred[2],double jgreen[2],double jblue[2])
    } else if (idev_temp == 3) {
       if (OPEN_FLAG_3 > 0) {
          cairo_set_source_rgb(cr3,avalue1,avalue2,avalue3);
-      }
-   }
-
-}
-
-/* CASEPA  - set line attribute (color set in AQSECO):
- *
- * jpatt   - the line pattern
- * pthick  - the line thickness (in points)
- *
- */
-#if PRECISION == 0
-void casepa(int *idev,float xpatt[],int *npatt,float *pthick,int *iopt)
-#else
-void casepa(int *idev,float xpatt[],int *npatt,float pthick[2],int *iopt)
-#endif
-{
-   int     npatt_temp;
-   float   pthick_temp;
-   int     iopt_temp;
-   int     idev_temp;
-
-#if PRECISION == 0
-   pthick_temp = *pthick;
-#else
-   pthick_temp = pthick[0];
-#endif
-   npatt_temp  = *npatt;
-   iopt_temp   = *iopt;
-   idev_temp   = *idev;
-
-   if (idev_temp == 1) {
-      if (OPEN_FLAG_1 > 0) {
-      }
-   } else if (idev_temp == 2) {
-      if (OPEN_FLAG_2 > 0) {
-      }
-   } else if (idev_temp == 3) {
-      if (OPEN_FLAG_3 > 0) {
-      }
-   }
-
-}
-
-/* CASESI  - set character size
- *
- * pheigh   - the desired point size
- *
- */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void casesi_(idev,pheigh)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void CASESI_(idev,pheigh)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void casesi(idev,pheigh)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void CASESI(idev,pheigh)
-#endif
-#if PRECISION == 0
-float *pheigh;
-#else
-float pheigh[2];
-#endif
-#if INTEGER_PRECISION == 0
-int   *idev;
-#else
-int   idev[2];
-#endif
-{
-   float   pheigh_temp;
-   int     idev_temp;
-
-#if PRECISION == 0
-   pheigh_temp = *pheigh;
-#else
-   pheigh_temp = pheigh[0];
-#endif
-#if INTEGER_PRECISION == 0
-   idev_temp = *idev;
-#else
-   idev_temp = *idev[0];
-#endif
-
-
-   if (idev_temp == 1) {
-      if (OPEN_FLAG_1 > 0) {
-      }
-   } else if (idev_temp == 2) {
-      if (OPEN_FLAG_2 > 0) {
-      }
-   } else if (idev_temp == 3) {
-      if (OPEN_FLAG_3 > 0) {
       }
    }
 
@@ -1596,13 +1410,8 @@ void cargfl(int *idev, double xpts[], double ypts[], int *npts)
             ay = ypts[0];
             cairo_move_to(cr2,ax,ay);
             for (i = 1; i < npts_temp; i++) {
-#if PRECISION == 0
                 ax = xpts[i];
                 ay = ypts[i];
-#else
-                ax = xpts[2*i];
-                ay = ypts[2*i];
-#endif
                 cairo_line_to(cr2,ax,ay);
             }
             cairo_close_path(cr2);
@@ -1674,15 +1483,9 @@ void cargfl(int *idev, double xpts[], double ypts[], int *npts)
  * error  - error flag
  *
  */
-#if PRECISION == 0
 void catxth(int *idev,int string[],double *ixpos,double *iypos,
             int *ijusth,int *ijustv,double *fontsize,int font[],
             int *islant,int *iweight,int *error)
-#else
-void catxth(int *idev,int string[],double ixpos[2],double iypos[2],
-            int *ijusth,int *ijustv,double fontsize[2],int font[],
-            int *islant,int *iweight,int *error)
-#endif
 {
 
    float  ixpos_temp;
@@ -1707,15 +1510,9 @@ void catxth(int *idev,int string[],double ixpos[2],double iypos[2],
 
    cairo_text_extents_t  extents;  /* use for justifying text */
 
-#if PRECISION == 0
    xpos       = *ixpos;
    ypos       = *iypos;
    size_temp  = *fontsize;
-#else
-   xpos       = ixpos[0];
-   ypos       = iypos[0];
-   size_temp  = fontsize[0];
-#endif
 
    ijusth_temp  = *ijusth;
    ijustv_temp  = *ijustv;
@@ -1824,15 +1621,9 @@ void catxth(int *idev,int string[],double ixpos[2],double iypos[2],
  * error  - error flag
  *
  */
-#if PRECISION == 0
 void catxtv(int *idev,int string[],double *ixpos,double *iypos,
             int *ijusth,int *ijustv,double *fontsize,int font[],
             int *islant,int *iweight,int *error)
-#else
-void catxtv(int *idev,int string[],double ixpos[2],double iypos[2],
-            int *ijusth,int *ijustv,double fontsize[2],int font[],
-            int *islant,int *iweight,int *error)
-#endif
 {
 
    float  ixpos_temp;
@@ -1858,15 +1649,9 @@ void catxtv(int *idev,int string[],double ixpos[2],double iypos[2],
 
    cairo_text_extents_t  extents;  /* use for justifying text */
 
-#if PRECISION == 0
    xpos  = *ixpos;
    ypos  = *iypos;
    size_temp = *fontsize;
-#else
-   xpos  = ixpos[0];
-   ypos  = iypos[0];
-   size_temp = fontsize[0];
-#endif
 
    ijusth_temp = *ijusth;
    ijustv_temp = *ijustv;
