@@ -15905,6 +15905,8 @@
 !     UPDATED         --NOVEMBER  2023. ONLY DO THE CONVERSION IF
 !                                       OUTPUT DEVICE IS POSTSCRIPT
 !     UPDATED         --JUNE      2024. CORRECTION FOR 11/2023 CODE
+!     UPDATED         --JULY      2026. SOME TWEAKS TO LATEX IMPORTING
+!                                       POSTSCRIPT FILE
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -15935,6 +15937,7 @@
       CHARACTER*4 ISSAV2
       CHARACTER*4 ICLESV
       CHARACTER*3 IEXT
+      CHARACTER*81 IATEMP2
 !
 !-----COMMON----------------------------------------------------------
 !
@@ -15945,6 +15948,7 @@
       INCLUDE 'DPCOSU.INC'
       INCLUDE 'DPCOHO.INC'
       INCLUDE 'DPCOST.INC'
+      INCLUDE 'DPCODV.INC'
 !
       LOGICAL IOPPLO
       COMMON/OPNPLT/IOPPLO
@@ -15999,8 +16003,8 @@
         WRITE(ICOUT,73)IPL2ST,IPL2FO,IPL2AC,IPL2FO,IPL2CS
    73   FORMAT('IPL2ST,IPL2FO,IPL2AC,IPL2FO,IPL2CS = ',4(A12,2X),A12)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,82)IFILE
-   82   FORMAT('IFILE = ',A80)
+        WRITE(ICOUT,82)IFILE(1:80)
+   82   FORMAT('IFILE(1:80) = ',A80)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -16046,12 +16050,12 @@
       IPEROD=0
       IFLGSP=0
 !
-      DO 101 I=ILAST,1,-1
+      DO I=ILAST,1,-1
         IF(IFILE(I:I).NE.' ')THEN
           ILASTT=I
           GO TO 103
         ENDIF
-  101 CONTINUE
+      ENDDO
       GO TO 9000
   103 CONTINUE
 !
@@ -16076,8 +16080,9 @@
 !
       IFLAGT=0
       IF(ICAPSW.EQ.'OFF')IFLAGT=1
-      IF(ICAPSW.EQ.'ON' .AND.   &
-        (ICAPTY.NE.'HTML'.AND.ICAPTY.NE.'LATE'))IFLAGT=1
+!     IF(ICAPSW.EQ.'ON' .AND.   &
+!       (ICAPTY.NE.'HTML'.AND.ICAPTY.NE.'LATE'))IFLAGT=1
+      IF(ICAPSW.EQ.'ON' .AND. ICAPTY.NE.'HTML')IFLAGT=1
 !
 !     2024/03: CORRECT SETTING FOR NON-POSTSCRIPT DEVICE
 !
@@ -16526,6 +16531,147 @@
             ISYSPE=ISSAV1
             ISYSHI=ISSAV2
             ICLEWT=ICLESV
+          ENDIF
+        ENDIF
+!
+!       CAPTURE LATEX CASE, CODE FOR IMPORTING THE GRAPH
+!       INTO THE LATEX SCRIPT
+!
+        IF(ICAPSW.EQ.'ON' .AND. ICAPTY.EQ.'LATE')THEN
+!
+          ISTEPN='224'
+          IF(IBUGO2.EQ.'ON'.OR.ISUBRO.EQ.'DEP3')   &
+            CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+          ILAST2=ILAST
+          DO I=ILAST,1,-1
+             IF(IFILE(I:I).NE.' ')THEN
+               ILAST2=I
+               EXIT
+             ENDIF
+          ENDDO
+!
+          IF(IMANUF.EQ.'POST' .AND. IDEV.EQ.'PLO1')THEN
+            WRITE(ICOUT,3001)IBASLC
+ 3001       FORMAT(A1,'end{verbatim}')
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','WRIT')
+!
+            IF(ILATPD.EQ.'LGRA')THEN
+!
+!             LGRAPHIC/PGRAPIC METHOD
+!
+              IF(ILATTY.EQ.'POST')THEN
+                IF(IORNSW.EQ.'PORT' .OR. IORNSW.EQ.'LAN2')THEN
+                  WRITE(ICOUT,3011)IBASLC,IFILE(1:ILAST2)
+ 3011             FORMAT(A1,'PGRAPHIC{',A,'}')
+                  CALL DPWRST('XXX','WRIT')
+                ELSE
+                  WRITE(ICOUT,3016)IBASLC,IFILE(1:ILAST2)
+ 3016             FORMAT(A1,'LGRAPHIC{',A,'}')
+                  CALL DPWRST('XXX','WRIT')
+                ENDIF
+              ELSE
+                IF(IORNSW.EQ.'PORT' .OR. IORNSW.EQ.'LAN2')THEN
+                  IF(ILATTY.EQ.'POST')THEN
+                    WRITE(ICOUT,3013)IBASLC,IFILE(1:ILAST2)
+ 3013               FORMAT(A1,'PGRAPHIC{',A,'}')
+                    CALL DPWRST('XXX','WRIT')
+                  ELSE
+                    WRITE(ICOUT,33011)IBASLC
+33011               FORMAT(A1,'PGRAPHIC')
+                    CALL DPWRST('XXX','WRIT')
+                    IFORMT='(A1,A   ,A2,A1)'
+                    WRITE(IFORMT(6:8),'(I3)')ILAST2-1
+                    IF(IFILE(ILAST2-1:ILAST2).EQ.'ps')THEN
+                      WRITE(ICOUT,IFORMT)'{',IFILE(1:ILAST2-1),'df','}'
+                      CALL DPWRST('XXX','WRIT')
+                    ELSEIF(IFILE(ILAST2-1:ILAST2).EQ.'PS')THEN
+                      WRITE(ICOUT,IFORMT)'{',IFILE(1:ILAST2-1),'DF','}'
+                      CALL DPWRST('XXX','WRIT')
+                    ENDIF
+                  ENDIF
+                ELSE
+                  IF(ILATTY.EQ.'POST')THEN
+                    WRITE(ICOUT,3018)IBASLC,IFILE(1:ILAST2)
+ 3018               FORMAT(A1,'LGRAPHIC{',A,'}')
+                    CALL DPWRST('XXX','WRIT')
+                  ELSE
+                    WRITE(ICOUT,33016)IBASLC
+33016               FORMAT(A1,'LGRAPHIC')
+                    CALL DPWRST('XXX','WRIT')
+                    IFORMT='(A1,A   ,A2,A1)'
+                    WRITE(IFORMT(6:8),'(I3)')ILAST2-1
+                    IF(IFILE(ILAST2-1:ILAST2).EQ.'ps')THEN
+                      WRITE(ICOUT,IFORMT)'{',IFILE(1:ILAST2-1),'df','}'
+                      CALL DPWRST('XXX','WRIT')
+                    ELSEIF(IFILE(ILAST2-1:ILAST2).EQ.'PS')THEN
+                      WRITE(ICOUT,IFORMT)'{',IFILE(1:ILAST2-1),'DF','}'
+                      CALL DPWRST('XXX','WRIT')
+                    ENDIF
+                  ENDIF
+                ENDIF
+              ENDIF
+            ELSE
+!
+!             USE "GRAPHICX" METHOD FOR IMPORTING POSTSCRIPT/PDF
+!
+              WRITE(ICOUT,3021)IBASLC
+ 3021         FORMAT(A1,'begin{figure}')
+              CALL DPWRST('XXX','WRIT')
+              WRITE(ICOUT,3022)IBASLC
+ 3022         FORMAT(3X,A1,'centering')
+              CALL DPWRST('XXX','WRIT')
+              IF(IORNSW.EQ.'LAND')THEN
+                WRITE(ICOUT,3025)IBASLC,IBASLC
+ 3025           FORMAT(3X,A1,'includegraphics[angle=-90,width=0.9',    &
+                       A1,'textwidth]')
+                CALL DPWRST('XXX','WRIT')
+              ELSE
+                WRITE(ICOUT,33025)IBASLC,IBASLC
+33025           FORMAT(3X,A1,'includegraphics[width=0.9',A1,'textwidth]')
+                CALL DPWRST('XXX','WRIT')
+              ENDIF
+              IF(ILATTY.EQ.'POST')THEN
+                WRITE(ICOUT,3027)IFILE(1:ILAST2)
+ 3027           FORMAT('{',A,'}')
+                CALL DPWRST('XXX','WRIT')
+              ELSEIF(ILATTY.EQ.'PDF ')THEN
+                IFORMT='(A1,A   ,A2,A1)'
+                WRITE(IFORMT(6:8),'(I3)')ILAST2-1
+                IF(IFILE(ILAST2-1:ILAST2).EQ.'ps')THEN
+                  WRITE(ICOUT,IFORMT)'{',IFILE(1:ILAST2-1),'df','}'
+                  CALL DPWRST('XXX','WRIT')
+                ELSEIF(IFILE(ILAST2-1:ILAST2).EQ.'PS')THEN
+                  WRITE(ICOUT,IFORMT)'{',IFILE(1:ILAST2-1),'DF','}'
+                  CALL DPWRST('XXX','WRIT')
+                ENDIF
+              ENDIF
+              IF(ILATCA.NE.'NULL' .AND. ILATCA.NE.'NONE')THEN
+                IATEMP2=' '
+                NCTEMP=1
+                DO II=80,1,-1
+                   IF(ILATCA(II:II).NE.' ')THEN
+                     NCTEMP=II
+                     EXIT
+                   ENDIF
+                ENDDO
+                IATEMP2(1:NCTEMP)=ILATCA(1:NCTEMP)
+                IATEMP2(NCTEMP+1:NCTEMP+1)='}'
+                WRITE(ICOUT,3028)IBASLC,IATEMP2
+ 3028           FORMAT(3X,A1,'caption{',A)
+                CALL DPWRST('XXX','WRIT')
+              ENDIF
+              WRITE(ICOUT,3029)IBASLC
+ 3029         FORMAT(A1,'end{figure}')
+              CALL DPWRST('XXX','WRIT')
+            ENDIF
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','WRIT')
+            WRITE(ICOUT,3091)IBASLC
+ 3091       FORMAT(A1,'begin{verbatim}')
+            CALL DPWRST('XXX','WRIT')
           ENDIF
         ENDIF
 !
@@ -17122,34 +17268,6 @@
         WRITE(ICOUT,2399)
  2399   FORMAT('<PRE>')
         CALL DPWRST('XXX','WRIT')
-!
-      ELSEIF(ICAPSW.EQ.'ON' .AND. ICAPTY.EQ.'LATE')THEN
-!
-        ISTEPN='224'
-        IF(IBUGO2.EQ.'ON'.OR.ISUBRO.EQ.'DEP3')   &
-          CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
-!
-        IF(IMANUF.EQ.'POST' .AND. IDEV.EQ.'PLO1')THEN
-          WRITE(ICOUT,3001)IBASLC
- 3001     FORMAT(A1,'end{verbatim}')
-          CALL DPWRST('XXX','WRIT')
-          WRITE(ICOUT,999)
-          CALL DPWRST('XXX','WRIT')
-          IF(IORNSW.EQ.'PORT' .OR. IORNSW.EQ.'LAN2')THEN
-            WRITE(ICOUT,3011)IBASLC,IFILE(1:ILAST)
- 3011       FORMAT(A1,'PGRAPHIC{',A80,'}')
-            CALL DPWRST('XXX','WRIT')
-          ELSE
-            WRITE(ICOUT,3016)IBASLC,IFILE(1:ILAST)
- 3016       FORMAT(A1,'LGRAPHIC{',A80,'}')
-            CALL DPWRST('XXX','WRIT')
-          ENDIF
-          WRITE(ICOUT,999)
-          CALL DPWRST('XXX','WRIT')
-          WRITE(ICOUT,3091)IBASLC
- 3091     FORMAT(A1,'begin{verbatim}')
-          CALL DPWRST('XXX','WRIT')
-        ENDIF
 !
       ENDIF
 !

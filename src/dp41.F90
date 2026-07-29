@@ -13440,13 +13440,14 @@
       RETURN
       END SUBROUTINE MANDIS
       SUBROUTINE MATARI(YM1,NR1,NC1,YM2,NR2,NC2,NR3,NC3,MAXROM,MAXCOM,   &
-      Y1,N1,Y2,N2,Y3,N3,Y4,N4,   &
-      INDEX,IZROV,IPOSV,   &
-      DMEAN,DSSQD,P1,P2,BETA,   &
-      YS1,YS2,YS3,YS4,   &
-      IMCASE,IUPFLG,IMSUBC,ITYPA1,ITYPA2,ITYPA3,ITYPA4,NUMVAR,IWRITE,   &
-      YM9,NR9,NC9,VECT9,NVECT9,SCAL9,ITYP9,   &
-      IBUGA3,ISUBRO,IERROR)
+                        Y1,N1,Y2,N2,Y3,N3,Y4,N4,                         &
+                        INDEX,IZROV,IPOSV,                               &
+                        DMEAN,DSSQD,P1,P2,BETA,                          &
+                        YS1,YS2,YS3,YS4,                                 &
+                        IMCASE,IUPFLG,IMSUBC,ITYPA1,ITYPA2,ITYPA3,       &
+                        ITYPA4,NUMVAR,IWRITE,                            &
+                        YM9,NR9,NC9,VECT9,NVECT9,SCAL9,ITYP9,            &
+                        IBUGA3,ISUBRO,IERROR)
 !
 !     PURPOSE--CARRY OUT MATRIX     ARITHMETIC OPERATIONS
 !              OF THE REAL DATA IN MATRICES YM1 AND YM2.
@@ -13642,6 +13643,7 @@
 !     UPDATED         --SEPTEMBER 2016 CORRELATION PERCENTAGE VALUE
 !     UPDATED         --SEPTEMBER 2016 CORRELATION DIGITS
 !     UPDATED         --AUGUST    2019 CALL LIST TO KENTAU
+!     UPDATED         --APRIL     2026 CALL LIST TO KENTAU
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -13662,6 +13664,7 @@
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ICASZZ
+      CHARACTER*4 ICASZ2
 !
 !-----DOUBLE PRECISION STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -16879,12 +16882,27 @@
               ENDIF
             ELSEIF(ICORTY.EQ.'KTAU')THEN
               ICASZZ='TWOS'
-              CALL KENTAU(Y3,Y4,NR1,ICASZZ,IKTATA,IWRITE,Y1,Y2,MAXOBV,   &
-                          RIGHT,AKTAUA,AKTAUB,AKTAUC,   &
-                          STATCD,PVAL,PVALLT,PVALUT,   &
-                          CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                          CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+              IF(IKTADE.EQ.'B   ')THEN
+                ICASZ2='TAUB'
+              ELSEIF(IKTADE.EQ.'C   ')THEN
+                ICASZ2='TAUC'
+              ELSE
+                ICASZ2='KTAU'
+              ENDIF
+              CALL KENTAU(Y3,Y4,NR1,ICASZZ,ICASZ2,IKTATA,IKTACU,IWRITE,    &
+                          Y1,Y2,INDEX,MAXOBV,                              &
+                          XYKTAU,AKTAUA,AKTAUB,AKTAUC,                     &
+                          STATCD,PVAL,PVALLT,PVALUT,                       &
+                          CUTU90,CUTU95,CTU975,CUTU99,CTU995,              &
+                          CUTL90,CUTL95,CTL975,CUTL99,CTL995,              &
                           IBUGA3,ISUBRO,IERROR)
+              IF(IKTADE.EQ.'B   ')THEN
+                RIGHT=AKTAUB
+              ELSEIF(IKTADE.EQ.'C   ')THEN
+                RIGHT=AKTAUC
+              ELSE
+                RIGHT=XYKTAU
+              ENDIF
             ELSE
               CALL CORR(Y3,Y4,NR1,IWRITE,RIGHT,IBUGA3,IERROR)
             ENDIF
@@ -16947,12 +16965,27 @@
               ENDIF
             ELSEIF(ICORTY.EQ.'KTAU')THEN
               ICASZZ='TWOS'
-              CALL KENTAU(Y3,Y4,NC1,ICASZZ,IKTATA,IWRITE,Y1,Y2,MAXOBV,   &
-                          RIGHT,AKTAUA,AKTAUB,AKTAUC,   &
-                          STATCD,PVAL,PVALLT,PVALUT,   &
-                          CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                          CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+              IF(IKTADE.EQ.'B   ')THEN
+                ICASZ2='TAUB'
+              ELSEIF(IKTADE.EQ.'C   ')THEN
+                ICASZ2='TAUC'
+              ELSE
+                ICASZ2='KTAU'
+              ENDIF
+              CALL KENTAU(Y3,Y4,NC1,ICASZZ,ICASZ2,IKTATA,IKTACU,IWRITE,   &
+                          Y1,Y2,INDEX,MAXOBV,                             &
+                          XYKTAU,AKTAUA,AKTAUB,AKTAUC,                    &
+                          STATCD,PVAL,PVALLT,PVALUT,                      &
+                          CUTU90,CUTU95,CTU975,CUTU99,CTU995,             &
+                          CUTL90,CUTL95,CTL975,CUTL99,CTL995,             &
                           IBUGA3,ISUBRO,IERROR)
+              IF(IKTADE.EQ.'B   ')THEN
+                RIGHT=AKTAUB
+              ELSEIF(IKTADE.EQ.'C   ')THEN
+                RIGHT=AKTAUC
+              ELSE
+                RIGHT=XYKTAU
+              ENDIF
             ELSE
               CALL CORR(Y3,Y4,NC1,IWRITE,RIGHT,IBUGA3,IERROR)
             ENDIF
@@ -17607,12 +17640,27 @@
               ENDIF
             ELSEIF(ICORTY.EQ.'KTAU')THEN
               ICASZZ='TWOS'
-              CALL KENTAU(Y3,Y4,NR1,ICASZZ,IKTATA,IWRITE,Y1,Y2,MAXOBV,   &
-                          RIGHT,AKTAUA,AKTAUB,AKTAUC,   &
-                          STATCD,PVAL,PVALLT,PVALUT,   &
-                          CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                          CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+              IF(IKTADE.EQ.'B   ')THEN
+                ICASZ2='TAUB'
+              ELSEIF(IKTADE.EQ.'C   ')THEN
+                ICASZ2='TAUC'
+              ELSE
+                ICASZ2='KTAU'
+              ENDIF
+              CALL KENTAU(Y3,Y4,NR1,ICASZZ,ICASZ2,IKTATA,IKTACU,IWRITE,    &
+                          Y1,Y2,INDEX,MAXOBV,                              &
+                          XYKTAU,AKTAUA,AKTAUB,AKTAUC,                     &
+                          STATCD,PVAL,PVALLT,PVALUT,                       &
+                          CUTU90,CUTU95,CTU975,CUTU99,CTU995,              &
+                          CUTL90,CUTL95,CTL975,CUTL99,CTL995,              &
                           IBUGA3,ISUBRO,IERROR)
+              IF(IKTADE.EQ.'B   ')THEN
+                RIGHT=AKTAUB
+              ELSEIF(IKTADE.EQ.'C   ')THEN
+                RIGHT=AKTAUC
+              ELSE
+                RIGHT=XYKTAU
+              ENDIF
             ELSE
               CALL CORR(Y3,Y4,NR1,IWRITE,RIGHT,IBUGA3,IERROR)
             ENDIF
@@ -17667,12 +17715,27 @@
               ENDIF
             ELSEIF(ICORTY.EQ.'KTAU')THEN
               ICASZZ='TWOS'
-              CALL KENTAU(Y3,Y4,NC1,ICASZZ,IKTATA,IWRITE,Y1,Y2,MAXOBV,   &
-                          RIGHT,AKTAUA,AKTAUB,AKTAUC,   &
-                          STATCD,PVAL,PVALLT,PVALUT,   &
-                          CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                          CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+              IF(IKTADE.EQ.'B   ')THEN
+                ICASZ2='TAUB'
+              ELSEIF(IKTADE.EQ.'C   ')THEN
+                ICASZ2='TAUC'
+              ELSE
+                ICASZ2='KTAU'
+              ENDIF
+              CALL KENTAU(Y3,Y4,NC1,ICASZZ,ICASZ2,IKTATA,IKTACU,IWRITE,    &
+                          Y1,Y2,INDEX,MAXOBV,                              &
+                          XYKTAU,AKTAUA,AKTAUB,AKTAUC,                     &
+                          STATCD,PVAL,PVALLT,PVALUT,                       &
+                          CUTU90,CUTU95,CTU975,CUTU99,CTU995,              &
+                          CUTL90,CUTL95,CTL975,CUTL99,CTL995,              &
                           IBUGA3,ISUBRO,IERROR)
+              IF(IKTADE.EQ.'B   ')THEN
+                RIGHT=AKTAUB
+              ELSEIF(IKTADE.EQ.'C   ')THEN
+                RIGHT=AKTAUC
+              ELSE
+                RIGHT=XYKTAU
+              ENDIF
             ELSE
               CALL CORR(Y3,Y4,NC1,IWRITE,RIGHT,IBUGA3,IERROR)
             ENDIF

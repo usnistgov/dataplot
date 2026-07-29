@@ -10,6 +10,49 @@ The complete news file can be viewed at
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
+April 2026 - July 2026.
+-----------------------------------------------------------------------
+
+ 1. Added the following Analysis commands
+
+        ORDINARY LEAST PRODUCTS FIT Y X
+        PASSING BABLOK FIT Y X
+        THIEL SEN FIT Y X
+        KENDALL TAU B CONFIDENCE LIMITS Y1 Y2
+
+ 2. Added the following LET sub-commands
+
+        LET IINDX = INDEX LESS THAN                 Y
+        LET IINDX = INDEX LESS THAN OR EQUAL TO     Y
+        LET IINDX = INDEX GREATER THAN              Y
+        LET IINDX = INDEX GREATER THAN OR EQUAL TO  Y
+
+ 3. Added the following SET sub-commands
+
+       SET READ TAB TO <COMMA/SPACE>
+       SET READ NUMBERS CONTAIN <COMMA/UNDERSCORE/OFF>
+
+    The SET READ TAB TO COMMA is useful for tab delimited data files
+    with missing cells or unequal length columns.  It converts the
+    tabs to commas and then treats the data file as a comma separated
+    file.  The default is SPACE (i.e., a tabs are converted to spaces).
+
+    The SET READ NUMBERS CONTAIN command can be used to allow numbers
+    in a data file to contain either commas or underscores (but not both
+    on the same line).  One reason for doing this is for clarity when
+    entering large numbers (e.g., 1_231_659.26).  Another reason is
+    that financial data may contain commas (e.g. $231,840.11).  The
+    default is OFF (i.e., commas or underscores will be treated as
+    errors).
+
+ 4. Made a number of update to the DEVICE LATEX and CAPTURE LATEX
+    commands.  Enter HELP LATEX or HELP CAPTURE LATEX for details.
+
+ 5. Fixed a bug in the DEVICE GD command.  This command was temporarily
+    broken in the last release.
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
 August 2024 - March 2026.
 -----------------------------------------------------------------------
 
@@ -57,6 +100,8 @@ August 2024 - March 2026.
  5. Added the following LET math commands
 
         LET Y2 X2 = DEMING FIT Y X
+
+        LET YNEW  = REMOVE Y YDELETE
 
  6. Added the following LET string commands
 

@@ -32568,7 +32568,7 @@
                       IREAAS,IREAPC,                                     &
                       IB,                                                &
                       IOTERM,IANSLO,MAXLIL,MAXCIL,ILOOST,ILOOLI,         &
-                      IREPCH,IMALEV,IREANQ,                              &
+                      IREPCH,IMALEV,IREANQ,IREANC,IREATA,                &
                       IERRFI,IBUGS2,ISUBRO,IERROR)
           IF(LINETY.EQ.'BLAN')GO TO 7400
           IF(NUMDPL.LT.IMNVAR)IMNVAR=NUMDPL

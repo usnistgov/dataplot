@@ -14,7 +14,7 @@
                         IREAAS,IREAPC,                                    &
                         IB,                                               &
                         IOTERM,IANSLO,MAXLI2,MAXCI2,ILOOST,ILOOLI,        &
-                        IREPCH,IMALEV,IREANQ,                             &
+                        IREPCH,IMALEV,IREANQ,IREANC,IREATA,               &
                         IERRFI,IBUGS2,ISUBRO,IERROR)
 !
 !     PURPOSE--THIS SUBROUTINE PERFORMS A FORMAT-FREE READ
@@ -276,6 +276,8 @@
       CHARACTER*4 IDATNN
       CHARACTER*4 IREACD
       CHARACTER*4 IREACM
+      CHARACTER*4 IREANC
+      CHARACTER*4 IREATA
       CHARACTER*4 IREADS
       CHARACTER*4 IREAPC
       CHARACTER*4 IREAPM
@@ -347,6 +349,8 @@
       IREAD3=IREADL
       TAGZZ=0.0
       IF(IREADL.EQ.',' .AND. IREACM.EQ.'ON')IREADL='    '
+      IF(IREADL.EQ.',' .AND. IREANC.EQ.',')IREADL='    '
+      IF(IREATA.EQ.',' .OR. IREATA.EQ.'COMM')IREADL=',   '
 !
 !     THE FOLLOWING NULL-CORRECTION WAS MADE IN APRIL OF 1987 (ELGIN PERRY
 !     AND DICK ATLEE FROM THE UNIV. OF MARYLAND; UNIVAC COMPILER MESSAGE)
@@ -703,6 +707,18 @@
           ICNT=ICNT+1
           IB(ICNT)=IB(J)
           NLASTZ=ICNT
+!
+!         TAB CHARACTER: USER REQUESTS CONVERSION TO COMMA
+!
+        ELSEIF(ITEMPV.EQ.9 .AND. (IREATA.EQ.'COMM' .OR. IREATA.EQ.','))THEN
+          ICNT=ICNT+1
+          IB(ICNT)=','
+          NLASTZ=ICNT
+!
+!         UNDERSCORE CHARACTER: USER REQUESTS UNDERSCORES BE IGNORED
+!
+        ELSEIF(IB(J).EQ.'_' .AND. IREANC.EQ.'UNDE')THEN
+          CONTINUE
         ELSEIF(ITEMPV.EQ.ITEMPD)THEN
           ICNT=ICNT+1
           IB(ICNT)=IB(J)
@@ -1735,6 +1751,12 @@
         IF(I.LE.ILAST)GO TO 160
         GO TO 1050
       ELSEIF(IB(I).EQ.',' .AND. IREACM.EQ.'ON')THEN
+        I=I+1
+        GO TO 160
+      ELSEIF(IB(I).EQ.'_' .AND. IREANC.EQ.'UNDE')THEN
+        I=I+1
+        GO TO 160
+      ELSEIF(IB(I).EQ.',' .AND. IREANC.EQ.'COMM')THEN
         I=I+1
         GO TO 160
       ELSEIF(IB(I).EQ.'%')THEN

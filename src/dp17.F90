@@ -27096,8 +27096,7 @@
 !
       RETURN
       END SUBROUTINE DPKLO3
-      SUBROUTINE DPKRUS(TEMP4,TEMP5,MAXNXT,   &
-                        ICAPSW,IFORSW,IMULT,   &
+      SUBROUTINE DPKRUS(MAXNXT,ICAPSW,IFORSW,IMULT,   &
                         ISUBRO,IBUGA2,IBUGA3,IBUGQ,IFOUND,IERROR)
 !
 !     PURPOSE--CARRY OUT KRUSKAL-WALLIS TEST
@@ -27156,9 +27155,6 @@
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION TEMP4(*)
-      DIMENSION TEMP5(*)
-!
 !-----COMMON----------------------------------------------------------
 !
       INCLUDE 'DPCOST.INC'
@@ -27171,14 +27167,20 @@
       DIMENSION TEMP2(MAXOBV)
       DIMENSION TEMP3(MAXOBV)
       DIMENSION RTEMP(MAXOBV)
+      DOUBLE PRECISION TEMP4(MAXOBV)
+      DOUBLE PRECISION TEMP5(MAXOBV)
 !
       INCLUDE 'DPCOZZ.INC'
+      INCLUDE 'DPCOZD.INC'
       EQUIVALENCE(GARBAG(IGARB1),DTAG(1))
       EQUIVALENCE(GARBAG(IGARB2),ARANK(1))
       EQUIVALENCE(GARBAG(IGARB3),TEMP1(1))
       EQUIVALENCE(GARBAG(IGARB4),TEMP2(1))
       EQUIVALENCE(GARBAG(IGARB5),TEMP3(1))
       EQUIVALENCE(GARBAG(IGARB6),RTEMP(1))
+!
+      EQUIVALENCE(DGARBG(IDGAR1),TEMP4(1))
+      EQUIVALENCE(DGARBG(IDGAR2),TEMP5(1))
 !
       INCLUDE 'DPCOZI.INC'
       EQUIVALENCE(IGARBG(IIGAR1),NRANK(1))
@@ -27335,12 +27337,12 @@
   335     CONTINUE
         ENDIF
 !
-        CALL DPKRU2(Y,X,NLOCAL,IVARN1,IVARN2,   &
-                    DTAG,ARANK,NRANK,MAXNXT,   &
-                    RTEMP,TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,   &
-                    STATVA,STATCD,PVAL,   &
+        CALL DPKRU2(Y,X,NLOCAL,IVARN1,IVARN2,                           &
+                    DTAG,ARANK,NRANK,MAXNXT,                            &
+                    RTEMP,TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,                &
+                    STATVA,STATCD,PVAL,                                 &
                     CUT0,CUT50,CUT75,CUT90,CUT95,CUT975,CUT99,CUT999,   &
-                    ICAPSW,ICAPTY,IFORSW,IMULT,IKRUGS,IKRUMC,   &
+                    ICAPSW,ICAPTY,IFORSW,IMULT,IKRUGS,IKRUMC,           &
                     ISUBRO,IBUGA3,IERROR)
 !
 !               ***************************************
@@ -27407,12 +27409,12 @@
           ENDIF
         ENDIF
 !
-        CALL DPKRU2(Y,X,NLOCAL,IVARN1,IVARN2,   &
-                    DTAG,ARANK,NRANK,MAXNXT,   &
-                    RTEMP,TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,   &
-                    STATVA,STATCD,PVAL,   &
+        CALL DPKRU2(Y,X,NLOCAL,IVARN1,IVARN2,                           &
+                    DTAG,ARANK,NRANK,MAXNXT,                            &
+                    RTEMP,TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,                &
+                    STATVA,STATCD,PVAL,                                 &
                     CUT0,CUT50,CUT75,CUT90,CUT95,CUT975,CUT99,CUT999,   &
-                    ICAPSW,ICAPTY,IFORSW,IMULT,IKRUGS,IKRUMC,   &
+                    ICAPSW,ICAPTY,IFORSW,IMULT,IKRUGS,IKRUMC,           &
                     ISUBRO,IBUGA3,IERROR)
 !
 !         ***************************************
@@ -27457,13 +27459,13 @@
 !
       RETURN
       END SUBROUTINE DPKRUS
-      SUBROUTINE DPKRU2(Y,TAG,N,IVARID,IVARI2,   &
-                        DTAG,ARANK,NRANK,MAXNXT,   &
-                        RTEMP,TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,   &
-                        STATVA,STATCD,PVAL,   &
-                        CUT0,CUT50,CUT75,CUT90,CUT95,CUT975,   &
-                        CUT99,CUT999,   &
-                        ICAPSW,ICAPTY,IFORSW,IMULT,IKRUGS,IKRUMC,   &
+      SUBROUTINE DPKRU2(Y,TAG,N,IVARID,IVARI2,                    &
+                        DTAG,ARANK,NRANK,MAXNXT,                  &
+                        RTEMP,TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,      &
+                        STATVA,STATCD,PVAL,                       &
+                        CUT0,CUT50,CUT75,CUT90,CUT95,CUT975,      &
+                        CUT99,CUT999,                             &
+                        ICAPSW,ICAPTY,IFORSW,IMULT,IKRUGS,IKRUMC, &
                         ISUBRO,IBUGA3,IERROR)
 !
 !     PURPOSE--THIS ROUTINE CARRIES OUT KRUSKALL-WALLIS'S TEST
@@ -27534,8 +27536,8 @@
       DIMENSION TEMP1(*)
       DIMENSION TEMP2(*)
       DIMENSION TEMP3(*)
-      DIMENSION TEMP4(*)
-      DIMENSION TEMP5(*)
+      DOUBLE PRECISION TEMP4(*)
+      DOUBLE PRECISION TEMP5(*)
 !
 !---------------------------------------------------------------------
 !
@@ -27598,11 +27600,11 @@
    56   CONTINUE
       ENDIF
 !
-      CALL DPKRU3(Y,TAG,N,   &
-                  DTAG,ARANK,NRANK,MAXNXT,   &
+      CALL DPKRU3(Y,TAG,N,                               &
+                  DTAG,ARANK,NRANK,MAXNXT,               &
                   RTEMP,TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,   &
-                  STATVA,STATCD,PVAL,NUMDF,NUMDIS,S2,   &
-                  IKRUGS,   &
+                  STATVA,STATCD,PVAL,NUMDF,NUMDIS,S2,    &
+                  IKRUGS,                                &
                   IBUGA3,ISUBRO,IERROR)
       IF(IERROR.EQ.'YES')GO TO 9000
 !
@@ -27815,7 +27817,7 @@
           ICNT=ICNT+1
           ITEXT(ICNT)='SD:'
           NCTEXT(ICNT)=3
-          AVALUE(ICNT)=TEMP4(I)
+          AVALUE(ICNT)=REAL(TEMP4(I))
           IDIGIT(ICNT)=NUMDIG
  2160   CONTINUE
 !
@@ -28252,11 +28254,11 @@
 !
       RETURN
       END SUBROUTINE DPKRU2
-      SUBROUTINE DPKRU3(Y,TAG,N,   &
-                        DTAG,ARANK,NRANK,MAXNXT,   &
+      SUBROUTINE DPKRU3(Y,TAG,N,                               &
+                        DTAG,ARANK,NRANK,MAXNXT,               &
                         RTEMP,TEMP1,TEMP2,TEMP3,TEMP4,TEMP5,   &
-                        STATVA,STATCD,PVAL,NUMDF,NUMDIS,S2,   &
-                        IKRUGS,   &
+                        STATVA,STATCD,PVAL,NUMDF,NUMDIS,S2,    &
+                        IKRUGS,                                &
                         IBUGA3,ISUBRO,IERROR)
 !
 !     PURPOSE--THIS ROUTINE CARRIES OUT KRUSKALL-WALLIS'S TEST
@@ -28306,8 +28308,8 @@
       DIMENSION TEMP1(*)
       DIMENSION TEMP2(*)
       DIMENSION TEMP3(*)
-      DIMENSION TEMP4(*)
-      DIMENSION TEMP5(*)
+      DOUBLE PRECISION TEMP4(*)
+      DOUBLE PRECISION TEMP5(*)
 !
 !---------------------------------------------------------------------
 !
@@ -28453,13 +28455,13 @@
             ENDIF
  2210    CONTINUE
          IF(IKRUGS.EQ.'ON')THEN
-           CALL MEDIAN(TEMP1,J,IWRITE,TEMP5,MAXNXT,YMED,   &
+           CALL MEDIAN(TEMP1,J,IWRITE,TEMP2,MAXNXT,YMED,   &
                        IBUGA3,IERROR)
            CALL MEAN(TEMP1,J,IWRITE,YMEANT,IBUGA3,IERROR)
            CALL SD(TEMP1,J,IWRITE,YSD,IBUGA3,IERROR)
-           TEMP2(IDIS)=YMEANT
-           TEMP3(IDIS)=YMED
-           TEMP4(IDIS)=YSD
+           TEMP3(IDIS)=YMEANT
+           TEMP4(IDIS)=DBLE(YMED)
+           TEMP5(IDIS)=DBLE(YSD)
          ENDIF
          NRANK(IDIS)=J
          ARANK(IDIS)=REAL(DSUM2)
@@ -28502,6 +28504,344 @@
 !
       RETURN
       END SUBROUTINE DPKRU3
+      SUBROUTINE DPKTC2(Y1,Y2,N,TEMP1,IINDX,                         &
+                        ICAPSW,ICAPTY,IFORSW,                        &
+                        IVARID,IVARI2,IVARI3,IVARI4,                 &
+                        CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                        IBUGA3,ISUBRO,IERROR)
+!
+!     PURPOSE--THIS ROUTINE GENERATES A CONFIDENCE LIMITS FOR THE
+!              KENDALL TAU B CORRELATION COEFFICIENT.
+!
+!              THE ALGORITHM IS:
+!
+!                  R       = KENDALL TAU B ESTIMATE
+!                  Zr      = 0.5*LN((1+R)/(1-R))
+!                  ZPPF    = NORPPF(1-ALPHA/2)
+!                  LCL(Zr) = Zr - ZPPF*SQRT(0.437/(N-4))
+!                  UCL(Zr) = Zr + ZPPF*SQRT(0.437/(N-4))
+!                  LCL(R)  = (EXP(2*LCL(Zr))-1)/(EXP(2*LCL(Zr))+1)
+!                  UCL(R)  = (EXP(2*UCL(Zr))-1)/(EXP(2*UCL(Zr))+1)
+!
+!     EXAMPLE--KENDALL TAU B CORRELATION CONFIDENCE LIMIT Y1 Y2
+!              SAMPLE 1 IS IN INPUT VECTOR Y1 (WITH N OBSERVATIONS).
+!              SAMPLE 2 IS IN INPUT VECTOR Y2 (WITH N OBSERVATIONS).
+!     REFERENCE--Bonett, D. G. and Wright, T. A. 2000. 'Sample Size
+!                Requirements for Estimating Pearson, Kendall and Spearman
+!                Correlations.' Psychometrika, Vol 65, No 1 (March),
+!                23-28.
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2026/05
+!     ORIGINAL VERSION--MAY       2026.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 ICAPTY
+      CHARACTER*4 IFORSW
+      CHARACTER*4 IVARID
+      CHARACTER*4 IVARI2
+      CHARACTER*4 IVARI3
+      CHARACTER*4 IVARI4
+      CHARACTER*4 ICASA2
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 IWRITE
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION Y1(*)
+      DIMENSION Y2(*)
+      DIMENSION TEMP1(*)
+      DIMENSION IINDX(*)
+!
+      PARAMETER (NUMALP=5)
+      REAL ALPHA(NUMALP)
+      REAL ALPHSV(NUMALP)
+      REAL LOWLIM(NUMALP)
+      REAL UPPLIM(NUMALP)
+      REAL NORVAL(NUMALP)
+!
+      PARAMETER(NUMCLI=4)
+      PARAMETER(MAXLIN=2)
+      PARAMETER (MAXROW=20)
+      CHARACTER*60 ITITLE
+      CHARACTER*60 ITITLZ
+      CHARACTER*60 ITEXT(MAXROW)
+      REAL         AVALUE(MAXROW)
+      INTEGER      NCTEXT(MAXROW)
+      INTEGER      IDIGIT(MAXROW)
+      INTEGER      NTOT(MAXROW)
+      LOGICAL IFRST
+      LOGICAL ILAST
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+      DATA ALPHA/0.80, 0.90, 0.95, 0.99, 0.999/
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPKT'
+      ISUBN2='C2  '
+      IERROR='NO'
+!
+      CUTL90=CPUMIN
+      CUTL95=CPUMIN
+      CUTL99=CPUMIN
+      CUTU90=CPUMIN
+      CUTU95=CPUMIN
+      CUTU99=CPUMIN
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'KTC2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPKTC2--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,N
+   52   FORMAT('IBUGA3,ISUBRO,N = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','WRIT')
+        DO 56 I=1,N
+          WRITE(ICOUT,57)I,Y1(I),Y2(I)
+   57     FORMAT('I,Y1(I),Y2(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','WRIT')
+   56   CONTINUE
+      ENDIF
+!
+!               ******************************
+!               **  STEP 1--                **
+!               **  ERROR CHECK             **
+!               ******************************
+!
+      IF(N.LT.5)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+  101   FORMAT('****** ERROR IN KENDALL TAU B CONFIDENCE LIMITS--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,113)
+  113   FORMAT('     THE NUMBER OF OBSERVATIONS IS LESS THAN FIVE.')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,115)N
+  115   FORMAT('     THE NUMBER OF OBSERVATIONS = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!
+!               *******************************************
+!               **  STEP 2--                             **
+!               **  CARRY OUT CALCULATIONS               **
+!               **  FOR KENDALL TAU B CONFIDENCE LIMITS  **
+!               *******************************************
+!
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KTC2')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IWRITE='OFF'
+      CALL SORTC(Y1,Y2,N,Y1,TEMP1)
+      Y2(1:N)=TEMP1(1:N)
+      TEMP1(1:N)=0.0
+      CALL KTAU(N,Y1,Y2,AKTAU,IINDX,TEMP1)
+      IF(AKTAU.GE.1. .OR. AKTAU.LE.-1.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,153)
+  153   FORMAT("     KENDALL'S TAU B IS EITHER +1 OR -1.")
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,155)
+  155   FORMAT('     UNABLE TO COMPUTE THE CONFIDENCE LIMITS.')
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      DO 200 I=1,NUMALP
+        ALPHT=1.0 - ALPHA(I)
+        ALPHT=1.0-ALPHT/2.0
+        CALL NORPPF(ALPHT,ZPPF)
+        ZR=0.5*LOG((1.0+AKTAU)/(1.0-AKTAU))
+        ALCL=ZR - ZPPF*SQRT(0.437/REAL(N-4))
+        AUCL=ZR + ZPPF*SQRT(0.437/REAL(N-4))
+        LOWLIM(I)=(EXP(2.0*ALCL)-1.0)/(EXP(2.0*ALCL)+1.0)
+        UPPLIM(I)=(EXP(2.0*AUCL)-1.0)/(EXP(2.0*AUCL)+1.0)
+        IF(LOWLIM(I).LT.-1.0)LOWLIM(I)=-1.0
+        IF(UPPLIM(I).GT.1.0)UPPLIM(I)=1.0
+        NORVAL(I)=ZPPF
+  200 CONTINUE
+!
+      CUTL90=LOWLIM(3)
+      CUTL95=LOWLIM(4)
+      CUTL99=LOWLIM(5)
+      CUTU90=UPPLIM(3)
+      CUTU95=UPPLIM(4)
+      CUTU99=UPPLIM(5)
+!
+!               ******************************
+!               **   STEP 3-                **
+!               **   WRITE OUT EVERYTHING   **
+!               ******************************
+!
+      ISTEPN='3'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'KTC2')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IF(IPRINT.EQ.'OFF')GO TO 9000
+!
+      NUMDIG=7
+      IF(IFORSW.EQ.'1')NUMDIG=1
+      IF(IFORSW.EQ.'2')NUMDIG=2
+      IF(IFORSW.EQ.'3')NUMDIG=3
+      IF(IFORSW.EQ.'4')NUMDIG=4
+      IF(IFORSW.EQ.'5')NUMDIG=5
+      IF(IFORSW.EQ.'6')NUMDIG=6
+      IF(IFORSW.EQ.'7')NUMDIG=7
+      IF(IFORSW.EQ.'8')NUMDIG=8
+      IF(IFORSW.EQ.'9')NUMDIG=9
+      IF(IFORSW.EQ.'0')NUMDIG=0
+      IF(IFORSW.EQ.'E')NUMDIG=-2
+      IF(IFORSW.EQ.'-2')NUMDIG=-2
+      IF(IFORSW.EQ.'-3')NUMDIG=-3
+      IF(IFORSW.EQ.'-4')NUMDIG=-4
+      IF(IFORSW.EQ.'-5')NUMDIG=-5
+      IF(IFORSW.EQ.'-6')NUMDIG=-6
+      IF(IFORSW.EQ.'-7')NUMDIG=-7
+      IF(IFORSW.EQ.'-8')NUMDIG=-8
+      IF(IFORSW.EQ.'-9')NUMDIG=-9
+!
+      ITITLE='Confidence Limits for the Kendall Tau B'
+      NCTITL=39
+      ITITLZ='Correlation Coefficient'
+      NCTITZ=23
+!
+      ICNT=1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=0
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Response Variable 1: '
+      WRITE(ITEXT(ICNT)(22:25),'(A4)')IVARID(1:4)
+      WRITE(ITEXT(ICNT)(26:29),'(A4)')IVARI2(1:4)
+      NCTEXT(ICNT)=29
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Response Variable 2: '
+      WRITE(ITEXT(ICNT)(22:25),'(A4)')IVARI3(1:4)
+      WRITE(ITEXT(ICNT)(26:29),'(A4)')IVARI4(1:4)
+      NCTEXT(ICNT)=29
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+!
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+!
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Summary Statistics:'
+      NCTEXT(ICNT)=19
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Observations:'
+      NCTEXT(ICNT)=23
+      AVALUE(ICNT)=REAL(N)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Kendall Tau B (r):'
+      NCTEXT(ICNT)=18
+      AVALUE(ICNT)=AKTAU
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Transformed Kendall Tau B (Zr):'
+      NCTEXT(ICNT)=31
+      AVALUE(ICNT)=ZR
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=1
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+!
+      NUMROW=ICNT
+      DO 5210 I=1,NUMROW
+        NTOT(I)=15
+ 5210 CONTINUE
+!
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+!
+      ISTEPN='9A'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'CNF2')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      CALL DPDTA1(ITITLE,NCTITL,ITITLZ,NCTITZ,ITEXT,NCTEXT,   &
+                  AVALUE,IDIGIT,                              &
+                  NTOT,NUMROW,                                &
+                  ICAPSW,ICAPTY,ILAST,IFRST,                  &
+                  ISUBRO,IBUGA3,IERROR)
+!
+      ISTEPN='9B'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'CNF2')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ICASA2='KTAU'
+      DO 4210 I=1,NUMALP
+        ALPHSV(I)=100.*ALPHA(I)
+ 4210 CONTINUE
+      CALL DPDT11(ALPHSV,NORVAL,NORVAL,LOWLIM,UPPLIM,   &
+                  ICASA2,ICAPSW,ICAPTY,NUMDIG,          &
+                  ISUBRO,IBUGA3,IERROR)
+!
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'KTC2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPKTC2--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPKTC2
       SUBROUTINE DPKUO2(Y,X,N,MAXNXT,IKUOTA,   &
                         TEMP1,TEMP2,PID,IVARID,IVARI2,NREPL,NLABID,   &
                         ICAPSW,ICAPTY,IFORSW,   &

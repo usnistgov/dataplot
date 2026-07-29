@@ -1,5 +1,4 @@
-      SUBROUTINE DPMMPD(YMEAN,YSD,N,Y2,X2,N2,   &
-                        IBUGA3,ISUBRO,IERROR)
+      SUBROUTINE DPMMPD(YMEAN,YSD,N,Y2,X2,N2,IBUGA3,ISUBRO,IERROR)
 !
 !     PURPOSE--GIVEN N SETS OF MEANS AND STANDARD DEVIATIONS (OR
 !              ANY LOCATION AND ASSOCIATED STANDARD UNCERTAINTY),
@@ -20905,7 +20904,7 @@
       IH1='B1SE'
       IH2='    '
       VALUE0=B1SE
-      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                     &
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
                   IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
                   IANS,IWIDTH,IBUGA3,IERROR)
 !
@@ -20919,7 +20918,63 @@
       IH1='B1SE'
       IH2='BOOT'
       VALUE0=B1SEB
-      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                     &
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                  IANS,IWIDTH,IBUGA3,IERROR)
+!
+      IH1='B0LC'
+      IH2='L   '
+      VALUE0=B0LCLA
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                  IANS,IWIDTH,IBUGA3,IERROR)
+!
+      IH1='B0UC'
+      IH2='L   '
+      VALUE0=B0UCLA
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                  IANS,IWIDTH,IBUGA3,IERROR)
+!
+      IH1='B1LC'
+      IH2='L   '
+      VALUE0=B1LCLA
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                  IANS,IWIDTH,IBUGA3,IERROR)
+!
+      IH1='B1UC'
+      IH2='L   '
+      VALUE0=B1UCLA
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                  IANS,IWIDTH,IBUGA3,IERROR)
+!
+      IH1='B0LC'
+      IH2='LBOO'
+      VALUE0=B0LCLB
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                  IANS,IWIDTH,IBUGA3,IERROR)
+!
+      IH1='B0UC'
+      IH2='LBOO'
+      VALUE0=B0UCLB
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                  IANS,IWIDTH,IBUGA3,IERROR)
+!
+      IH1='B1LC'
+      IH2='LBOO'
+      VALUE0=B1LCLB
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                  IANS,IWIDTH,IBUGA3,IERROR)
+!
+      IH1='B1UC'
+      IH2='LBOO'
+      VALUE0=B1UCLB
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
                   IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
                   IANS,IWIDTH,IBUGA3,IERROR)
 !
@@ -30055,20 +30110,22 @@
       DOUBLE PRECISION DK
       DOUBLE PRECISION DTERM1
       DOUBLE PRECISION DTERM2
+      DOUBLE PRECISION DPSI
 !
 !-----COMMON----------------------------------------------------------
 !
       INCLUDE 'DPCOPA.INC'
       INCLUDE 'DPCOZZ.INC'
+      INCLUDE 'DPCOZD.INC'
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCODA.INC'
       INCLUDE 'DPCOP2.INC'
 !
-      REAL YTEMP(MAXOBV)
-      REAL WORK(4,721)
+      DOUBLE PRECISION YTEMP(MAXOBV)
+      DOUBLE PRECISION WORK(4,721)
 !
-      EQUIVALENCE (GARBAG(IGARB1),YTEMP(1))
-      EQUIVALENCE (GARBAG(IGARB2),WORK(1,1))
+      EQUIVALENCE (DGARBG(IDGAR2),YTEMP(1))
+      EQUIVALENCE (DGARBG(IDGAR2),WORK(1,1))
 !
 !-----START POINT-----------------------------------------------------
 !
@@ -30129,18 +30186,18 @@
       CALL CHECKA(NUMARG,MINNA,MAXNA,IANS,IWIDTH,ISUBN1,ISUBN2,IERROR)
       IF(IERROR.EQ.'YES')GO TO 9000
 !
-!               ****************************************************************
-!               **  STEP 3--                                                   *
-!               **  EXAMINE THE LEFT-HAND SIDE--                               *
-!               **  IS THE PARAMETER OR VARIABLE NAME TO LEFT OF = SIGN        *
-!               **  ALREADY IN THE NAME LIST?                                  *
-!               **  NOTE THAT     ILEFT      IS THE NAME OF THE VARIABLE       *
-!               **  ON THE LEFT.                                               *
-!               **  NOTE THAT     ILISTL    IS THE LINE IN THE TABLE           *
-!               **  OF THE NAME ON THE LEFT.                                   *
-!               **  NOTE THAT     ICOLL    IS THE DATA COLUMN (1 TO 12)        *
-!               **  FOR THE NAME OF THE LEFT.                                  *
-!               ****************************************************************
+!               ********************************************************
+!               **  STEP 3--                                           *
+!               **  EXAMINE THE LEFT-HAND SIDE--                       *
+!               **  IS THE PARAMETER OR VARIABLE NAME TO LEFT OF = SIGN*
+!               **  ALREADY IN THE NAME LIST?                          *
+!               **  NOTE THAT     ILEFT      IS THE NAME OF THE        *
+!               **  VARIABLE ON THE LEFT.                              *
+!               **  NOTE THAT     ILISTL    IS THE LINE IN THE TABLE   *
+!               **  OF THE NAME ON THE LEFT.                           *
+!               **  NOTE THAT     ICOLL    IS THE DATA COLUMN (1 TO 12)*
+!               **  FOR THE NAME OF THE LEFT.                          *
+!               ********************************************************
 !
       ISTEPN='3'
       IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')   &
@@ -30459,16 +30516,16 @@
           ICNT=0
           DO 824 I=N,ISTRT,-1
             ICNT=ICNT+1
-            Y(I)=YTEMP(ICNT)
-            Y(ICNT)=-YTEMP(ICNT)
+            Y(I)=REAL(YTEMP(ICNT))
+            Y(ICNT)=-REAL(YTEMP(ICNT))
   824     CONTINUE
         ELSE
           ISTRT=N2+1
           ICNT=0
           DO 826 I=N,ISTRT,-1
             ICNT=ICNT+1
-            Y(I)=YTEMP(ICNT)
-            Y(ICNT)=-YTEMP(ICNT)
+            Y(I)=REAL(YTEMP(ICNT))
+            Y(ICNT)=-REAL(YTEMP(ICNT))
   826     CONTINUE
         ENDIF
 !
@@ -30585,13 +30642,13 @@
         GO TO 9000
       ENDIF
 !
-!               ***********************************************************
-!               **  STEP 8--                                             **
-!               **  IF CALLED FOR (THAT IS, IF IBUGA3 IS ON),            **
-!               **  PRINT OUT THE INTERMEDIATE VARIABLE Y(.).            **
-!               **  THIS IS USEFUL FOR DIAGNOSTIC PURPOSES               **
-!               **  IN REVIEWING THE OUTPUT FROM THIS SUBROUTINE.        **
-!               ***********************************************************
+!               ******************************************************
+!               **  STEP 8--                                        **
+!               **  IF CALLED FOR (THAT IS, IF IBUGA3 IS ON),       **
+!               **  PRINT OUT THE INTERMEDIATE VARIABLE Y(.).       **
+!               **  THIS IS USEFUL FOR DIAGNOSTIC PURPOSES          **
+!               **  IN REVIEWING THE OUTPUT FROM THIS SUBROUTINE.   **
+!               ******************************************************
 !
       ISTEPN='9'
       IF(ISUBRO.EQ.'OSME' .OR. IBUGA3.EQ.'ON')THEN
@@ -41916,6 +41973,1590 @@
 !
       RETURN
       END SUBROUTINE DPPAWI
+      SUBROUTINE DPPBFI(ICAPSW,IFORSW,ISEED,IBOOSS,      &
+                        IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+!
+!     PURPOSE--PERFORM A PASSING-BABLOK REGRESSION.  THIS IS ESSENTIALLY
+!              RANK REGRESSION APPLIED TO ERRORS-IN-VARIABLES FITTING.
+!              IN PARTICULAR, IT IS USED IN COMPARING TWO PAIRED
+!              MEASUREMENT PROCEDURES.
+!     REFERENCES--BABLOK, PASSING, BENDER, and SCHNEIDER (1988), "A GENERAL
+!                 REGRESSION PROCEDURE FOR METHOD TRANSFORMATION.
+!                 APPLICATION OF LINEAR REGRESSION PROCEDURES FOR METHOD
+!                 COMPARISON STUDIES IN CLINICAL CHEMISTRY, PART III",
+!                 CLINICAL CHEMISTRY IN LABORATORY MEDICINE, VOL. 26,
+!                 PP. 783-790.
+!               --DUFEY (2020), "DERIVATION OF PASSING-BABLOK REGRESSION
+!                 FROM KENDALL'S TAU," THE INTERNATIONAL JOURNAL OF
+!                 BIOSTATISTICS, 16(2) 20190157.
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2026/05
+!     ORIGINAL VERSION--MAY       2026.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICASAN
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 IFORSW
+      CHARACTER*4 IBUGA2
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IBUGQ
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IFOUND
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 IRESU
+      CHARACTER*4 IREPU
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISUBN0
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 IH1
+      CHARACTER*4 IH2
+      CHARACTER*4 IWRITE
+      CHARACTER*4 CVAL11
+      CHARACTER*4 CVAL12
+      CHARACTER*4 CVAL21
+      CHARACTER*4 CVAL22
+!
+      CHARACTER*4 ICASE
+      CHARACTER*40 INAME
+      PARAMETER (MAXSPN=10)
+      CHARACTER*4 IVARN1(MAXSPN)
+      CHARACTER*4 IVARN2(MAXSPN)
+      CHARACTER*4 IVARTY(MAXSPN)
+      REAL PVAR(MAXSPN)
+      INTEGER ILIS(MAXSPN)
+      INTEGER NRIGHT(MAXSPN)
+      INTEGER ICOLR(MAXSPN)
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZZ.INC'
+      INCLUDE 'DPCOZI.INC'
+!
+      DIMENSION YTEMP(MAXOBV)
+      DIMENSION XTEMP(MAXOBV)
+      DIMENSION TEMP1(MAXOBV)
+      DIMENSION TEMP2(MAXOBV)
+      DIMENSION ALPHAV(MAXOBV)
+      DIMENSION BETAV(MAXOBV)
+      DIMENSION PRED2(MAXOBV)
+      DIMENSION RES2(MAXOBV)
+      DIMENSION SLOPES(10*MAXOBV)
+      DIMENSION ITEMP1(MAXOBV)
+!
+      EQUIVALENCE (GARBAG(IGARB1),YTEMP(1))
+      EQUIVALENCE (GARBAG(IGARB2),XTEMP(1))
+      EQUIVALENCE (GARBAG(IGARB3),TEMP1(1))
+      EQUIVALENCE (GARBAG(IGARB4),PRED2(1))
+      EQUIVALENCE (GARBAG(IGARB5),RES2(1))
+      EQUIVALENCE (GARBAG(IGARB6),ALPHAV(1))
+      EQUIVALENCE (GARBAG(IGARB7),BETAV(1))
+      EQUIVALENCE (GARBAG(IGARB8),TEMP2(1))
+      EQUIVALENCE (GARBAG(IGARB9),SLOPES(1))
+      EQUIVALENCE (IGARBG(IIGAR1),ITEMP1(1))
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOHK.INC'
+      INCLUDE 'DPCOHO.INC'
+      INCLUDE 'DPCODA.INC'
+      INCLUDE 'DPCOST.INC'
+      INCLUDE 'DPCOSU.INC'
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPPB'
+      ISUBN2='FI  '
+      IFOUND='NO'
+      IERROR='NO'
+!
+      MAXCP1=MAXCOL+1
+      MAXCP2=MAXCOL+2
+      MAXCP3=MAXCOL+3
+      MAXCP4=MAXCOL+4
+      MAXCP5=MAXCOL+5
+      MAXCP6=MAXCOL+6
+      MAXNXT=MAXOBV
+!
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PBFI')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPPBFI--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR
+   54   FORMAT('IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR = ',5(A4,2X),A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *****************************************
+!               **  TREAT THE PASSING-BABLOK  FIT CASE **
+!               *****************************************
+!
+!               ***************************
+!               **  STEP 11--            **
+!               **  EXTRACT THE COMMAND  **
+!               ***************************
+!
+      ISTEPN='11'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PBFI')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ICASAN='PBFI'
+      ILASTC=0
+      IF(ICOM.EQ.'PASS' .AND. IHARG(1).EQ.'BABL')THEN
+        IF(NUMARG.GE.2 .AND. (IHARG(2).EQ.'FIT' .OR. IHARG(2).EQ.'REGR'))THEN
+          ILASTC=2
+        ENDIF
+      ELSE
+        IFOUND='NO'
+        GO TO 9000
+      ENDIF
+!
+      CALL ADJUST(ILASTC,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG)
+      IFOUND='YES'
+!
+!               *********************************
+!               **  STEP 2--                   **
+!               **  EXTRACT THE VARIABLE LIST  **
+!               *********************************
+!
+      ISTEPN='2'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PBFI')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      INAME='PASSING BABLOK FIT'
+      MINN2=5
+      MINNA=2
+      MAXNA=100
+      MINNVA=2
+      MAXNVA=2
+      IFLAGE=1
+      IFLAGM=0
+      IFLAGP=0
+      JMIN=1
+      JMAX=NUMARG
+!
+      CALL DPPARS(IHARG,IHARG2,IARGT,ARG,NUMARG,IANS,IWIDTH,   &
+                  IHNAME,IHNAM2,IUSE,NUMNAM,IN,IVALUE,VALUE,   &
+                  JMIN,JMAX,                                   &
+                  MINN2,MINNA,MAXNA,MAXSPN,IFLAGE,INAME,       &
+                  IVARN1,IVARN2,IVARTY,PVAR,                   &
+                  ILIS,NRIGHT,ICOLR,ISUB,NQ,ILOCQ,NUMVAR,      &
+                  MINNVA,MAXNVA,                               &
+                  IFLAGM,IFLAGP,                               &
+                  IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+!
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PBFI')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,181)
+  181   FORMAT('***** AFTER CALL DPPARS--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,182)NQ,NUMVAR,IMULT
+  182   FORMAT('NQ,NUMVAR,IMULT = ',2I8,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        IF(NUMVAR.GT.0)THEN
+          DO 185 I=1,NUMVAR
+            WRITE(ICOUT,187)I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),   &
+                            ICOLR(I)
+  187       FORMAT('I,IVARN1(I),IVARN2(I),ILIS(I),NRIGHT(I),',         &
+                   'ICOLR(I) = ',I8,2X,2A4,2X,3I8)
+            CALL DPWRST('XXX','BUG ')
+  185     CONTINUE
+        ENDIF
+      ENDIF
+!
+!     CHECK THAT N*(N-1) <= 20*MAXOBV
+!
+      NTEMP=NRIGHT(1)
+      NSLOPES=NTEMP*(NTEMP-1)/2
+      NMAX=20*MAXOBV
+      IF(NSLOPES.GT.20*MAXOBV)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,201)
+  201   FORMAT('***** ERROR IN PASSING-BABLOK FIT--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,203)NQ,NUMVAR,IMULT
+  203   FORMAT('      NUMBER OF OBSERVATIONS IS TOO LARGE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,204)NTEMP
+  204   FORMAT('      NUMBER OF OBSERVATIONS              = ',I12)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,205)NSLOPES
+  205   FORMAT('      NUMBER OF SLOPES TO COMPUTE         = ',I12)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,207)NMAX
+  207   FORMAT('      MAXIMUM NUMBER OF SLOPES SUPPORTED  = ',I12)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               **********************************************
+!               **  STEP 33--                               **
+!               **  FORM THE SUBSETTED VARIABLES            **
+!               **       Y(.)                               **
+!               **       X(.)                               **
+!               **  CONTAINING                              **
+!               **       THE VERTICAL AXIS VARIABLE         **
+!               **       THE HORIZONTAL AXIS VARIABLE       **
+!               **  RESPECTIVELY.                           **
+!               **********************************************
+!
+      ISTEPN='33'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PBFI')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ICOL=1
+      CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,    &
+                  INAME,IVARN1,IVARN2,IVARTY,           &
+                  ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVAR,     &
+                  MAXCOL,MAXCP1,MAXCP2,MAXCP3,          &
+                  MAXCP4,MAXCP5,MAXCP6,                 &
+                  V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO, &
+                  Y,X,X,NS,NS,NS,ICASE,                 &
+                  IBUGA3,ISUBRO,IFOUND,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+      CVAL11=IVARN1(1)
+      CVAL12=IVARN2(1)
+      CVAL21=IVARN1(2)
+      CVAL22=IVARN2(2)
+!
+!               ******************************************************
+!               **  STEP 41--                                       **
+!               **  CARRY OUT THE PASSING-BABLOK FIT                **
+!               ******************************************************
+!
+      ISTEPN='41'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PBFI')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IWRITE='OFF'
+      MAXNXT=MAXOBV
+      CALL DPPBF2(Y,X,NS,MAXNXT,IWRITE,IPBRTY,IPBRCI,IPBRBC,        &
+                  IBOOSS,ISEED,                                     &
+                  TEMP1,TEMP2,XTEMP,YTEMP,PRED2,RES2,SLOPES,ITEMP1, &
+                  ALPHAV,BETAV,                                     &
+                  CVAL11,CVAL12,CVAL21,CVAL22,                      &
+                  ALPHA,ALPHASD,BETA,BETASD,                        &
+                  ICAPSW,ICAPTY,IFORSW,ISUBRO,IBUGA3,IERROR)
+      DO II=1,NS
+         RES(II)=RES2(II)
+         PRED(II)=PRED2(II)
+      ENDDO
+!
+!               ***************************************
+!               **  STEP 52--                        **
+!               **  UPDATE INTERNAL DATAPLOT TABLES  **
+!               ***************************************
+!
+      ISTEPN='42'
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PBFI')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IH1='ALPH'
+      IH2='A   '
+      VALUE0=ALPHA
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                   &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,  &
+                  IANS,IWIDTH,IBUGA3,IERROR)
+!
+      IH1='BETA'
+      IH2='    '
+      VALUE0=BETA
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                  IANS,IWIDTH,IBUGA3,IERROR)
+!
+      IH1='SDAL'
+      IH2='PHA '
+      VALUE0=ALPHASD
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                  IANS,IWIDTH,IBUGA3,IERROR)
+!
+      IH1='SDBE'
+      IH2='TA  '
+      VALUE0=BETASD
+      CALL DPADDP(IH1,IH2,VALUE0,IHOST1,ISUBN0,                    &
+                  IHNAME,IHNAM2,IUSE,VALUE,IVALUE,NUMNAM,MAXNAM,   &
+                  IANS,IWIDTH,IBUGA3,IERROR)
+!
+      ICOLPR=MAXCP1
+      ICOLRE=MAXCP2
+      IREPU='OFF'
+      IRESU='OFF'
+      CALL UPDAPR(ICOLPR,ICOLRE,PRED2,RES2,PRED,RES,ISUB,NS,          &
+                  IREPU,REPSD,REPDF,IRESU,RESSD,RESDF,ALFCDF,         &
+                  IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+                  IANS,IWIDTH,ILOCN,IBUGA3,IERROR)
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'PBFI')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPPBFI--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IFOUND,IERROR
+ 9012   FORMAT('IFOUND,IERROR = ',A4,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)ICASAN,NS,MAXN,MAXNXT,NUMVAR
+ 9014   FORMAT('ICASAN,NS,MAXN,MAXNXT,NUMVAR = ',A4,2X,5I8)
+        CALL DPWRST('XXX','BUG ')
+        IF(NS.GT.0)THEN
+          DO I=1,NS
+            WRITE(ICOUT,9021)I,PRED2(I),RES2(I),ISUB(I)
+ 9021       FORMAT('I,PRED2(I),RES2(I),ISUB(I) = ',I8,2G15.7,I8)
+            CALL DPWRST('XXX','BUG ')
+          ENDDO
+        ENDIF
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPPBFI
+      SUBROUTINE DPPBF2(Y,X,N,MAXNXT,IWRITE,IPBRTY,IPBRCI,IPBRBC,       &
+                        IBOOSS,ISEED,                                   &
+                        TEMP1,TEMP2,XTEMP,YTEMP,PRED,RES,SLOPES,ITEMP1, &
+                        ALPHAV,BETAV,                                   &
+                        IHLEFT,IHLEF2,IHLEF3,IHLEF4,                    &
+                        ALPHA,ALPHASD,BETA,BETASD,                      &
+                        ICAPSW,ICAPTY,IFORSW,ISUBRO,IBUGA3,IERROR)
+!
+!     PURPOSE--PERFORM A PASSING-BABLOK REGRESSION.  THIS IS ESSENTIALLY
+!              RANK REGRESSION APPLIED TO ERRORS-IN-VARIABLES FITTING.
+!              IN PARTICULAR, IT IS USED IN COMPARING TWO PAIRED
+!              MEASUREMENT PROCEDURES.
+!     REFERENCES--BABLOK, PASSING, BENDER, and SCHNEIDER (1988), "A GENERAL
+!                 REGRESSION PROCEDURE FOR METHOD TRANSFORMATION.
+!                 APPLICATION OF LINEAR REGRESSION PROCEDURES FOR METHOD
+!                 COMPARISON STUDIES IN CLINICAL CHEMISTRY, PART III",
+!                 CLINICAL CHEMISTRY IN LABORATORY MEDICINE, VOL. 26,
+!                 PP. 783-790.
+!               --DUFEY (2020), "DERIVATION OF PASSING-BABLOK REGRESSION
+!                 FROM KENDALL'S TAU," THE INTERNATIONAL JOURNAL OF
+!                 BIOSTATISTICS, 16(2) 20190157.
+!     PRINTING--YES
+!     SUBROUTINES NEEDED--NORPPF, TPPF, SORT, SORTC, DPJBS3, DPPBR3
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABOARATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2026/05
+!     ORIGINAL VERSION--MAY       2026.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES--------------
+!
+      CHARACTER*4 IPBRTY
+      CHARACTER*4 IPBRCI
+      CHARACTER*4 IPBRBC
+      CHARACTER*4 ICAPSW
+      CHARACTER*4 ICAPTY
+      CHARACTER*4 IFORSW
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IHLEFT
+      CHARACTER*4 IHLEF2
+      CHARACTER*4 IHLEF3
+      CHARACTER*4 IHLEF4
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+      CHARACTER*4 ICASAN2
+      CHARACTER*4 IOP
+      CHARACTER*4 ICASJB
+!
+!----------------------------------------------------------------
+!
+      DIMENSION Y(*)
+      DIMENSION X(*)
+      DIMENSION TEMP1(*)
+      DIMENSION TEMP2(*)
+      DIMENSION XTEMP(*)
+      DIMENSION YTEMP(*)
+      DIMENSION PRED(*)
+      DIMENSION RES(*)
+      DIMENSION SLOPES(*)
+      DIMENSION ALPHAV(*)
+      DIMENSION BETAV(*)
+      DIMENSION ITEMP1(*)
+!
+      DIMENSION CONF(3)
+      DIMENSION T(3)
+      DIMENSION TSDM(3)
+      DIMENSION ALOWER_ALPHA(3)
+      DIMENSION AUPPER_ALPHA(3)
+      DIMENSION ALOWER_BETA(3)
+      DIMENSION AUPPER_BETA(3)
+      DIMENSION ALOWER_ALPHA_JN(3)
+      DIMENSION AUPPER_ALPHA_JN(3)
+      DIMENSION ALOWER_BETA_JN(3)
+      DIMENSION AUPPER_BETA_JN(3)
+!
+      PARAMETER(NUMCLI=4)
+      PARAMETER(MAXLIN=3)
+      PARAMETER (MAXROW=3)
+      PARAMETER (MAXRO2=40)
+      CHARACTER*60 ITITLE
+      CHARACTER*60 ITITL9
+      CHARACTER*60 ITEXT(MAXRO2)
+      REAL         AVALUE(MAXRO2)
+      INTEGER      NCTEXT(MAXRO2)
+      INTEGER      IDIGIT(MAXRO2)
+      INTEGER      NTOT(MAXRO2)
+      CHARACTER*60 ITTEMP
+      LOGICAL IFRST
+      LOGICAL ILAST
+      LOGICAL IFLAGA
+      LOGICAL IFLAGB
+!
+      CHARACTER*4 IRTFMD
+      COMMON/COMRTF/IRTFMD
+!
+      INCLUDE 'DPCOP2.INC'
+!
+      DATA CONF /90.0, 95.0, 99.0/
+!
+!-----START POINT------------------------------------------------
+!
+      IERROR='NO'
+      ISUBN1='DPPB'
+      ISUBN2='F2  '
+!
+      ALPHA=CPUMIN
+      BETA=CPUMIN
+      SDALPHA=CPUMIN
+      SDBETA=CPUMIN
+      IK=0
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPPBF2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,IWRITE,N,MAXNXT
+   52   FORMAT('IBUGA3,ISUBRO,IWRITE,N,MAXNXT = ',3(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        DO I=1,N
+          WRITE(ICOUT,56)I,X(I),Y(I)
+   56     FORMAT('I,X(I),Y(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDDO
+      ENDIF
+!
+!               ********************************************
+!               **  STEP 1--                              **
+!               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+!               ********************************************
+!
+      IF(N.LT.3)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR IN PASSING-BABLOK FIT (DPPBF2)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,102)
+  102   FORMAT('      THE NUMBER OF OBSERVATIONS IS LESS THAN 3.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,103)N
+  103   FORMAT('      THE ENTERED NUMBER OF OBSERVATIONS = ',I6)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               ***********************************************
+!               **  STEP 2--                                 **
+!               **  PERFORM THE PASSING-BABLOK FIT           **
+!               ***********************************************
+!
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PBF2')     &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     COMPUTE SOME SUMMARY STATISTICS
+!
+      CALL MEAN(Y,N,IWRITE,YMEAN,IBUGA3,IERROR)
+      CALL SD(Y,N,IWRITE,YSD,IBUGA3,IERROR)
+      CALL MEAN(X,N,IWRITE,XMEAN,IBUGA3,IERROR)
+      CALL SD(X,N,IWRITE,XSD,IBUGA3,IERROR)
+      CALL SORTC(X,Y,N,TEMP1,TEMP2)
+      X(1:N)=TEMP1(1:N)
+      Y(1:N)=TEMP2(1:N)
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+        WRITE(ICOUT,111)
+  111   FORMAT('AFTER CALL SORTC')
+        CALL DPWRST('XXX','BUG ')
+        DO I=1,N
+          WRITE(ICOUT,56)I,X(I),Y(I)
+          CALL DPWRST('XXX','BUG ')
+        ENDDO
+      ENDIF
+!
+      XTEMP(1:N)=X(1:N)
+      YTEMP(1:N)=Y(1:N)
+      CALL KTAU(N,XTEMP,YTEMP,TAUB,ITEMP1,TEMP1)
+!
+      IFLAGN=0
+      IF(IPBRTY.EQ.'METH' .AND. TAUB.LT.0.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,152)
+  152   FORMAT('      KENDALL TAU NEGATIVE FOR THE METHOD ',           &
+               'COMPARISON CASE, NOTHING DONE.') 
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,154)TAUB
+  154   FORMAT('      KENDALL TAU   = ',E15.7)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ELSEIF(IPBRTY.EQ.'ROBR' .AND. TAUB.LT.0.0)THEN
+        IFLAGN=1
+      ENDIF
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+        WRITE(ICOUT,113)
+  113   FORMAT('AFTER CALL KTAU')
+        CALL DPWRST('XXX','BUG ')
+        DO I=1,N
+          WRITE(ICOUT,56)I,X(I),Y(I)
+          CALL DPWRST('XXX','BUG ')
+        ENDDO
+      ENDIF
+!
+      CALL DPPBF3(Y,X,N,MAXNXT,TEMP1,TEMP2,SLOPES,NS,   &
+                  ALPHA,BETA,IPBRTY,IPBRBC,IK,IFLAGN,   &
+                  ISUBRO,IBUGA3,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+      PRED(1:N)=ALPHA + BETA*X(1:N)
+      RES(1:N)=Y(1:N) - PRED(1:N)
+!
+!     PERFORM CUSUM TEST
+!
+      NPOS=0
+      NNEG=0
+      IFLAG_CUSUM=1
+      DO II=1,N
+         AVAL=ALPHA + BETA*X(II)
+         IF(AVAL.GT.Y(II))NPOS=NPOS+1
+         IF(AVAL.LT.Y(II))NNEG=NNEG+1
+!
+         IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+           WRITE(ICOUT,215)II,X(II),AVAL,Y(II)
+  215      FORMAT('II,X(II),AVAL,Y(II) = ',I8,3G15.7)
+           CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+      ENDDO
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+        WRITE(ICOUT,206)NPOS,NNEG
+  206   FORMAT('CUSUM TEST: NPOS,NNEG = ',2I8)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IF(NPOS.GE.1 .AND. NNEG.GE.1)THEN
+        TEMP1(1:N)=0.0
+        APOS=SQRT(REAL(NPOS)/REAL(NNEG))
+        ANEG=-SQRT(REAL(NNEG)/REAL(NPOS))
+        DO II=1,N
+           AVAL=ALPHA + BETA*X(II)
+           IF(Y(II).GT.AVAL)TEMP1(II)=APOS
+           IF(Y(II).LT.AVAL)TEMP1(II)=ANEG
+        ENDDO
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+        WRITE(ICOUT,243)APOS,ANEG
+  243   FORMAT('CUSUM TEST: APOS,ANEG = ',2G15.7)
+        CALL DPWRST('XXX','BUG ')
+        DO II=1,N
+           WRITE(ICOUT,245)II,TEMP1(II)
+  245      FORMAT('II,TEMP1(II)(R(II) = ',I8,G15.7)
+           CALL DPWRST('XXX','BUG ')
+        ENDDO
+      ENDIF
+!
+      ELSE
+        IFLAG_CUSUM=0
+      ENDIF
+!
+      IF(IFLAG_CUSUM.EQ.1)THEN
+        DENOM=SQRT(1.0 + (1.0/BETA**2))
+        TEMP2(1:N)=(Y(1:N) + (X(1:N)/BETA) - ALPHA)/DENOM
+        CALL SORTC(TEMP2,TEMP1,N,XTEMP,YTEMP)
+        TEMP1(1:N)=YTEMP(1:N)
+        TEMP2(1:N)=XTEMP(1:N)
+        SUM1=0.0
+        AMAX_CUSUM=CPUMIN
+        DO II=1,N
+           SUM1=SUM1 + TEMP1(II)
+           TEMP2(II)=SUM1
+           AVAL=ABS(SUM1)
+           IF(AVAL.GT.AMAX_CUSUM)AMAX_CUSUM=AVAL
+        ENDDO
+        STAT_CUSUM=AMAX_CUSUM/SQRT(REAL(NNEG+1))
+        CV95_CUSUM=1.36
+        CV99_CUSUM=1.63
+!
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+          WRITE(ICOUT,228)DENOM,AMAX_CUSUM,STAT_CUSUM
+    228   FORMAT('DENOM,AMAX_CUSUM,STAT_CUSUM = ',3G15.7)
+          CALL DPWRST('XXX','BUG ')
+          DO II=1,N
+             WRITE(ICOUT,229)II,TEMP1(II),TEMP2(II)
+    229      FORMAT('II,TEMP1(II),TEMP2(II) = ',I8,2G15.7)
+             CALL DPWRST('XXX','BUG ')
+          ENDDO
+        ENDIF
+!
+      ENDIF
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+        WRITE(ICOUT,201)ALPHA,BETA,NS,IK
+    201 FORMAT('ALPHA,BETA,NS,IK = ',2G15.7,2I12)
+        CALL DPWRST('XXX','BUG ')
+        DO II=1,N
+          WRITE(ICOUT,202)II,X(II),Y(II),PRED(II),RES(II)
+    202   FORMAT('ROW,X(II),Y(II),PRED(II),RES(II) = ',I8,4G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDDO
+      ENDIF
+!               ****************************************************
+!               **  STEP 3A--                                     **
+!               **  COMPUTE CONFIDENCE INTERVALS FOR COEFFICIENTS **
+!               **  USING PASSING BABLOK FORMULAS                 **
+!               ****************************************************
+!
+      ISTEPN='3A'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PBF2')     &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IOP='OPEN'
+      IFLG11=1
+      IFLG21=0
+      IFLG31=0
+      IF(IPBRCI.EQ.'JACK' .OR. IPBRCI.EQ.'BOOT')THEN
+        IFLG21=1
+        IFLG31=1
+      ENDIF
+      IFLAG4=1
+      IFLAG5=0
+      CALL DPAUFI(IOP,IFLG11,IFLG21,IFLG31,IFLAG4,IFLAG5,   &
+                  IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,       &
+                  IBUGA3,ISUBRO,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+!
+      WRITE(IOUNI4,351)
+  351 FORMAT('SORTED SLOPES FOR PASSING-BABLOK REGRESSION')
+      WRITE(IOUNI4,352)
+  352 FORMAT('INDEX',7X,'SLOPE')
+      DO II=1,NS
+         WRITE(IOUNI4,'(I12,E15.7)')II,SLOPES(II)
+      ENDDO
+!
+      NLIMITS=3
+      AN=REAL(N)
+      ANUM=AN*(AN-1.0)*(2.0*AN+5.0)
+      AVAL=SQRT(ANUM/18.)
+      ANS=REAL(NS)
+!
+!     WRITE CONFIDENCE LIMITS TO "dpst1f.dat"
+!
+      WRITE(IOUNI1,203)
+  203 FORMAT('CONFIDENCE LIMITS: PASSING-BABLOK FORMULA')
+      WRITE(IOUNI1,204)
+  204 FORMAT('CONFIDENCE   ALPHA          ALPHA          ',            &
+             'BETA           BETA')
+      WRITE(IOUNI1,205)
+  205 FORMAT('LEVEL        LOWER LIMIT    UPPER LIMIT    ',            &
+             'LOWER LIMIT    UPPER LIMIT')
+!
+      IKT=IK
+!     IF(IPBRBC.EQ.'OFF')IKT=0
+      DO II=1,NLIMITS
+         ALPHAT=CONF(II)/100.0
+         ALPHAT=(1.0-ALPHAT)/2.0
+         ALPHAT=1.0-ALPHAT
+         CALL NORPPF(ALPHAT,APPF)
+         APPF=-APPF
+         CVAL=APPF*AVAL
+         AM1=(ANS-CVAL)/2.0
+         M1=INT(AM1+0.5)
+         IF(M1.LT.1)M1=1
+         IF(M1.GT.NS)M1=NS
+         M2=NS-M1+1
+         IF(M2.LT.1)M2=1
+         IF(M2.GT.NS)M2=NS
+         M1K=M1+IKT
+         M2K=M2+IKT
+         IF(M1K.LT.1)M1K=1
+         IF(M1K.GT.NS)M1K=NS
+         IF(M2K.LT.1)M2K=1
+         IF(M2K.GT.NS)M2K=NS
+         ALOWER_BETA(II)=SLOPES(MIN(M1K,M2K))
+         AUPPER_BETA(II)=SLOPES(MAX(M1K,M2K))
+         TEMP1(1:N)=Y(1:N) - AUPPER_BETA(II)*X(1:N)
+         CALL SORT(TEMP1,N,TEMP1)
+         IF(MOD(N,2).EQ.1)THEN
+           ALOWER_ALPHA(II)=TEMP1((N + 1)/2)
+         ELSE
+           ALOWER_ALPHA(II)=(TEMP1(N/2) + TEMP1((N/2) + 1))/2.0
+         ENDIF
+         TEMP1(1:N)=Y(1:N) - ALOWER_BETA(II)*X(1:N)
+         CALL SORT(TEMP1,N,TEMP1)
+         IF(MOD(N,2).EQ.1)THEN
+           AUPPER_ALPHA(II)=TEMP1((N + 1)/2)
+         ELSE
+           AUPPER_ALPHA(II)=(TEMP1(N/2) + TEMP1((N/2) + 1))/2.0
+         ENDIF
+         WRITE(IOUNI1,'(F5.1,8X,4E15.7)')CONF(II),ALOWER_ALPHA(II),  &
+           AUPPER_ALPHA(II),ALOWER_BETA(II),AUPPER_BETA(II)
+!
+         IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+            WRITE(ICOUT,233)II,IK,M1,M1K,M2,M2K
+  233       FORMAT('II,IK,M1,M1K,M2,M2K = ',6I10)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,235)APPF,AVAL,CVAL
+  235       FORMAT('APPF,AVAL,CVAL = ',3G15.7)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,231)ALOWER_ALPHA(II),AUPPER_ALPHA(II),   &
+                            ALOWER_BETA(II),AUPPER_BETA(II)
+  231       FORMAT('ALOWER_ALPHA(II),AUPPER_ALPHA(II),',         &
+                   'ALOWER_BETA(II),AUPPER_BETA(II) = ',5G15.7)
+            CALL DPWRST('XXX','BUG ')
+         ENDIF
+!
+      ENDDO
+!
+!               ****************************************************
+!               **  STEP 3B--                                     **
+!               **  COMPUTE CONFIDENCE INTERVALS FOR COEFFICIENTS **
+!               **  USING THE JACKNIFE                            **
+!               ****************************************************
+!
+!     WRITE JACKNIFE ESTIMATES OF ALPHA AND BETA TO "dpst2f.dat"
+!
+      IF(IPBRCI.EQ.'JACK')THEN
+!
+        ISTEPN='3B'
+        IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PBF2')     &
+           CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+        WRITE(IOUNI2,213)
+  213   FORMAT('CONFIDENCE LIMITS: JACKNIFE')
+        WRITE(IOUNI2,204)
+        WRITE(IOUNI2,205)
+!
+        WRITE(IOUNI3,216)
+    216 FORMAT('PARAMETER ESTIMATES FROM JACKNIFE SAMPLES')
+        WRITE(IOUNI3,217)
+    217 FORMAT(5X,'ROW',6X,'INTERCEPT',10X,'SLOPE')
+!
+        NM1=N-1
+        DO IROW=1,N
+           ICNT=0
+           DO II=1,N
+             IF(II.NE.IROW)THEN
+               ICNT=ICNT+1
+               XTEMP(ICNT)=X(II)
+               YTEMP(ICNT)=Y(II)
+             ENDIF
+           ENDDO
+!
+           CALL DPPBF3(YTEMP,XTEMP,NM1,MAXNXT,TEMP1,TEMP2,SLOPES,NS,   &
+                       ALPHAV(IROW),BETAV(IROW),IPBRTY,IPBRBC,IK,      &
+                       IFLAGN,ISUBRO,IBUGA3,IERROR)
+           WRITE(IOUNI3,'(I8,2E15.7)')IROW,ALPHAV(IROW),BETAV(IROW)
+!
+          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+            WRITE(ICOUT,211)IROW,ALPHAV(IROW),BETAV(IROW)
+  211       FORMAT('JACKNIFE ROW,ALPHAV(IROW),BETAV(IROW) = ',I8,2G15.7)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+        ENDDO
+!
+!       COMPUTE JACKNIFE STANDARD ERRORS AND LOWER/UPPER CONFIDENCE
+!       LIMITS
+!
+!
+        CALL MEAN(ALPHAV,N,IWRITE,ALPHAMEAN,IBUGA3,IERROR)
+        CALL MEAN(BETAV,N,IWRITE,BETAMEAN,IBUGA3,IERROR)
+        SUM1=SUM((ALPHAV(1:N) - ALPHAMEAN)**2)
+        SUM2=SUM((BETAV(1:N)  - BETAMEAN)**2)
+        AFACT=REAL(N-1)/REAL(N)
+        ALPHASD=SQRT(AFACT*SUM1)
+        BETASD =SQRT(AFACT*SUM2)
+!
+!       OBTAIN CONFIDENCE INTERVALS:
+!
+!          BETA  +/- TPPF(1-ALPHA/2,NM1)*STANDARD ERROR
+!          ALPHA +/- TPPF(1-ALPHA/2,NM1)*STANDARD ERROR
+!
+        ADF=REAL(N-1)
+        DO II=1,NLIMITS
+          ALPHAT=CONF(II)/100.0
+          ALPHAT=(1.0-ALPHAT)/2.0
+          ALPHAT=1.0-ALPHAT
+          CALL TPPF(ALPHAT,ADF,T(II))
+          ALOWER_ALPHA_JN(II)=ALPHA - T(II)*ALPHASD
+          AUPPER_ALPHA_JN(II)=ALPHA + T(II)*ALPHASD
+          ALOWER_BETA_JN(II)=BETA - T(II)*BETASD
+          AUPPER_BETA_JN(II)=BETA + T(II)*BETASD
+          WRITE(IOUNI2,'(F5.1,8X,4E15.7)')CONF(II),ALOWER_ALPHA_JN(II),  &
+            AUPPER_ALPHA_JN(II),ALOWER_BETA_JN(II),AUPPER_BETA_JN(II)
+!
+          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+             WRITE(ICOUT,241)II,T(II),ALOWER_ALPHA_JN(II),           &
+               AUPPER_ALPHA_JN(II),ALOWER_BETA_JN(II),               &
+               AUPPER_BETA_JN(II)
+  241        FORMAT('II,T(II),ALOWER_ALPHA_JN(II),',                 &
+               'AUPPER_ALPHA_JN(II),ALOWER_BETA_JN(II),',             &
+               'AUPPER_BETA_JN(II) = ',I3,4G15.7)
+             CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+        ENDDO
+!               ****************************************************
+!               **  STEP 3C--                                     **
+!               **  COMPUTE CONFIDENCE INTERVALS FOR COEFFICIENTS **
+!               **  USING BOOTSTRAP                               **
+!               ****************************************************
+!
+      ELSEIF(IPBRCI.EQ.'BOOT')THEN
+        ISTEPN='3C'
+        IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PBF2')     &
+           CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+        WRITE(IOUNI2,225)
+  225   FORMAT('CONFIDENCE LIMITS: BOOTSTRAP (PERCENTILE)')
+        WRITE(IOUNI2,204)
+        WRITE(IOUNI2,205)
+!
+        WRITE(IOUNI3,226)
+    226 FORMAT('PARAMETER ESTIMATES FROM BOOTSTRAP SAMPLES')
+        WRITE(IOUNI3,227)
+    227 FORMAT(5X,'ROW',6X,'INTERCEPT',10X,'SLOPE')
+!
+        NRESAM=IBOOSS
+        ICASJB='BOOT'
+        ISAMP=0
+        DO IRESAM=1,NRESAM
+!
+          IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PBF2')THEN
+             WRITE(ICOUT,422)IRESAM
+  422        FORMAT('FROM DPPBF2, IRESAM = ',I8)
+             CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+!         NOTE: YTEMP CONTAINS THE RESAMPLED RESIDUALS AFTER
+!               CALL TO DPJBS3.  ADD THIS TO THE ORIGINAL Y
+!               VALUES.
+!
+!               SINCE THIS IS AN ERRORS IN VARIABLES MODEL, ALSO
+!               NEED TO COMPUTE RESDIUALS FOR X VARIABLE
+!               (X(i) = (Y(i) - ALPHA)/BETA
+!
+!         NOTE: RESAMPLING OF RESIDUALS IS NOT GENERATING REASONABLE
+!               RESULTS, SO RESAMPLE THE ORIGINAL DATA
+!
+!         TEMP2(1:N)=(Y(1:N) - ALPHA)/BETA
+!         CALL DPJBS3(RES,N,ICASJB,IRESAM,ISEED,YTEMP,N2,ITEMP1,   &
+!                     TEMP1,IBUGA3,IERROR)
+!         IF(IERROR.EQ.'YES')CYCLE
+!         CALL DPJBS3(TEMP2,N,ICASJB,IRESAM,ISEED,XTEMP,N2,ITEMP1,   &
+!                     TEMP1,IBUGA3,IERROR)
+!         IF(IERROR.EQ.'YES')CYCLE
+!         ISAMP=ISAMP + 1
+!         YTEMP(1:N)=Y(1:N) + YTEMP(1:N)
+!         XTEMP(1:N)=X(1:N) + XTEMP(1:N)
+!
+          IERROR='NO'
+          CALL DPJBS3(Y,N,ICASJB,IRESAM,ISEED,YTEMP,N2,ITEMP1,   &
+                      TEMP1,IBUGA3,IERROR)
+!
+          IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PBF2')THEN
+             WRITE(ICOUT,423)IERROR,IRESAM,ISAMP
+  423        FORMAT('AFTER DPJBS3: IERROR, IRESAM,ISAMP = ',A4,2X,2I8)
+             CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+          IF(IERROR.EQ.'YES')CYCLE
+          ISAMP=ISAMP + 1
+          DO II=1,N
+             XTEMP(II)=X(ITEMP1(II))
+          ENDDO
+!
+          CALL DPPBF3(YTEMP,XTEMP,N,MAXNXT,TEMP1,TEMP2,SLOPES,NS,      &
+                      ALPHAV(IRESAM),BETAV(IRESAM),IPBRTY,IPBRBC,IK,   &
+                      IFLAGN,ISUBRO,IBUGA3,IERROR)
+!
+          IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PBF2')THEN
+             WRITE(ICOUT,443)IERROR,IRESAM,ISAMP
+  443        FORMAT('AFTER DPPBF3: IERROR, IRESAM,ISAMP = ',A4,2X,2I8)
+             CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+          IF(IERROR.EQ.'YES' .OR. NS.LE.0)CYCLE
+          WRITE(IOUNI3,'(I8,2E15.7)')IRESAM,ALPHAV(IRESAM),BETAV(IRESAM)
+!
+        ENDDO
+!
+        CALL SD(ALPHAV,ISAMP,IWRITE,ALPHASD,IBUGA3,IERROR)
+        CALL SD(BETAV,ISAMP,IWRITE,BETASD,IBUGA3,IERROR)
+!
+!       PERCENTILE CONFIDENCE LIMITS
+!
+        DO II=1,NLIMITS
+          ALPHAT=CONF(II)
+          ALPHATL=(100.0-ALPHAT)/2.0
+          ALPHATU=100.0-ALPHATL
+          CALL PERCEN(ALPHATL,ALPHAV,ISAMP,IWRITE,TEMP1,MAXNXT,      &
+                      ALOWER_ALPHA_JN(II),IBUGA3,IERROR)
+          CALL PERCEN(ALPHATL,BETAV,ISAMP,IWRITE,TEMP1,MAXNXT,       &
+                      ALOWER_BETA_JN(II),IBUGA3,IERROR)
+          CALL PERCEN(ALPHATU,ALPHAV,ISAMP,IWRITE,TEMP1,MAXNXT,      &
+                      AUPPER_ALPHA_JN(II),IBUGA3,IERROR)
+          CALL PERCEN(ALPHATU,BETAV,ISAMP,IWRITE,TEMP1,MAXNXT,       &
+                      AUPPER_BETA_JN(II),IBUGA3,IERROR)
+          WRITE(IOUNI2,'(F5.1,8X,4E15.7)')CONF(II),ALOWER_ALPHA_JN(II),  &
+             AUPPER_ALPHA_JN(II),ALOWER_BETA_JN(II),AUPPER_BETA_JN(II)
+!
+          IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+            WRITE(ICOUT,260)II,CONF(II),ALPHATL,ALPHATU
+  260       FORMAT('II,CONF(II),ALPHATL,ALPHATU = ',I8,3G15.7)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,261)II,ALOWER_ALPHA_JN(II),                    &
+                            AUPPER_ALPHA_JN(II),ALOWER_BETA_JN(II),    &
+                            AUPPER_BETA_JN(II)
+  261       FORMAT('II,ALOWER_ALPHA_JN(II),AUPPER_ALPHA_JN(II),',      &
+                   'ALOWER_BETA_JN(II),AUPPER_BETA_JN(II) = ',I8,5G15.7)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+        ENDDO
+!
+      ENDIF
+!
+      IOP='CLOS'
+      CALL DPAUFI(IOP,IFLG11,IFLG21,IFLG31,IFLAG4,IFLAG5,   &
+                  IOUNI1,IOUNI2,IOUNI3,IOUNI4,IOUNI5,   &
+                  IBUGA3,ISUBRO,IERROR)
+!
+!
+!               ***********************************************
+!               **  STEP 4--                                 **
+!               **  PRINT EVERYTHING OUT                     **
+!               ***********************************************
+!
+      ISTEPN='4'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PBF2')     &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     PRINT HEADER TABLE
+!
+      IF(IPRINT.EQ.'OFF')GO TO 9000
+!
+      NUMDIG=7
+      IF(IFORSW.EQ.'1')NUMDIG=1
+      IF(IFORSW.EQ.'2')NUMDIG=2
+      IF(IFORSW.EQ.'3')NUMDIG=3
+      IF(IFORSW.EQ.'4')NUMDIG=4
+      IF(IFORSW.EQ.'5')NUMDIG=5
+      IF(IFORSW.EQ.'6')NUMDIG=6
+      IF(IFORSW.EQ.'7')NUMDIG=7
+      IF(IFORSW.EQ.'8')NUMDIG=8
+      IF(IFORSW.EQ.'9')NUMDIG=9
+      IF(IFORSW.EQ.'0')NUMDIG=0
+      IF(IFORSW.EQ.'E')NUMDIG=-2
+      IF(IFORSW.EQ.'-2')NUMDIG=-2
+      IF(IFORSW.EQ.'-3')NUMDIG=-3
+      IF(IFORSW.EQ.'-4')NUMDIG=-4
+      IF(IFORSW.EQ.'-5')NUMDIG=-5
+      IF(IFORSW.EQ.'-6')NUMDIG=-6
+      IF(IFORSW.EQ.'-7')NUMDIG=-7
+      IF(IFORSW.EQ.'-8')NUMDIG=-8
+      IF(IFORSW.EQ.'-9')NUMDIG=-9
+!
+      ITITLE='Passing-Bablok Regression'
+      NCTITL=25
+!
+      ITITL9(1:4)=IHLEFT(1:4)
+      ITITL9(5:8)=IHLEF2(1:4)
+      ITITL9(9:16)=' versus '
+      ITITL9(17:20)=IHLEF3(1:4)
+      ITITL9(21:24)=IHLEF4(1:4)
+      NCTITZ=24
+      ICNT=1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=0
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Number of Observations:'
+      NCTEXT(ICNT)=23
+      AVALUE(ICNT)=REAL(N)
+      IDIGIT(ICNT)=0
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Mean of Y:'
+      NCTEXT(ICNT)=10
+      AVALUE(ICNT)=YMEAN
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Standard Deviation of Y:'
+      NCTEXT(ICNT)=24
+      AVALUE(ICNT)=YSD
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Mean of X:'
+      NCTEXT(ICNT)=10
+      AVALUE(ICNT)=XMEAN
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Standard Deviation of X:'
+      NCTEXT(ICNT)=24
+      AVALUE(ICNT)=XSD
+      IDIGIT(ICNT)=NUMDIG
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Kendall Tau-B Correlation of Y and X:'
+      NCTEXT(ICNT)=37
+      AVALUE(ICNT)=TAUB
+      IDIGIT(ICNT)=NUMDIG
+      IF(IFLAG_CUSUM.EQ.1)THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT)=' '
+        NCTEXT(ICNT)=0
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Modified Cusum Test:'
+        NCTEXT(ICNT)=20
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Test Statistic:'
+        NCTEXT(ICNT)=15
+        AVALUE(ICNT)=STAT_CUSUM
+        IDIGIT(ICNT)=NUMDIG
+        ICNT=ICNT+1
+        ITEXT(ICNT)='5% Critical Value:'
+        NCTEXT(ICNT)=18
+        AVALUE(ICNT)=CV95_CUSUM
+        IDIGIT(ICNT)=NUMDIG
+        ICNT=ICNT+1
+        ITEXT(ICNT)='1% Critical Value:'
+        NCTEXT(ICNT)=18
+        AVALUE(ICNT)=CV99_CUSUM
+        IDIGIT(ICNT)=NUMDIG
+        ICNT=ICNT+1
+        ITEXT(ICNT)=' '
+        NCTEXT(ICNT)=0
+        AVALUE(ICNT)=0.0
+        IDIGIT(ICNT)=-1
+      ENDIF
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=0
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Estimate of Intercept:'
+      NCTEXT(ICNT)=22
+      AVALUE(ICNT)=ALPHA
+      IDIGIT(ICNT)=NUMDIG
+      IF(IPBRCI.EQ.'JACK')THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Jacknife Standard Error(Intercept):'
+        NCTEXT(ICNT)=35
+        AVALUE(ICNT)=ALPHASD
+        IDIGIT(ICNT)=NUMDIG
+      ELSEIF(IPBRCI.EQ.'BOOT')THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Bootstrap Standard Error(Intercept):'
+        NCTEXT(ICNT)=36
+        AVALUE(ICNT)=ALPHASD
+        IDIGIT(ICNT)=NUMDIG
+      ENDIF
+      ICNT=ICNT+1
+      ITEXT(ICNT)='Estimate of Slope:'
+      NCTEXT(ICNT)=18
+      AVALUE(ICNT)=BETA
+      IDIGIT(ICNT)=NUMDIG
+      IF(IPBRCI.EQ.'JACK')THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Jacknife Standard Error(Slope):'
+        NCTEXT(ICNT)=31
+        AVALUE(ICNT)=BETASD
+        IDIGIT(ICNT)=NUMDIG
+      ELSEIF(IPBRCI.EQ.'BOOT')THEN
+        ICNT=ICNT+1
+        ITEXT(ICNT)='Bootstrap Standard Error(Slope):'
+        NCTEXT(ICNT)=32
+        AVALUE(ICNT)=BETASD
+        IDIGIT(ICNT)=NUMDIG
+      ENDIF
+      ICNT=ICNT+1
+      ITEXT(ICNT)=' '
+      NCTEXT(ICNT)=0
+      AVALUE(ICNT)=0.0
+      IDIGIT(ICNT)=-1
+!
+      NUMROW=ICNT
+      DO I=1,NUMROW
+        NTOT(I)=15
+      ENDDO
+!
+      IFRST=.TRUE.
+      ILAST=.TRUE.
+      CALL DPDTA1(ITITLE,NCTITL,ITITL9,NCTITZ,ITEXT,   &
+                  NCTEXT,AVALUE,IDIGIT,                &
+                  NTOT,NUMROW,                         &
+                  ICAPSW,ICAPTY,ILAST,IFRST,           &
+                  ISUBRO,IBUGA3,IERROR)
+!
+!     CONFIDENCE INTERVALS FOR COEFFICIENT ESTIMATES
+!
+      ISTEPN='3B'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PBF2')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ISIZE=0
+      IRTFMD='OFF'
+      IFLAGA=.TRUE.
+      IFLAGB=.TRUE.
+      NTOTAL=40
+      NBLNK1=2
+      NBLNK2=0
+      ITYPE=1
+!
+      ICASAN2='PBIN'
+      ITTEMP='Intercept Confidence Interval (Passsing-Bablok Formula)'
+      NCTEMP=56
+      AVAL=0.0
+      CALL DPDTXT(ITTEMP,NCTEMP,AVAL,NUMDIG,NTOTAL,          &
+                  NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,         &
+                  ICAPSW,ICAPTY,ITYPE,ISUBRO,IBUGA3,IERROR)
+      CALL DPDT11(CONF,T,TSDM,ALOWER_ALPHA,AUPPER_ALPHA,     &
+                  ICASAN2,ICAPSW,ICAPTY,NUMDIG,              &
+                  ISUBRO,IBUGA3,IERROR)
+!
+      ICASAN2='PBSL'
+      ITTEMP='Slope Confidence Interval (Passsing-Bablok Formula)'
+      NCTEMP=51
+      AVAL=0.0
+      CALL DPDTXT(ITTEMP,NCTEMP,AVAL,NUMDIG,NTOTAL,          &
+                  NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,         &
+                  ICAPSW,ICAPTY,ITYPE,ISUBRO,IBUGA3,IERROR)
+      CALL DPDT11(CONF,T,TSDM,ALOWER_BETA,AUPPER_BETA,       &
+                  ICASAN2,ICAPSW,ICAPTY,NUMDIG,              &
+                  ISUBRO,IBUGA3,IERROR)
+!
+      IF(IPBRCI.EQ.'JACK')THEN
+        ICASAN2='PBI2'
+        ITTEMP='Intercept Confidence Interval (Jacknife)'
+        NCTEMP=40
+        AVAL=0.0
+        CALL DPDTXT(ITTEMP,NCTEMP,AVAL,NUMDIG,NTOTAL,            &
+                    NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,           &
+                    ICAPSW,ICAPTY,ITYPE,ISUBRO,IBUGA3,IERROR)
+        CALL DPDT11(CONF,T,TSDM,ALOWER_ALPHA_JN,AUPPER_ALPHA_JN, &
+                    ICASAN2,ICAPSW,ICAPTY,NUMDIG,                &
+                    ISUBRO,IBUGA3,IERROR)
+        ICASAN2='PBS2'
+        ITTEMP='Slope Confidence Interval (Jacknife)'
+        NCTEMP=36
+        AVAL=0.0
+        CALL DPDTXT(ITTEMP,NCTEMP,AVAL,NUMDIG,NTOTAL,            &
+                    NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,           &
+                    ICAPSW,ICAPTY,ITYPE,ISUBRO,IBUGA3,IERROR)
+        CALL DPDT11(CONF,T,TSDM,ALOWER_BETA_JN,AUPPER_BETA_JN,   &
+                    ICASAN2,ICAPSW,ICAPTY,NUMDIG,                &
+                    ISUBRO,IBUGA3,IERROR)
+      ELSEIF(IPBRCI.EQ.'BOOT')THEN
+        ICASAN2='PBI2'
+        ITTEMP='Intercept Confidence Interval (Bootstrap Percentiles)'
+        NCTEMP=53
+        AVAL=0.0
+        CALL DPDTXT(ITTEMP,NCTEMP,AVAL,NUMDIG,NTOTAL,            &
+                    NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,           &
+                    ICAPSW,ICAPTY,ITYPE,ISUBRO,IBUGA3,IERROR)
+        CALL DPDT11(CONF,T,TSDM,ALOWER_ALPHA_JN,AUPPER_ALPHA_JN, &
+                    ICASAN2,ICAPSW,ICAPTY,NUMDIG,                &
+                    ISUBRO,IBUGA3,IERROR)
+        ICASAN2='PBS2'
+        ITTEMP='Slope Confidence Interval (Bootstrap Percentiles)'
+        NCTEMP=49
+        AVAL=0.0
+        CALL DPDTXT(ITTEMP,NCTEMP,AVAL,NUMDIG,NTOTAL,            &
+                    NBLNK1,NBLNK2,IFLAGA,IFLAGB,ISIZE,           &
+                    ICAPSW,ICAPTY,ITYPE,ISUBRO,IBUGA3,IERROR)
+        CALL DPDT11(CONF,T,TSDM,ALOWER_BETA_JN,AUPPER_BETA_JN,   &
+                    ICASAN2,ICAPSW,ICAPTY,NUMDIG,                &
+                    ISUBRO,IBUGA3,IERROR)
+      ENDIF
+!
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF2')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPPBF2--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR
+ 9012   FORMAT('IERROR = ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPPBF2
+      SUBROUTINE DPPBF3(Y,X,N,MAXNXT,TEMP1,TEMP2,SLOPES,NS,        &
+                        ALPHA,BETA,IPBRTY,IPBRBC,IK,IFLAGN,        &
+                        ISUBRO,IBUGA3,IERROR)
+!
+!     PURPOSE--COMPUTE THE SLOPE AND INTERCEPT PARAMETERS FOR A
+!              PASSING-BABLOK REGRESSION.  THIS IS ESSENTIALLY RANK
+!              REGRESSION APPLIED TO ERRORS-IN-VARIABLES FITTING.  IN
+!              PARTICULAR, IT IS USED IN COMPARING TWO PAIRED MEASUREMENT
+!              PROCEDURES.
+!     REFERENCES--BABLOK, PASSING, BENDER, and SCHNEIDER (1988), "A GENERAL
+!                 REGRESSION PROCEDURE FOR METHOD TRANSFORMATION.
+!                 APPLICATION OF LINEAR REGRESSION PROCEDURES FOR METHOD
+!                 COMPARISON STUDIES IN CLINICAL CHEMISTRY, PART III",
+!                 CLINICAL CHEMISTRY IN LABORATORY MEDICINE, VOL. 26,
+!                 PP. 783-790.
+!     PRINTING--NO
+!     SUBROUTINES NEEDED--SORTC, SORT
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABOARATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2026/05
+!     ORIGINAL VERSION--MAY       2026.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES--------------
+!
+      CHARACTER*4 IPBRTY
+      CHARACTER*4 IPBRBC
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+!
+!----------------------------------------------------------------
+!
+      DIMENSION Y(*)
+      DIMENSION X(*)
+      DIMENSION TEMP1(*)
+      DIMENSION TEMP2(*)
+      DIMENSION SLOPES(*)
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT------------------------------------------------
+!
+      IERROR='NO'
+      ISUBN1='DPPB'
+      ISUBN2='F3  '
+!
+      ALPHA=CPUMIN
+      BETA=CPUMIN
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF3')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPPBF3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,IPBRTY,N,MAXNXT
+   52   FORMAT('IBUGA3,ISUBRO,IPBRTY,N,MAXNXT = ',3(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        DO I=1,N
+          WRITE(ICOUT,56)I,X(I),Y(I)
+   56     FORMAT('I,X(I),Y(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDDO
+      ENDIF
+!
+!               ********************************************
+!               **  STEP 1--                              **
+!               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+!               ********************************************
+!
+!
+!     DPPBFI ROUTINE CHECKS THAT N IS AT LEAST 5.  BUT SET TO 4
+!     HERE TO ACCOMODATE JACKNIFE CONFIDENCE INTERVALS.
+!
+      IF(N.LT.4)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR IN PASSING-BABLOK FIT (DPPBF3)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,102)
+  102   FORMAT('      THE NUMBER OF OBSERVATIONS IS LESS THAN 5.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,103)N
+  103   FORMAT('      THE ENTERED NUMBER OF OBSERVATIONS = ',I6)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               ***********************************************
+!               **  STEP 2--                                 **
+!               **  PERFORM THE PASSING-BABLOK FIT           **
+!               ***********************************************
+!
+      ISTEPN='2'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'PBF3')     &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+!     IF NEGATIVE CORRELATION, NEED TO TAKE NEGATIVE OF Y VALUES
+!
+      IF(IFLAGN.EQ.1)THEN
+        Y(1:N)=-Y(1:N)
+      ENDIF
+!
+!     1. SORT THE DATA
+!
+      CALL SORTC(X,Y,N,TEMP1,TEMP2)
+      X(1:N)=TEMP1(1:N)
+      Y(1:N)=TEMP2(1:N)
+!
+!     2. CALCULATE ALL PAIRWISE SLOPES (NAIVE METHOD)
+!
+      NSLOPES=N*(N - 1)/2
+      MAXSLOPES=5*MAXNXT
+      IF(NSLOPES.GT.MAXSLOPES)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,201)NSLOPES,MAXSLOPES
+  201   FORMAT('      THE NUMBER OF SLOPES (',I12,') EXCEEDS ',I12)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!     NOTE THAT SLIGHTLY DIFFERENT COMPUTATIONS ARE USED DEPENDING
+!     ON WHETHER THE "METHOD COMPARISON" OR THE "ROBUST REGRESSION"
+!     IS REQUESTED.
+!
+      IF(IPBRTY.EQ.'METH')THEN
+!
+!       METHOD COMPARISON CASE
+!
+        ICNT = 0
+        IK=0
+        DO I=1,N-1
+           DO J=I + 1, N
+              IF(X(I).EQ.X(J) .AND. Y(I).EQ.Y(J))THEN
+                CONTINUE
+              ELSEIF(X(I).EQ.X(J) .AND. Y(I).GT.Y(J))THEN
+                ICNT = ICNT + 1
+                SLOPES(ICNT)=999999.
+              ELSEIF(X(I).EQ.X(J) .AND. Y(I).LT.Y(J))THEN
+                ICNT = ICNT + 1
+                SLOPES(ICNT)=-999999.
+              ELSE
+                SIJ=(Y(I) - Y(J))/(X(I) - X(J))
+                IF(SIJ.NE.-1.0)THEN
+                  IF(SIJ.LT.-1.0)IK=IK+1
+                  ICNT = ICNT + 1
+                  SLOPES(ICNT)=SIJ
+                ENDIF
+              ENDIF
+           ENDDO
+        ENDDO
+!
+        NS=ICNT
+        IF(NS.EQ.0)THEN
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+!
+        CALL SORT(SLOPES,NS,SLOPES)
+        IF(MOD(ICNT,2).EQ.1)THEN
+          ICNT2=(ICNT+1)/2
+          BETA=SLOPES(ICNT2 + IK)
+        ELSE
+          ICNT2=ICNT/2
+          BETA=(SLOPES(ICNT2+IK) + SLOPES(ICNT2+1+IK))/2.0
+        ENDIF
+!
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF3')THEN
+          WRITE(ICOUT,301)ICNT,IK,ICNT2,BETA
+  301     FORMAT('ICNT,IK,ICNT2,BETA = ',3I10,G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+      ELSE
+!
+!       ROBUST REGRESION CASE
+!
+        ICNT = 0
+        IK=0
+        INEG=0
+        IPOS=0
+        DO I=1,N-1
+           DO J=I + 1, N
+              IF(X(I).EQ.X(J) .AND. Y(I).EQ.Y(J))THEN
+                CONTINUE
+              ELSEIF(X(I).EQ.X(J) .AND. Y(I).GT.Y(J))THEN
+                ICNT = ICNT + 1
+                SLOPES(ICNT)=999999.
+                IPOS=IPOS+1
+              ELSEIF(X(I).EQ.X(J) .AND. Y(I).LT.Y(J))THEN
+                ICNT = ICNT + 1
+                SLOPES(ICNT)=-999999.
+                INEG=INEG+1
+              ELSEIF(X(I).GT.X(J) .AND. Y(I).EQ.Y(J))THEN
+                ICNT = ICNT + 1
+                SLOPES(ICNT)=0.
+                IPOS=IPOS+1
+              ELSEIF(X(I).LT.X(J) .AND. Y(I).EQ.Y(J))THEN
+                ICNT = ICNT + 1
+                SLOPES(ICNT)=0.
+                INEG=INEG+1
+              ELSE
+                SIJ=(Y(I) - Y(J))/(X(I) - X(J))
+                IF(SIJ.GT.0.0)THEN
+                  ICNT = ICNT + 1
+                  SLOPES(ICNT)=SIJ
+                  IPOS=IPOS+1
+                ELSEIF(SIJ.LT.0.0)THEN
+                  ICNT = ICNT + 1
+                  SLOPES(ICNT)=SIJ
+                  INEG=INEG+1
+                ENDIF
+              ENDIF
+           ENDDO
+        ENDDO
+!
+        NS=ICNT
+        IF(NS.EQ.0)THEN
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+!
+        CALL SORT(SLOPES,NS,SLOPES)
+        ICNT2=ICNT
+        IK=INEG/2
+!
+!       IF BIAS CORRECTION TURNED OFF
+!
+        IF(IPBRBC.EQ.'OFF')IK=0
+!
+        IF(IK.GT.0)ICNT2=ICNT+IK
+        IF(MOD(ICNT,2).EQ.1)THEN
+          ICNT2=(ICNT+1)/2
+          BETA=SLOPES(ICNT2 + IK)
+        ELSE
+          ICNT2=ICNT/2
+          BETA=(SLOPES(ICNT2+IK) + SLOPES(ICNT2+1+IK))/2.0
+        ENDIF
+!
+        IF(IFLAGN.EQ.1)BETA=-BETA
+!
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF3')THEN
+          WRITE(ICOUT,301)ICNT,IK,ICNT2,BETA
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+      ENDIF
+!
+!       COMPUTE THE INTERCEPT: MEDIAN(Y - BETA*X)
+!
+      TEMP1(1:N)=Y(1:N) - BETA*X(1:N)
+      CALL SORT(TEMP1,N,TEMP1)
+      IF(MOD(N,2).EQ.1)THEN
+        ALPHA=TEMP1((N + 1)/2)
+      ELSE
+        ALPHA=(TEMP1(N/2) + TEMP1((N/2) + 1))/2.0
+      ENDIF
+!
+!     IF NEGATIVE CORRELATION, RESTORE Y VALUES
+!
+      IF(IFLAGN.EQ.1)THEN
+        Y(1:N)=-Y(1:N)
+      ENDIF
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'PBF3')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPPBF3--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR,MAXSLOPES,NSLOPES,ICNT
+ 9012   FORMAT('IERROR,MAXSLOPES,NSLOPES,ICNT = ',A4,2X,3I12)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)ALPHA,BETA
+ 9014   FORMAT('ALPHA,BETA = ',2G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPPBF3
       SUBROUTINE DPPCPL(NPLOTV,NPLOTP,NS,ICASPL,IAND1,IAND2,   &
                         IBUGG2,IBUGG3,IBUGQ,ISUBRO,IFOUND,IERROR)
 !

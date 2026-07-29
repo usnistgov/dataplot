@@ -3575,7 +3575,7 @@
                    IREAAS,IREAPC,                                    &
                    IB,                                               &
                    IOTERM,IANSLO,MAXLIL,MAXCIL,ILOOST,ILOOLI,        &
-                   IREPCH,IMALEV,IREANQ,                             &
+                   IREPCH,IMALEV,IREANQ,IREANC,IREATA,               &
                    IERRFI,IBUGS2,ISUBRO,IERROR)
             IF(IERROR.EQ.'YES')GO TO 9000
             IF(LINETY.EQ.'BLAN')GO TO 5592
@@ -3712,7 +3712,7 @@
                    IREAAS,IREAPC,                                      &
                    IB,                                                 &
                    IOTERM,IANSLO,MAXLIL,MAXCIL,ILOOST,ILOOLI,          &
-                   IREPCH,IMALEV,IREANQ,                               &
+                   IREPCH,IMALEV,IREANQ,IREANC,IREATA,                 &
                    IERRFI,IBUGS2,ISUBRO,IERROR)
               IF(IERROR.EQ.'YES')GO TO 9000
               IF(LINETY.EQ.'BLAN')GO TO 4592
@@ -4104,7 +4104,7 @@
                     IREAAS,IREAPC,                                     &
                     IB,                                                &
                     IOTERM,IANSLO,MAXLIL,MAXCIL,ILOOST,ILOOLI,         &
-                    IREPCH,IMALEV,IREANQ,                              &
+                    IREPCH,IMALEV,IREANQ,IREANC,IREATA,                &
                     IERRFI,IBUGS2,ISUBRO,IERROR)
 !
 !       2019/04: CHECK FOR BLANK LINE BEFORE ERROR
@@ -5784,7 +5784,7 @@
                       IREAAS,IREAPC,                                     &
                       IB,                                                &
                       IOTERM,IANSLO,MAXLIL,MAXCIL,ILOOST,ILOOLI,         &
-                      IREPCH,IMALEV,IREANQ,                              &
+                      IREPCH,IMALEV,IREANQ,IREANC,IREATA,                &
                       IERRFI,IBUGS2,ISUBRO,IERROR)
 !
           IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'READ')THEN

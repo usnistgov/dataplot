@@ -5300,6 +5300,7 @@
 !               ******************************************************
 !
 15000 CONTINUE
+      IF(PX1.EQ.PX2 .AND. PY1.EQ.PY2) GO TO 9000
       ICSTR(1:1)=IBASLC
       ICSTR(2:13)='drawline[ 0]'
       NCSTR=13
@@ -10430,7 +10431,16 @@
 !
       IPTS=0
       NCHTOT=5
+      XPREV=CPUMIN
+      YPREV=CPUMIN
       DO 15010 I=1,NP
+!
+!       IF CURRENT POINT EQUAL TO PREVIOUS POINT, DO NOT
+!       NOT DRAW (I.E., ZERO LENGTH LINE)
+!
+        IF(I.GT.1)THEN
+          IF(PX(I).EQ.XPREV .AND. PY(I).EQ.YPREV)CYCLE
+        ENDIF
         IPTS=IPTS+1
         CALL GRTRSD(PX(I),PY(I),IX1,IY1,ISUBN0)
         NCSTR=NCSTR+1
@@ -10489,8 +10499,10 @@
           NCSTR=NCSTR+1
           ICSTR(NCSTR:NCSTR)=')'
         ENDIF
+        XPREV=PX(I)
+        YPREV=PY(I)
 15010 CONTINUE
-      IF(IPTS.GE.2)CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IF(IPTS.GE.2 .AND. NCSTR.GT.0)CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
       GO TO 9000
 !
@@ -16174,6 +16186,7 @@
 !                                      SUPPORT NEW INTEL API-ONE
 !                                      VERSION OF COMPILER
 !     UPDATED         --SEPTEMBER2025. USE ISO_C_BINDING
+!     UPDATED         --JULY     2026. A FEW TWEAKS TO LATEX DRIVER
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)-----------------------------------
 !
@@ -18855,14 +18868,13 @@
 !
       GO TO 9000
 !
-12199 CONTINUE
-!
 12090 CONTINUE
       ITYPE=9
 !
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,12081)
+      WRITE(ICOUT,12091)
+12091 FORMAT('***** ERROR IN DEVICE 2 GD XPM COMMAND--')
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,12093)
 12093 FORMAT('      THE GD LIBRARY DOES NOT SUPPORT XPM FOR CREATING IMAGES.')
@@ -18877,6 +18889,8 @@
 12110 CONTINUE
       ITYPE=11
       GO TO 12199
+!
+12199 CONTINUE
 !
 #ifdef HAVE_GD
       CALL GDINIT(ITYPE)
@@ -18958,6 +18972,21 @@
           NCSTR=29
           CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='usepackage[T1]{fontenc}'
+          NCSTR=24
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:41)='usepackage[body={6.5in,8.5in}]{geometry}'
+          NCSTR=41
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:20)='usepackage{amsmath}'
+          NCSTR=20
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
           ICSTR(1:1)=' '
           NCSTR=1
           CALL GRWRST(ICSTR,NCSTR,ISUBN0)
@@ -18976,6 +19005,50 @@
           ICSTR(2:27)='usepackage{graphics,color}'
           NCSTR=27
           CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+!         2026/07: Add the following block of code (suggested
+!                  by Jonathan Morgan)
+!
+          ICSTR(1:44)='% --- prevent dvipdfmx color-stack overflow:'
+          NCSTR=44
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          ICSTR(1:47)='%     make \color replace rather than stack ---'
+          NCSTR=47
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:13)='makeatletter'
+          NCSTR=13
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:4)='def'
+          ICSTR(5:5)=IBASLC
+          ICSTR(6:15)='set@color{'
+          ICSTR(16:16)=IBASLC
+          ICSTR(17:34)='special{color pop}'
+          ICSTR(35:35)=IBASLC
+          ICSTR(36:54)='special{color push '
+          ICSTR(55:55)=IBASLC
+          ICSTR(56:70)='current@color}}'
+          NCSTR=70
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:4)='let'
+          ICSTR(5:5)=IBASLC
+          ICSTR(6:16)='reset@color'
+          ICSTR(17:17)=IBASLC
+          ICSTR(18:22)='relax'
+          NCSTR=22
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:13)='makeatother'
+          NCSTR=13
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+!         End Change
 !
           ICSTR(1:1)=' '
           NCSTR=1
@@ -19060,6 +19133,1655 @@
           ICSTR(1:1)=' '
           NCSTR=1
           CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+!         2026/07: Add the following block of code (suggested
+!                  by Jonathan Morgan)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:17)='pagestyle{empty}'
+          NCSTR=17
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+!         End Change
+!
+!
+!       DEFINE GRAY SCALE AND COLORS
+!
+        IF(ILATCO.EQ.'ON')THEN
+          NCHTOT=5
+          NCHDEC=3
+          DO I=0,9
+            ICSTR(1:1)=IBASLC
+            ICSTR(2:25)='definecolor{G   }{gray}{'
+            NCSTR=25
+            WRITE(ICSTR(15:15),'(I1)')I
+            ACOL=REAL(I)/100.0
+            CALL GRTRRE(ACOL,NCHTOT,NCHDEC,ICSTR,NCSTR)
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR)='}'
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          ENDDO
+          DO I=10,99
+            ICSTR(1:1)=IBASLC
+            ICSTR(2:25)='definecolor{G   }{gray}{'
+            NCSTR=25
+            WRITE(ICSTR(15:16),'(I2)')I
+            ACOL=REAL(I)/100.0
+            CALL GRTRRE(ACOL,NCHTOT,NCHDEC,ICSTR,NCSTR)
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR)='}'
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          ENDDO
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:29)='definecolor{G100}{gray}{1.0}'
+          NCSTR=29
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+!  IF COLOR SWITCH ON, DEFINE COLORS BASED ON RGB VALUES
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='WHIT'
+          ARED=1.0
+          AGREEN=1.0
+          ABLUE=1.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='BLAC'
+          ARED=0.0
+          AGREEN=0.0
+          ABLUE=0.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='RED '
+          ARED=1.0
+          AGREEN=0.0
+          ABLUE=0.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='BLUE'
+          ARED=0.0
+          AGREEN=0.0
+          ABLUE=1.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='GREE'
+          ARED=0.0
+          AGREEN=1.0
+          ABLUE=0.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MAGE'
+          ARED=1.0
+          AGREEN=0.0
+          ABLUE=1.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='ORAN'
+          ARED=1.0
+          AGREEN=165.0/255.0
+          ABLUE=0.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='CYAN'
+          ARED=0.0
+          AGREEN=1.0
+          ABLUE=1.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='YELL'
+          ARED=1.0
+          AGREEN=1.0
+          ABLUE=0.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='YGRE'
+          ARED=154.0/255.0
+          AGREEN=205.0/255.0
+          ABLUE=50.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='DGRE'
+          ARED=0.0/255.0
+          AGREEN=100.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='LBLU'
+          ARED=173.0/255.0
+          AGREEN=216.0/255.0
+          ABLUE=230.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='VBLU'
+          ARED=138.0/255.0
+          AGREEN=43.0/255.0
+          ABLUE=226.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='VRED'
+          ARED=208.0/255.0
+          AGREEN=32.0/255.0
+          ABLUE=144.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='DGRE'
+          ARED=47.0/255.0
+          AGREEN=79.0/255.0
+          ABLUE=79.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='LGRE'
+          ARED=211.0/255.0
+          AGREEN=211.0/255.0
+          ABLUE=211.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='AQUA'
+          ARED=127.0/255.0
+          AGREEN=255.0/255.0
+          ABLUE=212.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='BROW'
+          ARED=165.0/255.0
+          AGREEN=42.0/255.0
+          ABLUE=42.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='CABL'
+          ARED=95.0/255.0
+          AGREEN=158.0/255.0
+          ABLUE=160.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='CORA'
+          ARED=255.0/255.0
+          AGREEN=127.0/255.0
+          ABLUE=80.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='CBLU'
+          ARED=100.0/255.0
+          AGREEN=149.0/255.0
+          ABLUE=237.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='DOGR'
+          ARED=85.0/255.0
+          AGREEN=107.0/255.0
+          ABLUE=47.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='DORC'
+          ARED=153.0/255.0
+          AGREEN=50.0/255.0
+          ABLUE=204.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='DSBL'
+          ARED=72.0/255.0
+          AGREEN=61.0/255.0
+          ABLUE=139.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='DTUR'
+          ARED=0.0/255.0
+          AGREEN=206.0/255.0
+          ABLUE=209.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='FIRE'
+          ARED=178.0/255.0
+          AGREEN=34.0/255.0
+          ABLUE=34.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='FGRE'
+          ARED=34.0/255.0
+          AGREEN=139.0/255.0
+          ABLUE=34.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='GOLD'
+          ARED=255.0/255.0
+          AGREEN=215.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='GLDR'
+          ARED=218.0/255.0
+          AGREEN=165.0/255.0
+          ABLUE=32.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='GRAY'
+          ARED=192.0/255.0
+          AGREEN=192.0/255.0
+          ABLUE=192.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='IRED'
+          ARED=205.0/255.0
+          AGREEN=92.0/255.0
+          ABLUE=92.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='KHAK'
+          ARED=240.0/255.0
+          AGREEN=230.0/255.0
+          ABLUE=140.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='DMGR'
+          ARED=105.0/255.0
+          AGREEN=105.0/255.0
+          ABLUE=105.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='LSBL'
+          ARED=176.0/255.0
+          AGREEN=196.0/255.0
+          ABLUE=222.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='LGRE'
+          ARED=50.0/255.0
+          AGREEN=205.0/255.0
+          ABLUE=50.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MARO'
+          ARED=176.0/255.0
+          AGREEN=48.0/255.0
+          ABLUE=96.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MAQU'
+          ARED=102.0/255.0
+          AGREEN=205.0/255.0
+          ABLUE=170.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MBLU'
+          ARED=0.0/255.0
+          AGREEN=0.0/255.0
+          ABLUE=205.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MFGR'
+          ARED=107.0/255.0
+          AGREEN=142.0/255.0
+          ABLUE=35.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MGLD'
+          ARED=250.0/255.0
+          AGREEN=250.0/255.0
+          ABLUE=210.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MORC'
+          ARED=186.0/255.0
+          AGREEN=85.0/255.0
+          ABLUE=211.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MSGR'
+          ARED=60.0/255.0
+          AGREEN=179.0/255.0
+          ABLUE=113.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MSBL'
+          ARED=123.0/255.0
+          AGREEN=104.0/255.0
+          ABLUE=238.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MSPG'
+          ARED=0.0/255.0
+          AGREEN=250.0/255.0
+          ABLUE=154.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MTUR'
+          ARED=72.0/255.0
+          AGREEN=209.0/255.0
+          ABLUE=204.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MVRD'
+          ARED=199.0/255.0
+          AGREEN=21.0/255.0
+          ABLUE=133.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MDBL'
+          ARED=25.0/255.0
+          AGREEN=25.0/255.0
+          ABLUE=112.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='NAVY'
+          ARED=0.0/255.0
+          AGREEN=0.0/255.0
+          ABLUE=128.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='ORED'
+          ARED=255.0/255.0
+          AGREEN=69.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='ORCH'
+          ARED=218.0/255.0
+          AGREEN=112.0/255.0
+          ABLUE=214.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='PGRE'
+          ARED=152.0/255.0
+          AGREEN=251.0/255.0
+          ABLUE=152.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='PINK'
+          ARED=255.0/255.0
+          AGREEN=192.0/255.0
+          ABLUE=203.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='PLUM'
+          ARED=221.0/255.0
+          AGREEN=160.0/255.0
+          ABLUE=221.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='PURP'
+          ARED=160.0/255.0
+          AGREEN=32.0/255.0
+          ABLUE=240.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='SALM'
+          ARED=250.0/255.0
+          AGREEN=128.0/255.0
+          ABLUE=114.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='SGRE'
+          ARED=46.0/255.0
+          AGREEN=139.0/255.0
+          ABLUE=87.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='SIEN'
+          ARED=160.0/255.0
+          AGREEN=82.0/255.0
+          ABLUE=45.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='SKBL'
+          ARED=135.0/255.0
+          AGREEN=206.0/255.0
+          ABLUE=235.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='SBLU'
+          ARED=106.0/255.0
+          AGREEN=90.0/255.0
+          ABLUE=205.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='SPGR'
+          ARED=0.0/255.0
+          AGREEN=255.0/255.0
+          ABLUE=127.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='STBL'
+          ARED=70.0/255.0
+          AGREEN=130.0/255.0
+          ABLUE=180.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='TAN '
+          ARED=210.0/255.0
+          AGREEN=180.0/255.0
+          ABLUE=140.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='THIS'
+          ARED=216.0/255.0
+          AGREEN=191.0/255.0
+          ABLUE=216.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='TURQ'
+          ARED=64.0/255.0
+          AGREEN=224.0/255.0
+          ABLUE=208.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='VIOL'
+          ARED=238.0/255.0
+          AGREEN=130.0/255.0
+          ABLUE=238.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='WHEA'
+          ARED=245.0/255.0
+          AGREEN=222.0/255.0
+          ABLUE=179.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='GYEL'
+          ARED=173.0/255.0
+          AGREEN=255.0/255.0
+          ABLUE=47.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='LCYA'
+          ARED=224.0/255.0
+          AGREEN=255.0/255.0
+          ABLUE=255.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='BLU2'
+          ARED=0.0/255.0
+          AGREEN=0.0/255.0
+          ABLUE=238.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='BLU3'
+          ARED=0.0/255.0
+          AGREEN=0.0/255.0
+          ABLUE=205.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='BLU4'
+          ARED=0.0/255.0
+          AGREEN=0.0/255.0
+          ABLUE=139.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='CYA2'
+          ARED=0.0/255.0
+          AGREEN=238.0/255.0
+          ABLUE=238.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='CYA3'
+          ARED=0.0/255.0
+          AGREEN=205.0/255.0
+          ABLUE=205.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='CYA4'
+          ARED=0.0/255.0
+          AGREEN=139.0/255.0
+          ABLUE=139.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='GRE2'
+          ARED=0.0/255.0
+          AGREEN=238.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='GRE3'
+          ARED=0.0/255.0
+          AGREEN=205.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='GRE4'
+          ARED=0.0/255.0
+          AGREEN=139.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='YEL2'
+          ARED=238.0/255.0
+          AGREEN=238.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='YEL3'
+          ARED=205.0/255.0
+          AGREEN=205.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='YEL4'
+          ARED=139.0/255.0
+          AGREEN=139.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='ORA2'
+          ARED=238.0/255.0
+          AGREEN=154.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='ORA3'
+          ARED=205.0/255.0
+          AGREEN=133.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='ORA4'
+          ARED=139.0/255.0
+          AGREEN=90.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='RED2'
+          ARED=238.0/255.0
+          AGREEN=0.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='RED3'
+          ARED=205.0/255.0
+          AGREEN=0.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='RED4'
+          ARED=139.0/255.0
+          AGREEN=0.0/255.0
+          ABLUE=0.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MAG2'
+          ARED=238.0/255.0
+          AGREEN=0.0/255.0
+          ABLUE=238.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MAG3'
+          ARED=205.0/255.0
+          AGREEN=0.0/255.0
+          ABLUE=205.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:24)='definecolor{    }{rgb}{'
+          NCSTR=24
+          ICSTR(14:17)='MAG4'
+          ARED=139.0/255.0
+          AGREEN=0.0/255.0
+          ABLUE=139.0/255.0
+          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=','
+          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='}'
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+        ENDIF
 !
 !CCCC     PGRAPHIC AND LGRAPHIC FOR IMPORTING EXTERNAL
 !CCCC     POSTSCRIPT FILES.  NOT RELEVANT IN THIS CONTEXT,
@@ -19176,1645 +20898,6 @@
         CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
       ENDIF
-!
-!  DEFINE GRAY SCALE COLORS
-!
-      IF(ILATCO.EQ.'ON')THEN
-        NCHTOT=5
-        NCHDEC=3
-        DO 15110 I=0,9
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:25)='definecolor{G   }{gray}{'
-          NCSTR=25
-          WRITE(ICSTR(15:15),'(I1)')I
-          ACOL=REAL(I)/100.0
-          CALL GRTRRE(ACOL,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-15110   CONTINUE
-        DO 15120 I=10,99
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:25)='definecolor{G   }{gray}{'
-          NCSTR=25
-          WRITE(ICSTR(15:16),'(I2)')I
-          ACOL=REAL(I)/100.0
-          CALL GRTRRE(ACOL,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-15120   CONTINUE
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:29)='definecolor{G100}{gray}{1.0}'
-        NCSTR=29
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-!  IF COLOR SWITCH ON, DEFINE COLORS BASED ON RGB VALUES
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='WHIT'
-        ARED=1.0
-        AGREEN=1.0
-        ABLUE=1.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='BLAC'
-        ARED=0.0
-        AGREEN=0.0
-        ABLUE=0.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='RED '
-        ARED=1.0
-        AGREEN=0.0
-        ABLUE=0.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='BLUE'
-        ARED=0.0
-        AGREEN=0.0
-        ABLUE=1.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='GREE'
-        ARED=0.0
-        AGREEN=1.0
-        ABLUE=0.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MAGE'
-        ARED=1.0
-        AGREEN=0.0
-        ABLUE=1.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='ORAN'
-        ARED=1.0
-        AGREEN=165.0/255.0
-        ABLUE=0.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='CYAN'
-        ARED=0.0
-        AGREEN=1.0
-        ABLUE=1.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='YELL'
-        ARED=1.0
-        AGREEN=1.0
-        ABLUE=0.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='YGRE'
-        ARED=154.0/255.0
-        AGREEN=205.0/255.0
-        ABLUE=50.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='DGRE'
-        ARED=0.0/255.0
-        AGREEN=100.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='LBLU'
-        ARED=173.0/255.0
-        AGREEN=216.0/255.0
-        ABLUE=230.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='VBLU'
-        ARED=138.0/255.0
-        AGREEN=43.0/255.0
-        ABLUE=226.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='VRED'
-        ARED=208.0/255.0
-        AGREEN=32.0/255.0
-        ABLUE=144.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='DGRE'
-        ARED=47.0/255.0
-        AGREEN=79.0/255.0
-        ABLUE=79.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='LGRE'
-        ARED=211.0/255.0
-        AGREEN=211.0/255.0
-        ABLUE=211.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='AQUA'
-        ARED=127.0/255.0
-        AGREEN=255.0/255.0
-        ABLUE=212.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='BROW'
-        ARED=165.0/255.0
-        AGREEN=42.0/255.0
-        ABLUE=42.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='CABL'
-        ARED=95.0/255.0
-        AGREEN=158.0/255.0
-        ABLUE=160.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='CORA'
-        ARED=255.0/255.0
-        AGREEN=127.0/255.0
-        ABLUE=80.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='CBLU'
-        ARED=100.0/255.0
-        AGREEN=149.0/255.0
-        ABLUE=237.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='DOGR'
-        ARED=85.0/255.0
-        AGREEN=107.0/255.0
-        ABLUE=47.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='DORC'
-        ARED=153.0/255.0
-        AGREEN=50.0/255.0
-        ABLUE=204.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='DSBL'
-        ARED=72.0/255.0
-        AGREEN=61.0/255.0
-        ABLUE=139.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='DTUR'
-        ARED=0.0/255.0
-        AGREEN=206.0/255.0
-        ABLUE=209.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='FIRE'
-        ARED=178.0/255.0
-        AGREEN=34.0/255.0
-        ABLUE=34.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='FGRE'
-        ARED=34.0/255.0
-        AGREEN=139.0/255.0
-        ABLUE=34.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='GOLD'
-        ARED=255.0/255.0
-        AGREEN=215.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='GLDR'
-        ARED=218.0/255.0
-        AGREEN=165.0/255.0
-        ABLUE=32.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='GRAY'
-        ARED=192.0/255.0
-        AGREEN=192.0/255.0
-        ABLUE=192.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='IRED'
-        ARED=205.0/255.0
-        AGREEN=92.0/255.0
-        ABLUE=92.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='KHAK'
-        ARED=240.0/255.0
-        AGREEN=230.0/255.0
-        ABLUE=140.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='DMGR'
-        ARED=105.0/255.0
-        AGREEN=105.0/255.0
-        ABLUE=105.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='LSBL'
-        ARED=176.0/255.0
-        AGREEN=196.0/255.0
-        ABLUE=222.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='LGRE'
-        ARED=50.0/255.0
-        AGREEN=205.0/255.0
-        ABLUE=50.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MARO'
-        ARED=176.0/255.0
-        AGREEN=48.0/255.0
-        ABLUE=96.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MAQU'
-        ARED=102.0/255.0
-        AGREEN=205.0/255.0
-        ABLUE=170.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MBLU'
-        ARED=0.0/255.0
-        AGREEN=0.0/255.0
-        ABLUE=205.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MFGR'
-        ARED=107.0/255.0
-        AGREEN=142.0/255.0
-        ABLUE=35.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MGLD'
-        ARED=250.0/255.0
-        AGREEN=250.0/255.0
-        ABLUE=210.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MORC'
-        ARED=186.0/255.0
-        AGREEN=85.0/255.0
-        ABLUE=211.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MSGR'
-        ARED=60.0/255.0
-        AGREEN=179.0/255.0
-        ABLUE=113.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MSBL'
-        ARED=123.0/255.0
-        AGREEN=104.0/255.0
-        ABLUE=238.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MSPG'
-        ARED=0.0/255.0
-        AGREEN=250.0/255.0
-        ABLUE=154.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MTUR'
-        ARED=72.0/255.0
-        AGREEN=209.0/255.0
-        ABLUE=204.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MVRD'
-        ARED=199.0/255.0
-        AGREEN=21.0/255.0
-        ABLUE=133.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MDBL'
-        ARED=25.0/255.0
-        AGREEN=25.0/255.0
-        ABLUE=112.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='NAVY'
-        ARED=0.0/255.0
-        AGREEN=0.0/255.0
-        ABLUE=128.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='ORED'
-        ARED=255.0/255.0
-        AGREEN=69.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='ORCH'
-        ARED=218.0/255.0
-        AGREEN=112.0/255.0
-        ABLUE=214.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='PGRE'
-        ARED=152.0/255.0
-        AGREEN=251.0/255.0
-        ABLUE=152.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='PINK'
-        ARED=255.0/255.0
-        AGREEN=192.0/255.0
-        ABLUE=203.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='PLUM'
-        ARED=221.0/255.0
-        AGREEN=160.0/255.0
-        ABLUE=221.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='PURP'
-        ARED=160.0/255.0
-        AGREEN=32.0/255.0
-        ABLUE=240.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='SALM'
-        ARED=250.0/255.0
-        AGREEN=128.0/255.0
-        ABLUE=114.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='SGRE'
-        ARED=46.0/255.0
-        AGREEN=139.0/255.0
-        ABLUE=87.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='SIEN'
-        ARED=160.0/255.0
-        AGREEN=82.0/255.0
-        ABLUE=45.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='SKBL'
-        ARED=135.0/255.0
-        AGREEN=206.0/255.0
-        ABLUE=235.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='SBLU'
-        ARED=106.0/255.0
-        AGREEN=90.0/255.0
-        ABLUE=205.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='SPGR'
-        ARED=0.0/255.0
-        AGREEN=255.0/255.0
-        ABLUE=127.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='STBL'
-        ARED=70.0/255.0
-        AGREEN=130.0/255.0
-        ABLUE=180.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='TAN '
-        ARED=210.0/255.0
-        AGREEN=180.0/255.0
-        ABLUE=140.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='THIS'
-        ARED=216.0/255.0
-        AGREEN=191.0/255.0
-        ABLUE=216.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='TURQ'
-        ARED=64.0/255.0
-        AGREEN=224.0/255.0
-        ABLUE=208.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='VIOL'
-        ARED=238.0/255.0
-        AGREEN=130.0/255.0
-        ABLUE=238.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='WHEA'
-        ARED=245.0/255.0
-        AGREEN=222.0/255.0
-        ABLUE=179.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='GYEL'
-        ARED=173.0/255.0
-        AGREEN=255.0/255.0
-        ABLUE=47.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='LCYA'
-        ARED=224.0/255.0
-        AGREEN=255.0/255.0
-        ABLUE=255.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='BLU2'
-        ARED=0.0/255.0
-        AGREEN=0.0/255.0
-        ABLUE=238.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='BLU3'
-        ARED=0.0/255.0
-        AGREEN=0.0/255.0
-        ABLUE=205.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='BLU4'
-        ARED=0.0/255.0
-        AGREEN=0.0/255.0
-        ABLUE=139.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='CYA2'
-        ARED=0.0/255.0
-        AGREEN=238.0/255.0
-        ABLUE=238.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='CYA3'
-        ARED=0.0/255.0
-        AGREEN=205.0/255.0
-        ABLUE=205.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='CYA4'
-        ARED=0.0/255.0
-        AGREEN=139.0/255.0
-        ABLUE=139.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='GRE2'
-        ARED=0.0/255.0
-        AGREEN=238.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='GRE3'
-        ARED=0.0/255.0
-        AGREEN=205.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='GRE4'
-        ARED=0.0/255.0
-        AGREEN=139.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='YEL2'
-        ARED=238.0/255.0
-        AGREEN=238.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='YEL3'
-        ARED=205.0/255.0
-        AGREEN=205.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='YEL4'
-        ARED=139.0/255.0
-        AGREEN=139.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='ORA2'
-        ARED=238.0/255.0
-        AGREEN=154.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='ORA3'
-        ARED=205.0/255.0
-        AGREEN=133.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='ORA4'
-        ARED=139.0/255.0
-        AGREEN=90.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='RED2'
-        ARED=238.0/255.0
-        AGREEN=0.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='RED3'
-        ARED=205.0/255.0
-        AGREEN=0.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='RED4'
-        ARED=139.0/255.0
-        AGREEN=0.0/255.0
-        ABLUE=0.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MAG2'
-        ARED=238.0/255.0
-        AGREEN=0.0/255.0
-        ABLUE=238.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MAG3'
-        ARED=205.0/255.0
-        AGREEN=0.0/255.0
-        ABLUE=205.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:24)='definecolor{    }{rgb}{'
-        NCSTR=24
-        ICSTR(14:17)='MAG4'
-        ARED=139.0/255.0
-        AGREEN=0.0/255.0
-        ABLUE=139.0/255.0
-        CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='}'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-      ENDIF
-!
       GO TO 9000
 !
 !               ******************************************************
@@ -31774,10 +31857,10 @@
 !
       RETURN
       END SUBROUTINE GRSEPA
-      SUBROUTINE GRSEPP(I,   &
-                        IDMANU,IDMODE,IDMOD2,IDMOD3,   &
+      SUBROUTINE GRSEPP(I,                                           &
+                        IDMANU,IDMODE,IDMOD2,IDMOD3,                 &
                         IDPOWE,IDCONT,IDCOLO,IDFONT,IDNVPP,IDNHPP,   &
-                        IDUNIT,IDNVOF,IDNHOF,   &
+                        IDUNIT,IDNVOF,IDNHOF,                        &
                         IBUGO2,IFOUN2,IERROR)
 !
 !     PURPOSE--SCAN FOR PARTICULAR MANUFACTURERS FOR DEVICE I, AND
@@ -32749,6 +32832,7 @@
           IGUNIT=ICAPNU
           IFLAG9=1
         ENDIF
+        IDCONT(I)='ON'
         IDNVOF(I)=0
         IDNHOF(I)=0
         ADOTPI=300.0

@@ -114,7 +114,7 @@
           ELSEIF(ISTAT.GE.6 .AND. BUF(1:6).EQ.'-LARGE' .OR.   &
                  BUF(1:6).EQ.'-large')THEN
             QWI.W = 1150
-            QWI.H = 1000
+            QWI.H = 925
             QWSCRN='LARG'
           ELSEIF(ISTAT.GE.7 .AND. BUF(1:7).EQ.'-LAPTOP' .OR.   &
                  BUF(1:7).EQ.'-laptop')THEN
@@ -124,13 +124,13 @@
           ELSEIF(ISTAT.GE.9 .AND. BUF(1:9).EQ.'-FILLIBEN' .OR.   &
                  BUF(1:9).EQ.'-filliben')THEN
             QWI.W = 1150
-            QWI.H = 1000
+            QWI.H = 925
             QWSCRN='LARG'
             IQWNTL='ON'
           ELSEIF(ISTAT.GE.10 .AND. BUF(1:10).EQ.'-EXTRAWIDE' .OR.   &
                  BUF(1:10).EQ.'-extrawide')THEN
             QWI.W = 1600
-            QWI.H = 1000
+            QWI.H = 925
             QWSCRN='WIDE'
           ELSEIF(ISTAT.GE.16 .AND.   &
                  BUF(1:16).EQ.'-TILE_HORIZONTAL' .OR.   &

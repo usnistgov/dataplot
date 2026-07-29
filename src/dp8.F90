@@ -9088,22 +9088,22 @@
           IVARI3=IVARN1(J)
           IVARI4=IVARN2(J)
           IF(ICASAN.EQ.'KTAU')THEN
-            CALL DP2SI2(Y,X,NS1,ICASA2,   &
-                        TEMP1,TEMP2,MAXNXT,   &
-                        IVARID,IVARI2,IVARI3,IVARI4,   &
-                        ICAPSW,ICAPTY,IFORSW,IKTATA,   &
-                        STATVA,STATCD,PVALUE,PVALLT,PVALUT,   &
-                        CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                        CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+            CALL DP2SI2(Y,X,NS1,ICASA2,                              &
+                        TEMP1,TEMP2,ITEMP1,MAXNXT,                   &
+                        IVARID,IVARI2,IVARI3,IVARI4,                 &
+                        ICAPSW,ICAPTY,IFORSW,IKTATA,IKTACU,IKTADE,   &
+                        STATVA,STATCD,PVALUE,PVALLT,PVALUT,          &
+                        CUTU90,CUTU95,CTU975,CUTU99,CTU995,          &
+                        CUTL90,CUTL95,CTL975,CUTL99,CTL995,          &
                         IBUGA3,ISUBRO,IERROR)
             CTU999=CPUMIN
             CTL999=CPUMIN
           ELSE
-            CALL DP2RC2(Y,X,NS1,ICASA2,   &
-                        TEMP1,TEMP2,TEMP3,MAXNXT,   &
-                        IVARID,IVARI2,IVARI3,IVARI4,   &
-                        ICAPSW,ICAPTY,IFORSW,IRCRTA,   &
-                        STATVA,STATCD,PVALUE,PVALLT,PVALUT,   &
+            CALL DP2RC2(Y,X,NS1,ICASA2,                              &
+                        TEMP1,TEMP2,TEMP3,MAXNXT,                    &
+                        IVARID,IVARI2,IVARI3,IVARI4,                 &
+                        ICAPSW,ICAPTY,IFORSW,IRCRTA,                 &
+                        STATVA,STATCD,PVALUE,PVALLT,PVALUT,          &
                         CUTU90,CUTU95,CTU975,CUTU99,CTU995,CTU999,   &
                         CUTL90,CUTL95,CTL975,CUTL99,CTL995,CTL999,   &
                         IBUGA3,ISUBRO,IERROR)
@@ -9128,10 +9128,10 @@
           ILAST=.FALSE.
           IF(I.EQ.1 .AND. J.EQ.2)IFRST=.TRUE.
           IF(I.EQ.NUMVAR .AND. J.EQ.NUMVAR)ILAST=.TRUE.
-          CALL DP2SI5(STATVA,STATCD,PVALUE,PVALLT,PVALUT,   &
+          CALL DP2SI5(STATVA,STATCD,PVALUE,PVALLT,PVALUT,          &
                       CUTU90,CUTU95,CTU975,CUTU99,CTU995,CTU999,   &
                       CUTL90,CUTL95,CTL975,CUTL99,CTL995,CTL999,   &
-                      IFLAGU,IFRST,ILAST,   &
+                      IFLAGU,IFRST,ILAST,                          &
                       IBUGA2,IBUGA3,ISUBRO,IERROR)
 !
  5220   CONTINUE
@@ -9156,13 +9156,13 @@
 !
       RETURN
       END SUBROUTINE DP2SIN
-      SUBROUTINE DP2SI2(Y1,Y2,N,ICASA2,   &
-                        TEMP1,TEMP2,MAXNXT,   &
-                        IVARID,IVARI2,IVARI3,IVARI4,   &
-                        ICAPSW,ICAPTY,IFORSW,IKTATA,   &
-                        STATVA,STATCD,PVAL,PVALLT,PVALUT,   &
-                        CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                        CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+      SUBROUTINE DP2SI2(Y1,Y2,N,ICASA2,                              &
+                        TEMP1,TEMP2,ITEMP1,MAXNXT,                   &
+                        IVARID,IVARI2,IVARI3,IVARI4,                 &
+                        ICAPSW,ICAPTY,IFORSW,IKTATA,IKTACU,IKTADE,   &
+                        STATVA,STATCD,PVAL,PVALLT,PVALUT,            &
+                        CUTU90,CUTU95,CTU975,CUTU99,CTU995,          &
+                        CUTL90,CUTL95,CTL975,CUTL99,CTL995,          &
                         IBUGA3,ISUBRO,IERROR)
 !
 !     PURPOSE--CARRY OUT A 2-SAMPLE TEST FOR INDEPENDENCE BASED ON
@@ -9189,6 +9189,7 @@
       CHARACTER*4 ICASA2
       CHARACTER*4 IFORSW
       CHARACTER*4 IKTATA
+      CHARACTER*4 IKTADE
       CHARACTER*4 IVARID
       CHARACTER*4 IVARI2
       CHARACTER*4 IVARI3
@@ -9198,6 +9199,7 @@
       CHARACTER*4 IERROR
 !
       CHARACTER*4 IWRITE
+      CHARACTER*4 ICASA3
       CHARACTER*40 IDIST
 !
       CHARACTER*4 ISUBN1
@@ -9210,6 +9212,7 @@
       DIMENSION Y2(*)
       DIMENSION TEMP1(*)
       DIMENSION TEMP2(*)
+      DIMENSION ITEMP1(*)
 !
       PARAMETER (NUMALP=5)
       REAL ALPHA(NUMALP)
@@ -9263,8 +9266,8 @@
         WRITE(ICOUT,51)
    51   FORMAT('**** AT THE BEGINNING OF DP2SI2--')
         CALL DPWRST('XXX','WRIT')
-        WRITE(ICOUT,52)IBUGA3,ISUBRO,N
-   52   FORMAT('IBUGA3,ISUBRO,N = ',2(A4,2X),I8)
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,IKTATA,IKTADE,N,IKTACU
+   52   FORMAT('IBUGA3,ISUBRO,IKTATA,IKTADE,N,IKTACU = ',4(A4,2X),2I8)
         CALL DPWRST('XXX','WRIT')
         DO 56 I=1,N
           WRITE(ICOUT,57)I,Y1(I),Y2(I)
@@ -9285,20 +9288,21 @@
 !
       IFLAG=0
       IDIST='NULL'
-      CALL SUMRAW(Y1,N,IDIST,IFLAG,   &
+      CALL SUMRAW(Y1,N,IDIST,IFLAG,                &
                   YMEAN1,YVAR1,YSD1,YMIN1,YMAX1,   &
                   ISUBRO,IBUGA3,IERROR)
 !
-      CALL SUMRAW(Y2,N,IDIST,IFLAG,   &
+      CALL SUMRAW(Y2,N,IDIST,IFLAG,                &
                   YMEAN2,YVAR2,YSD2,YMIN2,YMAX2,   &
                   ISUBRO,IBUGA3,IERROR)
 !
-      CALL KENTAU(Y1,Y2,N,ICASA2,IKTATA,IWRITE,   &
-                  TEMP1,TEMP2,MAXNXT,   &
-                  STATVA,AKTAUA,AKTAUB,AKTAUC,   &
-                  STATCD,PVAL,PVALLT,PVALUT,   &
-                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+      ICASA3='ALL'
+      CALL KENTAU(Y1,Y2,N,ICASA2,ICASA3,IKTATA,IKTACU,IWRITE,   &
+                  TEMP1,TEMP2,ITEMP1,MAXNXT,                    &
+                  STATVA,AKTAUA,AKTAUB,AKTAUC,                  &
+                  STATCD,PVAL,PVALLT,PVALUT,                    &
+                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,           &
+                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,           &
                   IBUGA3,ISUBRO,IERROR)
       IF(IERROR.EQ.'YES')GO TO 9000
 !
@@ -14362,6 +14366,8 @@
       DOUBLE PRECISION XPSU(*)
       DOUBLE PRECISION WK3(*)
 !
+      DOUBLE PRECISION DSD
+!
       PARAMETER (NUMALP=7)
       REAL ALPHA(NUMALP)
       REAL ADC(NUMALP)
@@ -14435,9 +14441,9 @@
    56   CONTINUE
       ENDIF
 !
-      CALL DPADK3(Y,TAG,N,ALPHA,NUMALP,   &
+      CALL DPADK3(Y,TAG,N,ALPHA,NUMALP,                             &
                   XTEMP,YTEMP,XPS,XPSU,WK3,IPBCH,ISIZE,IWK2,NTIE,   &
-                  ADKSTA,ADC,DSD,IFLAG,NBCH,MINSIZ,MAXSIZ,   &
+                  ADKSTA,ADC,DSD,IFLAG,NBCH,MINSIZ,MAXSIZ,          &
                   IBUGA3,ISUBRO,IERROR)
       IF(IERROR.EQ.'YES')GO TO 9000
 !

@@ -40354,10 +40354,10 @@
  2199 CONTINUE
       RETURN
       END SUBROUTINE DPLINE
-      SUBROUTINE DPLIPO(NLAB,AMEAN,ASD,WTS,N,   &
-                        CUMWTS,YUNIF,YNORM,YSAVE,   &
-                        XLP,SELIP1,ALOWLP,AUPPLP,   &
-                        IWRITE,IOUNI5,   &
+      SUBROUTINE DPLIPO(NLAB,AMEAN,ASD,WTS,N,                &
+                        CUMWTS,YUNIF,YNORM,YSAVE,            &
+                        XLP,SELIP1,ALOWLP,AUPPLP,            &
+                        IWRITE,IOUNI5,                       &
                         ICAPSW,ICAPTY,MAXNXT,NUMDIG,ISEED,   &
                         ISUBRO,IBUGA3,IERROR)
 !

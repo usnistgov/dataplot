@@ -4977,7 +4977,7 @@
                     IREAAS,IREAPC,                                     &
                     IB,                                                &
                     IOTERM,IANSLO,MAXLIL,MAXCIL,ILOOST,ILOOLI,         &
-                    IREPCH,IMALEV,IREANQ,                              &
+                    IREPCH,IMALEV,IREANQ,IREANC,IREATA,                &
                     IERRFI,IBUGS2,ISUBRO,IERROR)
 !CCCC   ICOMCH AND ICOMFFL ADDED TO ARGUMENT LIST MAY, 1990.
 !CCCC   THE    LINETY   ARGUMENT ADDED ABOVE      SEPTEMBER 1995

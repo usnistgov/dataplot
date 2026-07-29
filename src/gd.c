@@ -199,10 +199,10 @@
 gdImagePtr    im;                 /* Declare Image for writing */
 gdFontPtr     im_font;            /* Image Font Pointer */
 FILE          *jpegout;           /* File ID for Image (writing) */
-char          file_string[160];   /* Name of current file (writing) */
+char          file_string[80];   /* Name of current file (writing) */
 gdImagePtr    im2;                /* Declare Image for reading */
 FILE          *jpegin;            /* File ID for Image (reading) */
-char          file_string_2[160]; /* Name of current file (reading) */
+char          file_string_2[80]; /* Name of current file (reading) */
 
 /* common parameters */
 int    COLOR_OPTION_GD = 0;            /* Specify fixed/true color */
@@ -469,11 +469,7 @@ void gderas(int *xpixels, int *ypixels, int *back_col, int *icol_type,
    }
 
    /* Now, start new image */
-#if INTEGER_PRECISION == 0
      i_to_s_2(file_name, file_string, 80, &len);
-#else
-     i_to_s_2(file_name, file_string, 160, &len);
-#endif
 
    /* Open image.  Different code is used for the "fixed"
     *              (i.e., a maximum of 255 distinct colors) and

@@ -7395,7 +7395,6 @@
             WRITE (ICOUT,999)
             WRITE (ICOUT,3101)
             CALL DPWRST('XXX','BUG ')
-            CALL DPWRST('XXX','BUG ')
             DO 310 L=1,NQ
                TEMPC0 = '1,'
                DO 300 I=1,N,N-1

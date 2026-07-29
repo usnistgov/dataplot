@@ -20631,12 +20631,12 @@
 !
       RETURN
       END SUBROUTINE CMPLMT 
-      SUBROUTINE CMPSTA(TEMP,TEMPZ,TEMPZ3,XTEMP1,XTEMP2,XTEMP3,   &
-                        XTEMP4,XTEMP5,   &
-                        MAXNXT,NS2,NSZ,NSZ3,NUMV2,ICASPL,ISTARA,   &
-                        ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,   &
-                        DTEMP1,DTEMP2,DTEMP3,   &
-                        RIGHT,   &
+      SUBROUTINE CMPSTA(TEMP,TEMPZ,TEMPZ3,XTEMP1,XTEMP2,XTEMP3,          &
+                        XTEMP4,XTEMP5,                                   &
+                        MAXNXT,NS2,NSZ,NSZ3,NUMV2,ICASPL,ISTARA,         &
+                        ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6, &
+                        DTEMP1,DTEMP2,DTEMP3,                            &
+                        RIGHT,                                           &
                         ISUBRO,IBUGG3,IERROR)
 !
 !     PURPOSE--COMPUTE THE VALUE OF ONE OF 100+ STATISTICS.  THIS
@@ -20780,6 +20780,10 @@
 !                 EIGHTH/NINTH DECILE
 !                 DECILE RATIO
 !                 EXTREME
+!                 INDEX GREATER THAN
+!                 INDEX GREATER THAN OR EQUAL TO
+!                 INDEX LESS    THAN
+!                 INDEX LESS    THAN OR EQUAL TO
 !                 INDEX MINIMUM
 !                 INDEX MAXIMUM
 !                 INDEX EXTREME
@@ -22151,6 +22155,11 @@
 !                                       STANDARD DEVIATION
 !     UPDATED         --FEBRUARY  2025. DEMMING REGRESSION
 !     UPDATED         --APRIL     2025. PERCENT ACCEPTABLE
+!     UPDATED         --APRIL     2026. CALL LIST TO KENTAU
+!     UPDATED         --MAY       2026. INDEX GREATER THAN
+!     UPDATED         --MAY       2026. INDEX GREATER THAN OR EQUAL TO
+!     UPDATED         --MAY       2026. INDEX LESS THAN
+!     UPDATED         --MAY       2026. INDEX LESS THAN OR EQUAL TO
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -22168,6 +22177,7 @@
       CHARACTER*4 MESSAG
 !
       CHARACTER*4 ICASZZ
+      CHARACTER*4 ICASP2
       CHARACTER*4 ITYP91
       CHARACTER*4 IWRITE
       CHARACTER*4 ICASE
@@ -22385,6 +22395,10 @@
       IF(ICASPL.EQ.'INMN')GO TO 31760
       IF(ICASPL.EQ.'INMX')GO TO 31770
       IF(ICASPL.EQ.'INEX')GO TO 31780
+      IF(ICASPL.EQ.'INGT')GO TO 31785
+      IF(ICASPL.EQ.'INGE')GO TO 31785
+      IF(ICASPL.EQ.'INLT')GO TO 31785
+      IF(ICASPL.EQ.'INLE')GO TO 31785
       IF(ICASPL.EQ.'UNIQ')GO TO 11315
 !
       IFLAGN=0
@@ -25048,15 +25062,15 @@
       GO TO 79000
 31540 CONTINUE
       ICASZZ='TWOS'
-      CALL KENTAU(TEMP,TEMPZ,NS2,ICASZZ,IKTATA,IWRITE,   &
-                  XTEMP1,XTEMP2,MAXNXT,   &
-                  RIGHT,AKTAUA,AKTAUB,AKTAUC,   &
-                  STATCD,PVAL,PVALLT,PVALUT,   &
-                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+      CALL KENTAU(TEMP,TEMPZ,NS2,ICASZZ,ICASPL,IKTATA,IKTACU,IWRITE,   &
+                  XTEMP1,XTEMP2,ITEMP1,MAXNXT,                         &
+                  RIGHT,AKTAUA,AKTAUB,AKTAUC,                          &
+                  STATCD,PVAL,PVALLT,PVALUT,                           &
+                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,                  &
+                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,                  &
                   IBUGG3,ISUBRO,IERROR)
-      IF(ICASPL.EQ.'KTAA')RIGHT=ABS(RIGHT)
-      IF(ICASPL.EQ.'TAUA')RIGHT=AKTAUA
+      IF(ICASPL.EQ.'TAUA')RIGHT=ABS(RIGHT)
+      IF(ICASPL.EQ.'KTAA')RIGHT=AKTAUA
       IF(ICASPL.EQ.'KTAB')RIGHT=AKTAUB
       IF(ICASPL.EQ.'KTAC')RIGHT=AKTAUC
       IF(ICASPL.EQ.'KTCD')RIGHT=STATCD
@@ -25068,27 +25082,53 @@
       GO TO 79000
 31545 CONTINUE
       ICASZZ='TWOS'
-      CALL KENTAU(TEMP,TEMPZ,NS2,ICASZZ,IKTATA,IWRITE,   &
-                  XTEMP1,XTEMP2,MAXNXT,   &
-                  R12,AKTAUA,AKTAUB,AKTAUC,   &
-                  STATCD,PVAL,PVALLT,PVALUT,   &
-                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+      ICASP2='KTAU'
+      IF(IKTADE.EQ.'B   ')ICASP2='TAUB'
+      IF(IKTADE.EQ.'C   ')ICASP2='TAUC'
+!
+      CALL KENTAU(TEMP,TEMPZ,NS2,ICASZZ,ICASP2,IKTATA,IKTACU,IWRITE,   &
+                  XTEMP1,XTEMP2,ITEMP1,MAXNXT,                         &
+                  AKTAU,AKTAUA,AKTAUB,AKTAUC,                          &
+                  STATCD,PVAL,PVALLT,PVALUT,                           &
+                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,                  &
+                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,                  &
                   IBUGG3,ISUBRO,IERROR)
-      CALL KENTAU(TEMP,TEMPZ3,NS2,ICASZZ,IKTATA,IWRITE,   &
-                  XTEMP1,XTEMP2,MAXNXT,   &
-                  R13,AKTAUA,AKTAUB,AKTAUC,   &
-                  STATCD,PVAL,PVALLT,PVALUT,   &
-                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+      IF(IKTADE.EQ.'B   ')THEN
+        R12=AKTAUB
+      ELSEIF(IKTADE.EQ.'C   ')THEN
+        R12=AKTAUC
+      ELSE
+        R12=AKTAU
+      ENDIF
+      CALL KENTAU(TEMP,TEMPZ3,NS2,ICASZZ,ICASP2,IKTATA,IKTACU,IWRITE,  &
+                  XTEMP1,XTEMP2,ITEMP1,MAXNXT,                         &
+                  AKTAU,AKTAUA,AKTAUB,AKTAUC,                          &
+                  STATCD,PVAL,PVALLT,PVALUT,                           &
+                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,                  &
+                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,                  &
                   IBUGG3,ISUBRO,IERROR)
-      CALL KENTAU(TEMPZ,TEMPZ3,NS2,ICASZZ,IKTATA,IWRITE,   &
-                  XTEMP1,XTEMP2,MAXNXT,   &
-                  R23,AKTAUA,AKTAUB,AKTAUC,   &
-                  STATCD,PVAL,PVALLT,PVALUT,   &
-                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+      IF(IKTADE.EQ.'B   ')THEN
+        R13=AKTAUB
+      ELSEIF(IKTADE.EQ.'C   ')THEN
+        R13=AKTAUC
+      ELSE
+        R13=AKTAU
+      ENDIF
+      CALL KENTAU(TEMPZ,TEMPZ3,NS2,ICASZZ,ICASP2,IKTATA,IKTACU,IWRITE,  &
+                  XTEMP1,XTEMP2,ITEMP1,MAXNXT,                          &
+                  AKTAU,AKTAUA,AKTAUB,AKTAUC,                           &
+                  STATCD,PVAL,PVALLT,PVALUT,                            &
+                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,                   &
+                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,                   &
                   IBUGG3,ISUBRO,IERROR)
+      IF(IKTADE.EQ.'B   ')THEN
+        R23=AKTAUB
+      ELSEIF(IKTADE.EQ.'C   ')THEN
+        R23=AKTAUC
+      ELSE
+        R23=AKTAU
+      ENDIF
+!
       ANUM=R12 - (R13*R23)
       DENOM=SQRT((1.0 - R13**2)*(1.0 - R23**2))
       IF(DENOM.GT.0.0)THEN
@@ -26988,6 +27028,20 @@
       CALL EXTIND(TEMP,NS2,IWRITE,PSTAMV,RIGHT,ISUBRO,IBUGG3,IERROR)
       GO TO 79000
 !
+31785 CONTINUE
+      IHP='CUTO'
+      IHP2='FF  '
+      IHWUSE='P'
+      MESSAG='YES'
+      CALL CHECKN(IHP,IHP2,IHWUSE,                                    &
+                  IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+                  ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+      CUTOFF=VALUE(ILOCP)
+      CALL GTIND(TEMP,NS2,ICASPL,CUTOFF,IWRITE,PSTAMV,RIGHT,           &
+                 ISUBRO,IBUGG3,IERROR)
+      GO TO 79000
+!
 31790 CONTINUE
       CALL DPGRU3(TEMP,NS2,IWRITE,PSTAMV,XGRUB,XCDF,XDIR,XIND,   &
                   ISUBRO,IBUGG3,IERROR)
@@ -28665,10 +28719,10 @@
         IOUNI5=0
       ENDIF
 !
-      CALL DPLIPO(NLAB,TEMP,TEMPZ,TEMPZ3,ITEMP1,   &
-                  XTEMP1,XTEMP2,XTEMP3,DTEMP1,   &
-                  XLP,SELIP1,ALOWLP,AUPPLP,   &
-                  IWRITE,IOUNI5,   &
+      CALL DPLIPO(NLAB,TEMP,TEMPZ,TEMPZ3,ITEMP1,       &
+                  XTEMP1,XTEMP2,XTEMP3,XTEMP4,         &
+                  XLP,SELIP1,ALOWLP,AUPPLP,            &
+                  IWRITE,IOUNI5,                       &
                   ICAPSW,ICAPTY,MAXNXT,NUMDIG,ISEED,   &
                   ISUBRO,IBUGG3,IERROR)
       IF(ICASPL.EQ.'LPOO')RIGHT=XLP
@@ -29157,11 +29211,11 @@
 !
 34035 CONTINUE
       IKRUGS='OFF'
-      CALL DPKRU3(TEMP,TEMPZ,NS2,   &
-                  TEMPZ3,XTEMP1,ITEMP1,MAXOBV,   &
+      CALL DPKRU3(TEMP,TEMPZ,NS2,                              &
+                  TEMPZ3,XTEMP1,ITEMP1,MAXOBV,                 &
                   XTEMP2,XTEMP3,XTEMP4,XTEMP5,DTEMP1,DTEMP2,   &
-                  STATVA,STATCD,PVAL2T,NUMDF,NUMDIS,S2,   &
-                  IKRUGS,   &
+                  STATVA,STATCD,PVAL2T,NUMDF,NUMDIS,S2,        &
+                  IKRUGS,                                      &
                   IBUGG3,ISUBRO,IERROR)
       IF(ICASPL.EQ.'KWTE')THEN
         RIGHT=STATVA
@@ -30119,10 +30173,10 @@
       IF(ALPHA.LE.0.0 .OR. ALPHA.GE.100.0)ALPHA=0.95
 !
       CALL DPLRS3(TEMP,NS2,TEMPZ,NSZ,ILRASC,TEMPZ3,XTEMP1,   &
-                  XTEMP2,XTEMP3,DTEMP1,MAXNXT,   &
-                  S,STATVA,STATCD,PVAL2T,PVALLT,PVALUT,   &
-                  STATEV,STATSD,STATVA,   &
-                  ALPHA,ALCL,UCL,   &
+                  XTEMP2,XTEMP3,XTEMP4,MAXNXT,               &
+                  S,STATVA,STATCD,PVAL2T,PVALLT,PVALUT,      &
+                  STATEV,STATSD,STATVA,                      &
+                  ALPHA,ALCL,UCL,                            &
                   IBUGG3,ISUBRO,IERROR)
 !
       IF(ICASPL.EQ.'LRST')RIGHT=STATVA
@@ -30323,12 +30377,12 @@
 !
       RETURN
       END SUBROUTINE CMPSTA
-      SUBROUTINE CMPST2(TEMP,TEMPZ,TEMPZ3,XTEMP1,XTEMP2,XTEMP3,   &
-                        XTEMP4,XTEMP5,   &
-                        MAXNXT,NS2,NSZ,NSZ3,NUMV2,ICASPL,ISTARA,   &
+      SUBROUTINE CMPST2(TEMP,TEMPZ,TEMPZ3,XTEMP1,XTEMP2,XTEMP3,            &
+                        XTEMP4,XTEMP5,                                     &
+                        MAXNXT,NS2,NSZ,NSZ3,NUMV2,ICASPL,ISTARA,           &
                         ISEED,ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,   &
-                        DTEMP1,DTEMP2,DTEMP3,   &
-                        RIGHT,   &
+                        DTEMP1,DTEMP2,DTEMP3,                              &
+                        RIGHT,                                             &
                         ISUBRO,IBUGG3,IERROR)
 !
 !     PURPOSE--THIS IS A COPY OF CMPSTA.  IT IS USED BY DPSBEX (USED
@@ -30561,6 +30615,11 @@
 !     UPDATED         --NOVEMBER  2024. POSITION EFFECT POSITION MEAN
 !                                       STANDARD DEVIATION
 !     UPDATED         --APRIL     2025. PERCENT ACCEPTABLE
+!     UPDATED         --APRIL     2026. CALL LIST TO KENTAU
+!     UPDATED         --MAY       2026. INDEX GREATER THAN
+!     UPDATED         --MAY       2026. INDEX GREATER THAN OR EQUAL TO
+!     UPDATED         --MAY       2026. INDEX LESS THAN
+!     UPDATED         --MAY       2026. INDEX LESS THAN OR EQUAL TO
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -30576,6 +30635,7 @@
       CHARACTER*4 MESSAG
 !
       CHARACTER*4 ICASZZ
+      CHARACTER*4 ICASP2
       CHARACTER*4 ITYP91
       CHARACTER*4 IWRITE
       CHARACTER*4 ICASE
@@ -30770,6 +30830,10 @@
       IF(ICASPL.EQ.'INMN')GO TO 31760
       IF(ICASPL.EQ.'INMX')GO TO 31770
       IF(ICASPL.EQ.'INEX')GO TO 31780
+      IF(ICASPL.EQ.'INGT')GO TO 31785
+      IF(ICASPL.EQ.'INGE')GO TO 31785
+      IF(ICASPL.EQ.'INLT')GO TO 31785
+      IF(ICASPL.EQ.'INLE')GO TO 31785
       IF(ICASPL.EQ.'UNIQ')GO TO 11315
 !
       IFLAGN=0
@@ -32844,17 +32908,17 @@
       GO TO 79000
 31540 CONTINUE
       ICASZZ='TWOS'
-      CALL KENTAU(TEMP,TEMPZ,NS2,ICASZZ,IKTATA,IWRITE,   &
-                  XTEMP1,XTEMP2,MAXNXT,   &
-                  RIGHT,AKTAUA,AKTAUB,AKTAUC,   &
-                  STATCD,PVAL,PVALLT,PVALUT,   &
-                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+      CALL KENTAU(TEMP,TEMPZ,NS2,ICASZZ,ICASPL,IKTATA,IKTACU,IWRITE,   &
+                  XTEMP1,XTEMP2,ITEMP1,MAXNXT,                         &
+                  RIGHT,AKTAUA,AKTAUB,AKTAUC,                          &
+                  STATCD,PVAL,PVALLT,PVALUT,                           &
+                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,                  &
+                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,                  &
                   IBUGG3,ISUBRO,IERROR)
-      IF(ICASPL.EQ.'TAUA')RIGHT=AKTAUA
+      IF(ICASPL.EQ.'TAUA')RIGHT=ABS(RIGHT)
+      IF(ICASPL.EQ.'KTAA')RIGHT=AKTAUA
       IF(ICASPL.EQ.'KTAB')RIGHT=AKTAUB
       IF(ICASPL.EQ.'KTAC')RIGHT=AKTAUC
-      IF(ICASPL.EQ.'KTAA')RIGHT=ABS(RIGHT)
       IF(ICASPL.EQ.'KTCD')RIGHT=STATCD
       IF(ICASPL.EQ.'KTPV')RIGHT=PVAL
       IF(ICASPL.EQ.'KTPL')RIGHT=PVALLT
@@ -32864,27 +32928,53 @@
       GO TO 79000
 31545 CONTINUE
       ICASZZ='TWOS'
-      CALL KENTAU(TEMP,TEMPZ,NS2,ICASZZ,IKTATA,IWRITE,   &
-                  XTEMP1,XTEMP2,MAXNXT,   &
-                  R12,AKTAUA,AKTAUB,AKTAUC,   &
-                  STATCD,PVAL,PVALLT,PVALUT,   &
-                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+      ICASP2='KTAU'
+      IF(IKTADE.EQ.'B   ')ICASP2='TAUB'
+      IF(IKTADE.EQ.'C   ')ICASP2='TAUC'
+!
+      CALL KENTAU(TEMP,TEMPZ,NS2,ICASZZ,ICASP2,IKTATA,IKTACU,IWRITE,   &
+                  XTEMP1,XTEMP2,ITEMP1,MAXNXT,                         &
+                  AKTAU,AKTAUA,AKTAUB,AKTAUC,                          &
+                  STATCD,PVAL,PVALLT,PVALUT,                           &
+                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,                  &
+                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,                  &
                   IBUGG3,ISUBRO,IERROR)
-      CALL KENTAU(TEMP,TEMPZ3,NS2,ICASZZ,IKTATA,IWRITE,   &
-                  XTEMP1,XTEMP2,MAXNXT,   &
-                  R13,AKTAUA,AKTAUB,AKTAUC,   &
-                  STATCD,PVAL,PVALLT,PVALUT,   &
-                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+      IF(IKTADE.EQ.'B   ')THEN
+        R12=AKTAUB
+      ELSEIF(IKTADE.EQ.'C   ')THEN
+        R12=AKTAUC
+      ELSE
+        R12=AKTAU
+      ENDIF
+      CALL KENTAU(TEMP,TEMPZ3,NS2,ICASZZ,ICASP2,IKTATA,IKTACU,IWRITE,  &
+                  XTEMP1,XTEMP2,ITEMP1,MAXNXT,                         &
+                  AKTAU,AKTAUA,AKTAUB,AKTAUC,                          &
+                  STATCD,PVAL,PVALLT,PVALUT,                           &
+                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,                  &
+                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,                  &
                   IBUGG3,ISUBRO,IERROR)
-      CALL KENTAU(TEMPZ,TEMPZ3,NS2,ICASZZ,IKTATA,IWRITE,   &
-                  XTEMP1,XTEMP2,MAXNXT,   &
-                  R23,AKTAUA,AKTAUB,AKTAUC,   &
-                  STATCD,PVAL,PVALLT,PVALUT,   &
-                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+      IF(IKTADE.EQ.'B   ')THEN
+        R13=AKTAUB
+      ELSEIF(IKTADE.EQ.'C   ')THEN
+        R13=AKTAUC
+      ELSE
+        R13=AKTAU
+      ENDIF
+      CALL KENTAU(TEMPZ,TEMPZ3,NS2,ICASZZ,ICASP2,IKTATA,IKTACU,IWRITE,  &
+                  XTEMP1,XTEMP2,ITEMP1,MAXNXT,                          &
+                  AKTAU,AKTAUA,AKTAUB,AKTAUC,                           &
+                  STATCD,PVAL,PVALLT,PVALUT,                            &
+                  CUTU90,CUTU95,CTU975,CUTU99,CTU995,                   &
+                  CUTL90,CUTL95,CTL975,CUTL99,CTL995,                   &
                   IBUGG3,ISUBRO,IERROR)
+      IF(IKTADE.EQ.'B   ')THEN
+        R23=AKTAUB
+      ELSEIF(IKTADE.EQ.'C   ')THEN
+        R23=AKTAUC
+      ELSE
+        R23=AKTAU
+      ENDIF
+!
       ANUM=R12 - (R13*R23)
       DENOM=SQRT((1.0 - R13**2)*(1.0 - R23**2))
       IF(DENOM.GT.0.0)THEN
@@ -34787,6 +34877,20 @@
       CALL EXTIND(TEMP,NS2,IWRITE,PSTAMV,RIGHT,ISUBRO,IBUGG3,IERROR)
       GO TO 79000
 !
+31785 CONTINUE
+      IHP='CUTO'
+      IHP2='FF  '
+      IHWUSE='P'
+      MESSAG='YES'
+      CALL CHECKN(IHP,IHP2,IHWUSE,                                    &
+                  IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,NUMNAM,MAXNAM,   &
+                  ISUBN1,ISUBN2,MESSAG,IANS,IWIDTH,ILOCP,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+      CUTOFF=VALUE(ILOCP)
+      CALL GTIND(TEMP,NS2,ICASPL,CUTOFF,IWRITE,PSTAMV,RIGHT,           &
+                 ISUBRO,IBUGG3,IERROR)
+      GO TO 79000
+!
 31790 CONTINUE
       CALL DPGRU3(TEMP,NS2,IWRITE,PSTAMV,XGRUB,XCDF,XDIR,XIND,   &
                   ISUBRO,IBUGG3,IERROR)
@@ -36452,10 +36556,10 @@
       IWRITE='OFF'
       IOUNI5=0
 !
-      CALL DPLIPO(NLAB,TEMP,TEMPZ,TEMPZ3,ITEMP1,   &
-                  XTEMP1,XTEMP2,XTEMP3,DTEMP1,   &
-                  XLP,SELIP1,ALOWLP,AUPPLP,   &
-                  IWRITE,IOUNI5,   &
+      CALL DPLIPO(NLAB,TEMP,TEMPZ,TEMPZ3,ITEMP1,       &
+                  XTEMP1,XTEMP2,XTEMP3,XTEMP4,         &
+                  XLP,SELIP1,ALOWLP,AUPPLP,            &
+                  IWRITE,IOUNI5,                       &
                   ICAPSW,ICAPTY,MAXNXT,NUMDIG,ISEED,   &
                   ISUBRO,IBUGG3,IERROR)
       IF(ICASPL.EQ.'LPOO')RIGHT=XLP
@@ -37901,10 +38005,10 @@
       IF(ALPHA.LE.0.0 .OR. ALPHA.GE.100.0)ALPHA=0.95
 !
       CALL DPLRS3(TEMP,NS2,TEMPZ,NSZ,ILRASC,TEMPZ3,XTEMP1,   &
-                  XTEMP2,XTEMP3,DTEMP1,MAXNXT,   &
-                  S,STATVA,STATCD,PVAL2T,PVALLT,PVALUT,   &
-                  STATEV,STATSD,STATVA,   &
-                  ALPHA,ALCL,UCL,   &
+                  XTEMP2,XTEMP3,XTEMP4,MAXNXT,               &
+                  S,STATVA,STATCD,PVAL2T,PVALLT,PVALUT,      &
+                  STATEV,STATSD,STATVA,                      &
+                  ALPHA,ALCL,UCL,                            &
                   IBUGG3,ISUBRO,IERROR)
 !
       IF(ICASPL.EQ.'LRST')RIGHT=STATVA

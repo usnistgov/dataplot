@@ -872,6 +872,9 @@
       DOUBLE PRECISION B31,B32,B33,B34,B35,B36,B37
       DOUBLE PRECISION D1,D3,D5,D7,D9,D11
 !
+      DOUBLE PRECISION DBETAI
+      EXTERNAL DBETAI
+!
 !-----COMMON----------------------------------------------------------
 !
       INCLUDE 'DPCOP2.INC'

@@ -3060,7 +3060,8 @@
       DOUBLE PRECISION x
 !     ..
 !     .. External Functions ..
-      DOUBLE PRECISION alnrel,gamln1
+      DOUBLE PRECISION gamln1
+      REAL alnrel
       EXTERNAL alnrel,gamln1
 !     ..
 !     .. Intrinsic Functions ..
@@ -3073,7 +3074,7 @@
       RETURN
                                                                                                                                   
    10 IF (x.GT.1.25D0) GO TO 20
-      gsumln = gamln1(x) + alnrel(x)
+      gsumln = gamln1(x) + alnrel(real(x))
       RETURN
                                                                                                                                   
    20 gsumln = gamln1(x-1.0D0) + dlog(x* (1.0D0+x))
@@ -3628,6 +3629,203 @@
  9000 CONTINUE
       RETURN
       END SUBROUTINE GTLRAN
+      SUBROUTINE GTIND(X,N,ICASPL,CUTOFF,IWRITE,PSTAMV,XIND,           &
+                       ISUBRO,IBUGA3,IERROR)
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES THE INDEX WHERE:
+!                1. FIRST VALUE GREATER THAN             CUTOFF
+!                2. FIRST VALUE GREATER THAN OR EQUAL TO CUTOFF
+!                3. FIRST VALUE LESS    THAN             CUTOFF
+!                4. FIRST VALUE LESS    THAN OR EQUAL TO CUTOFF
+!              VALUE OF ICASPL SPECIFIES WHICH CASE IS COMPUTED
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF
+!                                (UNSORTED OR SORTED) OBSERVATIONS.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS
+!                                IN THE VECTOR X.
+!     OUTPUT ARGUMENTS--XIND   = THE SINGLE PRECISION VALUE OF THE
+!                                COMPUTED INDEX.
+!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE COMPUTED INDEX.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2026.05
+!     ORIGINAL VERSION--MAY       2026.
+!     UPDATED         --JUNE      2026. COMMENT N=1 CODE SINCE NEED
+!                                       TO ACCOUNT FOR CASE WHERE NO
+!                                       MATCH IS FOUND.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICASPL
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='GTIN'
+      ISUBN2='D   '
+      IERROR='NO'
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'TIND')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF GTIND--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,ICASPL,N,CUTOFF
+   52   FORMAT('IBUGA3,ISUBRO,ICASPL,N,CUTOFF = ',3(A4,2X),I8,G15.7)
+        CALL DPWRST('XXX','BUG ')
+        DO 55 I=1,N
+          WRITE(ICOUT,56)I,X(I)
+   56     FORMAT('I,X(I) = ',I8,G15.7)
+          CALL DPWRST('XXX','BUG ')
+   55   CONTINUE
+      ENDIF
+!
+!               ********************************************
+!               **  STEP 1--                              **
+!               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+!               ********************************************
+!
+      AN=N
+!
+      IF(N.LT.1)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN INDEX (SUBROUTINE GTIND)')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE INPUT NUMBER OF OBSERVATIONS IS LESS THAN 1.')
+        WRITE(ICOUT,117)N
+  117   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+!     COMMENT OUT THE FOLLOWING CODE.  NEED TO ACCOUNT FOR CASE
+!     WHERE NO MATCH IS FOUND.
+!
+!     IF(N.EQ.1)THEN
+!       XIND=1.0
+!       GO TO 800
+!     ENDIF
+!
+!               *****************************************
+!               **  STEP 2--                           **
+!               **  COMPUTE THE INDEX.                 **
+!               *****************************************
+!
+      XIND=-1
+      IF(ICASPL.EQ.'INGT')THEN
+        DO I=1,N
+          IF(X(I).NE.PSTAMV .AND. X(I).GT.CUTOFF)THEN
+            XIND=REAL(I)
+            GO TO 800
+          ENDIF
+        ENDDO
+      ELSEIF(ICASPL.EQ.'INGE')THEN
+        DO I=1,N
+          IF(X(I).NE.PSTAMV .AND. X(I).GE.CUTOFF)THEN
+            XIND=REAL(I)
+            GO TO 800
+          ENDIF
+        ENDDO
+      ELSEIF(ICASPL.EQ.'INLT')THEN
+        DO I=1,N
+          IF(X(I).NE.PSTAMV .AND. X(I).LT.CUTOFF)THEN
+            XIND=REAL(I)
+            GO TO 800
+          ENDIF
+        ENDDO
+      ELSEIF(ICASPL.EQ.'INLE')THEN
+        DO I=1,N
+          IF(X(I).NE.PSTAMV .AND. X(I).LE.CUTOFF)THEN
+            XIND=REAL(I)
+            GO TO 800
+          ENDIF
+        ENDDO
+      ENDIF
+!
+!               *******************************
+!               **  STEP 3--                 **
+!               **  WRITE OUT A LINE         **
+!               **  OF SUMMARY INFORMATION.  **
+!               *******************************
+!
+  800 CONTINUE
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IF(ICASPL.EQ.'INGT')THEN
+          WRITE(ICOUT,811)CUTOFF,XIND
+  811     FORMAT('THE INDEX FOR THE FIRST VALUE GREATER THAN ',G15.7,  &
+                 ' = ',F12.0)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASPL.EQ.'INGE')THEN
+          WRITE(ICOUT,821)CUTOFF,XIND
+  821     FORMAT('THE INDEX FOR THE FIRST VALUE GREATER THAN OR ',     &
+                 'EQUAL TO ',G15.7,' = ',F12.0)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASPL.EQ.'INLT')THEN
+          WRITE(ICOUT,831)CUTOFF,XIND
+  831     FORMAT('THE INDEX FOR THE FIRST VALUE LESS THAN ',G15.7,  &
+                 ' = ',F12.0)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASPL.EQ.'INLE')THEN
+          WRITE(ICOUT,841)CUTOFF,XIND
+  841     FORMAT('THE INDEX FOR THE FIRST VALUE LESS THAN OR ',     &
+                 'EQUAL TO ',G15.7,' = ',F12.0)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT.      **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'TIND')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF GTIND--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR,XIND
+ 9012   FORMAT('IERROR,XIND = ',A4,2X,F12.0)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE GTIND
       SUBROUTINE GTRCDF(X,A,B,C,D,ANU1,ANU3,ALPHA,CDF)
 !
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE CUMULATIVE DISTRIBUTION

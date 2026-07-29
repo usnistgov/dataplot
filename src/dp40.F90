@@ -1890,6 +1890,9 @@
       DOUBLE PRECISION DTERM3
       DOUBLE PRECISION DCORR
 !
+      DOUBLE PRECISION DGAMMA
+      EXTERNAL DGAMMA
+!
       DIMENSION Y1(*)
       DIMENSION Y2(*)
 !
@@ -4363,7 +4366,7 @@
 !-------START POINT-----------------------------------------------------
 !
         DX=DBLE(X)
-        CALL NODCDF(X,DCDF)
+        CALL NODCDF(DX,DCDF)
         DCDF=2.0D0*DCDF-1.0D0
         CDF=REAL(DCDF)
       ENDIF
@@ -14069,6 +14072,8 @@
 !     UPDATED         --OCTOBER   2023. IPSTDP
 !     UPDATED         --OCTOBER   2023. IX11SF, IX11FT
 !     UPDATED         --FEBRUARY  2024. CHANGED DEFAULT X11 FONT
+!     UPDATED         --JULY      2026. ILATPD, ILATDR, ILATTY, ILATCG
+!     UPDATED         --JULY      2026. ILATCA
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -14909,6 +14914,11 @@
       ILATCO='OFF'
       ILATFS='OFF'
       ILATLT='HARD'
+      ILATPD='GRAP'
+      ILATDR='EPIC'
+      ILATTY='PDF '
+      ILATCG='PDF '
+      ILATCA='... add caption here ...'
 !
 !----------AQUATERM CASE-----------
 !
@@ -15428,6 +15438,10 @@
 !     UPDATED         --JULY      2025.  PCSPBW
 !     UPDATED         --JULY      2025.  IDMPNC, IDMPC2
 !     UPDATED         --SEPTEMBER 2025.  IDMPGH, IDMPGV
+!     UPDATED         --APRIL     2026.  IKTACU, IKTADE
+!     UPDATED         --MAY       2026.  IPBRTY, IPBRCI, IPBRBC
+!     UPDATED         --MAY       2026.  ITSRCI
+!     UPDATED         --JUNE      2026.  IREANC, IREATA
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -19466,6 +19480,23 @@
 !
       IREAPC='ON'
 !
+!CCCC THE FOLLOWING SECTION WAS ADDED    JUNE 2026
+!
+!               *******************************************************
+!               **  TREAT THE SET READ NUMBERS CONTAIN               **
+!               **                <COMMA/UNDERSCORE/OFF>             **
+!               *******************************************************
+!
+      IREANC='OFF'
+!
+!CCCC THE FOLLOWING SECTION WAS ADDED    JUNE 2026
+!
+!               *******************************************************
+!               **  TREAT THE SET READ TAB TO <COMMA/SPACE>          **
+!               *******************************************************
+!
+      IREATA='SPAC'
+!
 !CCCC THE FOLLOWING SECTION WAS ADDED    NOVEMBER 2019
 !
 !               ******************************************************
@@ -20693,6 +20724,23 @@
 !
       IKTATA='TABL'
 !
+!CCCC THE FOLLOWING SECTION WAS ADDED    APRIL 2026
+!
+!               **************************************************
+!               **  TREAT THE SET KENDALL TAU CUTOFF <VALUE>    **
+!               **************************************************
+!
+      IKTACU=100
+!
+!CCCC THE FOLLOWING SECTION WAS ADDED    APRIL 2026
+!
+!               **************************************************
+!               **  TREAT THE SET KENDALL TAU DEFINITION        **
+!               **                <B/C/CONOVER>                 **
+!               **************************************************
+!
+      IKTADE='B'
+!
 !CCCC THE FOLLOWING SECTION WAS ADDED    MARCH 2013
 !
 !               *****************************************************
@@ -20701,6 +20749,43 @@
 !               *****************************************************
 !
       IRCRTA='TABL'
+!
+!CCCC THE FOLLOWING SECTION WAS ADDED    MAY 2026
+!
+!               **************************************************
+!               **  TREAT THE SET PASSING BABLOK TYPE           **
+!               **                <METHOD COMPARISON/           **
+!               **                 ROBUST REGRESSION>           **
+!               **************************************************
+!
+      IPBRTY='METH'
+!
+!CCCC THE FOLLOWING SECTION WAS ADDED    MAY 2026
+!
+!               *******************************************************
+!               **  TREAT THE SET PASSING BABLOK CONFIDENCE INTERVAL **
+!               **                <NONE/JACKNIFE/BOOTSTRAP>          **
+!               *******************************************************
+!
+      IPBRCI='NONE'
+!
+!CCCC THE FOLLOWING SECTION WAS ADDED    MAY 2026
+!
+!               ***************************************************
+!               **  TREAT THE SET PASSING BABLOK BIAS CORRECTION **
+!               **                <ON/OFF>                       **
+!               ***************************************************
+!
+      IPBRBC='ON'
+!
+!CCCC THE FOLLOWING SECTION WAS ADDED    MAY 2026
+!
+!               *******************************************************
+!               **  TREAT THE SET THEIL SEN      CONFIDENCE INTERVAL **
+!               **                <NONE/JACKNIFE/BOOTSTRAP>          **
+!               *******************************************************
+!
+      ITSRCI='BOOT'
 !
 !CCCC THE FOLLOWING SECTION WAS ADDED    MARCH 2013
 !
@@ -30235,11 +30320,12 @@
 !
       RETURN
       END SUBROUTINE KCONS2
-      SUBROUTINE KENTAU(X,Y,N,ICASAN,IKTATA,IWRITE,XTEMP,YTEMP,MAXNXT,   &
-                        XYKTAU,KTAUA,KTAUB,KTAUC,   &
-                        STATCD,PVAL,PVALLT,PVALUT,   &
-                        CUTU90,CUTU95,CTU975,CUTU99,CTU995,   &
-                        CUTL90,CUTL95,CTL975,CUTL99,CTL995,   &
+      SUBROUTINE KENTAU(X,Y,N,ICASAN,ICASA2,IKTATA,IKTACU,             &
+                        IWRITE,XTEMP,YTEMP,ITEMP,MAXNXT,               &
+                        XYKTAU,KTAUA,KTAUB,KTAUC,                      &
+                        STATCD,PVAL,PVALLT,PVALUT,                     &
+                        CUTU90,CUTU95,CTU975,CUTU99,CTU995,            &
+                        CUTL90,CUTL95,CTL975,CUTL99,CTL995,            &
                         IBUGA3,ISUBRO,IERROR)
 !
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE KENDALL'S TAU COEFFICIENT
@@ -30256,6 +30342,28 @@
 !                                IN THE VECTOR X, OR EQUIVALENTLY,
 !                                THE INTEGER NUMBER OF OBSERVATIONS
 !                                IN THE VECTOR Y.
+!                     --ICASAN = "TWOS", "LOWE", "UPPE": FOR 2-SAMPLE
+!                                TEST FOR INDEPENDENCE ONLY WHICH IS
+!                                BASED ON CONOVER DEFINITION
+!                     --ICASA2 = "KTAU" - KENDALL TAU CONOVER DEFINITION
+!                              = "KTAA" - KENDALL TAU A
+!                              = "KTAB" - KENDALL TAU B
+!                              = "KTAC" - KENDALL TAU C
+!                              = "KTAC" - KENDALL TAU C
+!                              = "KTCD" - CDF FOR 2-SAMPLE INDEPENDENCE
+!                                         TEST
+!                              = "KTPV" - P-VALUE FOR TWO-SIDED 2-SAMPLE
+!                                         INDEPENDENCE TEST
+!                              = "KTPL" - P-VALUE FOR LOWER TAILED
+!                                         2-SAMPLE INDEPENDENCE TEST
+!                              = "KTPU" - P-VALUE FOR UPPER TAILED
+!                                         2-SAMPLE INDEPENDENCE TEST
+!                     --IKTATA = SPECIFY WHETHER TABLED VALUE OR NORMAL
+!                                APPROXIMATION WILL BE USED FOR 2-SAMPLE
+!                                INDEPNDENCE TEST
+!                     --IKTACU = SPECIFY THE SAMPLE SIZE CUTOFF FOR
+!                                USING THE MORE EFFICIENT ALGORITHM FOR
+!                                KENDALL'S TAU B CASE.
 !     OUTPUT ARGUMENTS--XYKTAU = THE SINGLE PRECISION VALUE OF THE
 !                                COMPUTED KENDALL'S TAU
 !                                COEFFICIENT BETWEEN THE 2 SETS OF
@@ -30289,10 +30397,15 @@
 !                                       FOR LARGE SAMPLES
 !     UPDATED         --AUGUST    2019. SUPPORT SOME DIFFERENT
 !                                       FORMULATIONS OF KENDALL'S TAU
+!     UPDATED         --APRIL     2026. SUPPORT FOR MORE EFFICIENT
+!                                       ALGORITHM FOR KENDALL'S TAU B
+!     UPDATED         --APRIL     2026. ONLY COMPUTE REQUESTED KENDALL
+!                                       TAU STATISTIC
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
       CHARACTER*4 ICASAN
+      CHARACTER*4 ICASA2
       CHARACTER*4 IKTATA
       CHARACTER*4 IWRITE
       CHARACTER*4 IBUGA3
@@ -30304,11 +30417,11 @@
 !
 !---------------------------------------------------------------------
 !
-      DIMENSION X(*)
-      DIMENSION Y(*)
-!
-      DIMENSION XTEMP(*)
-      DIMENSION YTEMP(*)
+      REAL    X(*)
+      REAL    Y(*)
+      REAL    XTEMP(*)
+      REAL    YTEMP(*)
+      INTEGER ITEMP(*)
 !
       DIMENSION WP900(60)
       DIMENSION WP950(60)
@@ -30316,9 +30429,24 @@
       DIMENSION WP990(60)
       DIMENSION WP995(60)
 !
+      REAL XYKTAU
       REAL KTAUA
       REAL KTAUB
       REAL KTAUC
+      REAL STATCD
+      REAL PVAL
+      REAL PVALLT
+      REAL PVALUT
+      REAL CUTU90
+      REAL CUTU95
+      REAL CUTU975
+      REAL CUTU99
+      REAL CUTU995
+      REAL CUTL90
+      REAL CUTL95
+      REAL CUTL975
+      REAL CUTL99
+      REAL CUTL995
 !
 !-----COMMON----------------------------------------------------------
 !
@@ -30393,19 +30521,46 @@
 !                K = (Nc - Nd)/{N*(N-1)/2}
 !
 !              THIS IS ALSO REFERRED TO AS KENDALL'S TAU-A IN THE
-!              LITERATURE.
+!              LITERATURE.  NOTE THAT THIS FORMULA ASSUMES NO TIES.
 !
-!              THE DISTINCTION BETWEEN THE 2 STATISTICS IS THAT THE
-!              CONOVER (GAMMA) FORMULATION TAKES TIES INTO ACCOUNT WHILE
-!              KENDALL'S TAU-A DOES NOT.
+!              KENDALL'S TAU B IS DEFINED AS
 !
-!              THERE ARE SEVERAL ADDITIONAL VARIANTS.  THESE USE
-!              (Nc - Nd) IN THE NUMERATOR, BUT USE DIFFERENT
-!              DENOMINATORS.
+!                 K = (Nc - Nd)/SQRT((Nc + Nd + Tx)*(Nc + Nd + Ty))
+!
+!              WITH Tx AND Ty DENOTING THE NUMBER OF TIES IN THE X
+!              VARIABLE AND THE Y VARIABLE, RESPECTIVELY.  NOTE THAT
+!              THIS FORMULA TAKES TIES INTO ACCOUNT AND IS THE MOST
+!              COMMONLY USED DEFINITION OF KENDALL'S TAU.  KENDALL'S
+!              TAU B IS EQUIVALENT TO KENDALL'S TAU A WHEN THERE ARE
+!              NO TIES.  FOR THAT REASON, WE WILL COMPUTE KENDALL'S
+!              TAU B AND SIMPLY SET KENDALL'S TAU A TO THAT VALUE.
+!
+!              WE INCLUDE THE CONOVER FORMULATION SINCE THE 2-SAMPLE
+!              INDEPENDENCE TEST IN HIS BOOK IS BASED ON THIS
+!              FORMULATION.
 !
       ISUBN1='KENT'
       ISUBN2='AU  '
       IERROR='NO'
+!
+      XYKTAU=CPUMIN
+      KTAUA=CPUMIN
+      KTAUB=CPUMIN
+      KTAUC=CPUMIN
+      STATCD=CPUMIN
+      PVAL=CPUMIN
+      PVALLT=CPUMIN
+      PVALUT=CPUMIN
+      CUTU90=CPUMIN
+      CUTU95=CPUMIN
+      CUTU975=CPUMIN
+      CUTU99=CPUMIN
+      CUTU995=CPUMIN
+      CUTL90=CPUMIN
+      CUTL95=CPUMIN
+      CUTL975=CPUMIN
+      CUTL99=CPUMIN
+      CUTL995=CPUMIN
 !
       IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'NTAU')THEN
         WRITE(ICOUT,999)
@@ -30414,8 +30569,9 @@
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF KENTAU--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,52)ICASAN,IBUGA3,N
-   52   FORMAT('ICASAN,IBUGA3,N = ',2(A4,2X),I8)
+        WRITE(ICOUT,52)ICASAN,ICASA2,IKTATA,IBUGA3,N,IKTACU
+   52   FORMAT('ICASAN,ICASA2,IKTATA,IBUGA3,N,IKTACU = ',              &
+               4(A4,2X),2I8)
         CALL DPWRST('XXX','BUG ')
         DO 55 I=1,N
           WRITE(ICOUT,56)I,X(I),Y(I)
@@ -30424,9 +30580,9 @@
    55   CONTINUE
        ENDIF
 !
-!               ********************************************
-!               **  COMPUTE RANK CORRELATION COEFFICIENT  **
-!               ********************************************
+!               *****************************************************
+!               **  COMPUTE KENDALL'S TAU CORRELATION COEFFICIENT  **
+!               *****************************************************
 !
 !               ********************************************
 !               **  STEP 1--                              **
@@ -30435,7 +30591,7 @@
 !
       AN=N
 !
-      IF(N.LT.1.OR.N.GT.MAXNXT)THEN
+      IF(N.LT.2.OR.N.GT.MAXNXT)THEN
         IERROR='YES'
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
@@ -30447,7 +30603,7 @@
                'VARIABLES')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,115)MAXNXT
-  115   FORMAT('      MUST BE BETWEEN 1 AND ',I8,' (INCLUSIVELY).')
+  115   FORMAT('      MUST BE BETWEEN 2 AND ',I8,' (INCLUSIVELY).')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,116)
   116   FORMAT('      SUCH WAS NOT THE CASE HERE.')
@@ -30456,29 +30612,49 @@
   117   FORMAT('      THE NUMBER OF OBSERVATIONS   = ',I8,'.')
         CALL DPWRST('XXX','BUG ')
         GO TO 9000
-      ELSEIF(N.EQ.1)THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,121)
-  121   FORMAT('***** WARNING IN KENDALLS TAU--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,123)
-  123   FORMAT('      THE NUMBER OF PAIRS (N) HAS THE VALUE 1.')
-        CALL DPWRST('XXX','BUG ')
-        XYKTAU=1.0
+      ENDIF
+!
+!               ********************************************************
+!               **  STEP 2--                                          **
+!               **  COMPUTE THE KENDALL'S TAU CORRELATION COEFFICIENT **
+!               ********************************************************
+!
+!     CASE 1: USE MORE EFFICIENT ALGORITHM FOR KENDALL'S TAU B
+!             (OR KENDALL'S TAU A)
+!
+      IF((ICASA2.EQ.'KTAA' .OR. ICASA2.EQ.'KTAB') .AND. N.GE.IKTACU)THEN
+        CALL SORTC(X,Y,N,XTEMP,YTEMP)
+        X(1:N)=XTEMP(1:N)
+        Y(1:N)=YTEMP(1:N)
+        CALL KTAU(N,X,Y,KTAUB,ITEMP,XTEMP)
+        KTAUA=KTAUB
+!
+        IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,801)N,KTAUB
+  801     FORMAT('KENDALLS TAU B CORRELATION COEFFICIENT OF THE ',   &
+                 I8,' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'NTAU')THEN
+          WRITE(ICOUT,803)KTAUB
+  803     FORMAT('KENTAU: EFFICIENT ALGORITHM, KTAUB = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
         GO TO 9000
       ENDIF
 !
-!               *************************************************
-!               **  STEP 2--                                   **
-!               **  COMPUTE THE RANK CORRELATION COEFFICIENT.  **
-!               *************************************************
+!     CASE 2: USE THE LESS EFFICIENT, BUT SIMPLER, ALGORITHM
+!             (FOR SMALLER SAMPLE SIZES, THE COMPUTATIONAL TIME
+!             DOES NOT VARY MUCH)
 !
       CALL DISTIN(X,N,IWRITE,XTEMP,NXD,IBUGA3,IERROR)
       CALL DISTIN(Y,N,IWRITE,YTEMP,NYD,IBUGA3,IERROR)
       M=MIN(NXD,NYD)
       AM=REAL(M)
-!CCCC CALL SORTC(X,Y,N,XTEMP,YTEMP)
 !
       ANC=0.0
       AND=0.0
@@ -30522,14 +30698,19 @@
   200 CONTINUE
       XYKTAU=(ANC-AND)/(ANC+AND)
 !
-!     KENDALL'S TAU-A
-!
-      KTAUA=(ANC-AND)/DENOM1
-!
 !     KENDALL'S TAU-B
 !
       DENOM2=SQRT((ANC2+AND2+TX)*(ANC2+AND2+TY))
       KTAUB=(ANC2-AND2)/DENOM2
+!
+!     KENDALL'S TAU-A
+!
+!     2026/04: SET KENDALL'S TAU A EQUAL TO KENDALL'S TAU B SINCE
+!              EQUIVALENT WHEN THERE ARE NO TIES AND TAU A SHOULD
+!              NOT BE USED WHEN THERE ARE TIES.
+!
+!     KTAUA=(ANC-AND)/DENOM1
+      KTAUA=KTAUB
 !
 !     KENDALL'S TAU-C
 !
@@ -30549,6 +30730,16 @@
 !           W(p) = Z(p)*SQRT(N*(2*N+5))/(3*SQRT(N*(N-1)))
 !
 !     ONLY COMPUTE THESE FOR CONOVER DEFINITION OF KENDALL'S TAU.
+!
+!     ONLY COMPUTE P-VALUES AND CRITICAL VALUES IF NEEDED.
+!
+      IFLAG=0
+      IF(ICASA2.EQ.'ALL')IFLAG=1
+      IF(ICASA2.EQ.'KTCD')IFLAG=1
+      IF(ICASA2.EQ.'KTPV')IFLAG=1
+      IF(ICASA2.EQ.'KTPL')IFLAG=1
+      IF(ICASA2.EQ.'KTPU')IFLAG=1
+      IF(IFLAG.EQ.0)GO TO 8000
 !
       AN=REAL(N)
       ANUM=SQRT(2.0*(2.0*AN+5.0))
@@ -30597,13 +30788,52 @@
 !               **  OF SUMMARY INFORMATION.  **
 !               *******************************
 !
+ 8000 CONTINUE
+!
       IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
         WRITE(ICOUT,999)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,811)N,XYKTAU
-  811   FORMAT('THE KENDALLS TAU COEFFICIENT OF THE ',I8,   &
-               ' OBSERVATIONS = ',G15.7)
-        CALL DPWRST('XXX','BUG ')
+        IF(ICASA2.EQ.'KTAA')THEN
+          WRITE(ICOUT,811)N,XYKTAU
+  811     FORMAT('THE KENDALLS TAU (CONOVER) COEFFICIENT OF THE ',I8,  &
+                 ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASA2.EQ.'TAUA')THEN
+          WRITE(ICOUT,812)N,KTAUA
+  812     FORMAT('THE KENDALLS TAU A COEFFICIENT OF THE ',I8,          &
+                 ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASA2.EQ.'TAUB')THEN
+          WRITE(ICOUT,813)N,KTAUB
+  813     FORMAT('THE KENDALLS TAU B COEFFICIENT OF THE ',I8,          &
+                 ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASA2.EQ.'TAUC')THEN
+          WRITE(ICOUT,814)N,KTAUC
+  814     FORMAT('THE KENDALLS TAU C COEFFICIENT OF THE ',I8,          &
+                 ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASA2.EQ.'KTCD')THEN
+          WRITE(ICOUT,815)N,STATC
+  815     FORMAT('THE KENDALLS TAU CDF OF THE ',I8,                    &
+                 ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASA2.EQ.'KTPV')THEN
+          WRITE(ICOUT,816)N,PVAL
+  816     FORMAT('THE KENDALLS TAU P-VALUE OF THE ',I8,                &
+                 ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASA2.EQ.'KTPL')THEN
+          WRITE(ICOUT,817)N,PVALLT
+  817     FORMAT('THE KENDALLS TAU LOWER TAILED P-VALUE OF THE ',I8,   &
+                 ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSEIF(ICASA2.EQ.'KTPU')THEN
+          WRITE(ICOUT,818)N,PVALUT
+  818     FORMAT('THE KENDALLS TAU UPPER TAILED P-VALUE OF THE ',I8,   &
+                 ' OBSERVATIONS = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
       ENDIF
 !
 !               *****************
@@ -31416,6 +31646,8 @@
       DIMENSION XSCORE(*)
       DIMENSION XS(*)
 !
+      DOUBLE PRECISION DTERM1
+!
 !---------------------------------------------------------------------
 !
       INCLUDE 'DPCOP2.INC'
@@ -31529,6 +31761,74 @@
 !
       RETURN
       END SUBROUTINE KSCORE
+      subroutine ktau(n, x, y, tau, idx, localy)
+!
+!     written by Venkatraman E Seshan 4/20/2011, modified slightly
+!     for incorporation into Dataplot.
+!
+      integer n
+      integer idx(*)
+!     double precision x(n), y(n), tau
+      real x(n), y(n), tau
+      real localy(*)
+!
+      integer i, n0, nties
+!     double precision dn, dnx, dny, ties
+      real dn, dnx, dny, ties
+!
+!     storage for idx used to store indices for blocks of x
+!     integer, allocatable :: idx(:)
+!     allocate(idx(n))
+!
+      dn = dble(n)*dble(n-1)/2
+      dnx = 0.0d0
+      nties = 1
+      n0 = 0
+!     find the ties in x, calculate correction for ties
+!     n0 is the number of unique x values
+      do 10 i = 1, n-1
+         if (x(i) .eq. x(i+1)) then
+            nties = nties + 1
+         else
+            n0 = n0+1
+!     here idx[i] = sum(x == ux[i]) where ux is sort(unique(x))
+            idx(n0) = nties
+            ties = dble(nties)
+            dnx = dnx + ties*(ties-1.0d0)/2.0d0
+            nties = 1
+         endif
+ 10   continue
+      n0 = n0+1
+      idx(n0) = nties
+      if (x(n-1) .eq. x(n)) then
+         ties = dble(nties)
+         dnx = dnx + ties*(ties-1.0d0)/2.0d0
+      endif
+!     now idx[i] = sum(x <= ux[i]) where ux is sort(unique(x))
+      do 15 i = 2,n0
+         idx(i) = idx(i-1) + idx(i)
+ 15   continue
+!     call the subroutine to compute the #concordant - #discordant
+      call countall(n, y, n0, idx, tau, localy)
+!     the call above returns y in sorted order, now adjust for ties in y
+      dny = 0
+      ties = 1.0d0
+      do 20 i = 1, n-1
+         if (y(i) .eq. y(i+1)) then
+            ties = ties + 1.0d0
+         else
+            dny = dny + ties*(ties-1.0d0)/2.0d0
+            ties = 1.0d0
+         endif
+ 20   continue
+      if (y(n-1) .eq. y(n)) then
+         dny = dny + ties*(ties-1.0d0)/2.0d0
+      endif
+!     calculate Kendall's tau-b
+      tau = tau/sqrt((dn-dnx)*(dn-dny))
+!     deallocate(idx)
+      return
+      end
       SUBROUTINE KTRADE (W, K, WPRIME, KPRIME, WS, R)
 !
 !        ALGORITHM AS 304.3 APPL.STATIST. (1996), VOL.45, NO.3
@@ -54426,6 +54726,7 @@
 !                  QUANTILE CONFIDENCE LIMITS                  (HLR)
 !                  DIFFERENCE OF MEANS CONFIDENCE LIMITS       (HLR)
 !                  CORRELATION CONFIDENCE LIMITS               (HLR)
+!                  KENDALL TAU B CONFIDENCE LIMITS             (HLR)
 !                  HEDGES G CONFIDENCE LIMITS                  (HLR)
 !                  RATIO OF SD CONFIDENCE LIMITS               (HLR)
 !
@@ -54450,7 +54751,9 @@
 !                  ORTHOGONAL DISTANCE FIT
 !                  BOOTSTRAP FIT                               (HLR)
 !                  BEST CP Y X1 TO XK                          (HLR)
+!                  THEIL SEN FIT                               (HLR)
 !                  DEMING FIT                                  (HLR)
+!                  PASSING BABLOK FIT                          (HLR)
 !                  ORDINARY LEAST PRODUCTS FIT                 (HLR)
 !                  LOWESS                                      (HLR)
 !                  SEASONAL LOWESS
@@ -54836,6 +55139,9 @@
 !     UPDATED         --NOVEMBER  2024. POSITION EFFECT TEST
 !     UPDATED         --FEBRUARY  2025. DEMING FIT
 !     UPDATED         --APRIL     2026. ORDINARY LEAST PRODUCTS FIT
+!     UPDATED         --MAY       2026. KENDALL TAU B CONFIDENCE LIMITS
+!     UPDATED         --MAY       2026. PASSING BABLOK FIT
+!     UPDATED         --MAY       2026. THEIL SEN FIT
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -55172,6 +55478,32 @@
          (IHARG(3).EQ.'FIT ' .OR. IHARG(3).EQ.'REGR'))THEN
         ICASAN='OLPF'
         CALL DPOLPF(ICAPSW,IFORSW,ISEED,IBOOSS,                      &
+                    IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
+      ENDIF
+!
+!               *********************************************
+!               **  TREAT THE PASSING BABLOK           FIT **
+!               *********************************************
+!
+      IF(ICOM.EQ.'PASS'.AND.NUMARG.GE.2.AND.                         &
+         IHARG(1).EQ.'BABL' .AND.                                    &
+         (IHARG(2).EQ.'FIT ' .OR. IHARG(2).EQ.'REGR'))THEN
+        ICASAN='PBFI'
+        CALL DPPBFI(ICAPSW,IFORSW,ISEED,IBOOSS,                      &
+                    IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+        IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
+      ENDIF
+!
+!               *********************************************
+!               **  TREAT THE THEIL SEN                FIT **
+!               *********************************************
+!
+      IF(ICOM.EQ.'THEI'.AND.NUMARG.GE.2.AND.                         &
+         IHARG(1).EQ.'SEN ' .AND.                                    &
+         (IHARG(2).EQ.'FIT ' .OR. IHARG(2).EQ.'REGR'))THEN
+        ICASAN='PBFI'
+        CALL DPTSFI(ICAPSW,IFORSW,ISEED,IBOOSS,                      &
                     IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
       ENDIF
@@ -56437,18 +56769,43 @@
       ENDIF
 !
 !CCCC THE FOLLOWING SECTION WAS ADDED     JUNE 2012
-!               ***************************************************
-!               **  TREAT THE CORRELATION CONFIDENCE LIMITS CASE **
-!               ***************************************************
+!CCCC KENDALL'S TAU B ADDED MAY 2026
+!               ******************************************************
+!               **  TREAT THE CORRELATION CONFIDENCE LIMITS CASE    **
+!               **  TREAT THE KENDALLS TAU B CONFIDENCE LIMITS CASE **
+!               ******************************************************
 !
       IF(ICOM.EQ.'CORR')THEN
          IF(NUMARG.GE.2.AND.IHARG(1).EQ.'CONF'.AND.   &
            (IHARG(2).EQ.'LIMI'.OR.IHARG(2).EQ.'INTE'))THEN
             ISHIFT=2
             CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,   &
-            IBUGA2,IERROR)
-            ICASAN='CRCI'
-            CALL DPCRCI(MAXNXT,ICAPSW,IFORSW,   &
+                        IBUGA2,IERROR)
+            ICASAN='CORR'
+            CALL DPCRCI(MAXNXT,ICAPSW,IFORSW,ICASAN,                 &
+                        IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+            IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
+         ENDIF
+      ELSEIF(ICOM.EQ.'KEND' .AND. IHARG(1).EQ.'TAU ' .AND.           &
+             IHARG(2).EQ.'B   ')THEN
+         IF(NUMARG.GE.4.AND.IHARG(3).EQ.'CONF'.AND.   &
+           (IHARG(4).EQ.'LIMI'.OR.IHARG(4).EQ.'INTE'))THEN
+            ISHIFT=4
+            CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,   &
+                        IBUGA2,IERROR)
+            ICASAN='KTAU'
+            CALL DPCRCI(MAXNXT,ICAPSW,IFORSW,ICASAN,                 &
+                        IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
+            IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
+         ENDIF
+      ELSEIF(ICOM.EQ.'KEND' .AND. IHARG(1).EQ.'TAU ')THEN
+         IF(NUMARG.GE.3.AND.IHARG(2).EQ.'CONF'.AND.   &
+           (IHARG(3).EQ.'LIMI'.OR.IHARG(3).EQ.'INTE'))THEN
+            ISHIFT=3
+            CALL SHIFTL(ISHIFT,IHARG,IHARG2,IARG,ARG,IARGT,NUMARG,   &
+                        IBUGA2,IERROR)
+            ICASAN='KTAU'
+            CALL DPCRCI(MAXNXT,ICAPSW,IFORSW,ICASAN,                 &
                         IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
             IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
          ENDIF
@@ -56687,8 +57044,7 @@
             IMULT='ON'
          ENDIF
          ICASAN='KTES'
-         CALL DPKRUS(XTEMP1,XTEMP2,MAXNXT,   &
-                     ICAPSW,IFORSW,IMULT,   &
+         CALL DPKRUS(MAXNXT,ICAPSW,IFORSW,IMULT,   &
                      ISUBRO,IBUGA2,IBUGA3,IBUGQ,IFOUND,IERROR)
          IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
       ENDIF

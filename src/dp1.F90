@@ -2884,12 +2884,10 @@
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
 #ifdef INTEL_CONS
-      USE MSFLIB
-#endif
-#ifdef INTEL_QWIN
+!     USE MSFLIB
       USE IFPORT
 #endif
-#ifdef INTEL_CONSOLE
+#ifdef INTEL_QWIN
       USE IFPORT
 #endif
 #ifdef INTEL

@@ -32544,8 +32544,8 @@
       RETURN
       END SUBROUTINE EXTREA
       SUBROUTINE EXTSTA(ICOM,ICOM2,IHARG,IHARG2,IARGT,ARG,NUMARG,   &
-                        JMIN,JMAX,   &
-                        ISTACS,ISTANM,ISTANR,ISTADF,ISTARA,   &
+                        JMIN,JMAX,                                  &
+                        ISTACS,ISTANM,ISTANR,ISTADF,ISTARA,         &
                         IFOUND,ILOCV,ISUBRO,IBUGG3,IERROR)
 !
 !     PURPOSE--EXTRACT THE NAME OF ONE OF 90+ STATISTICS.  THIS
@@ -32688,6 +32688,10 @@
 !                       EIGHTH/NINTH DECILE
 !                 DECILE RATIO
 !                 EXTREME
+!                 INDEX GREATER THAN
+!                 INDEX GREATER THAN OR EQUAL TO
+!                 INDEX LESS    THAN
+!                 INDEX LESS    THAN OR EQUAL TO
 !                 INDEX MINIMUM
 !                 INDEX MAXIMUM
 !                 INDEX EXTREME
@@ -33954,6 +33958,10 @@
 !     UPDATED         --NOVEMBER  2024. POSITION EFFECT CDF
 !     UPDATED         --NOVEMBER  2024. POSITION EFFECT PVALUE
 !     UPDATED         --APRIL     2025. PERCENT ACCEPTABLE
+!     UPDATED         --MAY       2026. INDEX GREATER THAN
+!     UPDATED         --MAY       2026. INDEX GREATER THAN OR EQUAL TO
+!     UPDATED         --MAY       2026. INDEX LESS THAN
+!     UPDATED         --MAY       2026. INDEX LESS THAN OR EQUAL TO
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -33983,7 +33991,7 @@
       INCLUDE 'DPCOPA.INC'
 !CCCC INCLUDE 'DPCOZC.INC'
 !
-      PARAMETER (MAXSTA=1672)
+      PARAMETER (MAXSTA=1678)
       PARAMETER (MAXSCL=8)
       INTEGER      INFLAV(MAXSTA)
       CHARACTER*4  INAME(MAXSTA,MAXSCL)
@@ -34018,7 +34026,7 @@
       DATA (INAME(1,J),J=1,MAXSCL)/   &
       'NUMB','    ','OF  ','COMM','DIGI','    ','    ','    '/
       DATA INFLAV(1)/1/
-      DATA INLONG(1)/'NUMBER'/
+      DATA INLONG(1)/'NUMBER OF COMMON DIGITS'/
 !
       DATA INCASE(2)/'NUMB'/
       DATA (INAME(2,J),J=1,MAXSCL)/   &
@@ -34387,7 +34395,7 @@
       DATA INFLAV(63)/2/
       DATA INLONG(63)/'RANK CORRELATION ABSOLUTE VALUE'/
 !
-      DATA INCASE(64)/'KTAA'/
+      DATA INCASE(64)/'TAUA'/
       DATA (INAME(64,J),J=1,MAXSCL)/   &
       'KEND','    ','TAU ','ABSO','VALU','    ','    ','    '/
       DATA INFLAV(64)/2/
@@ -43134,7 +43142,7 @@
       DATA INFLAV(1503)/2/
       DATA INLONG(1503)/'KENDALLS TAU DISSIMILARITY'/
 !
-      DATA INCASE(1504)/'TAUA'/
+      DATA INCASE(1504)/'KTAA'/
       DATA (INAME(1504,J),J=1,MAXSCL)/   &
       'KEND','    ','TAU ','A   ','    ','    ','    ','    '/
       DATA INFLAV(1504)/2/
@@ -44153,6 +44161,42 @@
       'PERC','    ','    ','    ','    ','    ','    ','    '/
       DATA INFLAV(1672)/1/
       DATA INLONG(1672)/'PERCENTILE'/
+!
+      DATA INCASE(1673)/'INGE'/
+      DATA (INAME(1673,J),J=1,MAXSCL)/   &
+      'INDE','    ','GREA','THAN','OR  ','EQUA','TO  ','    '/
+      DATA INFLAV(1673)/1/
+      DATA INLONG(1673)/'INDEX GREATER THAN OR EQUAL TO'/
+!
+      DATA INCASE(1674)/'INGE'/
+      DATA (INAME(1674,J),J=1,MAXSCL)/   &
+      'INDE','    ','GREA','THAN','OR  ','EQUA','    ','    '/
+      DATA INFLAV(1674)/1/
+      DATA INLONG(1674)/'INDEX GREATER THAN OR EQUAL TO'/
+!
+      DATA INCASE(1675)/'INGT'/
+      DATA (INAME(1675,J),J=1,MAXSCL)/   &
+      'INDE','    ','GREA','THAN','    ','    ','    ','    '/
+      DATA INFLAV(1675)/1/
+      DATA INLONG(1675)/'INDEX GREATER THAN'/
+!
+      DATA INCASE(1676)/'INLE'/
+      DATA (INAME(1676,J),J=1,MAXSCL)/   &
+      'INDE','    ','LESS','THAN','OR  ','EQUA','TO  ','    '/
+      DATA INFLAV(1676)/1/
+      DATA INLONG(1676)/'INDEX LESS THAN OR EQUAL TO'/
+!
+      DATA INCASE(1677)/'INLE'/
+      DATA (INAME(1677,J),J=1,MAXSCL)/   &
+      'INDE','    ','LESS','THAN','OR  ','EQUA','    ','    '/
+      DATA INFLAV(1677)/1/
+      DATA INLONG(1677)/'INDEX LESS THAN OR EQUAL TO'/
+!
+      DATA INCASE(1678)/'INLT'/
+      DATA (INAME(1678,J),J=1,MAXSCL)/   &
+      'INDE','    ','LESS','THAN','    ','    ','    ','    '/
+      DATA INFLAV(1678)/1/
+      DATA INLONG(1678)/'INDEX LESS THAN'/
 !
 !-----START POINT-----------------------------------------------------
 !

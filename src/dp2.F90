@@ -6912,6 +6912,22 @@
 !     UPDATED         --SEPTEMBER  2025.  SET DOT MATRIX PLOT GRID VERTICAL
 !     UPDATED         --DECEMBER   2025.  SET READ EXCEL METHOD
 !     UPDATED         --JANUARY    2026.  SET READ REMOVE QUOTES
+!     UPDATED         --APRIL      2026.  SET KENDALL TAU CUTOFF
+!     UPDATED         --APRIL      2026.  SET KENDALL TAU DEFINITION
+!     UPDATED         --MAY        2026.  SET PASSING BABLOK TYPE
+!     UPDATED         --MAY        2026.  SET PASSING BABLOK CONFIDENCE
+!                                             LIMITS
+!     UPDATED         --MAY        2026.  SET PASSING BABLOK BIAS
+!                                             CORRECTION
+!     UPDATED         --MAY        2026.  SET THEIL SEN CONFIDENCE
+!                                             LIMITS
+!     UPDATED         --JUNE       2026.  SET READ NUMBERS CONTAIN
+!     UPDATED         --JUNE       2026.  SET READ TAB TO
+!     UPDATED         --JULY       2026.  SET LATEX IMPORT PDF
+!     UPDATED         --JULY       2026.  SET LATEX DRIVER
+!     UPDATED         --JULY       2026.  SET LATEX CAPTION
+!     UPDATED         --JULY       2026.  SET LATEX TYPE
+!     UPDATED         --JULY       2026.  SET LATEX CAPTURE GRAPHS
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -8515,6 +8531,58 @@
         ENDIF
       ENDIF
 !
+!     ****************************************
+!     **  CHECK FOR LATEX CAPTURE GRAPHS    **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='CAPT'
+      IPART3='GRAP'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.      &
+         IHARG(3).EQ.IPART3)THEN
+         IF(IHV.EQ.'LATE')THEN
+           IHV='LATE'
+         ELSE
+           IHV='PDF '
+         ENDIF
+         ILATCG=IHV
+         GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED JULY  2026
+!               ***********************************************
+!               **  TREAT THE    SET LATEX CAPTION           **
+!               ***********************************************
+!
+      IF(NUMARG.GE.2.AND.IHARG(1).EQ.'LATE'.AND.IHARG(2).EQ.'CAPT')THEN
+!
+         IPART1='LATE'
+         IPART2='CAPT'
+         IF(IHARG(3).EQ.'NULL')THEN
+           ILATCA='NULL'
+           IHV=ILATCA(1:4)
+           GO TO 5160
+         ELSEIF(IHARG(3).EQ.'NONE')THEN
+           ILATCA='NONE'
+           IHV=ILATCA(1:4)
+           GO TO 5160
+         ELSEIF(IHARG(3).EQ.'DEFA')THEN
+           ILATCA='... add caption here ...'
+           IHV=ILATCA(1:4)
+           GO TO 5160
+         ELSE
+           IWORD=4
+           IF(IHARG(3).EQ.'=   ')IWORD=5
+           ICASEZ='CLAT'
+           ICMDTI='THE LATEX CAPTION HAS BEEN SET TO'
+           CALL DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,   &
+                       ISTRIN,IWORD,ICMDTI,ITEMP,                &
+                       ICASEZ,ILATCA,NCTEMP,                     &
+                       IBUGS2,ISUBRO,IFOUND,IERROR)
+           GO TO 9000
+        ENDIF
+      ENDIF
+!
 !CCCC FOLLOWING SECTION ADDED SEPTEMBER 2018
 !     *************************************************************
 !     **  SET WRITE FEEDBACK <ON/OFF>                            **
@@ -9972,6 +10040,46 @@
           IHV='OFF'
         ENDIF
         IREALT=IHV
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED JUNE 2026.
+!     *************************************************************
+!     **  SET READ NUMBERS CONTAIN <COMMA/UNDERSCORE/OFF>        **
+!     *************************************************************
+!
+      IPART1='READ'
+      IPART2='NUMB'
+      IPART3='CONT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'COMM')THEN
+          IHV='COMM'
+        ELSEIF(IHV.EQ.'UNDE')THEN
+          IHV='UNDE'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        IREANC=IHV
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED JUNE 2026.
+!     *******************************************
+!     **  SET READ TAB TO <COMMA/SPACE>        **
+!     *******************************************
+!
+      IPART1='READ'
+      IPART2='TAB '
+      IPART3='TO  '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3)THEN
+        IF(IHV.EQ.'COMM' .OR. IHV.EQ.',')THEN
+          IHV='COMM'
+        ELSE
+          IHV='SPAC'
+        ENDIF
+        IREATA=IHV
         GO TO 5160
       ENDIF
 !
@@ -19183,6 +19291,142 @@
         GO TO 5160
       ENDIF
 !
+!CCCC FOLLOWING SECTION ADDED APRIL  2026
+!     ***********************************************
+!     **  SET KENDALL TAU DEFINITION               **
+!     **      <B/C/CONOVER>                        **
+!     ***********************************************
+!
+      IPART1='KEND'
+      IPART2='TAU '
+      IPART3='DEFI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3)THEN
+        IF(IHARG(4).EQ.'CONO')THEN
+          IHV='CONO'
+        ELSEIF(IHARG(4).EQ.'C   ')THEN
+          IHV='C   '
+        ELSE
+          IHV='B   '
+        ENDIF
+        IKTADE=IHV
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED APRIL  2026
+!     ***********************************************
+!     **  SET KENDALL TAU CUTOFF <VALUE>           **
+!     ***********************************************
+!
+      IPART1='KEND'
+      IPART2='TAU '
+      IPART3='CUTO'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3)THEN
+        IF(IHARG(4).EQ.'ON  ' .OR. IHARG(4).EQ.'OFF ' .OR. &
+           IHARG(4).EQ.'DEFA')THEN
+          IV=100
+        ELSE
+          IV=IARG(4)
+          IF(IV.LT.1) IV=100
+        ENDIF
+        IKTACU=IV
+        GO TO 5150
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED MAY  2016
+!     ***************************************************
+!     **  SET PASSING BABLOK TYPE                      **
+!     **        <METHOD COMPARISON/ROBUST REGRESSION>  **
+!     ***************************************************
+!
+      IPART1='PASS'
+      IPART2='BABL'
+      IPART3='TYPE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3)THEN
+        IF(IHARG(4).EQ.'ROBU' .AND. IHARG(5).EQ.'REGR')THEN
+          IHV='ROBR'
+        ELSE
+          IHV='METH'
+        ENDIF
+        IPBRTY=IHV
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED MAY  2016
+!     ****************************************************************
+!     **  SET PASSING BABLOK CONFIDENCE LIMIT                       **
+!     **        <NONE/JACKNIFE/BOOTSTRAP>                           **
+!     ****************************************************************
+!
+      IPART1='PASS'
+      IPART2='BABL'
+      IPART3='CONF'
+      IPART4='LIMI'
+      IPART5='INTE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3.AND.                          &
+         (IHARG(4).EQ.IPART4.OR.IHARG(4).EQ.IPART5))THEN
+        IF(IHARG(5).EQ.'JACK')THEN
+          IHV='JACK'
+        ELSEIF(IHARG(5).EQ.'BOOT')THEN
+          IHV='BOOT'
+        ELSE
+          IHV='NONE'
+        ENDIF
+        IPBRCI=IHV
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED MAY  2026
+!     ***************************************************
+!     **  SET PASSING BABLOK BIAS CORRECTION <ON/OFF>  **
+!     ***************************************************
+!
+      IPART1='PASS'
+      IPART2='BABL'
+      IPART3='BIAS'
+      IPART4='CORR'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IF(IHV.EQ.'ON' .OR. IHV.EQ.'YES' .OR. IHV.EQ.'TRUE')THEN
+          IHV='ON'
+        ELSEIF(IHV.EQ.'OFF' .OR. IHV.EQ.'NO' .OR. IHV.EQ.'NONE' .OR.   &
+               IHV.EQ.'FALS' .OR. IHV.EQ.'DEFA')THEN
+          IHV='OFF'
+        ELSE
+          IHV='OFF'
+        ENDIF
+        IPBRBC=IHV
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED MAY  2016
+!     ****************************************************************
+!     **  SET THEIL SEN      CONFIDENCE LIMIT                       **
+!     **        <NONE/JACKNIFE/BOOTSTRAP>                           **
+!     ****************************************************************
+!
+      IPART1='THEI'
+      IPART2='SEN '
+      IPART3='CONF'
+      IPART4='LIMI'
+      IPART5='INTE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3.AND.                          &
+         (IHARG(4).EQ.IPART4.OR.IHARG(4).EQ.IPART5))THEN
+        IF(IHARG(5).EQ.'JACK')THEN
+          IHV='JACK'
+        ELSEIF(IHARG(5).EQ.'BOOT')THEN
+          IHV='BOOT'
+        ELSE
+          IHV='NONE'
+        ENDIF
+        ITSRCI=IHV
+        GO TO 5160
+      ENDIF
+!
 !CCCC FOLLOWING SECTION ADDED FEBRUARY  2011
 !     ******************************************************
 !     **  SET LEVENE         GROUP STATISTICS <ON/OFF>    **
@@ -27729,6 +27973,58 @@
       ENDIF
 !
 !     ****************************************
+!     **  CHECK FOR LATEX DRIVER            **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='DRIV'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+         IF(IHV.EQ.'TIKZ' .OR. IHV.EQ.'PGF ')THEN
+           IHV='TIKZ'
+         ELSE
+           IHV='EPIC'
+         ENDIF
+         ILATDR=IHV
+         GO TO 5160
+      ENDIF
+!
+!     ****************************************
+!     **  CHECK FOR LATEX IMPORT PDF        **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='IMPO'
+      IPART3='PDF '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.                &
+         IHARG(3).EQ.IPART3)THEN
+         IF(IHV.EQ.'LGRA' .OR. IHV.EQ.'PGRA')THEN
+           IHV='LGRA'
+         ELSEIF(IHV.EQ.'EPSF')THEN
+           IHV='LGRA'
+         ELSE
+           IHV='GRAP'
+         ENDIF
+         ILATPD=IHV
+         GO TO 5160
+      ENDIF
+!
+!     ****************************************
+!     **  CHECK FOR LATEX TYPE              **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='TYPE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+         IF(IHV.EQ.'PDF ')THEN
+           IHV='PDF '
+         ELSE
+           IHV='POST'
+         ENDIF
+         ILATTY=IHV
+         GO TO 5160
+      ENDIF
+!
+!     ****************************************
 !     **  CHECK FOR GD       COLOR          **
 !     ****************************************
 !
@@ -30405,6 +30701,20 @@
 !     UPDATED         --SEPTEMBER  2025.  PROBE DOT MATRIX PLOT GRID VERTICAL
 !     UPDATED         --JANUARY    2026.  PROBE READ EXCEL METHOD
 !     UPDATED         --JANUARY    2026.  PROBE READ REMOVE QUOTES
+!     UPDATED         --APRIL      2026.  PROBE KENDALL TAU CUTOFF
+!     UPDATED         --APRIL      2026.  PROBE KENDALL TAU DEFINITION
+!     UPDATED         --MAY        2026.  PROBE PASSING BABLOK TYPE
+!     UPDATED         --MAY        2026.  PROBE PASSING BABLOK CONFIDENCE
+!                                               LIMIT
+!     UPDATED         --MAY        2026.  PROBE PASSING BABLOK BIAS
+!                                               CORRECTION
+!     UPDATED         --JUNE       2026.  PROBE READ NUMBERS CONTAIN
+!     UPDATED         --JUNE       2026.  PROBE READ TAB TO
+!     UPDATED         --JULY       2026.  PROBE LATEX DRIVER
+!     UPDATED         --JULY       2026.  PROBE LATEX IMPORT PDF
+!     UPDATED         --JULY       2026.  PROBE LATEX CAPTION
+!     UPDATED         --JULY       2026.  PROBE LATEX TYPE
+!     UPDATED         --JULY       2026.  PROBE LATEX CAPTURE GRAPHS
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -30589,6 +30899,12 @@
         ELSEIF(IHARG(2).EQ.'PERC' .AND. IHARG(3).EQ.'SIGN' .AND.   &
                IHARG(4).EQ.'IGNO')THEN
           IHV=IREAPC
+          GO TO 5160
+        ELSEIF(IHARG(2).EQ.'NUMB' .AND. IHARG(3).EQ.'CONT')THEN
+          IHV=IREANC
+          GO TO 5160
+        ELSEIF(IHARG(2).EQ.'TAB ' .AND. IHARG(3).EQ.'TO  ')THEN
+          IHV=IREATA
           GO TO 5160
         ELSEIF(IHARG(2).EQ.'ASTE' .AND. IHARG(3).EQ.'IGNO')THEN
           IHV=IREAAS
@@ -30970,6 +31286,47 @@
         ENDIF
         IPROBS(1:NCLATF)=ILATFO(1:NCLATF)
         NCPROB=NCLATF
+        GO TO 8100
+      ENDIF
+!
+!     ****************************************
+!     **  CHECK FOR LATEX CAPTURE GRAPHS    **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='CAPT'
+      IPART3='GRAP'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.                &
+         IHARG(3).EQ.IPART3)THEN
+        IHV=ILATCG
+        GO TO 5160
+      ENDIF
+!
+!CCCC THE FOLLOWING SECTION WAS ADDED    JULY  2026
+!     *****************************************
+!     **  CHECK FOR PROBE LATEX CAPTION      **
+!     *****************************************
+!
+      IF(NUMARG.GE.2.AND. IHARG(1).EQ.'LATE' .AND.   &
+        IHARG(2).EQ.'CAPT')THEN
+        IFOUND='YES'
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,11743)
+11743     FORMAT('THE LATEX CAPTION  = ')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1717)ILATCA
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+        NCPROB=1
+        DO II=80,1,-1
+           IF(ILATCA(II:II).NE.' ')THEN
+             NCPROB=II
+             EXIT
+           ENDIF
+        ENDDO
+        IPROBS(1:NCPROB)=ILATCA(1:NCPROB)
         GO TO 8100
       ENDIF
 !
@@ -38743,6 +39100,37 @@
         GO TO 5160
       ENDIF
 !
+!CCCC FOLLOWING SECTION ADDED APRIL        2026.
+!               ****************************************
+!               **  STEP 20.A--                       **
+!               **  PROBE KENDALL TAU DEFINITION      **
+!               **        <B/C/CONOVER>               **
+!               ****************************************
+!
+      IPART1='KEND'
+      IPART2='TAU'
+      IPART3='DEFI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3)THEN
+        IHV=IKTADE
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED APRIL        2026.
+!               ****************************************
+!               **  STEP 20.A--                       **
+!               **  PROBE KENDALL TAU CUTOFF <VALUE>  **
+!               ****************************************
+!
+      IPART1='KEND'
+      IPART2='TAU'
+      IPART3='CUTO'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3)THEN
+        IV=IKTACU
+        GO TO 5150
+      ENDIF
+!
 !CCCC FOLLOWING SECTION ADDED MARCH        2013.
 !               *********************************************
 !               **  STEP 20.A--                            **
@@ -38757,6 +39145,78 @@
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
          IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
         IHV=IRCRTA
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED MAY          2026.
+!               ****************************************
+!               **  STEP 20.A--                       **
+!               **  PROBE PASSING BABLOK TYPE         **
+!               **        <METHOD COMPARISON/         **
+!               **         ROBUST REGRESSION>         **
+!               ****************************************
+!
+      IPART1='PASS'
+      IPART2='BABL'
+      IPART3='TYPE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3)THEN
+        IHV=IPBRTY
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED MAY          2026.
+!               *********************************************
+!               **  STEP 20.A--                            **
+!               **  PROBE PASSING BABLOK CONFIDENCE LIMIT  **
+!               **        <NONE/JACKNIFE/BOOTSTRAP>        **
+!               *********************************************
+!
+      IPART1='PASS'
+      IPART2='BABL'
+      IPART3='CONF'
+      IPART4='LIMI'
+      IPART5='INTE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3.AND.                          &
+         (IHARG(4).EQ.IPART4.OR.IHARG(4).EQ.IPART5))THEN
+        IHV=IPBRCI
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED MAY          2026.
+!               *******************************************
+!               **  STEP 20.A--                          **
+!               **  PROBE PASSING BABLOK BIAS CORRECTION **
+!               **        <ON/OFF>                       **
+!               *******************************************
+!
+      IPART1='PASS'
+      IPART2='BABL'
+      IPART3='BIAS'
+      IPART4='CORR'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3.AND.IHARG(4).EQ.IPART4)THEN
+        IHV=IPBRBC
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED MAY          2026.
+!               *********************************************
+!               **  STEP 20.A--                            **
+!               **  PROBE THEIL SEN      CONFIDENCE LIMIT  **
+!               **        <NONE/JACKNIFE/BOOTSTRAP>        **
+!               *********************************************
+!
+      IPART1='THEI'
+      IPART2='SEN '
+      IPART3='CONF'
+      IPART4='LIMI'
+      IPART5='INTE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
+         IHARG(3).EQ.IPART3.AND.                          &
+         (IHARG(4).EQ.IPART4.OR.IHARG(4).EQ.IPART5))THEN
+        IHV=ITSRCI
         GO TO 5160
       ENDIF
 !
@@ -44185,6 +44645,41 @@
       IPART2='COLO'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
         IHV=ILATCO
+        GO TO 5160
+      ENDIF
+!
+!     ****************************************
+!     **  CHECK FOR LATEX    DRIVER         **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='DRIV'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=ILATDR
+        GO TO 5160
+      ENDIF
+!
+!     ****************************************
+!     **  CHECK FOR LATEX IMPORT PDF        **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='IMPO'
+      IPART3='PDF '
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.                &
+         IHARG(3).EQ.IPART3)THEN
+        IHV=ILATPD
+        GO TO 5160
+      ENDIF
+!
+!     ****************************************
+!     **  CHECK FOR LATEX TYPE              **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='TYPE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=ILATTY
         GO TO 5160
       ENDIF
 !

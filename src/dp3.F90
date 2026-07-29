@@ -4286,7 +4286,7 @@
                        x,x2
 !     ..
 !     .. External Functions ..
-      DOUBLE PRECISION alnrel
+      REAL alnrel
       EXTERNAL alnrel
 !     ..
 !     .. Intrinsic Functions ..
@@ -4328,15 +4328,15 @@
 !
 !                    COMBINE THE RESULTS
 !
-      u = d*alnrel(a/b)
+      u = d*alnrel(real(a)/real(b))
       v = a* (dlog(b)-1.0D0)
       IF (u.LE.v) GO TO 30
       algdiv = (w-v) - u
       RETURN
-                                                                                                                                  
+
    30 algdiv = (w-u) - v
       RETURN
-                                                                                                                                  
+
       END FUNCTION algdiv
       SUBROUTINE ALPCDF(DX,DALPHA,DCDF)
 !CCCC SUBROUTINE ALPCDF(X,ALPHA,BETA,CDF)
@@ -16850,7 +16850,8 @@
       INTEGER i,n
 !     ..
 !     .. External Functions ..
-      DOUBLE PRECISION algdiv,alnrel,bcorr,gamln,gsumln
+      DOUBLE PRECISION algdiv,bcorr,gamln,gsumln
+      REAL ALNREL
       EXTERNAL algdiv,alnrel,bcorr,gamln,gsumln
 !     ..
 !     .. Intrinsic Functions ..
@@ -16930,7 +16931,7 @@
       h = a/b
       c = h/ (1.0D0+h)
       u = - (a-0.5D0)*dlog(c)
-      v = b*alnrel(h)
+      v = b*alnrel(real(h))
       IF (u.LE.v) GO TO 110
       betaln = (((-0.5D0*dlog(b)+e)+w)-v) - u
       RETURN
@@ -23472,8 +23473,10 @@
       DOUBLE PRECISION c(30),d(30)
 !     ..
 !     .. External Functions ..
-      DOUBLE PRECISION algdiv,alnrel,gam1
-      EXTERNAL algdiv,alnrel,gam1
+      DOUBLE PRECISION algdiv,gam1
+      EXTERNAL algdiv,gam1
+      REAL alnrel
+      EXTERNAL alnrel
 !     ..
 !     .. External Subroutines ..
       EXTERNAL grat1
@@ -23486,9 +23489,10 @@
       bm1 = (b-0.5D0) - 0.5D0
       nu = a + 0.5D0*bm1
       IF (y.GT.0.375D0) GO TO 10
-      lnx = alnrel(-y)
+      aval=real(y)
+      lnx = alnrel(-aval)
       GO TO 20
-                                                                                                                                  
+
    10 lnx = dlog(x)
    20 z = -nu*lnx
       IF (b*z.EQ.0.0D0) GO TO 70
@@ -28065,6 +28069,85 @@
 !
       RETURN
       END SUBROUTINE BKNOT
+      subroutine blockcount(m, y, m1, btau, localy)
+!
+!     Routine called by ktau-countall.
+!     written by Venkatraman E Seshan 4/20/2011, modified slightly
+!     for incorporation into Dataplot.
+!     blocks A = 1,...,m1 and B=m1+1,...,m; x[i] < x[j] for i in A & j in B
+!     y's sorted within blocks y[1] <= ... <= y[m1] and y[m1+1] <= ... <= y[m]
+!     this subroutine computes {I(y[i] < y[j]) - I(y[i] > y[j])}
+!     summed over i = 1,...,m1 and j = m1+1,...,m. also returns sorted y
+      integer m, m1
+!     double precision y(m), btau, localy(*)
+      real y(m), btau, localy(*)
+      integer i, j, l, mp1
+!     double precision numlt, numeq, numgt, cury
+      real numlt, numeq, numgt, cury
+!
+!     temporary space for y so that sorted y can be returned
+!     double precision, allocatable :: localy(:)
+!     need the m+1th value for the while loop
+!
+      mp1 = m+1
+!     allocate(localy(mp1))
+!
+!     copy y into localy
+      do 10 i = 1,m
+         localy(i) = y(i)
+ 10   continue
+!     need localy[m+1] larger than y[m1] (make it larger than all y's)
+      localy(mp1) = max(y(m),y(m1))+1
+!     initialize number lt, eq, and gt as well as btau
+!     at the start all y[m1+1] to y[m] are assumed larger
+      numlt = 0
+      numgt = dble(m-m1)
+      numeq = 0
+!     initialize block count
+      btau = 0
+!     start with current y smaller than y[1]
+      cury = localy(1) - 1
+      j = m1+1
+      l = 0
+!     loops through y[1] ... y[m1]
+      do 50 i = 1, m1
+         if (cury .lt. localy(i)) then
+            cury = localy(i)
+            numlt = numlt + numeq
+            numeq = 0
+!     find y[m1+1 ... m] less than current y[i]
+            do 20 while ((localy(j) .lt. cury) .and. (j .le. m))
+!     add the y's to the sorted list
+               l = l+1
+               y(l) = localy(j)
+!     adjuest the number greater and less accordingly
+               numlt = numlt + 1
+               numgt = numgt - 1
+               j = j+1
+ 20         continue
+!     now find y[m1+1 ... m] equal to current y[i]
+            do 30 while ((localy(j) .eq. cury) .and. (j .le. m))
+!     add the y's to the sorted list
+               l = l+1
+               y(l) = localy(j)
+               numeq = numeq + 1
+               j = j+1
+ 30         continue
+!     adjust number greater than current y[i]
+            numgt = numgt - numeq
+            l = l+1
+            y(l) = localy(i)
+            btau = btau + numgt - numlt
+         else
+!     contribution to tau when y[i] = y[i-1]
+            l = l+1
+            y(l) = localy(i)
+            btau = btau + numgt - numlt
+         endif
+ 50   continue
+!     deallocate(localy)
+      return
+      end
       SUBROUTINE BNDRY(A,BOX,IMX,JMX,IB,JB,NB,ISUBRO,IBUGG3)
 !
 !     PURPOSE--XX
@@ -31134,8 +31217,10 @@
       INTEGER i,n
 !     ..
 !     .. External Functions ..
-      DOUBLE PRECISION algdiv,alnrel,bcorr,betaln,esum,gam1,gamln1,rlog1
-      EXTERNAL algdiv,alnrel,bcorr,betaln,esum,gam1,gamln1,rlog1
+      DOUBLE PRECISION algdiv,bcorr,betaln,esum,gam1,gamln1,rlog1
+      EXTERNAL algdiv,bcorr,betaln,esum,gam1,gamln1,rlog1
+      REAL alnrel
+      EXTERNAL alnrel
 !     ..
 !     .. Intrinsic Functions ..
       INTRINSIC abs,dble,dlog,dmax1,dmin1,exp,sqrt
@@ -31153,11 +31238,11 @@
 !
       IF (x.GT.0.375D0) GO TO 10
       lnx = dlog(x)
-      lny = alnrel(-x)
+      lny = alnrel(-real(x))
       GO TO 30
                                                                                                                                   
    10 IF (y.GT.0.375D0) GO TO 20
-      lnx = alnrel(-y)
+      lnx = alnrel(-real(y))
       lny = dlog(y)
       GO TO 30
                                                                                                                                   
@@ -31269,8 +31354,10 @@
       INTEGER i,n
 !     ..
 !     .. External Functions ..
-      DOUBLE PRECISION algdiv,alnrel,bcorr,betaln,gam1,gamln1,rlog1
-      EXTERNAL algdiv,alnrel,bcorr,betaln,gam1,gamln1,rlog1
+      DOUBLE PRECISION algdiv,bcorr,betaln,gam1,gamln1,rlog1
+      EXTERNAL algdiv,bcorr,betaln,gam1,gamln1,rlog1
+      REAL alnrel
+      EXTERNAL alnrel
 !     ..
 !     .. Intrinsic Functions ..
       INTRINSIC abs,dble,dlog,dmax1,dmin1,exp,sqrt
@@ -31290,11 +31377,11 @@
 !
       IF (x.GT.0.375D0) GO TO 10
       lnx = dlog(x)
-      lny = alnrel(-x)
+      lny = alnrel(-real(x))
       GO TO 30
                                                                                                                                   
    10 IF (y.GT.0.375D0) GO TO 20
-      lnx = alnrel(-y)
+      lnx = alnrel(-real(y))
       lny = dlog(y)
       GO TO 30
                                                                                                                                   

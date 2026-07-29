@@ -6615,25 +6615,22 @@
 !
       IERROR='NO'
 !
-      IF(IBUGA3.EQ.'OFF')GO TO 90
-      WRITE(ICOUT,999)
-  999 FORMAT(1X)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,51)
-   51 FORMAT('***** AT THE BEGINNING OF COMDIG--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,52)IBUGA3
-   52 FORMAT('IBUGA3 = ',A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,53)N
-   53 FORMAT('N = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      DO 55 I=1,N
-      WRITE(ICOUT,56)I,X(I)
-   56 FORMAT('I,X(I) = ',I8,E15.7)
-      CALL DPWRST('XXX','BUG ')
-   55 CONTINUE
-   90 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF COMDIG--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,N
+   52   FORMAT('IBUGA3,N = ',A4,2X,I8)
+        CALL DPWRST('XXX','BUG ')
+        DO I=1,N
+           WRITE(ICOUT,56)I,X(I)
+   56      FORMAT('I,X(I) = ',I8,E15.7)
+           CALL DPWRST('XXX','BUG ')
+        ENDDO
+      ENDIF
 !
 !               ********************************************
 !               **  STEP 1--                              **
@@ -6642,37 +6639,34 @@
 !
       AN=N
 !
-      IF(N.GE.2)GO TO 119
-      IERROR='YES'
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,111)
-  111 FORMAT('***** ERROR IN COMDIG--THE INPUT NUMBER OF OBSERVATIONS')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,113)
-  113 FORMAT('      IN THE VARIABLE FOR WHICH THE COMMON DIGITS ARE')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,115)
-  115 FORMAT('      TO BE COMPUTED MUST BE 2 OR LARGER.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,116)
-  116 FORMAT('      SUCH WAS NOT THE CASE HERE.')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,117)N
-  117 FORMAT('      THE INPUT NUMBER OF OBSERVATIONS HERE = ',I8,'.')
-      CALL DPWRST('XXX','BUG ')
-      GO TO 9000
-  119 CONTINUE
+      IF(N.LT.2)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN COMDIG--THE NUMBER OF OBSERVATIONS IN THE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('      VARIABLE FOR WHICH THE COMMON DIGITS ARE TO BE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,115)
+  115   FORMAT('      COMPUTED MUST BE 2 OR LARGER.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N
+  117   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
 !
       HOLD=X(1)
-      DO 135 I=2,N
-      IF(X(I).NE.HOLD)GO TO 139
-  135 CONTINUE
+      DO I=2,N
+        IF(X(I).NE.HOLD)GO TO 139
+      ENDDO
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','BUG ')
       WRITE(ICOUT,136)HOLD
-  136 FORMAT('***** NON-FATAL DIAGNOSTIC IN COMDIG--',   &
-      'THE FIRST INPUT ARGUMENT (A VECTOR) HAS ALL ELEMENTS = ',E15.7)
+  136 FORMAT('***** WARNING IN COMDIG--THE FIRST ARGUMENT (A VECTOR) ',  &
+             'HAS ALL ELEMENTS = ',E15.7)
       CALL DPWRST('XXX','BUG ')
       XDIGI=ABS(HOLD)-REAL(INT(ABS(HOLD)))
       NDIGI=MAXDIG
@@ -6682,23 +6676,22 @@
 !  CHECK IF INTEGER PORTION OF NUMBERS MATCHES FOR ALL THE NUMBERS.
 !
       IHOLD=INT(X(1))
-      DO 145 I=2,N
+      DO I=2,N
         IXTEMP=INT(X(I))
         IF(IXTEMP.NE.IHOLD)THEN
           NDIG=-1
           XDIGI=0.0
-          IF(IFEEDB.EQ.'OFF')GO TO 149
-          IF(IWRITE.EQ.'OFF')GO TO 149
-          WRITE(ICOUT,999)
-          CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,146)N
-  146 FORMAT('THE INTEGER PORTION OF THE  ',I8,' OBSERVATIONS DOES ',   &
-             'NOT MATCH.')
-          CALL DPWRST('XXX','BUG ')
-  149     CONTINUE
+          IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,146)N
+  146       FORMAT('THE INTEGER PORTION OF THE  ',I8,' OBSERVATIONS ',   &
+                   'DOES NOT MATCH.')
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
           GO TO 800
         ENDIF
-  145 CONTINUE
+      ENDDO
 !
 !               ************************
 !               **  STEP 2--          **
@@ -6708,27 +6701,27 @@
       XDIGI=0.0
       NDIGI=0
 !
-      DO 200 L=1,MAXDIG
+      DO L=1,MAXDIG
         ATEMP=X(1)*10**(L-1)
         ADIG=ABS(ATEMP) - INT(ABS(ATEMP))
         IDIG=INT(ADIG*10)
-        DO 300 I=2,N
+        DO I=2,N
           ATEMP=X(I)*10**(L-1)
           ADIG=ABS(ATEMP) - INT(ABS(ATEMP))
           IDIG2=INT(ADIG*10)
           IF(IDIG.NE.IDIG2)GO TO 209
-  300   CONTINUE
+        ENDDO
         NDIGI=NDIGI+1
         DIGITS(NDIGI)=IDIG
-  200 CONTINUE
+      ENDDO
   209 CONTINUE
 !
       IF(NDIGI.GT.0)THEN
         XDIGI=REAL(INT(X(1)))*(10**NDIGI)
-        DO 400 I=1,NDIGI
+        DO I=1,NDIGI
           ATEMP=DIGITS(I)*(10**(NDIGI-I))
           XDIGI=XDIGI + ATEMP
-  400   CONTINUE
+        ENDDO
         XDIGI=XDIGI/(10**NDIGI)
       ENDIF
 !
@@ -6739,18 +6732,17 @@
 !               *******************************
 !
   800 CONTINUE
-      IF(IFEEDB.EQ.'OFF')GO TO 890
-      IF(IWRITE.EQ.'OFF')GO TO 890
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,811)N,NDIGI
-  811 FORMAT('THE NUMBER OF COMMON DIGITS FOR THE ',I8,   &
-             ' OBSERVATIONS = ',I5)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,813)XDIGI
-  813 FORMAT('THE COMMON DIGITS = ',G15.7)
-      CALL DPWRST('XXX','BUG ')
-  890 CONTINUE
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,811)N,NDIGI
+  811   FORMAT('THE NUMBER OF COMMON DIGITS FOR THE ',I8,   &
+               ' OBSERVATIONS = ',I5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,813)XDIGI
+  813   FORMAT('THE COMMON DIGITS = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 !
 !               *****************
 !               **  STEP 90--  **
@@ -6758,22 +6750,16 @@
 !               *****************
 !
  9000 CONTINUE
-      IF(IBUGA3.EQ.'OFF')GO TO 9090
-      WRITE(ICOUT,999)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9011)
- 9011 FORMAT('***** AT THE END       OF SUM--')
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9012)IBUGA3,IERROR
- 9012 FORMAT('IBUGA3,IERROR = ',A4,2X,A4)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9013)N
- 9013 FORMAT('N = ',I8)
-      CALL DPWRST('XXX','BUG ')
-      WRITE(ICOUT,9015)NDIGI,XDIGI
- 9015 FORMAT('NDIGI,XDIGI = ',I8,E15.7)
-      CALL DPWRST('XXX','BUG ')
- 9090 CONTINUE
+      IF(IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF SUM--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR,N,NDIGI,XDIGI
+ 9012   FORMAT('IERROR,N,NDIGI,XDIGI = ',A4,2X,2I8,E15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 !
       RETURN
       END SUBROUTINE COMDIG
@@ -17578,6 +17564,54 @@
 !
       RETURN
       END SUBROUTINE COV
+      subroutine countall(n, y, n0, idx, tau, localy)
+!
+!     Routine called by ktau.
+!     written by Venkatraman E Seshan 4/20/2011, modified slightly
+!     for incorporation into Dataplot.
+!
+!     x, y are ordered using order(x,y)
+!     loop y through the unique values of x, coalescing pair at a time
+!
+      integer n, n0, idx(n0)
+!     double precision y(n), tau, localy(*)
+      real y(n), tau, localy(*)
+      integer i, n1, m, m1, m0
+!     double precision btau
+      real btau
+!
+      tau = 0.0d0
+!
+!     this loop merges consecutive pairs of blocks of x
+!     starting with individual (unique) x values
+!     eventually leading to a single block in log2(n0) steps
+!
+      do 20 while (n0 .gt. 1)
+         n1 = n0/2
+         m = idx(2)
+         m1 = idx(1)
+         m0 = 1
+         call blockcount(m, y(m0), m1, btau, localy)
+         tau = tau + btau
+         idx(1) = idx(2)
+         do 10 i = 2,n1
+            m0 = idx(2*(i-1)) + 1
+            m = idx(2*i) - m0 + 1
+            m1 = idx(2*i-1) - m0 + 1
+            call blockcount(m, y(m0), m1, btau, localy)
+            tau = tau + btau
+            idx(i) = idx(2*i)
+ 10      continue
+         if (2*n1 .lt. n0) then
+            idx(n1+1) = idx(n0)
+            n0 = n1 + 1
+         else
+            n0 = n1
+         endif
+ 20   continue
+                                                                                                                                  
+      return
+      end
       SUBROUTINE COVMAT(YM1,YM9,DMEAN,MAXROM,NR,NC,MAXVAR)
 !
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE VARIANCE-COVARIANCE

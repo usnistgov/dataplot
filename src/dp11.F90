@@ -22702,12 +22702,14 @@
 !
       RETURN
       END SUBROUTINE DPCR
-      SUBROUTINE DPCRCI(MAXNXT,ICAPSW,IFORSW,   &
+      SUBROUTINE DPCRCI(MAXNXT,ICAPSW,IFORSW,ICASAN,               &
                         IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
 !
 !     PURPOSE--GENERATE CONFIDENCE LIMITS FOR THE CORRELATION
+!              COEFFICIENT OR THE KENDALL TAUB B CORRELATION
 !              COEFFICIENT
 !     EXAMPLE--CORRELATION CONFIDENCE LIMTIS Y1 Y2
+!              KENDALL TAU B CONFIDENCE LIMITS Y1 Y2
 !     WRITTEN BY--ALAN HECKERT
 !                 STATISTICAL ENGINEERING DIVISION
 !                 INFORMATION TECHNOLOGY LABORATORY
@@ -22719,10 +22721,12 @@
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     VERSION NUMBER--2012/6
 !     ORIGINAL VERSION--JUNE      2012.
+!     UPDATED         --MAY       2026. ADDED KENDALL TAU CASE
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
       CHARACTER*4 ICAPSW
+      CHARACTER*4 ICASAN
       CHARACTER*4 IFORSW
       CHARACTER*4 IBUGA2
       CHARACTER*4 IBUGA3
@@ -22754,9 +22758,18 @@
       LOGICAL IFRST
       LOGICAL ILAST
 !
+      INCLUDE 'DPCOPA.INC'
+      INCLUDE 'DPCOZZ.INC'
+      INCLUDE 'DPCOZI.INC'
+!
+      DIMENSION TEMP1(MAXOBV)
+      DIMENSION ITEMP1(MAXOBV)
+!
+      EQUIVALENCE (GARBAG(IGARB1),TEMP1(1))
+      EQUIVALENCE (IGARBG(IIGAR1),ITEMP1(1))
+!
 !-----COMMON----------------------------------------------------------
 !
-      INCLUDE 'DPCOPA.INC'
       INCLUDE 'DPCOHK.INC'
       INCLUDE 'DPCOSU.INC'
       INCLUDE 'DPCODA.INC'
@@ -22792,8 +22805,8 @@
         WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF DPCRCI--')
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,52)IBUGA2,IBUGA3,IBUGQ,ISUBRO,MAXNXT
-   52   FORMAT('IBUGA2,IBUGA3,IBUGQ,ISUBRO,MAXNXT = ',4(A4,2X),I8)
+        WRITE(ICOUT,52)IBUGA2,IBUGA3,IBUGQ,ISUBRO,ICASAN,MAXNXT
+   52   FORMAT('IBUGA2,IBUGA3,IBUGQ,ISUBRO,MAXNXT,ICASAN = ',5(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -22807,6 +22820,7 @@
       CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 !
       INAME='CORRELATION CONFIDENCE LIMITS'
+      IF(ICASAN.EQ.'KTAU')INAME='KENDALLS TAU B CONFIDENCE LIMITS'
       MINNA=1
       MAXNA=100
       MINN2=4
@@ -22820,12 +22834,11 @@
 !
       CALL DPPARS(IHARG,IHARG2,IARGT,ARG,NUMARG,IANS,IWIDTH,   &
                   IHNAME,IHNAM2,IUSE,NUMNAM,IN,IVALUE,VALUE,   &
-                  JMIN,JMAX,   &
-                  MINN2,MINNA,MAXNA,MAXSPN,IFLAGE,INAME,   &
-                  IVARN1,IVARN2,IVARTY,PVAR,   &
-                  ILIS,NRIGHT,ICOLR,ISUB,NQ,ILOCQ,NUMVAR,   &
-                  MINNVA,MAXNVA,   &
-                  IFLAGM,IFLAGP,   &
+                  JMIN,JMAX,                                   &
+                  MINN2,MINNA,MAXNA,MAXSPN,IFLAGE,INAME,       &
+                  IVARN1,IVARN2,IVARTY,PVAR,                   &
+                  ILIS,NRIGHT,ICOLR,ISUB,NQ,ILOCQ,NUMVAR,      &
+                  MINNVA,MAXNVA,IFLAGM,IFLAGP,                 &
                   IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
       IF(IERROR.EQ.'YES')GO TO 9000
 !
@@ -22863,24 +22876,24 @@
       DO 5210 I=1,NUMVAR
         DO 5220 J=I+1,NUMVAR
           ICOL=I
-          CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,   &
-                      INAME,IVARN1,IVARN2,IVARTY,   &
-                      ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVA2,   &
-                      MAXCOL,MAXCP1,MAXCP2,MAXCP3,   &
-                      MAXCP4,MAXCP5,MAXCP6,   &
-                      V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,   &
-                      Y,Y,Y,NS1,NLOCA2,NLOCA3,ICASE,   &
+          CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,     &
+                      INAME,IVARN1,IVARN2,IVARTY,            &
+                      ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVA2,      &
+                      MAXCOL,MAXCP1,MAXCP2,MAXCP3,           &
+                      MAXCP4,MAXCP5,MAXCP6,                  &
+                      V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,  &
+                      Y,Y,Y,NS1,NLOCA2,NLOCA3,ICASE,         &
                       IBUGA3,ISUBRO,IFOUND,IERROR)
           IF(IERROR.EQ.'YES')GO TO 9000
 !
           ICOL=J
-          CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,   &
-                      INAME,IVARN1,IVARN2,IVARTY,   &
-                      ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVA2,   &
-                      MAXCOL,MAXCP1,MAXCP2,MAXCP3,   &
-                      MAXCP4,MAXCP5,MAXCP6,   &
-                      V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,   &
-                      X,X,X,NS1,NLOCA2,NLOCA3,ICASE,   &
+          CALL DPPAR3(ICOL,IVALUE,IVALU2,IN,MAXN,MAXOBV,     &
+                      INAME,IVARN1,IVARN2,IVARTY,            &
+                      ILIS,NRIGHT,ICOLR,ISUB,NQ,NUMVA2,      &
+                      MAXCOL,MAXCP1,MAXCP2,MAXCP3,           &
+                      MAXCP4,MAXCP5,MAXCP6,                  &
+                      V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,  &
+                      X,X,X,NS1,NLOCA2,NLOCA3,ICASE,         &
                       IBUGA3,ISUBRO,IFOUND,IERROR)
           IF(IERROR.EQ.'YES')GO TO 9000
 !
@@ -22894,9 +22907,15 @@
             CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
             WRITE(ICOUT,999)
             CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,5211)
- 5211       FORMAT('***** FROM DPCRCI, BEFORE CALL DPCRC2--')
-            CALL DPWRST('XXX','BUG ')
+            IF(ICASAN.EQ.'CORR')THEN
+              WRITE(ICOUT,5211)
+ 5211         FORMAT('***** FROM DPCRCI, BEFORE CALL DPCRC2--')
+              CALL DPWRST('XXX','BUG ')
+            ELSE
+              WRITE(ICOUT,5218)
+ 5218         FORMAT('***** FROM DPCRCI, BEFORE CALL DPKTC2--')
+              CALL DPWRST('XXX','BUG ')
+            ENDIF
             WRITE(ICOUT,5212)I,J,NS1,MAXN
  5212       FORMAT('I,J,NS1,MAXN = ',4I8)
             CALL DPWRST('XXX','BUG ')
@@ -22911,11 +22930,19 @@
           IVARI2=IVARN2(I)
           IVARI3=IVARN1(J)
           IVARI4=IVARN2(J)
-          CALL DPCRC2(Y,X,NS1,   &
-                      ICAPSW,ICAPTY,IFORSW,   &
-                      IVARID,IVARI2,IVARI3,IVARI4,   &
-                      CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
-                      IBUGA3,ISUBRO,IERROR)
+          IF(ICASAN.EQ.'CORR')THEN
+            CALL DPCRC2(Y,X,NS1,                                     &
+                        ICAPSW,ICAPTY,IFORSW,                        &
+                        IVARID,IVARI2,IVARI3,IVARI4,                 &
+                        CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                        IBUGA3,ISUBRO,IERROR)
+          ELSE
+            CALL DPKTC2(Y,X,NS1,TEMP1,ITEMP1,                        &
+                        ICAPSW,ICAPTY,IFORSW,                        &
+                        IVARID,IVARI2,IVARI3,IVARI4,                 &
+                        CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
+                        IBUGA3,ISUBRO,IERROR)
+          ENDIF
           IF(IERROR.EQ.'YES')GO TO 9000
 !
 !               ***************************************
@@ -22962,9 +22989,9 @@
 !
       RETURN
       END SUBROUTINE DPCRCI
-      SUBROUTINE DPCRC2(Y1,Y2,N,   &
-                        ICAPSW,ICAPTY,IFORSW,   &
-                        IVARID,IVARI2,IVARI3,IVARI4,   &
+      SUBROUTINE DPCRC2(Y1,Y2,N,                                     &
+                        ICAPSW,ICAPTY,IFORSW,                        &
+                        IVARID,IVARI2,IVARI3,IVARI4,                 &
                         CUTL90,CUTU90,CUTL95,CUTU95,CUTL99,CUTU99,   &
                         IBUGA3,ISUBRO,IERROR)
 !
@@ -23099,7 +23126,7 @@
 !
       ISTEPN='2'
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'CRC2')   &
-      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 !
       IWRITE='OFF'
       CALL CORR(Y1,Y2,N,IWRITE,ACORR,IBUGA3,IERROR)
@@ -23111,8 +23138,8 @@
 !
       DO 200 I=1,NUMALP
         ALPHT=ALPHA(I)
-        CALL DPCRC3(ACORR,N,ALPHT,U,Z,   &
-                    ALOWLM,AUPPLM,   &
+        CALL DPCRC3(ACORR,N,ALPHT,U,Z,      &
+                    ALOWLM,AUPPLM,          &
                     IBUGA3,ISUBRO,IERROR)
         IF(IERROR.EQ.'YES')GO TO 9000
         LOWLIM(I)=ALOWLM
@@ -23134,7 +23161,7 @@
 !
       ISTEPN='3'
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'CRC2')   &
-      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 !
       IF(IPRINT.EQ.'OFF')GO TO 9000
 !
@@ -23271,24 +23298,24 @@
 !
       ISTEPN='9A'
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'CNF2')   &
-      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 !
       CALL DPDTA1(ITITLE,NCTITL,ITITLZ,NCTITZ,ITEXT,NCTEXT,   &
-                  AVALUE,IDIGIT,   &
-                  NTOT,NUMROW,   &
-                  ICAPSW,ICAPTY,ILAST,IFRST,   &
+                  AVALUE,IDIGIT,                              &
+                  NTOT,NUMROW,                                &
+                  ICAPSW,ICAPTY,ILAST,IFRST,                  &
                   ISUBRO,IBUGA3,IERROR)
 !
       ISTEPN='9B'
       IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'CNF2')   &
-      CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 !
       ICASA2='CORR'
       DO 4210 I=1,NUMALP
         ALPHSV(I)=100.*ALPHA(I)
  4210 CONTINUE
       CALL DPDT11(ALPHSV,NORVAL,NORVAL,LOWLIM,UPPLIM,   &
-                  ICASA2,ICAPSW,ICAPTY,NUMDIG,   &
+                  ICASA2,ICAPSW,ICAPTY,NUMDIG,          &
                   ISUBRO,IBUGA3,IERROR)
 !
 !

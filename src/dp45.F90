@@ -5940,6 +5940,8 @@
       DIMENSION XNOS(*)
       DIMENSION XS(MAXOBV)
 !
+      DOUBLE PRECISION DTERM1
+!
 !---------------------------------------------------------------------
 !
       INCLUDE 'DPCOP2.INC'

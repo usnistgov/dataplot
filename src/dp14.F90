@@ -7080,18 +7080,18 @@
 !
       RETURN
       END SUBROUTINE DPEQS2
-      SUBROUTINE DPEQS3(Y,X,TAG,N,MAXNXT,   &
-                        TEMP1,XTEMP,YTEMP,   &
+      SUBROUTINE DPEQS3(Y,X,TAG,N,MAXNXT,                         &
+                        TEMP1,XTEMP,YTEMP,                        &
                         SLOPE,AINTER,RESVAR,Q,QYX,QY,QXY,NSIZE,   &
-                        NUMSLO,ICASE,   &
-                        STATVA,STATCD,PVAL2T,   &
-                        STATV1,STATC1,PVAL1,   &
-                        STATV2,STATC2,PVAL2,   &
-                        STATV3,STATC3,PVAL3,   &
-                        CV80,CV90,CV95,CV99,   &
-                        CV180,CV190,CV195,CV199,   &
-                        CV280,CV290,CV295,CV299,   &
-                        CV380,CV390,CV395,CV399,   &
+                        NUMSLO,ICASE,                             &
+                        STATVA,STATCD,PVAL2T,                     &
+                        STATV1,STATC1,PVAL1,                      &
+                        STATV2,STATC2,PVAL2,                      &
+                        STATV3,STATC3,PVAL3,                      &
+                        CV80,CV90,CV95,CV99,                      &
+                        CV180,CV190,CV195,CV199,                  &
+                        CV280,CV290,CV295,CV299,                  &
+                        CV380,CV390,CV395,CV399,                  &
                         IBUGA3,ISUBRO,IERROR)
 !
 !     PURPOSE--THIS ROUTINE CARRIES OUT A TEST FOR EQUAL SLOPES
@@ -7484,7 +7484,8 @@
  3020   CONTINUE
         QYXT=DSUM1
 !
-        CALL SUMDP(QYX,NUMSLO,IWRITE,YXSUM,IBUGA3,IERROR)
+!       CALL SUMDP(QYX,NUMSLO,IWRITE,YXSUM,IBUGA3,IERROR)
+        YXSUM=SUM(QYX(1:NUMSLO))
         TERM1=QYXT - YXSUM
         AK=REAL(NUMSLO)
         AN=REAL(N)
@@ -11156,8 +11157,8 @@
       RETURN
       END SUBROUTINE DPEXFI
       SUBROUTINE DPEXFN(IANS,IANSLC,ICANS,MAXTMP,IWIDTH,NUMARG,   &
-                        ISTRIN,IWORD,ICMDTI,ITEMP,   &
-                        ICASE,IFILEZ,NCHAR,   &
+                        ISTRIN,IWORD,ICMDTI,ITEMP,                &
+                        ICASE,IFILEZ,NCHAR,                       &
                         IBUGS2,ISUBRO,IFOUND,IERROR)
 !
 !     PURPOSE--FOR VARIOUS SET COMMANDS, EXTRACT A FILE NAME.
@@ -11193,6 +11194,7 @@
 !     UPDATED         --APRIL       2020. SEARCH6 DIRECTORY
 !     UPDATED         --FEBRUARY    2021. FOR MACOS, USE DPEXW3
 !                                         INSTEAD OF DPEXWO
+!     UPDATED         --JULY        2026. LATEX CAPTION
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -11250,6 +11252,36 @@
       ELSE
         ISTART=1
         ISTOP=IWIDTH
+!
+!       LATEX CAPTION IS NOT A FILE NAME, SO ADD QUOTES TO
+!       ALLOW SPACES IN THE TEXT.  NOTE THAT THE STARTING
+!       QUOTE MUST COME AFTER THE    SET LATEX CAPTION   .
+!
+        IF(ICASE.EQ.'CLAT')THEN
+          ICANS(ISTOP+2:ISTOP+2)='"'
+          DO II=1,ISTOP-6
+             IF(IANS(II)  .EQ.'C' .AND. IANS(II+1).EQ.'A' .AND.        &
+                IANS(II+2).EQ.'P' .AND. IANS(II+3).EQ.'T' .AND.        &
+                IANS(II+4).EQ.'I' .AND. IANS(II+5).EQ.'O' .AND.        &
+                IANS(II+6).EQ.'N')THEN
+                IF(II+6.EQ.ISTOP)THEN
+                  ICANS(ISTOP+1:ISTOP+3)='" "'
+                  ISTOP=ISTOP+3
+                ELSE
+                  DO JJ=II+7,ISTOP
+                     IF(ICANS(JJ:JJ).NE.' ')THEN
+                       DO KK=ISTOP,JJ,-1
+                          ICANS(KK+1:KK+1)=ICANS(KK:KK)
+                       ENDDO
+                       ICANS(JJ:JJ)='"'
+                       EXIT
+                     ENDIF
+                   ENDDO
+                   ISTOP=ISTOP+2
+                ENDIF
+             ENDIF
+          ENDDO
+        ENDIF
 !
 !       2021/02: FOR MacOS, GO TO END OF COMMAND LINE
 !
@@ -11484,6 +11516,9 @@
           ELSEIF(ICASE.EQ.'FLAT')THEN
             IFILEZ='NULL'
             NCTEMP=4
+          ELSEIF(ICASE.EQ.'CLAT')THEN
+            IFILEZ='NULL'
+            NCTEMP=4
           ELSEIF(ICASE.EQ.'PYPA')THEN
             IFILEZ=' '
             NCTEMP=0
@@ -11600,6 +11635,9 @@
             IFILEZ='NULL'
             NCTEMP=4
           ELSEIF(ICASE.EQ.'FLAT')THEN
+            IFILEZ='NULL'
+            NCTEMP=4
+          ELSEIF(ICASE.EQ.'CLAT')THEN
             IFILEZ='NULL'
             NCTEMP=4
           ELSEIF(ICASE.EQ.'PYPA')THEN
