@@ -14074,6 +14074,7 @@
 !     UPDATED         --FEBRUARY  2024. CHANGED DEFAULT X11 FONT
 !     UPDATED         --JULY      2026. ILATPD, ILATDR, ILATTY, ILATCG
 !     UPDATED         --JULY      2026. ILATCA
+!     UPDATED         --AUGUST    2026. ILATFF, ILATFS
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -14918,7 +14919,11 @@
       ILATDR='EPIC'
       ILATTY='PDF '
       ILATCG='PDF '
+      ILATFF='RMFA'
+      ILATST='NORM'
       ILATCA='... add caption here ...'
+      PTIKHE=4.8
+      PTIKWI=6.26
 !
 !----------AQUATERM CASE-----------
 !

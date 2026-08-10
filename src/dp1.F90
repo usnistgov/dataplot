@@ -336,6 +336,7 @@
 !
       PARAMETER(MAXCLR=163)
       INTEGER IRED(MAXCLR), IBLUE(MAXCLR), IGREEN(MAXCLR)
+      CHARACTER*4 COLOR_NAMES(MAXCLR)
 !
 !---------------------------------------------------------------------
 !
@@ -8095,13 +8096,17 @@
 !     UPDATED         --JANUARY  1989. ZETA (BY ALAN HECKERT)
 !     UPDATED         --JANUARY  1994. ALPHA: 1X IN FORMAT (JJF)
 !     UPDATED         --AUGUST   2016. TRAP WRITE ERRORS
+!     UPDATED         --AUGUST   2026. COMMENT OUT CALL TO GRTRST
+!     UPDATED         --AUGUST   2026. ALLOW LENGTH OF ICSTR TO BE
+!                                      DEFINED BY CALLING ROUTINE
+!                                      (BUT ONLY FIRST 240 CHARACTERS USED)
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 !
-      CHARACTER*130 ICSTR
+!     CHARACTER*130 ICSTR
+      CHARACTER*(*) ICSTR
 !
       CHARACTER*4 ISUBN0
-!
       CHARACTER*4 IBRANC
 !
       SAVE NUMERR
@@ -8166,10 +8171,14 @@
 !               **  CARRY OUT ANY SUB-STRING TRANSLATIONS  **
 !               *********************************************
 !
-      IF(NUMTRA.GE.1)   &
-      CALL GRTRST(ICSTR,NCSTR,   &
-      ICTRA1,NCTRA1,ICTRA2,NCTRA2,NUMTRA,   &
-      IBUGG4,ISUBG4,IERRG4)
+!     AUGUST 2026: COMMENT OUT THIS CODE AS THIS WAS DESIGNED FOR
+!                  TERMINALS/COMMUNICATION PROTOCOLS THAT ARE NOW
+!                  OBSOLETE.
+!
+!     IF(NUMTRA.GE.1)                                    &
+!       CALL GRTRST(ICSTR,NCSTR,                         &
+!                   ICTRA1,NCTRA1,ICTRA2,NCTRA2,NUMTRA,  &
+!                    IBUGG4,ISUBG4,IERRG4)
 !
 !               ****************************
 !               **  STEP 21--             **
@@ -8177,7 +8186,8 @@
 !               ****************************
 !
       IBRANC='NOWR'
-      IF(1.LE.NCSTR.AND.NCSTR.LE.130)THEN
+!     IF(1.LE.NCSTR.AND.NCSTR.LE.130)THEN
+      IF(1.LE.NCSTR.AND.NCSTR.LE.240)THEN
         IBRANC='WRIT'
         IF((IHOST1.EQ.'VAX'.AND.ICSTR(1:1).EQ.'$') .OR.   &
            NCSTR2.LT.0)THEN

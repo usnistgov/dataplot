@@ -854,6 +854,251 @@
 !
       RETURN
       END SUBROUTINE DPGCI
+      SUBROUTINE DPFWHM(X,Y,N,IWRITE,TEMP1,FWHM,ISUBRO,IBUGA3,IERROR)
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES THE FULL WIDTH HALF MAXIMUM FOR
+!              A SET OF DATA (X,Y).
+!     INPUT  ARGUMENTS--X      = THE SINGLE PRECISION VECTOR OF OBSERVATIONS
+!                                DEFINING THE X-COORDINATES.
+!                     --Y      = THE SINGLE PRECISION VECTOR OF OBSERVATIONS
+!                                DEFINING THE Y-COORDINATES.
+!                     --N      = THE INTEGER NUMBER OF OBSERVATIONS.
+!     OUTPUT ARGUMENTS--FWHM   = THE SINGLE PRECISION VALUE OF THE COMPUTED
+!                                SAMPLE FULL WIDTH HALF MAXIMUM.
+!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE SAMPLE FULL WIDTH
+!             HALF MAXIMUM OF THE (X,Y) VECTORS.
+!     RESTRICTIONS--THERE IS NO RESTRICTION ON THE MAXIMUM VALUE
+!                   OF N FOR THIS SUBROUTINE.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--SORTC.
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--NONE.
+!     MODE OF INTERNAL OPERATIONS--SINGLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     REFERENCES-XX
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGYS
+!                 GAITHERSBURG, MD 20899
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGYS.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2026/08
+!     ORIGINAL VERSION--AUGUST    2026.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IWRITE
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION X(*)
+      DIMENSION Y(*)
+      DIMENSION TEMP1(*)
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='FWHM'
+      ISUBN2='    '
+      IERROR='NO'
+!
+      FWHM=CPUMIN
+!
+      IF(ISUBRO.EQ.'FWHM' .OR. IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPFWHM--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)ISUBRO,IBUGA3,N
+   52   FORMAT('ISUBRO,IBUGA3,N = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        DO I=1,N
+          WRITE(ICOUT,56)I,X(I),Y(I)
+   56     FORMAT('I,X(I),Y(I) = ',I8,2G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDDO
+      ENDIF
+!
+!               ********************************************
+!               **  STEP 1--                              **
+!               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+!               ********************************************
+!
+      AN=N
+!
+      IF(N.LT.3)THEN
+        IERROR='YES'
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN FULL WIDTH HALF MAXIMUM (FWHM)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)
+  112   FORMAT('      THE NUMBER OF OBSERVATIONS FOR THE RESPONSE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,113)
+  113   FORMAT('      IS LESS THAN 3.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)N
+  117   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8,'.')
+        CALL DPWRST('XXX','BUG ')
+        GO TO 9000
+      ENDIF
+!
+      CALL DISTIN(X,N,IWRITE,TEMP1,NDIST,IBUGA3,IERROR)
+      IF(N.NE.NDIST)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,136)
+  136   FORMAT('      THE NUMBER OF DISTINCT VALUES FOR THE X VARIABLE')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,137)
+  137   FORMAT('      IS NOT EQUAL TO THE NUMBER OF OBSERVATIONS.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               ************************************************
+!               **  STEP 2--                                  **
+!               **  COMPUTE THE     FWHM                      **
+!               ************************************************
+!
+!     STEP 1: SORT BY THE X VARIABLE
+!
+      CALL SORTC(X,Y,N,X,TEMP1)
+      Y(1:N)=TEMP1(1:N)
+!
+!     STEP 2: FIND MAXIMUM AND INDEX OF MAXIMUM
+!
+      YMAX=CPUMIN
+      DO II=1,N
+         IF(Y(II).GT.YMAX)THEN
+           YMAX=Y(II)
+           IINDX=II
+         ENDIF
+      ENDDO
+!
+      IF(YMAX.LE.0.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,201)
+  201   FORMAT('      THE MAXIMUM VALUE IS NON-POSITIVE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,203)YMAX
+  203   FORMAT('      MAXIMUM VALUE:      ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!     STEP 3: FIND INDEXES FOR POINTS BELOW HALF-MAXIMUM
+!
+!             SEARCH LEFT FIRST
+!
+      YMAXHALF=YMAX/2.0
+      IINDXLOW=-1
+      IF(IINDX.EQ.1)THEN
+        IINDXLOW=1
+      ELSE
+        DO II=IINDX-1,1,-1
+           IF(Y(II).LE.YMAXHALF)THEN
+             IINDXLOW=II
+             EXIT
+           ENDIF
+        ENDDO
+      ENDIF
+!
+!             NOW SEARCH RIGHT
+!
+      IINDXUPP=-1
+      IF(IINDX.EQ.N)THEN
+        IINDXUPP=N
+      ELSE
+        DO II=IINDX+1,N
+           IF(Y(II).LE.YMAXHALF)THEN
+             IINDXUPP=II
+             EXIT
+           ENDIF
+        ENDDO
+      ENDIF
+!
+!     STEP 4: NOW COMPUTE THE FWHM
+!
+      IF(IINDXLOW.GE.1 .AND. IINDXUPP.GE.1)THEN
+        FWHM=X(IINDXUPP) - X(IINDXLOW)
+      ELSEIF(IINDXLOW.GE.1 .AND. IINDXUPP.LT.1)THEN
+        FWHM=X(N) - X(IINDXLOW)
+      ELSEIF(IINDXLOW.LT.1 .AND. IINDXUPP.GE.1)THEN
+        FWHM=X(IINDXUPP) - X(1)
+      ELSE
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,301)
+  301   FORMAT('      NO OBSERVATIONS BELOW THE HALF MAXIMUM VALUE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,303)
+  303   FORMAT('      THE FULL WIDTH HALF MAXIMUM VALUE NOT COMPUTED.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               *******************************
+!               **  STEP 3--                 **
+!               **  WRITE OUT A LINE         **
+!               **  OF SUMMARY INFORMATION.  **
+!               *******************************
+!
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,811)N,XYCORR
+  811   FORMAT('THE FULL WIDTH HALF MAXIMUM OF THE ',I8,   &
+               ' OBSERVATIONS = ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT.      **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(ISUBRO.EQ.'FWHM' .OR. IBUGA3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPFWHM--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR,FWHM,YMAX,YMAXHALF
+ 9012   FORMAT('IERROR,FWHM,YMAX,YMAXHALF = ',A4,2X,3G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)IINDX,IINDXLOW,IINDXUPP
+ 9014   FORMAT('IINDX,IINDXLOW,IINDXUPP = ',3I10)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPFWHM
       SUBROUTINE DPGCL(ICHAR2,IOP,X,Y,NUMCO,IXMINS,IXMAXS,IXDELS,   &
       IBUGD2,IFOUND,IERROR)
 !

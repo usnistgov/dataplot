@@ -219,34 +219,34 @@
 !     UPDATED         --OCTOBER  2016. ADD TEMPLATES FOR SEVERL FUTURE
 !                                      DEVICE DRIVERS (CAIRO, WMF, D3)
 !
-!-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
+!-----NON-COMMON VARIABLES (GRAPHICS)--------------------------------------
 !
 #ifdef HAVE_QWIN
       USE IFQWIN
 #endif
-       use, intrinsic   :: iso_c_binding
+      use, intrinsic   :: iso_c_binding
 #ifdef HAVE_X11
-       interface
-           subroutine xclear() bind(C,name="xclear")
-              use, intrinsic                     :: iso_c_binding
-           end subroutine xclear
-       end interface
+      interface
+          subroutine xclear() bind(C,name="xclear")
+             use, intrinsic                     :: iso_c_binding
+          end subroutine xclear
+      end interface
 #endif
 #ifdef HAVE_CAIRO
-       interface
-           subroutine caflsh(idev,imodel) bind(C,name="caflsh")
+      interface
+          subroutine caflsh(idev,imodel) bind(C,name="caflsh")
               use, intrinsic                     :: iso_c_binding
               integer(c_int), intent(in)         :: idev
               integer(c_int), intent(in)         :: imodel
-           end subroutine caflsh
-       end interface
+          end subroutine caflsh
+      end interface
 #endif
 #ifdef HAVE_AQUA
-       interface
-           subroutine aqrend() bind(C,name="aqrend")
+      interface
+          subroutine aqrend() bind(C,name="aqrend")
               use, intrinsic                     :: iso_c_binding
            end subroutine aqrend
-       end interface
+      end interface
 #endif
 #ifdef HAVE_WININTERACTER
       USE WINTERACTER
@@ -956,7 +956,7 @@
       ENDIF
 !
       RETURN
-      END SUBROUTINE GRCLDE                 
+      END SUBROUTINE GRCLDE
       SUBROUTINE GRCOSC
 !
 !     PURPOSE--COPY THE SCREEN OF A SPECIFIC GRAPHICS DEVICE.
@@ -1550,13 +1550,13 @@
       ENDIF
 !
       RETURN
-      END SUBROUTINE GRCOSC                 
-      SUBROUTINE GRDETH(ICTEXT,NCTEXT,   &
-                        IFONT,IDIR,ANGLE,   &
-                        JFONT,JDIR,ANGLE2,   &
-                        PHEIGH,PWIDTH,PVEGAP,PHOGAP,   &
+      END SUBROUTINE GRCOSC
+      SUBROUTINE GRDETH(ICTEXT,NCTEXT,                       &
+                        IFONT,IDIR,ANGLE,                    &
+                        JFONT,JDIR,ANGLE2,                   &
+                        PHEIGH,PWIDTH,PVEGAP,PHOGAP,         &
                         JSIZE,JHEIG2,JWIDT2,JVEGA2,JHOGA2,   &
-                        PHEIG2,PWIDT2,PVEGA2,PHOGA2,   &
+                        PHEIG2,PWIDT2,PVEGA2,PHOGA2,         &
                         PXLEC,PXLECG,PYLEC,PYLECG)
 !
 !     PURPOSE--FOR A SPECIFIC GRAPHICS DEVICE, FOR THE STANDARD
@@ -2130,11 +2130,11 @@
 !
       RETURN
       END SUBROUTINE GRDETH
-      SUBROUTINE GRDETV(ICTEXT,NCTEXT,   &
-                        IFONT,IDIR,ANGLE,   &
-                        JFONT,JDIR,ANGLE2,   &
+      SUBROUTINE GRDETV(ICTEXT,NCTEXT,                 &
+                        IFONT,IDIR,ANGLE,              &
+                        JFONT,JDIR,ANGLE2,             &
                         PHEIGH,PWIDTH,PVEGAP,PHOGAP,   &
-                        JSIZE,   &
+                        JSIZE,                         &
                         JHEIG2,JWIDT2,JVEGA2,JHOGA2,   &
                         PHEIG2,PWIDT2,PVEGA2,PHOGA2,   &
                         PXLEC,PXLECG,PYLEC,PYLECG)
@@ -4325,7 +4325,7 @@
 !
       RETURN
       END SUBROUTINE GRDRIM
-      SUBROUTINE GRDRLI(IX1,IY1,IX2,IY2,PX1,PY1,PX2,PY2,IFACTO,JCOL)
+      SUBROUTINE GRDRLI(IX1,IY1,IX2,IY2,PX1,PY1,PX2,PY2,IFACTO,ICOL,JCOL)
 !
 !     PURPOSE--FOR A SPECIFIC GRAPHICS DEVICE,
 !              DRAW A LINE FROM (IX1,IY1) TO (IX2,IY2).
@@ -4395,6 +4395,8 @@
 !     UPDATED         --SEPTEMBER 2015. FIX GREYSCALE COLOR FOR SVG
 !     UPDATED         --OCTOBER   2016. ADD PRE-PROCESSOR DIRECTIVES
 !     UPDATED         --OCTOBER   2016. ADD TEMPLATES FOR SEVERL FUTURE
+!     UPDATED         --JULY      2026. SUPPORT FOR TIKZ IN LATEX
+!     UPDATED         --JULY      2026. ADD ICOL FOR LATEX TIKZ DEVICE
 !
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
@@ -4402,32 +4404,32 @@
 #ifdef HAVE_QWIN
       USE IFQWIN
 #endif
-       use, intrinsic   :: iso_c_binding
+      use, intrinsic   :: iso_c_binding
 #ifdef HAVE_X11
-       interface
-           subroutine xdraw(xpts,ypts, npts) bind(C,name="xdraw")
+      interface
+        subroutine xdraw(xpts,ypts, npts) bind(C,name="xdraw")
               use, intrinsic                     :: iso_c_binding
               integer(c_int), intent(inout)      :: xpts(*)
               integer(c_int), intent(inout)      :: ypts(*)
               integer(c_int), intent(inout)      :: npts
-           end subroutine xdraw
-       end interface
+        end subroutine xdraw
+      end interface
 #endif
 #ifdef HAVE_GD
-       interface
-           subroutine gddraw(ix1,iy1,ix2,iy2) bind(C,name="gddraw")
+      interface
+        subroutine gddraw(ix1,iy1,ix2,iy2) bind(C,name="gddraw")
               use, intrinsic                     :: iso_c_binding
               integer(c_int), intent(in)         :: ix1
               integer(c_int), intent(in)         :: iy1
               integer(c_int), intent(in)         :: ix2
               integer(c_int), intent(in)         :: iy2
-           end subroutine gddraw
-       end interface
+        end subroutine gddraw
+      end interface
 #endif
 #ifdef HAVE_CAIRO
-       interface
-           subroutine cadraw(idev,xpts,ypts,npts,icap,ijoin,ipatt,pthick) &
-                      bind(C,name="cadraw")
+      interface
+        subroutine cadraw(idev,xpts,ypts,npts,icap,ijoin,ipatt,pthick) &
+                   bind(C,name="cadraw")
               use, intrinsic                     :: iso_c_binding
               integer(c_int), intent(in)         :: idev
               real(c_double), intent(in)         :: xpts(*)
@@ -4437,29 +4439,29 @@
               integer(c_int), intent(in)         :: ijoin
               integer(c_int), intent(in)         :: ipatt
               real(c_double), intent(in)         :: pthick
-           end subroutine cadraw
-       end interface
+        end subroutine cadraw
+      end interface
 #endif
 #ifdef HAVE_AQUA
-       interface
-           subroutine aqdraw(xpts,ypts,npts,icap) bind(C,name="aqdraw")
+      interface
+        subroutine aqdraw(xpts,ypts,npts,icap) bind(C,name="aqdraw")
               use, intrinsic                     :: iso_c_binding
               real(c_double), intent(in)         :: xpts(*)
               real(c_double), intent(in)         :: ypts(*)
               integer(c_int), intent(in)         :: npts
               integer(c_int), intent(in)         :: icap
-           end subroutine aqdraw
-       end interface
+        end subroutine aqdraw
+      end interface
 #endif
 #ifdef HAVE_LIBPLOT
-       interface
-           subroutine pldraw(xpts,ypts,npts) bind(C,name="pldraw")
+      interface
+        subroutine pldraw(xpts,ypts,npts) bind(C,name="pldraw")
               use, intrinsic                     :: iso_c_binding
               real(c_double), intent(in)         :: xpts(*)
               real(c_double), intent(in)         :: ypts(*)
               integer(c_int), intent(in)         :: npts
-           end subroutine pldraw
-       end interface
+        end subroutine pldraw
+      end interface
 #endif
 #ifdef HAVE_WININTERACTER
       USE WINTERACTER
@@ -4482,6 +4484,7 @@
       COMMON/IGKS/IGKSID,IGKSWK,IGKSTY
 !
       CHARACTER*130 ICSTR
+      CHARACTER*4 ICOL
       CHARACTER*4 ISUBN0
       CHARACTER*1 ICARAT
       CHARACTER*1 IQUOTE
@@ -4496,6 +4499,7 @@
 !CCCC MARCH 2002: ADD FOLLOWING LINE FOR SVG DEVICE
       PARAMETER(MAXCLR=163)
       INTEGER IRED(MAXCLR), IBLUE(MAXCLR), IGREEN(MAXCLR)
+      CHARACTER*4 COLOR_NAMES(MAXCLR)
 !
 !-----COMMON----------------------------------------------------------
 !
@@ -5301,31 +5305,75 @@
 !
 15000 CONTINUE
       IF(PX1.EQ.PX2 .AND. PY1.EQ.PY2) GO TO 9000
-      ICSTR(1:1)=IBASLC
-      ICSTR(2:13)='drawline[ 0]'
-      NCSTR=13
-!
       CALL GRTRSD(PX1,PY1,IX1,IY1,ISUBN0)
       CALL GRTRSD(PX2,PY2,IX2,IY2,ISUBN0)
       NCHTOT=5
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)='('
-      CALL GRTRIN(IX1,NCHTOT,ICSTR,NCSTR)
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)=','
-      CALL GRTRIN(IY1,NCHTOT,ICSTR,NCSTR)
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)=')'
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)='('
-      CALL GRTRIN(IX2,NCHTOT,ICSTR,NCSTR)
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)=','
-      CALL GRTRIN(IY2,NCHTOT,ICSTR,NCSTR)
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)=')'
 !
-      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IF(ILATDR.EQ.'TIKZ')THEN
+        NCCOLO=4
+        DO II=4,1,-1
+           IF(ICOL(II:II).NE.' ')THEN
+             NCCOLO=II
+             EXIT
+           ENDIF
+        ENDDO
+        ICSTR(1:1)=IBASLC
+        ICSTR(2:6)='draw['
+        NCSTR=6
+        ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+        NCSTR=NCSTR+NCCOLO
+        ICSTR(NCSTR+1:NCSTR+2)=']('
+        NCSTR=NCSTR+2
+        IF(IX1.GT.99)THEN
+          NCHTOT=3
+        ELSEIF(IX1.GT.9)THEN
+          NCHTOT=2
+        ELSE
+          NCHTOT=1
+        ENDIF
+        CALL GRTRIN(IX1,NCHTOT,ICSTR,NCSTR)
+        ICSTR(NCSTR+1:NCSTR+3)='pt,'
+        NCSTR=NCSTR+3
+        IF(IY1.GT.99)THEN
+          NCHTOT=3
+        ELSEIF(IY1.GT.9)THEN
+          NCHTOT=2
+        ELSE
+          NCHTOT=1
+        ENDIF
+        CALL GRTRIN(IY1,NCHTOT,ICSTR,NCSTR)
+        ICSTR(NCSTR+1:NCSTR+8)='pt) -- ('
+        NCSTR=NCSTR+8
+        CALL GRTRIN(IX2,NCHTOT,ICSTR,NCSTR)
+        ICSTR(NCSTR+1:NCSTR+3)='pt,'
+        NCSTR=NCSTR+3
+        CALL GRTRIN(IY2,NCHTOT,ICSTR,NCSTR)
+        ICSTR(NCSTR+1:NCSTR+2)=');'
+        NCSTR=NCSTR+2
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ELSE
+        ICSTR(1:1)=IBASLC
+        ICSTR(2:13)='drawline[ 0]'
+        NCSTR=13
+!
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)='('
+        CALL GRTRIN(IX1,NCHTOT,ICSTR,NCSTR)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=','
+        CALL GRTRIN(IY1,NCHTOT,ICSTR,NCSTR)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=')'
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)='('
+        CALL GRTRIN(IX2,NCHTOT,ICSTR,NCSTR)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=','
+        CALL GRTRIN(IY2,NCHTOT,ICSTR,NCSTR)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=')'
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ENDIF
       GO TO 9000
 !
 !               ******************************************************
@@ -5755,6 +5803,7 @@
 !     UPDATED         --OCTOBER   2023. SCALABLE FONTS FOR X11
 !     UPDATED         --JUNE      2024. FOR GD DEVICE, CHECK IF FONT
 !                                       FILE EXISTS
+!     UPDATED         --AUGUST    2026. LATEX SUPPORT FOR TIKZ
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 !
@@ -5968,6 +6017,7 @@
 !CCCC MARCH 2002: ADD FOLLOWING LINE FOR SVG DEVICE
       PARAMETER(MAXCLR=163)
       INTEGER IRED(MAXCLR), IBLUE(MAXCLR), IGREEN(MAXCLR)
+      CHARACTER*4 COLOR_NAMES(MAXCLR)
 !
 !-----COMMON----------------------------------------------------------
 !
@@ -6041,44 +6091,44 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'DRPH')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRDRPH--')
+     51   FORMAT('***** AT THE BEGINNING OF GRDRPH--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)NP,IGUNIT,JPATT,JFONT,JCASE,JJUST,JSIZE
-   52   FORMAT('NP,IGUNIT,JPATT,JFONT,JCASE,JJUST,JSIZE = ',7I8)
+     52   FORMAT('NP,IGUNIT,JPATT,JFONT,JCASE,JJUST,JSIZE = ',7I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)IMANUF,IFIG,IPATT,IFONT,ICASE,IJUST,IFILL
-   53   FORMAT('IMANUF,IFIG,IPATT,IFONT,ICASE,IJUST,IFILL = ',   &
+     53   FORMAT('IMANUF,IFIG,IPATT,IFONT,ICASE,IJUST,IFILL = ',   &
                6(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         DO 55 I=1,NP
           WRITE(ICOUT,56)PX(I),PY(I)
-   56     FORMAT('PX(I),PY(I) = ',2G15.7)
+     56     FORMAT('PX(I),PY(I) = ',2G15.7)
           CALL DPWRST('XXX','BUG ')
-   55   CONTINUE
+     55   CONTINUE
         WRITE(ICOUT,63)IDIR,ICOL,ANGLE,ANGLE2,JDIR,JCOL
-   63   FORMAT('IDIR,ICOL,ANGLE,ANGLE2,JDIR,JCOL = ',   &
+     63   FORMAT('IDIR,ICOL,ANGLE,ANGLE2,JDIR,JCOL = ',   &
                2(A4,2X),2G15.7,2I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,66)PTHICK,JTHICK,PTHIC2
-   66   FORMAT('PTHICK,JTHICK,PTHIC2 = ',G15.7,I8,G15.7)
+     66   FORMAT('PTHICK,JTHICK,PTHIC2 = ',G15.7,I8,G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,67)PHEIGH,PWIDTH,PVEGAP,PHOGAP
-   67   FORMAT('PHEIGH,PWIDTH,PVEGAP,PHOGAP = ',4G15.7)
+     67   FORMAT('PHEIGH,PWIDTH,PVEGAP,PHOGAP = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,68)PHEIG2,PWIDT2,PVEGA2,PHOGA2
-   68   FORMAT('PHEIG2,PWIDT2,PVEGA2,PHOGA2 = ',4G15.7)
+     68   FORMAT('PHEIG2,PWIDT2,PVEGA2,PHOGA2 = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,69)JFILL,JHOGA2,JVEGA2,JHEIG2,JWIDT2
-   69   FORMAT('JFILL,JHOGA2,JVEGA2,JHEIG2,JWIDT2 = ',5I5)
+     69   FORMAT('JFILL,JHOGA2,JVEGA2,JHEIG2,JWIDT2 = ',5I5)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,71)ISYMBL,ISPAC
-   71   FORMAT('ISYMBL,ISPAC = ',A24,2X,A4)
+     71   FORMAT('ISYMBL,ISPAC = ',A24,2X,A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,79)IBUGG4,ISUBG4,IERRG4
-   79   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
+     79   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -6135,70 +6185,70 @@
 !
       GO TO 910
 !
-  910 CONTINUE
+    910 CONTINUE
       PXINC=0.0
       PYINC=0.0
       IJUSTH='LEFT'
       IJUSTV='BOTT'
       GO TO 995
 !
-  920 CONTINUE
+    920 CONTINUE
       PXINC=PWIDT2/2.0
       PYINC=0.0
       IJUSTH='CENT'
       IJUSTV='BOTT'
       GO TO 995
 !
-  930 CONTINUE
+    930 CONTINUE
       PXINC=PWIDT2
       PYINC=0.0
       IJUSTH='RIGH'
       IJUSTV='BOTT'
       GO TO 990
 !
-  940 CONTINUE
+    940 CONTINUE
       PXINC=0.0
       PYINC=PHEIG2/2.0
       IJUSTH='LEFT'
       IJUSTV='CENT'
       GO TO 995
 !
-  950 CONTINUE
+    950 CONTINUE
       PXINC=PWIDT2/2.0
       PYINC=PHEIG2/2.0
       IJUSTH='CENT'
       IJUSTV='CENT'
       GO TO 995
 !
-  960 CONTINUE
+    960 CONTINUE
       PXINC=PWIDT2
       PYINC=PHEIG2/2.0
       IJUSTH='RIGH'
       IJUSTV='CENT'
       GO TO 990
 !
-  970 CONTINUE
+    970 CONTINUE
       PXINC=0.0
       PYINC=PHEIG2
       IJUSTH='LEFT'
       IJUSTV='TOP '
       GO TO 995
 !
-  980 CONTINUE
+    980 CONTINUE
       PXINC=PWIDT2/2.0
       PYINC=PHEIG2
       IJUSTH='CENT'
       IJUSTV='TOP '
       GO TO 995
 !
-  990 CONTINUE
+    990 CONTINUE
       PXINC=PWIDT2
       PYINC=PHEIG2
       IJUSTH='RIGH'
       IJUSTV='TOP '
       GO TO 995
 !
-  995 CONTINUE
+    995 CONTINUE
 !CCCC FOLLOWING 2 LINES ADDED MAY 1992.
       PXINC=PXINC*(100.0/(PWXMAX-PWXMIN))
       PYINC=PYINC*(100.0/(PWYMAX-PWYMIN))
@@ -7994,9 +8044,9 @@
               IXTEMP=IROW-IXINC
               IYTEMP=ICOLZ+IYINC
               CALL GDPOIN(IXTEMP,IYTEMP,JCOL)
-12678       CONTINUE
-12675     CONTINUE
-12670   CONTINUE
+12678         CONTINUE
+12675       CONTINUE
+12670     CONTINUE
       ELSE
 !
 !       2024/06: CHECK IF FONT FILE EXISTS AS GIVEN.  IF NOT,
@@ -8263,74 +8313,236 @@
 !
         GO TO 9000
       ELSE
-        IF(IJUST.EQ.'LEFT')THEN
-          ICJUNK='bl'
-        ELSEIF(IJUST.EQ.'CENT')THEN
-          ICJUNK='bc'
-        ELSEIF(IJUST.EQ.'RIGH')THEN
-          ICJUNK='br'
-        ELSEIF(IJUST.EQ.'LJUS')THEN
-          ICJUNK='bl'
-        ELSEIF(IJUST.EQ.'CJUS')THEN
-          ICJUNK='bc'
-        ELSEIF(IJUST.EQ.'RJUS')THEN
-          ICJUNK='br'
-        ELSEIF(IJUST.EQ.'LEBO')THEN
-          ICJUNK='bl'
-        ELSEIF(IJUST.EQ.'CEBO')THEN
-          ICJUNK='bc'
-        ELSEIF(IJUST.EQ.'RIBO')THEN
-          ICJUNK='br'
-        ELSEIF(IJUST.EQ.'LECE')THEN
-          ICJUNK='cl'
-        ELSEIF(IJUST.EQ.'CECE')THEN
-          ICJUNK='cc'
-        ELSEIF(IJUST.EQ.'RICE')THEN
-          ICJUNK='cr'
-        ELSEIF(IJUST.EQ.'LETO')THEN
-          ICJUNK='tl'
-        ELSEIF(IJUST.EQ.'CETO')THEN
-          ICJUNK='tc'
-        ELSEIF(IJUST.EQ.'RITO')THEN
-          ICJUNK='tr'
+!
+!         COMPUTE NUMBER OF CHARACTERS FOR ISYMBOL
+!
+        ILAST=16
+        DO I=16,1,-1
+          ILAST=I
+          IF(ISYMBL(I:I).NE.' ')GO TO 15009
+        ENDDO
+15009     CONTINUE
+!
+        IF(ILATDR.EQ.'TIKZ')THEN
+          DO I=1,NP
+!
+            PX1=PX(I)
+            PY1=PY(I)
+            CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
+!
+            NCCOLO=4
+            DO II=4,1,-1
+               IF(ICOL(II:II).NE.' ')THEN
+                 NCCOLO=II
+                 EXIT
+               ENDIF
+            ENDDO
+!
+            NCSTR=1
+            ICSTR(NCSTR:NCSTR)='\'
+            ICSTR(NCSTR+1:NCSTR+10)='node[text='
+            NCSTR=NCSTR+10
+            ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+            NCSTR=NCSTR+NCCOLO
+!
+            IF(ILATFF.EQ.'RMFA')THEN
+              IF(ILATST.EQ.'NORM')THEN
+                ICSTR(NCSTR+1:NCSTR+15)=',font=\rmfamily'
+                NCSTR=NCSTR+15
+              ELSEIF(ILATST.EQ.'BOLD')THEN
+                ICSTR(NCSTR+1:NCSTR+24)=',font=\rmfamily\bfseries'
+                NCSTR=NCSTR+24
+              ELSEIF(ILATST.EQ.'ITAL')THEN
+                ICSTR(NCSTR+1:NCSTR+23)=',font=\rmfamily\itshape'
+                NCSTR=NCSTR+23
+              ENDIF
+            ELSEIF(ILATFF.EQ.'SFFA')THEN
+              IF(ILATST.EQ.'NORM')THEN
+                ICSTR(NCSTR+1:NCSTR+15)=',font=\sffamily'
+                NCSTR=NCSTR+15
+              ELSEIF(ILATST.EQ.'BOLD')THEN
+                ICSTR(NCSTR+1:NCSTR+24)=',font=\sffamily\bfseries'
+                NCSTR=NCSTR+24
+              ELSEIF(ILATST.EQ.'ITAL')THEN
+                ICSTR(NCSTR+1:NCSTR+23)=',font=\sffamily\itshape'
+                NCSTR=NCSTR+23
+              ENDIF
+            ELSEIF(ILATFF.EQ.'TTFA')THEN
+              IF(ILATST.EQ.'NORM')THEN
+                ICSTR(NCSTR+1:NCSTR+15)=',font=\ttfamily'
+                NCSTR=NCSTR+15
+              ELSEIF(ILATST.EQ.'BOLD')THEN
+                ICSTR(NCSTR+1:NCSTR+24)=',font=\ttfamily\bfseries'
+                NCSTR=NCSTR+24
+              ELSEIF(ILATST.EQ.'ITAL')THEN
+                ICSTR(NCSTR+1:NCSTR+23)=',font=\ttfamily\itshape'
+                NCSTR=NCSTR+23
+              ENDIF
+            ENDIF
+            IF(JSIZE.EQ.1)THEN
+              ICSTR(NCSTR+1:NCSTR+5)='\tiny'
+              NCSTR=NCSTR+5
+            ELSEIF(JSIZE.EQ.2)THEN
+              ICSTR(NCSTR+1:NCSTR+11)='\scriptsize'
+              NCSTR=NCSTR+11
+            ELSEIF(JSIZE.EQ.3)THEN
+              ICSTR(NCSTR+1:NCSTR+13)='\footnotesize'
+              NCSTR=NCSTR+13
+            ELSEIF(JSIZE.EQ.4)THEN
+              ICSTR(NCSTR+1:NCSTR+6)='\small'
+              NCSTR=NCSTR+6
+            ELSEIF(JSIZE.EQ.5)THEN
+              ICSTR(NCSTR+1:NCSTR+11)='\normalsize'
+              NCSTR=NCSTR+11
+            ELSEIF(JSIZE.EQ.6)THEN
+              ICSTR(NCSTR+1:NCSTR+6)='\large'
+              NCSTR=NCSTR+6
+            ELSEIF(JSIZE.EQ.7)THEN
+              ICSTR(NCSTR+1:NCSTR+6)='\Large'
+              NCSTR=NCSTR+6
+            ELSEIF(JSIZE.EQ.8)THEN
+              ICSTR(NCSTR+1:NCSTR+5)='\LARGE'
+              NCSTR=NCSTR+6
+            ELSEIF(JSIZE.EQ.9)THEN
+              ICSTR(NCSTR+1:NCSTR+5)='\huge'
+              NCSTR=NCSTR+5
+            ELSEIF(JSIZE.EQ.11)THEN
+              ICSTR(NCSTR+1:NCSTR+5)='\HUGE'
+              NCSTR=NCSTR+5
+            ENDIF
+!             ICSTR(NCSTR+1:NCSTR+32)=', inner ysep=0pt, text depth=0pt'
+!             NCSTR=NCSTR+32
+!
+            IF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'CENT')THEN
+              CONTINUE
+            ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'TOP')THEN
+              ICSTR(NCSTR+1:NCSTR+14)=', anchor=north'
+              NCSTR=NCSTR+14
+            ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'BOTT')THEN
+              ICSTR(NCSTR+1:NCSTR+14)=', anchor=south'
+              NCSTR=NCSTR+14
+            ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'CENT')THEN
+              ICSTR(NCSTR+1:NCSTR+13)=', anchor=west'
+              NCSTR=NCSTR+13
+            ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'TOP')THEN
+              ICSTR(NCSTR+1:NCSTR+19)=', anchor=north west'
+              NCSTR=NCSTR+19
+            ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'BOTT')THEN
+              ICSTR(NCSTR+1:NCSTR+19)=', anchor=south west'
+              NCSTR=NCSTR+19
+            ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'CENT')THEN
+              ICSTR(NCSTR+1:NCSTR+13)=', anchor=east'
+              NCSTR=NCSTR+13
+            ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'TOP')THEN
+              ICSTR(NCSTR+1:NCSTR+19)=', anchor=north east'
+              NCSTR=NCSTR+19
+            ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'BOTT')THEN
+              ICSTR(NCSTR+1:NCSTR+19)=', anchor=south east'
+              NCSTR=NCSTR+19
+            ENDIF
+            ICSTR(NCSTR+1:NCSTR+6)='] at ('
+            NCSTR=NCSTR+6
+            IF(IX.GT.99)THEN
+              NCHTOT=3
+            ELSEIF(IX.GT.9)THEN
+              NCHTOT=2
+            ELSE
+              NCHTOT=1
+            ENDIF
+            CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+            ICSTR(NCSTR+1:NCSTR+3)='pt,'
+            NCSTR=NCSTR+3
+            IF(IY.GT.99)THEN
+              NCHTOT=3
+            ELSEIF(IY.GT.9)THEN
+              NCHTOT=2
+            ELSE
+              NCHTOT=1
+            ENDIF
+            CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+            ICSTR(NCSTR+1:NCSTR+5)='pt) {'
+            NCSTR=NCSTR+5
+            DO JJ=1,ILAST
+               ICSTR(NCSTR+1:NCSTR+1)=ISYMBL(JJ:JJ)
+               NCSTR=NCSTR+1
+            ENDDO
+            ICSTR(NCSTR+1:NCSTR+2)='};'
+            NCSTR=NCSTR+2
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ENDDO
         ELSE
-          ICJUNK='cc'
+          IF(IJUST.EQ.'LEFT')THEN
+            ICJUNK='bl'
+          ELSEIF(IJUST.EQ.'CENT')THEN
+            ICJUNK='bc'
+          ELSEIF(IJUST.EQ.'RIGH')THEN
+            ICJUNK='br'
+          ELSEIF(IJUST.EQ.'LJUS')THEN
+            ICJUNK='bl'
+          ELSEIF(IJUST.EQ.'CJUS')THEN
+            ICJUNK='bc'
+          ELSEIF(IJUST.EQ.'RJUS')THEN
+            ICJUNK='br'
+          ELSEIF(IJUST.EQ.'LEBO')THEN
+            ICJUNK='bl'
+          ELSEIF(IJUST.EQ.'CEBO')THEN
+            ICJUNK='bc'
+          ELSEIF(IJUST.EQ.'RIBO')THEN
+            ICJUNK='br'
+          ELSEIF(IJUST.EQ.'LECE')THEN
+            ICJUNK='cl'
+          ELSEIF(IJUST.EQ.'CECE')THEN
+            ICJUNK='cc'
+          ELSEIF(IJUST.EQ.'RICE')THEN
+            ICJUNK='cr'
+          ELSEIF(IJUST.EQ.'LETO')THEN
+            ICJUNK='tl'
+          ELSEIF(IJUST.EQ.'CETO')THEN
+            ICJUNK='tc'
+          ELSEIF(IJUST.EQ.'RITO')THEN
+            ICJUNK='tr'
+          ELSE
+            ICJUNK='cc'
+          ENDIF
+!
+          DO I=1,NP
+!
+            PX1=PX(I)
+            PY1=PY(I)
+            CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
+!
+            ICSTR(1:1)=IBASLC
+            ICSTR(2:5)='put('
+            NCSTR=5
+            NCHTOT=5
+            CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR)=','
+            CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR+15)='){ makebox(0,0)['
+            ICSTR(NCSTR+2:NCSTR+2)=IBASLC
+            NCSTR=NCSTR+15
+            ICSTR(NCSTR+1:NCSTR+2)=ICJUNK(1:2)
+            NCSTR=NCSTR+2
+!
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR)=']'
+!
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR)='{'
+            DO JJ=1,ILAST
+               NCSTR=NCSTR+1
+               ICSTR(NCSTR:NCSTR)=ISYMBL(JJ:JJ)
+            ENDDO
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR+1)='}}'
+            NCSTR=NCSTR+1
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ENDDO
         ENDIF
-!
-        DO 15650 I=1,NP
-!
-          PX1=PX(I)
-          PY1=PY(I)
-          CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:5)='put('
-          NCSTR=5
-          NCHTOT=5
-          CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR+15)='){ makebox(0,0)['
-          ICSTR(NCSTR+2:NCSTR+2)=IBASLC
-          NCSTR=NCSTR+15
-          ICSTR(NCSTR+1:NCSTR+2)=ICJUNK(1:2)
-          NCSTR=NCSTR+2
-!
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=']'
-!
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='{'
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=ISYMBL(1:1)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR+1)='}}'
-          NCSTR=NCSTR+1
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-15650   CONTINUE
       ENDIF
 !
       GO TO 9000
@@ -9084,8 +9296,9 @@
 !     UPDATED         --OCTOBER   2016. ADD TEMPLATES FOR SEVERAL FUTURE
 !                                       DEVICES
 !     UPDATED         --JULY      2019. TWEAK SCRATCH SPACE
+!     UPDATED         --AUGUST    2026. ADD TIKZ SUPPORT FOR LATEX
 !
-!-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
+!-----NON-COMMON VARIABLES (GRAPHICS)-----------------------------------
 !
 #ifdef HAVE_QWIN
       USE IFQWIN
@@ -9202,7 +9415,8 @@
       EQUIVALENCE (IGARBG(IIGAR5),IPY(1))
 !CCCC END CHANGE
 !
-      CHARACTER*130 ICSTR
+!     CHARACTER*130 ICSTR
+      CHARACTER*240 ICSTR
       CHARACTER*4 ISUBN0
       CHARACTER*1 ICARAT
       CHARACTER*1 IQUOTE
@@ -9218,6 +9432,7 @@
 !CCCC MARCH 2002: ADD FOLLOWING LINE FOR SVG DEVICE
       PARAMETER(MAXCLR=163)
       INTEGER IRED(MAXCLR), IBLUE(MAXCLR), IGREEN(MAXCLR)
+      CHARACTER*4 COLOR_NAMES(MAXCLR)
 !
 !CCCC MARCH 2002: ADD FOLLOWING LINE FOR SVG DEVICE
       INCLUDE 'DPCOCT.INC'
@@ -9236,30 +9451,30 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'DRPL')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRDRPL--')
+     51   FORMAT('***** AT THE BEGINNING OF GRDRPL--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IGUNIT,NP,IFIG,IPATT,JPATT
-   52   FORMAT('IGUNIT,NP,IFIG,IPATT,JPATT = ',2I8,3(2X,A4))
+     52   FORMAT('IGUNIT,NP,IFIG,IPATT,JPATT = ',2I8,3(2X,A4))
         CALL DPWRST('XXX','BUG ')
         DO 55 I=1,NP
           WRITE(ICOUT,56)PX(I),PY(I)
-   56     FORMAT('PX(I),PY(I) = ',2G15.7)
+     56     FORMAT('PX(I),PY(I) = ',2G15.7)
           CALL DPWRST('XXX','BUG ')
-   55   CONTINUE
+     55   CONTINUE
         WRITE(ICOUT,60)PTHICK,JTHICK,PTHIC2
-   60   FORMAT('PTHICK,JTHICK,PTHIC2 = ',G15.7,I8,G15.7)
+     60   FORMAT('PTHICK,JTHICK,PTHIC2 = ',G15.7,I8,G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,61)ICOL,IMANUF,IMODEL,JCOL
-   61   FORMAT('ICOL,IMANUF,IMODEL,JCOL = ',3(A4,2X),I8)
+     61   FORMAT('ICOL,IMANUF,IMODEL,JCOL = ',3(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,63)ICOLR,ICOLG,ICOLB,IRGBFL
-   63   FORMAT('ICOLR,ICOLG,ICOLB,IRGBFL = ',4I5)
+     63   FORMAT('ICOLR,ICOLG,ICOLB,IRGBFL = ',4I5)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,69)IBUGG4,ISUBG4,IERRG4
-   69   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',2(A4,2X),A4)
+     69   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',2(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -10395,99 +10610,257 @@
 !
 15000 CONTINUE
       IF(NP.LE.1 .OR. JPATT.EQ.-1)GO TO 9000
-      IF(JPATT.EQ.1)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:13)='drawline[ 0]'
-        NCSTR=13
-      ELSEIF(JPATT.EQ.3)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:15)='dottedline{12}'
-        NCSTR=15
-      ELSEIF(JPATT.EQ.2)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:13)='dashline{24}'
-        NCSTR=13
-      ELSEIF(JPATT.EQ.4)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:18)='dashline[-30]{12}'
-        NCSTR=18
-      ELSEIF(JPATT.EQ.5)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:18)='dashline[-30]{24}'
-        NCSTR=18
-      ELSEIF(JPATT.EQ.6)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:18)='dashline[+30]{12}'
-        NCSTR=18
-      ELSEIF(JPATT.EQ.7)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:18)='dashline[+30]{24}'
-        NCSTR=18
-      ELSE
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:13)='drawline[ 0]'
-        NCSTR=13
-      ENDIF
 !
       IPTS=0
-      NCHTOT=5
+      NCHTOT=3
       XPREV=CPUMIN
       YPREV=CPUMIN
-      DO 15010 I=1,NP
+      NCCOLO=4
+      DO II=4,1,-1
+         IF(ICOL(II:II).NE.' ')THEN
+           NCCOLO=II
+           EXIT
+         ENDIF
+      ENDDO
 !
-!       IF CURRENT POINT EQUAL TO PREVIOUS POINT, DO NOT
-!       NOT DRAW (I.E., ZERO LENGTH LINE)
-!
-        IF(I.GT.1)THEN
-          IF(PX(I).EQ.XPREV .AND. PY(I).EQ.YPREV)CYCLE
-        ENDIF
-        IPTS=IPTS+1
-        CALL GRTRSD(PX(I),PY(I),IX1,IY1,ISUBN0)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='('
-        CALL GRTRIN(IX1,NCHTOT,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRIN(IY1,NCHTOT,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=')'
-        IF(NCSTR.GT.80)THEN
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-          NCSTR=0
-          IF(JPATT.EQ.1)THEN
-            ICSTR(1:1)=IBASLC
-            ICSTR(2:13)='drawline[ 0]'
-            NCSTR=13
-          ELSEIF(JPATT.EQ.3)THEN
-            ICSTR(1:1)=IBASLC
-            ICSTR(2:15)='dottedline{12}'
-            NCSTR=15
-          ELSEIF(JPATT.EQ.2)THEN
-            ICSTR(1:1)=IBASLC
-            ICSTR(2:13)='dashline{24}'
-            NCSTR=13
-          ELSEIF(JPATT.EQ.4)THEN
-            ICSTR(1:1)=IBASLC
-            ICSTR(2:18)='dashline[-30]{12}'
-            NCSTR=18
-          ELSEIF(JPATT.EQ.5)THEN
-            ICSTR(1:1)=IBASLC
-            ICSTR(2:18)='dashline[-30]{24}'
-            NCSTR=18
-          ELSEIF(JPATT.EQ.6)THEN
-            ICSTR(1:1)=IBASLC
-            ICSTR(2:18)='dashline[+30]{12}'
-            NCSTR=18
-          ELSEIF(JPATT.EQ.7)THEN
-            ICSTR(1:1)=IBASLC
-            ICSTR(2:18)='dashline[+30]{24}'
-            NCSTR=18
-          ELSE
-            ICSTR(1:1)=IBASLC
-            ICSTR(2:13)='drawline[ 0]'
-            NCSTR=13
+      IF(ILATDR.EQ.'TIKZ')THEN
+        NCSTR=0
+        ICSTR=' '
+        JTHICK2=ABS(JTHICK)
+        DO II=1,NP
+          IF(II.GT.1)THEN
+            IF(PX(II).EQ.XPREV .AND. PY(II).EQ.YPREV)CYCLE
           ENDIF
-          IPTS=0
+          CALL GRTRSD(PX(II),PY(II),IX1,IY1,ISUBN0)
+          IF(II.EQ.1)THEN
+!
+!           SET COLOR
+!
+            ICSTR(1:1)=IBASLC
+            ICSTR(2:6)='draw['
+            NCSTR=6
+            ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+            NCSTR=NCSTR+NCCOLO
+!
+!           SET LINE PATTERN IF NOT SOLID
+!
+            IF(JPATT.EQ.2)THEN
+              ICSTR(NCSTR+1:NCSTR+7)=',dashed'
+              NCSTR=NCSTR+7
+            ELSEIF(JPATT.EQ.3)THEN
+              ICSTR(NCSTR+1:NCSTR+7)=',dotted'
+              NCSTR=NCSTR+7
+            ELSEIF(JPATT.EQ.4)THEN
+              ICSTR(NCSTR+1:NCSTR+9)=',dash dot'
+              NCSTR=NCSTR+9
+            ELSEIF(JPATT.EQ.5)THEN
+              ICSTR(NCSTR+1:NCSTR+13)=',dash dot dot'
+              NCSTR=NCSTR+13
+            ELSEIF(JPATT.EQ.6)THEN
+              ICSTR(NCSTR+1:NCSTR+15)=',loosely dashed'
+              NCSTR=NCSTR+15
+            ELSEIF(JPATT.EQ.7)THEN
+              ICSTR(NCSTR+1:NCSTR+15)=',loosely dotted'
+              NCSTR=NCSTR+15
+            ENDIF
+!
+!           SET LINE THICKNESS (IF SET TO HARDWARE)
+!
+            IF(JTHICK2.EQ.1)THEN
+              ICSTR(NCSTR+1:NCSTR+11)=',ultra thin'
+              NCSTR=NCSTR+11
+            ELSEIF(JTHICK2.EQ.2)THEN
+              ICSTR(NCSTR+1:NCSTR+10)=',very thin'
+              NCSTR=NCSTR+10
+            ELSEIF(JTHICK2.EQ.4)THEN
+              ICSTR(NCSTR+1:NCSTR+10)=',semithick'
+              NCSTR=NCSTR+10
+            ELSEIF(JTHICK2.EQ.5)THEN
+              ICSTR(NCSTR+1:NCSTR+6)=',thick'
+              NCSTR=NCSTR+6
+            ELSE
+              ICSTR(NCSTR+1:NCSTR+5)=',thin'
+              NCSTR=NCSTR+5
+            ENDIF
+!
+            ICSTR(NCSTR+1:NCSTR+2)=']('
+            NCSTR=NCSTR+2
+            IF(IX1.GT.99)THEN
+              NCHTOT=3
+            ELSEIF(IX1.GT.9)THEN
+              NCHTOT=2
+            ELSE
+              NCHTOT=1
+            ENDIF
+            CALL GRTRIN(IX1,NCHTOT,ICSTR,NCSTR)
+            ICSTR(NCSTR+1:NCSTR+3)='pt,'
+            NCSTR=NCSTR+3
+            IF(IY1.GT.99)THEN
+              NCHTOT=3
+            ELSEIF(IY1.GT.9)THEN
+              NCHTOT=2
+            ELSE
+              NCHTOT=1
+            ENDIF
+            CALL GRTRIN(IY1,NCHTOT,ICSTR,NCSTR)
+            ICSTR(NCSTR+1:NCSTR+3)='pt)'
+            NCSTR=NCSTR+3
+          ELSE
+            ICSTR(NCSTR+1:NCSTR+5)=' -- ('
+            NCSTR=NCSTR+5
+            IF(IX1.GT.99)THEN
+              NCHTOT=3
+            ELSEIF(IX1.GT.9)THEN
+              NCHTOT=2
+            ELSE
+              NCHTOT=1
+            ENDIF
+            CALL GRTRIN(IX1,NCHTOT,ICSTR,NCSTR)
+            ICSTR(NCSTR+1:NCSTR+3)='pt,'
+            NCSTR=NCSTR+3
+            IF(IY1.GT.99)THEN
+              NCHTOT=3
+            ELSEIF(IY1.GT.9)THEN
+              NCHTOT=2
+            ELSE
+              NCHTOT=1
+            ENDIF
+            CALL GRTRIN(IY1,NCHTOT,ICSTR,NCSTR)
+            ICSTR(NCSTR+1:NCSTR+3)='pt)'
+            NCSTR=NCSTR+3
+            IF(II.EQ.NP)THEN
+              ICSTR(NCSTR+1:NCSTR+1)=';'
+              NCSTR=NCSTR+1
+            ENDIF
+            IF(NCSTR.GT.200)THEN
+              IF(ICSTR(NCSTR:NCSTR).NE.';')THEN
+                ICSTR(NCSTR+1:NCSTR+1)=';'
+                NCSTR=NCSTR+1
+              ENDIF
+              CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+              NCSTR=0
+              ICSTR=' '
+!
+              ICSTR(1:1)=IBASLC
+              ICSTR(2:6)='draw['
+              NCSTR=6
+              ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+              NCSTR=NCSTR+NCCOLO
+              IF(JPATT.EQ.2)THEN
+                ICSTR(NCSTR+1:NCSTR+7)=',dashed'
+                NCSTR=NCSTR+7
+              ELSEIF(JPATT.EQ.3)THEN
+                ICSTR(NCSTR+1:NCSTR+7)=',dotted'
+                NCSTR=NCSTR+7
+              ELSEIF(JPATT.EQ.4)THEN
+                ICSTR(NCSTR+1:NCSTR+9)=',dash dot'
+                NCSTR=NCSTR+9
+              ELSEIF(JPATT.EQ.5)THEN
+                ICSTR(NCSTR+1:NCSTR+13)=',dash dot dot'
+                NCSTR=NCSTR+13
+              ELSEIF(JPATT.EQ.6)THEN
+                ICSTR(NCSTR+1:NCSTR+15)=',loosely dashed'
+                NCSTR=NCSTR+15
+              ELSEIF(JPATT.EQ.7)THEN
+                ICSTR(NCSTR+1:NCSTR+15)=',loosely dotted'
+                NCSTR=NCSTR+15
+              ENDIF
+              IF(JTHICK2.EQ.1)THEN
+                ICSTR(NCSTR+1:NCSTR+11)=',ultra thin'
+                NCSTR=NCSTR+11
+              ELSEIF(JTHICK2.EQ.2)THEN
+                ICSTR(NCSTR+1:NCSTR+10)=',very thin'
+                NCSTR=NCSTR+10
+              ELSEIF(JTHICK2.EQ.4)THEN
+                ICSTR(NCSTR+1:NCSTR+10)=',semithick'
+                NCSTR=NCSTR+10
+              ELSEIF(JTHICK2.EQ.5)THEN
+                ICSTR(NCSTR+1:NCSTR+6)=',thick'
+                NCSTR=NCSTR+6
+              ELSE
+                ICSTR(NCSTR+1:NCSTR+5)=',thin'
+                NCSTR=NCSTR+5
+              ENDIF
+!
+              ICSTR(NCSTR+1:NCSTR+2)=']('
+              NCSTR=NCSTR+2
+              IF(IX1.GT.99)THEN
+                NCHTOT=3
+              ELSEIF(IX1.GT.9)THEN
+                NCHTOT=2
+              ELSE
+                NCHTOT=1
+              ENDIF
+              CALL GRTRIN(IX1,NCHTOT,ICSTR,NCSTR)
+              ICSTR(NCSTR+1:NCSTR+3)='pt,'
+              NCSTR=NCSTR+3
+              IF(IY1.GT.99)THEN
+                NCHTOT=3
+              ELSEIF(IY1.GT.9)THEN
+                NCHTOT=2
+              ELSE
+                NCHTOT=1
+              ENDIF
+              CALL GRTRIN(IY1,NCHTOT,ICSTR,NCSTR)
+              ICSTR(NCSTR+1:NCSTR+3)='pt)'
+              NCSTR=NCSTR+3
+            ENDIF
+          ENDIF
+          XPREV=PX(II)
+          YPREV=PY(II)
+        ENDDO
+!
+        IF(NCSTR.GT.1)THEN
+          IF(ICSTR(NCSTR:NCSTR).NE.';')THEN
+            ICSTR(NCSTR+1:NCSTR+1)=';'
+            NCSTR=NCSTR+1
+          ENDIF
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        ENDIF
+!
+      ELSE
+        IF(JPATT.EQ.1)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:13)='drawline[ 0]'
+          NCSTR=13
+        ELSEIF(JPATT.EQ.3)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:15)='dottedline{12}'
+          NCSTR=15
+        ELSEIF(JPATT.EQ.2)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:13)='dashline{24}'
+          NCSTR=13
+        ELSEIF(JPATT.EQ.4)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:18)='dashline[-30]{12}'
+          NCSTR=18
+        ELSEIF(JPATT.EQ.5)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:18)='dashline[-30]{24}'
+          NCSTR=18
+        ELSEIF(JPATT.EQ.6)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:18)='dashline[+30]{12}'
+          NCSTR=18
+        ELSEIF(JPATT.EQ.7)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:18)='dashline[+30]{24}'
+          NCSTR=18
+        ELSE
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:13)='drawline[ 0]'
+          NCSTR=13
+        ENDIF
+!
+        DO I=1,NP
+!
+!          IF CURRENT POINT EQUAL TO PREVIOUS POINT, DO NOT
+!          NOT DRAW (I.E., ZERO LENGTH LINE)
+!
+          IF(I.GT.1)THEN
+            IF(PX(I).EQ.XPREV .AND. PY(I).EQ.YPREV)CYCLE
+          ENDIF
           IPTS=IPTS+1
           CALL GRTRSD(PX(I),PY(I),IX1,IY1,ISUBN0)
           NCSTR=NCSTR+1
@@ -10498,11 +10871,59 @@
           CALL GRTRIN(IY1,NCHTOT,ICSTR,NCSTR)
           NCSTR=NCSTR+1
           ICSTR(NCSTR:NCSTR)=')'
-        ENDIF
-        XPREV=PX(I)
-        YPREV=PY(I)
-15010 CONTINUE
-      IF(IPTS.GE.2 .AND. NCSTR.GT.0)CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          IF(NCSTR.GT.80)THEN
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+            NCSTR=0
+            IF(JPATT.EQ.1)THEN
+              ICSTR(1:1)=IBASLC
+              ICSTR(2:13)='drawline[ 0]'
+              NCSTR=13
+            ELSEIF(JPATT.EQ.3)THEN
+              ICSTR(1:1)=IBASLC
+              ICSTR(2:15)='dottedline{12}'
+              NCSTR=15
+            ELSEIF(JPATT.EQ.2)THEN
+              ICSTR(1:1)=IBASLC
+              ICSTR(2:13)='dashline{24}'
+              NCSTR=13
+            ELSEIF(JPATT.EQ.4)THEN
+              ICSTR(1:1)=IBASLC
+              ICSTR(2:18)='dashline[-30]{12}'
+              NCSTR=18
+            ELSEIF(JPATT.EQ.5)THEN
+              ICSTR(1:1)=IBASLC
+              ICSTR(2:18)='dashline[-30]{24}'
+              NCSTR=18
+            ELSEIF(JPATT.EQ.6)THEN
+              ICSTR(1:1)=IBASLC
+              ICSTR(2:18)='dashline[+30]{12}'
+              NCSTR=18
+            ELSEIF(JPATT.EQ.7)THEN
+              ICSTR(1:1)=IBASLC
+              ICSTR(2:18)='dashline[+30]{24}'
+              NCSTR=18
+            ELSE
+              ICSTR(1:1)=IBASLC
+              ICSTR(2:13)='drawline[ 0]'
+              NCSTR=13
+            ENDIF
+            IPTS=0
+            IPTS=IPTS+1
+            CALL GRTRSD(PX(I),PY(I),IX1,IY1,ISUBN0)
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR)='('
+            CALL GRTRIN(IX1,NCHTOT,ICSTR,NCSTR)
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR)=','
+            CALL GRTRIN(IY1,NCHTOT,ICSTR,NCSTR)
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR)=')'
+          ENDIF
+          XPREV=PX(I)
+          YPREV=PY(I)
+        ENDDO
+        IF(IPTS.GE.2 .AND. NCSTR.GT.0)CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ENDIF
 !
       GO TO 9000
 !
@@ -11116,6 +11537,7 @@
 !     UPDATED         --OCTOBER  2020. SUPPORT RGB COLOR FOR BACKGROUND
 !     UPDATED         --OCTOBER  2023. UPDATE TO GD DRIVER TO SET
 !                                      BACKGROUND COLOR
+!     UPDATED         --JULY     2026. TIKZ OPTION FOR LATEX
 !
 #ifdef HAVE_QWIN
       USE IFQWIN
@@ -11271,6 +11693,7 @@
 !  AUGUST 1992.  ADD FOLLOWING LINE
       PARAMETER(MAXCLR=163)
       INTEGER IRED(MAXCLR), IBLUE(MAXCLR), IGREEN(MAXCLR)
+      CHARACTER*4 COLOR_NAMES(MAXCLR)
 !  OCTOBER 1993.  ADD FOLLOWING LINE
       DIMENSION PX(5)
       DIMENSION PY(5)
@@ -11326,20 +11749,20 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'ERSC')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRERSC--')
+     51   FORMAT('***** AT THE BEGINNING OF GRERSC--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)JCOL,IGBAUD,AGERDE
-   53   FORMAT('JCOL,IGBAUD,AGERDE = ',2I8,G15.7)
+     53   FORMAT('JCOL,IGBAUD,AGERDE = ',2I8,G15.7)
         CALL DPWRST('XXX','BUG ')
 !CCCC   THE FOLLOWING 2 LINES WERE ADDED   MAY 1992
         WRITE(ICOUT,54)IPL1CS,IPL2CS,IPSTBP,IPSTPN
-   54   FORMAT('IPL1CS,IPL2CS,IPSTBP, IPSTPN = ',3(A4,2X),2X,I6)
+     54   FORMAT('IPL1CS,IPL2CS,IPSTBP, IPSTPN = ',3(A4,2X),2X,I6)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,55)IMANUF,IMODEL,IBUGG4,IGUNIT
-   55   FORMAT('IMANUF,IMODEL,IBUGG4,IGUNIT = ',3(A4,2X),A4)
+     55   FORMAT('IMANUF,IMODEL,IBUGG4,IGUNIT = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -13146,10 +13569,17 @@
 !               ******************************************************
 15000 CONTINUE
       IF(ILATOS.EQ.'ON')THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:13)='end{picture}'
-        NCSTR=13
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        IF(ILATDR.EQ.'TIKZ')THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:17)='end{tikzpicture}'
+          NCSTR=17
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        ELSE
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:13)='end{picture}'
+          NCSTR=13
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        ENDIF
         ICSTR(1:1)=IBASLC
         ICSTR(2:8)='newpage'
         NCSTR=8
@@ -13164,24 +13594,68 @@
       NCSTR=31
       CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-      ICSTR(1:1)=IBASLC
-      ICSTR(2:16)='begin{picture}('
-      NCSTR=16
-      NCHTOT=5
-      CALL GRTRIN(NUMHPP,NCHTOT,ICSTR,NCSTR)
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)=','
-      NCHTOT=5
-      CALL GRTRIN(NUMVPP,NCHTOT,ICSTR,NCSTR)
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)=')'
-      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-      IF(ILATCO.EQ.'ON' .AND. JCOL.NE.0)THEN
+      IF(ILATDR.EQ.'TIKZ')THEN
         ICSTR(1:1)=IBASLC
-        ICSTR(2:16)='pagecolor{    }'
-        ICSTR(12:15)=ICOLT(1:4)
-        NCSTR=16
+        ICSTR(2:19)='begin{tikzpicture}'
+        NCSTR=19
+!
+!         SET DEFAULT FONT
+!
+        IF(ILATFF.EQ.'RMFA')THEN
+          IF(ILATST.EQ.'NORM')THEN
+            ICSTR(NCSTR+1:NCSTR+27)='[font=\rmfamily\scriptsize]'
+            NCSTR=NCSTR+27
+          ELSEIF(ILATST.EQ.'BOLD')THEN
+            ICSTR(NCSTR+1:NCSTR+37)='[font=\rmfamily\bfseries\scriptsize]'
+            NCSTR=NCSTR+37
+          ELSEIF(ILATST.EQ.'ITAL')THEN
+            ICSTR(NCSTR+1:NCSTR+36)='[font=\rmfamily\itshape\scruptsize]'
+            NCSTR=NCSTR+36
+          ENDIF
+        ELSEIF(ILATFF.EQ.'SFFA')THEN
+          IF(ILATST.EQ.'NORM')THEN
+            ICSTR(NCSTR+1:NCSTR+28)='[font=\sffamily\scriptsize]'
+            NCSTR=NCSTR+28
+          ELSEIF(ILATST.EQ.'BOLD')THEN
+            ICSTR(NCSTR+1:NCSTR+37)='[font=\sffamily\bfseries\scriptsize]'
+            NCSTR=NCSTR+37
+          ELSEIF(ILATST.EQ.'ITAL')THEN
+            ICSTR(NCSTR+1:NCSTR+36)='[font=\sffamily\itshape\scriptsize]'
+            NCSTR=NCSTR+36
+          ENDIF
+        ELSEIF(ILATFF.EQ.'TTFA')THEN
+          IF(ILATST.EQ.'NORM')THEN
+            ICSTR(NCSTR+1:NCSTR+28)='[font=\ttfamily\scriptsize]'
+            NCSTR=NCSTR+28
+          ELSEIF(ILATST.EQ.'BOLD')THEN
+            ICSTR(NCSTR+1:NCSTR+37)='[font=\ttfamily\bfseries\scriptsize]'
+            NCSTR=NCSTR+37
+          ELSEIF(ILATST.EQ.'ITAL')THEN
+            ICSTR(NCSTR+1:NCSTR+36)='[font=\ttfamily\itshape\scriptsize]'
+            NCSTR=NCSTR+36
+          ENDIF
+        ENDIF
         CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ELSE
+        ICSTR(1:1)=IBASLC
+        ICSTR(2:16)='begin{picture}('
+        NCSTR=16
+        NCHTOT=5
+        CALL GRTRIN(NUMHPP,NCHTOT,ICSTR,NCSTR)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=','
+        NCHTOT=5
+        CALL GRTRIN(NUMVPP,NCHTOT,ICSTR,NCSTR)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=')'
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        IF(ILATCO.EQ.'ON' .AND. JCOL.NE.0)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:16)='pagecolor{    }'
+          ICSTR(12:15)=ICOLT(1:4)
+          NCSTR=16
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        ENDIF
       ENDIF
 !
       GO TO 9000
@@ -13648,6 +14122,7 @@
 !     UPDATED         --OCTOBER  2016. ADD PRE-PROCESSOR DIRECTIVES
 !     UPDATED         --OCTOBER  2016. ADD TEMPLATES FOR SEVERL FUTURE
 !                                      DEVICE DRIVERS (CAIRO, WMF, D3)
+!     UPDATED         --JULY     2026. TIKZ OPTION FOR LATEX
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)-----------------------------------
 !
@@ -13754,22 +14229,22 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'EXIT')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GREXIT--')
+     51   FORMAT('***** AT THE BEGINNING OF GREXIT--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IMANUF,IMODEL,IMODE2,IMODE3
-   52   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
+     52   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)IGCODE,ISOFT,ISOFT2,ISOFT3
-   54   FORMAT('IGCODE,ISOFT,ISOFT2,ISOFT3 = ',3(A4,2X),A4)
+     54   FORMAT('IGCODE,ISOFT,ISOFT2,ISOFT3 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,55)IGUNIT,IGBAUD
-   55   FORMAT('IGUNIT,IGBAUD = ',2I8)
+     55   FORMAT('IGUNIT,IGBAUD = ',2I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,56)IBUGG4,ISUBG4,IERRG4
-   56   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
+     56   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -14260,10 +14735,17 @@
 !
 15000 CONTINUE
 !
-      ICSTR(1:1)=IBASLC
-      ICSTR(2:13)='end{picture}'
-      NCSTR=13
-      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IF(ILATDR.EQ.'TIKZ')THEN
+        ICSTR(1:1)=IBASLC
+        ICSTR(2:17)='end{tikzpicture}'
+        NCSTR=17
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ELSE
+        ICSTR(1:1)=IBASLC
+        ICSTR(2:13)='end{picture}'
+        NCSTR=13
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ENDIF
 !
       IF(IMODEL.NE.'STAN')THEN
 !
@@ -14499,6 +14981,7 @@
 !     UPDATED         --SEPTEMBER 2015. FIX GREYSCALE COLOR FOR SVG
 !     UPDATED         --JULY      2019. TWEAK SCRATCH SPACE
 !     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
+!     UPDATED         --AUGUST    2026. TIKZ SUPPORT FOR LATEX
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)----------------------------------
 !
@@ -14623,6 +15106,7 @@
       INCLUDE 'DPCOF2.INC'
       PARAMETER(MAXCLR=163)
       INTEGER IRED(MAXCLR), IBLUE(MAXCLR), IGREEN(MAXCLR)
+      CHARACTER*4 COLOR_NAMES(MAXCLR)
 !
       INCLUDE 'DPCOCT.INC'
       INCLUDE 'DPCOP2.INC'
@@ -14658,33 +15142,33 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'FIRE')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRFIRE--')
+     51   FORMAT('***** AT THE BEGINNING OF GRFIRE--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IGUNIT,NP,JPATT,IFIG,IPATT
-   52   FORMAT('IGUNIT,NP,JPATT,IFIG,IPATT = ',3I8,2(2X,A4))
+     52   FORMAT('IGUNIT,NP,JPATT,IFIG,IPATT = ',3I8,2(2X,A4))
         CALL DPWRST('XXX','BUG ')
         DO 55 I=1,NP
           WRITE(ICOUT,56)PX(I),PY(I)
-   56     FORMAT('PX(I),PY(I) = ',2G15.7)
+     56     FORMAT('PX(I),PY(I) = ',2G15.7)
           CALL DPWRST('XXX','BUG ')
-   55   CONTINUE
+     55   CONTINUE
         WRITE(ICOUT,63)IHORPA,IVERPA,IDUPPA,IDDOPA
-   63   FORMAT('IHORPA,IVERPA,IDUPPA,IDDOPA = ',3(A4,2X),A4)
+     63   FORMAT('IHORPA,IVERPA,IDUPPA,IDDOPA = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,65)PXSPA2,PYSPA2,PTHICK,JTHICK,PTHIC2
-   65   FORMAT('PXSPA2,PYSPA2,PTHICK,JTHICK,PTHIC2 = ',3G15.7,I8,G15.7)
+     65   FORMAT('PXSPA2,PYSPA2,PTHICK,JTHICK,PTHIC2 = ',3G15.7,I8,G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,66)ICOLF,ICOLP,JCOLF,JCOLP
-   66   FORMAT('ICOLF,ICOLP,JCOLF,JCOLP = ',2(A4,2X),2I8)
+     66   FORMAT('ICOLF,ICOLP,JCOLF,JCOLP = ',2(A4,2X),2I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,67)ICOLFR,ICOLFG,ICOLFB,IRGBFL
-   67   FORMAT('ICOLFR,ICOLFG,ICOLFB,IRGBFL = ',4I5)
+     67   FORMAT('ICOLFR,ICOLFG,ICOLFB,IRGBFL = ',4I5)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,68)IMANUF,IMODEL,ISUBG4,IERRG4
-   68   FORMAT('IMANUF,IMODEL,ISUBG4,IERRG4 = ',3(A4,2X),A4)
+     68   FORMAT('IMANUF,IMODEL,ISUBG4,IERRG4 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -14696,16 +15180,16 @@
         AVAL=PY(1)
         DO 110 I=2,NP
           IF(PY(I).NE.AVAL)GO TO 119
-  110   CONTINUE
+    110   CONTINUE
         GO TO 9000
-  119   CONTINUE
+    119   CONTINUE
 !
         AVAL=PX(1)
         DO 120 I=2,NP
           IF(PX(I).NE.AVAL)GO TO 129
-  120   CONTINUE
+    120   CONTINUE
         GO TO 9000
-  129   CONTINUE
+    129   CONTINUE
       ENDIF
 !
 !CCCC AUGUST 1992.  SET ICOL TO ICOLP FOR GRDRBP (AFFECTS COLOR
@@ -15681,12 +16165,78 @@
 !               **  TREAT THE LATEX (USING EEPIC)    DRIVER         **
 !               ******************************************************
 !
+!     AUGUST 2026: SUPPORT TIKZ DRIVER (TIKZ WILL DO HARDWARE FILL FOR
+!                  RECTANGLES
+!
 15000 CONTINUE
 !
       IF(IPATT.EQ.'EMPT' .OR. IPATT.EQ.'BLAN' .OR. IPATT.EQ.'    ' .OR.   &
          IPATT.EQ.'NONE' .OR. NP.LE.1)GO TO 9000
-      IFACTO=-999
-      GO TO 8900
+      IF(ILATDR.EQ.'TIKZ' .AND. IFIG.EQ.'BOX' .AND.                       &
+        (IPATT.EQ.'SOLI' .OR. IPATT.EQ.'FILL'))THEN
+        IF(NP.LE.3)GO TO 9000
+        CALL GRTRSD(PX(1),PY(1),IX1,IY1,ISUBN0)
+        CALL GRTRSD(PX(3),PY(3),IX2,IY2,ISUBN0)
+        NCCOLO=4
+        DO II=4,1,-1
+           IF(ICOL(II:II).NE.' ')THEN
+             NCCOLO=II
+             EXIT
+           ENDIF
+        ENDDO
+        ICSTR(1:1)=IBASLC
+        ICSTR(2:6)='fill['
+        NCSTR=6
+        ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+        NCSTR=NCSTR+NCCOLO
+        ICSTR(NCSTR+1:NCSTR+3)='] ('
+        NCSTR=NCSTR+3
+        IF(IX1.GT.99)THEN
+          NCHTOT=3
+        ELSEIF(IX1.GT.9)THEN
+          NCHTOT=2
+        ELSE
+          NCHTOT=1
+        ENDIF
+        CALL GRTRIN(IX1,NCHTOT,ICSTR,NCSTR)
+        ICSTR(NCSTR+1:NCSTR+3)='pt,'
+        NCSTR=NCSTR+3
+        IF(IY1.GT.99)THEN
+          NCHTOT=3
+        ELSEIF(IY1.GT.9)THEN
+          NCHTOT=2
+        ELSE
+          NCHTOT=1
+        ENDIF
+        CALL GRTRIN(IY1,NCHTOT,ICSTR,NCSTR)
+        ICSTR(NCSTR+1:NCSTR+15)='pt) rectangle ('
+        NCSTR=NCSTR+15
+        IF(IX2.GT.99)THEN
+          NCHTOT=3
+        ELSEIF(IX2.GT.9)THEN
+          NCHTOT=2
+        ELSE
+          NCHTOT=1
+        ENDIF
+        CALL GRTRIN(IX2,NCHTOT,ICSTR,NCSTR)
+        ICSTR(NCSTR+1:NCSTR+3)='pt,'
+        NCSTR=NCSTR+3
+        IF(IY2.GT.99)THEN
+          NCHTOT=3
+        ELSEIF(IY2.GT.9)THEN
+          NCHTOT=2
+        ELSE
+          NCHTOT=1
+        ENDIF
+        CALL GRTRIN(IY2,NCHTOT,ICSTR,NCSTR)
+        ICSTR(NCSTR+1:NCSTR+4)='pt);'
+        NCSTR=NCSTR+4
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ELSE
+        IFACTO=-999
+        GO TO 8900
+      ENDIF
+      GO TO 9000
 !
 !               ******************************************************
 !               **  STEP 160--                                      **
@@ -16041,7 +16591,7 @@
       ELSEIF(IFIG.NE.'BOX')THEN
         IF(IFLAG.EQ.'SOLI')THEN
           CALL GRFIR2(PX,PY,NP,PXSPA2,PYSPA2,IFACTO,   &
-                    IHORPA,IVERPA,IDUPPA,IDDOPA,JCOLF)
+                    IHORPA,IVERPA,IDUPPA,IDDOPA,ICOLF,JCOLF)
         ELSE
           CALL GRFIR3(PX,PY,NP,PXSPA2,PYSPA2,IFACTO,   &
                     IHORPA,IVERPA,IDUPPA,IDDOPA,IPATT2,PTHICK,   &
@@ -16187,6 +16737,7 @@
 !                                      VERSION OF COMPILER
 !     UPDATED         --SEPTEMBER2025. USE ISO_C_BINDING
 !     UPDATED         --JULY     2026. A FEW TWEAKS TO LATEX DRIVER
+!     UPDATED         --JULY     2026. CODE FOR TIKZ IN LATEX DRIVER
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)-----------------------------------
 !
@@ -16222,16 +16773,16 @@
 #endif
 #ifdef HAVE_AQUA
        interface
-           subroutine aqinit(nplot,numhp,numvp,ired,igreen,iblue,   &
-                             maxclr)                                &
+           subroutine aqinit(nplot,numhp,numvp,iired,iigreen,iiblue, &
+                             maxclr)                                 &
                       bind(C,name="aqinit")
               use, intrinsic   :: iso_c_binding
               integer(c_int), intent(in)         :: nplot
               integer(c_int), intent(in)         :: numhp
               integer(c_int), intent(in)         :: numvp
-              integer(c_int), intent(in)         :: ired(*)
-              integer(c_int), intent(in)         :: igreen(*)
-              integer(c_int), intent(in)         :: iblue(*)
+              integer(c_int), intent(in)         :: iired(*)
+              integer(c_int), intent(in)         :: iigreen(*)
+              integer(c_int), intent(in)         :: iiblue(*)
               integer(c_int), intent(in)         :: maxclr
            end subroutine aqinit
        end interface
@@ -16302,6 +16853,7 @@
       CHARACTER*4 ICASE2
       PARAMETER(MAXCLR=163)
       INTEGER IRED(MAXCLR), IBLUE(MAXCLR), IGREEN(MAXCLR)
+      CHARACTER*4 COLOR_NAMES(MAXCLR)
       CHARACTER*8 CTEMP
       CHARACTER*1 IA
       INTEGER IWIND(8)
@@ -16501,20 +17053,20 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'INDE')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRINDE--')
+     51   FORMAT('***** AT THE BEGINNING OF GRINDE--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IMANUF,IMODEL,IMODE2,IMODE3
-   52   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
+     52   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)IGUNIT,IGBAUD,IGCODE,ISOFT,ISOFT2,ISOFT3
-   54   FORMAT('IGUNIT,IGBAUD,IGCODE,ISOFT,ISOFT2,ISOFT3 = ',   &
+     54   FORMAT('IGUNIT,IGBAUD,IGCODE,ISOFT,ISOFT2,ISOFT3 = ',   &
                2I8,4(2X,A4))
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,56)IBUGG4,ISUBG4,IERRG4,IOFFSV,IOFFSH
-   56   FORMAT('IBUGG4,ISUBG4,IERRG4,IOFFSV,IOFFSH = ',4(A4,2X),A4)
+     56   FORMAT('IBUGG4,ISUBG4,IERRG4,IOFFSV,IOFFSH = ',4(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -18991,62 +19543,80 @@
           NCSTR=1
           CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:99)='usepackage{epsfig}'
-          NCSTR=19
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          IF(ILATDR.EQ.'TIKZ')THEN
 !
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:23)='usepackage{epic,eepic}'
-          NCSTR=23
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!           LOAD TIKZ PACKAGE
 !
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:27)='usepackage{graphics,color}'
-          NCSTR=27
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+            ICSTR(1:1)=IBASLC
+            ICSTR(2:17)='usepackage{tikz}'
+            NCSTR=17
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+          ELSE
+!
+!           LOAD EPIC/EEPIC PACKAGES
+!
+            ICSTR(1:1)=IBASLC
+            ICSTR(2:19)='usepackage{epsfig}'
+            NCSTR=19
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+            ICSTR(1:1)=IBASLC
+            ICSTR(2:23)='usepackage{epic,eepic}'
+            NCSTR=23
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+            ICSTR(1:1)=IBASLC
+            ICSTR(2:27)='usepackage{graphics,color}'
+            NCSTR=27
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          ENDIF
 !
 !         2026/07: Add the following block of code (suggested
 !                  by Jonathan Morgan)
 !
-          ICSTR(1:44)='% --- prevent dvipdfmx color-stack overflow:'
-          NCSTR=44
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-          ICSTR(1:47)='%     make \color replace rather than stack ---'
-          NCSTR=47
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!                  Doesn't seem to work for TIKZ
 !
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:13)='makeatletter'
-          NCSTR=13
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          IF(ILATDR.NE.'TIKZ')THEN
+            ICSTR(1:44)='% --- prevent dvipdfmx color-stack overflow:'
+            NCSTR=44
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+            ICSTR(1:47)='%     make \color replace rather than stack ---'
+            NCSTR=47
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:4)='def'
-          ICSTR(5:5)=IBASLC
-          ICSTR(6:15)='set@color{'
-          ICSTR(16:16)=IBASLC
-          ICSTR(17:34)='special{color pop}'
-          ICSTR(35:35)=IBASLC
-          ICSTR(36:54)='special{color push '
-          ICSTR(55:55)=IBASLC
-          ICSTR(56:70)='current@color}}'
-          NCSTR=70
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+            ICSTR(1:1)=IBASLC
+            ICSTR(2:13)='makeatletter'
+            NCSTR=13
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:4)='let'
-          ICSTR(5:5)=IBASLC
-          ICSTR(6:16)='reset@color'
-          ICSTR(17:17)=IBASLC
-          ICSTR(18:22)='relax'
-          NCSTR=22
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+            ICSTR(1:1)=IBASLC
+            ICSTR(2:4)='def'
+            ICSTR(5:5)=IBASLC
+            ICSTR(6:15)='set@color{'
+            ICSTR(16:16)=IBASLC
+            ICSTR(17:34)='special{color pop}'
+            ICSTR(35:35)=IBASLC
+            ICSTR(36:54)='special{color push '
+            ICSTR(55:55)=IBASLC
+            ICSTR(56:70)='current@color}}'
+            NCSTR=70
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:13)='makeatother'
-          NCSTR=13
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+            ICSTR(1:1)=IBASLC
+            ICSTR(2:4)='let'
+            ICSTR(5:5)=IBASLC
+            ICSTR(6:16)='reset@color'
+            ICSTR(17:17)=IBASLC
+            ICSTR(18:22)='relax'
+            NCSTR=22
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+            ICSTR(1:1)=IBASLC
+            ICSTR(2:13)='makeatother'
+            NCSTR=13
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          ENDIF
 !
 !         End Change
 !
@@ -19152,8 +19722,8 @@
           NCHDEC=3
           DO I=0,9
             ICSTR(1:1)=IBASLC
-            ICSTR(2:25)='definecolor{G   }{gray}{'
-            NCSTR=25
+            ICSTR(2:23)='definecolor{G }{gray}{'
+            NCSTR=23
             WRITE(ICSTR(15:15),'(I1)')I
             ACOL=REAL(I)/100.0
             CALL GRTRRE(ACOL,NCHTOT,NCHDEC,ICSTR,NCSTR)
@@ -19163,8 +19733,8 @@
           ENDDO
           DO I=10,99
             ICSTR(1:1)=IBASLC
-            ICSTR(2:25)='definecolor{G   }{gray}{'
-            NCSTR=25
+            ICSTR(2:24)='definecolor{G  }{gray}{'
+            NCSTR=24
             WRITE(ICSTR(15:16),'(I2)')I
             ACOL=REAL(I)/100.0
             CALL GRTRRE(ACOL,NCHTOT,NCHDEC,ICSTR,NCSTR)
@@ -19179,1607 +19749,30 @@
 !
 !  IF COLOR SWITCH ON, DEFINE COLORS BASED ON RGB VALUES
 !
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='WHIT'
-          ARED=1.0
-          AGREEN=1.0
-          ABLUE=1.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='BLAC'
-          ARED=0.0
-          AGREEN=0.0
-          ABLUE=0.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='RED '
-          ARED=1.0
-          AGREEN=0.0
-          ABLUE=0.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='BLUE'
-          ARED=0.0
-          AGREEN=0.0
-          ABLUE=1.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='GREE'
-          ARED=0.0
-          AGREEN=1.0
-          ABLUE=0.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MAGE'
-          ARED=1.0
-          AGREEN=0.0
-          ABLUE=1.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='ORAN'
-          ARED=1.0
-          AGREEN=165.0/255.0
-          ABLUE=0.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='CYAN'
-          ARED=0.0
-          AGREEN=1.0
-          ABLUE=1.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='YELL'
-          ARED=1.0
-          AGREEN=1.0
-          ABLUE=0.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='YGRE'
-          ARED=154.0/255.0
-          AGREEN=205.0/255.0
-          ABLUE=50.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='DGRE'
-          ARED=0.0/255.0
-          AGREEN=100.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='LBLU'
-          ARED=173.0/255.0
-          AGREEN=216.0/255.0
-          ABLUE=230.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='VBLU'
-          ARED=138.0/255.0
-          AGREEN=43.0/255.0
-          ABLUE=226.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='VRED'
-          ARED=208.0/255.0
-          AGREEN=32.0/255.0
-          ABLUE=144.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='DGRE'
-          ARED=47.0/255.0
-          AGREEN=79.0/255.0
-          ABLUE=79.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='LGRE'
-          ARED=211.0/255.0
-          AGREEN=211.0/255.0
-          ABLUE=211.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='AQUA'
-          ARED=127.0/255.0
-          AGREEN=255.0/255.0
-          ABLUE=212.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='BROW'
-          ARED=165.0/255.0
-          AGREEN=42.0/255.0
-          ABLUE=42.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='CABL'
-          ARED=95.0/255.0
-          AGREEN=158.0/255.0
-          ABLUE=160.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='CORA'
-          ARED=255.0/255.0
-          AGREEN=127.0/255.0
-          ABLUE=80.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='CBLU'
-          ARED=100.0/255.0
-          AGREEN=149.0/255.0
-          ABLUE=237.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='DOGR'
-          ARED=85.0/255.0
-          AGREEN=107.0/255.0
-          ABLUE=47.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='DORC'
-          ARED=153.0/255.0
-          AGREEN=50.0/255.0
-          ABLUE=204.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='DSBL'
-          ARED=72.0/255.0
-          AGREEN=61.0/255.0
-          ABLUE=139.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='DTUR'
-          ARED=0.0/255.0
-          AGREEN=206.0/255.0
-          ABLUE=209.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='FIRE'
-          ARED=178.0/255.0
-          AGREEN=34.0/255.0
-          ABLUE=34.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='FGRE'
-          ARED=34.0/255.0
-          AGREEN=139.0/255.0
-          ABLUE=34.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='GOLD'
-          ARED=255.0/255.0
-          AGREEN=215.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='GLDR'
-          ARED=218.0/255.0
-          AGREEN=165.0/255.0
-          ABLUE=32.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='GRAY'
-          ARED=192.0/255.0
-          AGREEN=192.0/255.0
-          ABLUE=192.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='IRED'
-          ARED=205.0/255.0
-          AGREEN=92.0/255.0
-          ABLUE=92.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='KHAK'
-          ARED=240.0/255.0
-          AGREEN=230.0/255.0
-          ABLUE=140.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='DMGR'
-          ARED=105.0/255.0
-          AGREEN=105.0/255.0
-          ABLUE=105.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='LSBL'
-          ARED=176.0/255.0
-          AGREEN=196.0/255.0
-          ABLUE=222.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='LGRE'
-          ARED=50.0/255.0
-          AGREEN=205.0/255.0
-          ABLUE=50.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MARO'
-          ARED=176.0/255.0
-          AGREEN=48.0/255.0
-          ABLUE=96.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MAQU'
-          ARED=102.0/255.0
-          AGREEN=205.0/255.0
-          ABLUE=170.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MBLU'
-          ARED=0.0/255.0
-          AGREEN=0.0/255.0
-          ABLUE=205.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MFGR'
-          ARED=107.0/255.0
-          AGREEN=142.0/255.0
-          ABLUE=35.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MGLD'
-          ARED=250.0/255.0
-          AGREEN=250.0/255.0
-          ABLUE=210.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MORC'
-          ARED=186.0/255.0
-          AGREEN=85.0/255.0
-          ABLUE=211.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MSGR'
-          ARED=60.0/255.0
-          AGREEN=179.0/255.0
-          ABLUE=113.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MSBL'
-          ARED=123.0/255.0
-          AGREEN=104.0/255.0
-          ABLUE=238.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MSPG'
-          ARED=0.0/255.0
-          AGREEN=250.0/255.0
-          ABLUE=154.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MTUR'
-          ARED=72.0/255.0
-          AGREEN=209.0/255.0
-          ABLUE=204.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MVRD'
-          ARED=199.0/255.0
-          AGREEN=21.0/255.0
-          ABLUE=133.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MDBL'
-          ARED=25.0/255.0
-          AGREEN=25.0/255.0
-          ABLUE=112.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='NAVY'
-          ARED=0.0/255.0
-          AGREEN=0.0/255.0
-          ABLUE=128.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='ORED'
-          ARED=255.0/255.0
-          AGREEN=69.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='ORCH'
-          ARED=218.0/255.0
-          AGREEN=112.0/255.0
-          ABLUE=214.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='PGRE'
-          ARED=152.0/255.0
-          AGREEN=251.0/255.0
-          ABLUE=152.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='PINK'
-          ARED=255.0/255.0
-          AGREEN=192.0/255.0
-          ABLUE=203.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='PLUM'
-          ARED=221.0/255.0
-          AGREEN=160.0/255.0
-          ABLUE=221.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='PURP'
-          ARED=160.0/255.0
-          AGREEN=32.0/255.0
-          ABLUE=240.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='SALM'
-          ARED=250.0/255.0
-          AGREEN=128.0/255.0
-          ABLUE=114.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='SGRE'
-          ARED=46.0/255.0
-          AGREEN=139.0/255.0
-          ABLUE=87.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='SIEN'
-          ARED=160.0/255.0
-          AGREEN=82.0/255.0
-          ABLUE=45.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='SKBL'
-          ARED=135.0/255.0
-          AGREEN=206.0/255.0
-          ABLUE=235.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='SBLU'
-          ARED=106.0/255.0
-          AGREEN=90.0/255.0
-          ABLUE=205.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='SPGR'
-          ARED=0.0/255.0
-          AGREEN=255.0/255.0
-          ABLUE=127.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='STBL'
-          ARED=70.0/255.0
-          AGREEN=130.0/255.0
-          ABLUE=180.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='TAN '
-          ARED=210.0/255.0
-          AGREEN=180.0/255.0
-          ABLUE=140.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='THIS'
-          ARED=216.0/255.0
-          AGREEN=191.0/255.0
-          ABLUE=216.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='TURQ'
-          ARED=64.0/255.0
-          AGREEN=224.0/255.0
-          ABLUE=208.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='VIOL'
-          ARED=238.0/255.0
-          AGREEN=130.0/255.0
-          ABLUE=238.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='WHEA'
-          ARED=245.0/255.0
-          AGREEN=222.0/255.0
-          ABLUE=179.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='GYEL'
-          ARED=173.0/255.0
-          AGREEN=255.0/255.0
-          ABLUE=47.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='LCYA'
-          ARED=224.0/255.0
-          AGREEN=255.0/255.0
-          ABLUE=255.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='BLU2'
-          ARED=0.0/255.0
-          AGREEN=0.0/255.0
-          ABLUE=238.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='BLU3'
-          ARED=0.0/255.0
-          AGREEN=0.0/255.0
-          ABLUE=205.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='BLU4'
-          ARED=0.0/255.0
-          AGREEN=0.0/255.0
-          ABLUE=139.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='CYA2'
-          ARED=0.0/255.0
-          AGREEN=238.0/255.0
-          ABLUE=238.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='CYA3'
-          ARED=0.0/255.0
-          AGREEN=205.0/255.0
-          ABLUE=205.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='CYA4'
-          ARED=0.0/255.0
-          AGREEN=139.0/255.0
-          ABLUE=139.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='GRE2'
-          ARED=0.0/255.0
-          AGREEN=238.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='GRE3'
-          ARED=0.0/255.0
-          AGREEN=205.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='GRE4'
-          ARED=0.0/255.0
-          AGREEN=139.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='YEL2'
-          ARED=238.0/255.0
-          AGREEN=238.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='YEL3'
-          ARED=205.0/255.0
-          AGREEN=205.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='YEL4'
-          ARED=139.0/255.0
-          AGREEN=139.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='ORA2'
-          ARED=238.0/255.0
-          AGREEN=154.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='ORA3'
-          ARED=205.0/255.0
-          AGREEN=133.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='ORA4'
-          ARED=139.0/255.0
-          AGREEN=90.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='RED2'
-          ARED=238.0/255.0
-          AGREEN=0.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='RED3'
-          ARED=205.0/255.0
-          AGREEN=0.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='RED4'
-          ARED=139.0/255.0
-          AGREEN=0.0/255.0
-          ABLUE=0.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MAG2'
-          ARED=238.0/255.0
-          AGREEN=0.0/255.0
-          ABLUE=238.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MAG3'
-          ARED=205.0/255.0
-          AGREEN=0.0/255.0
-          ABLUE=205.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-          ICSTR(1:1)=IBASLC
-          ICSTR(2:24)='definecolor{    }{rgb}{'
-          NCSTR=24
-          ICSTR(14:17)='MAG4'
-          ARED=139.0/255.0
-          AGREEN=0.0/255.0
-          ABLUE=139.0/255.0
-          CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          DO JJ=1,MAXCLR
+            ARED=REAL(IRED(JJ))/255.
+            AGREEN=REAL(IGREEN(JJ))/255.
+            ABLUE=REAL(IBLUE(JJ))/255.
+            IF(COLOR_NAMES(JJ)(4:4).EQ.' ')THEN
+              ICSTR(1:23)='\definecolor{   }{rgb}{'
+              ICSTR(14:16)=COLOR_NAMES(JJ)(1:3)
+              NCSTR=23
+            ELSE
+              ICSTR(1:24)='\definecolor{    }{rgb}{'
+              ICSTR(14:17)=COLOR_NAMES(JJ)(1:4)
+              NCSTR=24
+            ENDIF
+            CALL GRTRRE(ARED,NCHTOT,NCHDEC,ICSTR,NCSTR)
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR)=','
+            CALL GRTRRE(AGREEN,NCHTOT,NCHDEC,ICSTR,NCSTR)
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR)=','
+            CALL GRTRRE(ABLUE,NCHTOT,NCHDEC,ICSTR,NCSTR)
+            NCSTR=NCSTR+1
+            ICSTR(NCSTR:NCSTR)='}'
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          ENDDO
 !
         ENDIF
 !
@@ -21481,22 +20474,22 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'MOBE')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRMOBE--')
+     51   FORMAT('***** AT THE BEGINNING OF GRMOBE--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IMANUF,IMODEL,IMODE2,IMODE3
-   52   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
+     52   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)IGCODE,ISOFT,ISOFT2,ISOFT3
-   54   FORMAT('IGCODE,ISOFT,ISOFT2,ISOFT3 = ',3(A4,2X),A4)
+     54   FORMAT('IGCODE,ISOFT,ISOFT2,ISOFT3 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,55)IGBAUD,IGUNIT,PX,PY
-   55   FORMAT('IGBAUD,IGUNIT,PX,PY = ',2I8,2G15.7)
+     55   FORMAT('IGBAUD,IGUNIT,PX,PY = ',2I8,2G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,59)IBUGG4,ISUBG4,IERRG4
-   59   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
+     59   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -22183,32 +21176,32 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'OPDE')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GROPDE--')
+     51   FORMAT('***** AT THE BEGINNING OF GROPDE--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IMANUF,IMODEL,IMODE2,IMODE3
-   52   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
+     52   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)IGCODE,ISOFT,ISOFT2,ISOFT3
-   54   FORMAT('IGCODE,ISOFT,ISOFT2,ISOFT3 = ',3(A4,2X),A4)
+     54   FORMAT('IGCODE,ISOFT,ISOFT2,ISOFT3 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,55)IGBAUD,IGUNIT,NCPREP
-   55   FORMAT('IGBAUD,IGUNIT,NCPREP = ',3I8)
+     55   FORMAT('IGBAUD,IGUNIT,NCPREP = ',3I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,56)IBUGG4,ISUBG4,IERRG4
-   56   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
+     56   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,61)IPPDE1,IPPDE2
-   61   FORMAT('IPPDE1,IPPDE2 = ',A4,2X,A4)
+     61   FORMAT('IPPDE1,IPPDE2 = ',A4,2X,A4)
         CALL DPWRST('XXX','BUG ')
         IF(NCPREP.GT.0)THEN
           DO 63 I=1,NCPREP
             WRITE(ICOUT,64)I,ICPREP(I:I)
-   64       FORMAT('I,ICPREP(I:I) = ',I8,2X,A1,4X)
+     64       FORMAT('I,ICPREP(I:I) = ',I8,2X,A1,4X)
             CALL DPWRST('XXX','BUG ')
-   63     CONTINUE
+     63     CONTINUE
         ENDIF
       ENDIF
 !
@@ -22983,19 +21976,19 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'RESC')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRRESC--')
+     51   FORMAT('***** AT THE BEGINNING OF GRRESC--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)IMANUF,IMODEL,IBUGG4,IGUNIT
-   53   FORMAT('IMANUF,IMODEL,IBUGG4,IGUNIT = ',3(A4,2X),I8)
+     53   FORMAT('IMANUF,IMODEL,IBUGG4,IGUNIT = ',3(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,56)NUMHPP,NUMVPP,ANUMHP,ANUMVP
-   56   FORMAT('NUMHPP,NUMVPP,ANUMHP,ANUMVP = ',2I8,2G15.7)
+     56   FORMAT('NUMHPP,NUMVPP,ANUMHP,ANUMVP = ',2I8,2G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,57)PXCOOR,PYCOOR
-   57   FORMAT('PXCOOR,PYCOOR = ',2G15.7)
+     57   FORMAT('PXCOOR,PYCOOR = ',2G15.7)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -23762,13 +22755,13 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'RIBE')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRRIBE--')
+     51   FORMAT('***** AT THE BEGINNING OF GRRIBE--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)IMANUF,IMODEL,IBUGG4,IGUNIT
-   53   FORMAT('IMANUF,IMODEL,IBUGG4,IGUNIT = ',3(A4,2X),I8)
+     53   FORMAT('IMANUF,IMODEL,IBUGG4,IGUNIT = ',3(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -24341,16 +23334,16 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SAGR')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRSAGR--')
+     51   FORMAT('***** AT THE BEGINNING OF GRSAGR--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IMANUF,IMODEL,ICODE
-   52   FORMAT('IMANUF,IMODEL,ICODE = ',2(A4,2X),I8)
+     52   FORMAT('IMANUF,IMODEL,ICODE = ',2(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,55)NCSTR2,ISTRI2(1:MIN(80,NCSTR2))
-   55   FORMAT('NCSTR2,ISTRI2(1:MIN(80,NCSTR2)) = ',I5,2X,80A1)
+     55   FORMAT('NCSTR2,ISTRI2(1:MIN(80,NCSTR2)) = ',I5,2X,80A1)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -25438,13 +24431,13 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SECA')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRSECA--')
+     51   FORMAT('***** AT THE BEGINNING OF GRSECA--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)ITYPE,ICASE,IMANUF,IMODEL,IBUGG4
-   52   FORMAT('ITYPE,ICASE,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
+     52   FORMAT('ITYPE,ICASE,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -25934,6 +24927,7 @@
       INTEGER RED(8),GRN(8),BLE(8)
       PARAMETER(MAXCLR=163)
       INTEGER IRED(MAXCLR), IBLUE(MAXCLR), IGREEN(MAXCLR)
+      CHARACTER*4 COLOR_NAMES(MAXCLR)
 !
 !-----COMMON----------------------------------------------------------
 !
@@ -25963,16 +24957,16 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SECO')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRSECO--')
+     51   FORMAT('***** AT THE BEGINNING OF GRSECO--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)ICASE,ICOL,IBUGG4
-   52   FORMAT('ICASE,ICOL,IBUGG4 = ',2(A4,2X),A4)
+     52   FORMAT('ICASE,ICOL,IBUGG4 = ',2(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)IMANUF,IMODEL,IGUNIT
-   54   FORMAT('IMANUF,IMODEL,IGUNIT = ',2(A4,2X),I8)
+     54   FORMAT('IMANUF,IMODEL,IGUNIT = ',2(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -26951,13 +25945,15 @@
         IF(JCOL.GE.1000 .AND. JCOL.LE.1999)ICOL='RED'
         IF(JCOL.GE.2000 .AND. JCOL.LE.2999)ICOL='GREE'
         IF(JCOL.GE.3000 .AND. JCOL.LE.3999)ICOL='BLUE'
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:12)='color{    }'
-        ICSTR(8:11)=ICOL(1:4)
-        NCSTR=12
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        GO TO 9000
+        IF(ILATDR.NE.'TIKZ')THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:12)='color{    }'
+          ICSTR(8:11)=ICOL(1:4)
+          NCSTR=12
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        ENDIF
       ENDIF
+      GO TO 9000
 !
 !               ******************************************************
 !               **  STEP 160--                                      **
@@ -27144,16 +26140,16 @@
 !
       IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'SEC2')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRSEC2--')
+     51   FORMAT('***** AT THE BEGINNING OF GRSEC2--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)ARED,ABLUE,AGREEN,AALPHA
-   52   FORMAT('ARED,ABLUE,AGREEN,AALPHA = ',4G15.7)
+     52   FORMAT('ARED,ABLUE,AGREEN,AALPHA = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)IMANUF,IMODEL,IGUNIT
-   54   FORMAT('IMANUF,IMODEL,IGUNIT = ',2(A4,2X),I8)
+     54   FORMAT('IMANUF,IMODEL,IGUNIT = ',2(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -27797,16 +26793,16 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SEDI')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRSEDI--')
+     51   FORMAT('***** AT THE BEGINNING OF GRSEDI--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)ICASE,IDIR,JDIR,ANGLE,ANGLE2
-   53   FORMAT('ICASE,IDIR,JDIR,ANGLE,ANGLE2 = ',2(A4,2X),I8,2G15.7)
+     53   FORMAT('ICASE,IDIR,JDIR,ANGLE,ANGLE2 = ',2(A4,2X),I8,2G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,55)IMANUF,IMODEL,IBUGG4,IGUNIT
-   55   FORMAT('IMANUF,IMODEL,IBUGG4,IGUNIT = ',3(A4,2X),I8)
+     55   FORMAT('IMANUF,IMODEL,IBUGG4,IGUNIT = ',3(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -28306,13 +27302,13 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SEFI')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRSEFI--')
+     51   FORMAT('***** AT THE BEGINNING OF GRSEFI--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)ICASE,IFILLT,IMANUF,IMODEL,IBUGG4
-   52   FORMAT('ICASE,IFILLT,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
+     52   FORMAT('ICASE,IFILLT,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -28762,13 +27758,13 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SEFO')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRSEFO--')
+     51   FORMAT('***** AT THE BEGINNING OF GRSEFO--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)ICASE,IFONT,IMANUF,IMODEL,IBUGG4
-   54   FORMAT('ICASE,IFONT,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
+     54   FORMAT('ICASE,IFONT,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -29278,13 +28274,13 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SEJU')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRSEJU--')
+     51   FORMAT('***** AT THE BEGINNING OF GRSEJU--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IBUGG4,ICASE,IJUST,IMANUF,IMODEL
-   52   FORMAT('IBUGG4,ICASE,IJUST,IMANUF,IMODEL = ',4(A4,2X),A4)
+     52   FORMAT('IBUGG4,ICASE,IJUST,IMANUF,IMODEL = ',4(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -29814,22 +28810,22 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SEMO')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRSEMO--')
+     51   FORMAT('***** AT THE BEGINNING OF GRSEMO--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IMANUF,IMODEL,IMODE2,IMODE3
-   52   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
+     52   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)IGUNIT,IGBAUD,PDIAXC,PDIAYC
-   53   FORMAT('IGUNIT,IGBAUD,PDIAXC,PDIAYC = ',2I8,2G15.7)
+     53   FORMAT('IGUNIT,IGBAUD,PDIAXC,PDIAYC = ',2I8,2G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)IGCODE,ISOFT,ISOFT2,ISOFT3
-   54   FORMAT('IGCODE,ISOFT,ISOFT2,ISOFT3 = ',3(A4,2X),A4)
+     54   FORMAT('IGCODE,ISOFT,ISOFT2,ISOFT3 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,59)IGRASW,IBUGG4,ISUBG4,IERRG4
-   59   FORMAT('IGRASW,IBUGG4,ISUBG4,IERRG4 = ',3(A4,2X),A4)
+     59   FORMAT('IGRASW,IBUGG4,ISUBG4,IERRG4 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -30480,22 +29476,22 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SEPA')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRSEPA--')
+     51   FORMAT('***** AT THE BEGINNING OF GRSEPA--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)ICASE,IPATTT,JPATTT
-   53   FORMAT('ICASE,IPATTT,JPATTT = ',2(A4,2X),I8)
+     53   FORMAT('ICASE,IPATTT,JPATTT = ',2(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)PXSPA,PYSPA,PXSPA2,PYSPA2
-   54   FORMAT('PXSPA,PYSPA,PXSPA2,PYSPA2 = ',4G15.7)
+     54   FORMAT('PXSPA,PYSPA,PXSPA2,PYSPA2 = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,55)IHORPA,IVERPA,IDUPPA,IDDOPA
-   55   FORMAT('IHORPA,IVERPA,IDUPPA,IDDOPA = ',3(A4,2X),A4)
+     55   FORMAT('IHORPA,IVERPA,IDUPPA,IDDOPA = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,58)IMANUF,IMODEL,IBUGG4,ISUBG4
-   58   FORMAT('IMANUF,IMODEL,IBUGG4,ISUBG4 = ',3(A4,2X),A4)
+     58   FORMAT('IMANUF,IMODEL,IBUGG4,ISUBG4 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -31953,6 +30949,7 @@
 !                                      THESE DO NOT SUPPORT GRAPHICS
 !     UPDATED         --DECEMBER 2019. CHECK FEEDBACK SETTING FOR OUTPUT
 !                                      MESSAGES
+!     UPDATED         --JULY     2026. TIKZ FOR LATEX
 !
 !---------------------------------------------------------------------
 !
@@ -32013,7 +31010,7 @@
 !
       IF(IBUGO2.EQ.'ON')THEN
         WRITE(ICOUT,11)
-   11   FORMAT('AT THE BEGINNING OF GRSEPP')
+     11   FORMAT('AT THE BEGINNING OF GRSEPP')
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -32339,7 +31336,7 @@
         END IF
         IF(IFEEDB.EQ.'ON')THEN
           WRITE(ICOUT,999)
-  999     FORMAT(1X)
+    999     FORMAT(1X)
           CALL DPWRST('XXX','BUG ')
           IF(IDMODE(I).EQ.'2622')THEN
             WRITE(ICOUT,6021)
@@ -32827,6 +31824,9 @@
 !       NOTE: IF CAPTURE SWITCH IS ON AND THIS IS DEVICE 1, THEN
 !             SET IGUNIT EQUAL TO CAPTURE FILE.
 !
+!       2026/07: SUPPORT FOR TIKZ PACKAGE.  CONVERT INCHES (SPECIFIED
+!                WITH SET LATEX TIKZ HEIGHT AND SET LATEX TIKZ WIDTH
+!                COMMANDS) TO NUMBER OF PIXELS
         IFLAG9=0
         IF(I.EQ.1 .AND. IPR.EQ.ICAPNU)THEN
           IGUNIT=ICAPNU
@@ -32835,29 +31835,42 @@
         IDCONT(I)='ON'
         IDNVOF(I)=0
         IDNHOF(I)=0
-        ADOTPI=300.0
-        IF(IORNSW.EQ.'PORT')THEN
-          IDNHPP(I)=INT(6.25*ADOTPI)
-          IDNVPP(I)=INT(9.0*ADOTPI)
-        ELSEIF(IORNSW.EQ.'LAND')THEN
-          IDNHPP(I)=INT(6.25*ADOTPI)
-          IDNVPP(I)=INT((6.25*ADOTPI)*(8.5/11.0))
-        ELSEIF(IORNSW.EQ.'LAN2')THEN
-          IDNHPP(I)=INT(6.25*ADOTPI)
-          IDNVPP(I)=INT((6.25*ADOTPI)*(8.5/11.0))
-        ELSEIF(IORNSW.EQ.'SQUA')THEN
-          IDNHPP(I)=INT(6.0*ADOTPI)
-          IDNVPP(I)=INT(6.0*ADOTPI)
+        IF(ILATDR.EQ.'TIKZ')THEN
+          ADOTPI=72.27
+          IDNHPP(I)=INT(PTIKWI*ADOTPI)
+          IDNVPP(I)=INT(PTIKHE*ADOTPI)
         ELSE
-          IDNHPP(I)=INT(6.25*ADOTPI)
-          IDNVPP(I)=INT((6.25*ADOTPI)*(8.5/11.0))
+          ADOTPI=300.0
+          IF(IORNSW.EQ.'PORT')THEN
+            IDNHPP(I)=INT(6.25*ADOTPI)
+            IDNVPP(I)=INT(9.0*ADOTPI)
+          ELSEIF(IORNSW.EQ.'LAND')THEN
+            IDNHPP(I)=INT(6.25*ADOTPI)
+            IDNVPP(I)=INT((6.25*ADOTPI)*(8.5/11.0))
+          ELSEIF(IORNSW.EQ.'LAN2')THEN
+            IDNHPP(I)=INT(6.25*ADOTPI)
+            IDNVPP(I)=INT((6.25*ADOTPI)*(8.5/11.0))
+          ELSEIF(IORNSW.EQ.'SQUA')THEN
+            IDNHPP(I)=INT(6.0*ADOTPI)
+            IDNVPP(I)=INT(6.0*ADOTPI)
+          ELSE
+            IDNHPP(I)=INT(6.25*ADOTPI)
+            IDNVPP(I)=INT((6.25*ADOTPI)*(8.5/11.0))
+          ENDIF
         ENDIF
+!
         IF(IFLAG9.EQ.0 .AND. IFEEDB.EQ.'ON')THEN
           WRITE(ICOUT,999)
           CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,8402)IDMODE(I)
- 8402     FORMAT('LATEX (USING EPIC/EEPIC/GRAPHICS)--',A4)
-          CALL DPWRST('XXX','BUG ')
+          IF(ILATDR.EQ.'TIKZ')THEN
+            WRITE(ICOUT,8404)IDMODE(I)
+ 8404       FORMAT('LATEX (USING TIKZ GRAPHICS)--',A4)
+            CALL DPWRST('XXX','BUG ')
+          ELSE
+            WRITE(ICOUT,8402)IDMODE(I)
+ 8402       FORMAT('LATEX (USING EPIC/EEPIC/GRAPHICS)--',A4)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
           GO TO 8900
         ELSE
           GO TO 8919
@@ -33014,7 +32027,7 @@
 !
       IF(IBUGO2.EQ.'ON')THEN
         WRITE(ICOUT,51)
-   51   FORMAT('AT THE BEGINNING OF GRSEPP')
+     51   FORMAT('AT THE BEGINNING OF GRSEPP')
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -33138,25 +32151,25 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SESI')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRSESI--')
+     51   FORMAT('***** AT THE BEGINNING OF GRSESI--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)ICASE,IFONT,JSIZE
-   52   FORMAT('ICASE,IFONT,JSIZE = ',2(A4,2X),I8)
+     52   FORMAT('ICASE,IFONT,JSIZE = ',2(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)PHEIGH,PWIDTH,PVEGAP,PHOGAP
-   53   FORMAT('PHEIGH,PWIDTH,PVEGAP,PHOGAP = ',4G15.7)
+     53   FORMAT('PHEIGH,PWIDTH,PVEGAP,PHOGAP = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,55)JHEIG2,JWIDT2,JVEGA2,JHOGA2
-   55   FORMAT('JHEIG2,JWIDT2,JVEGA2,JHOGA2 = ',4I8)
+     55   FORMAT('JHEIG2,JWIDT2,JVEGA2,JHOGA2 = ',4I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,56)PHEIG2,PWIDT2,PVEGA2,PHOGA2
-   56   FORMAT('PHEIG2,PWIDT2,PVEGA2,PHOGA2 = ',4G15.7)
+     56   FORMAT('PHEIG2,PWIDT2,PVEGA2,PHOGA2 = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,57)IMANUF,IMODEL,IBUGG4
-   57   FORMAT('IMANUF,IMODEL,IBUGG4 = ',2(A4,2X),A4)
+     57   FORMAT('IMANUF,IMODEL,IBUGG4 = ',2(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -33693,53 +32706,55 @@
 !               ******************************************************
 !
 15000 CONTINUE
-      IF(JSIZE.EQ.1)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:5)='tiny'
-        NCSTR=5
-      ELSEIF(JSIZE.EQ.2)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:11)='scriptsize'
-        NCSTR=11
-      ELSEIF(JSIZE.EQ.3)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:13)='footnotesize'
-        NCSTR=13
-      ELSEIF(JSIZE.EQ.5)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:6)='small'
-        NCSTR=6
-      ELSEIF(JSIZE.EQ.5)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:11)='normalsize'
-        NCSTR=11
-      ELSEIF(JSIZE.EQ.6)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:6)='large'
-        NCSTR=6
-      ELSEIF(JSIZE.EQ.7)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:6)='Large'
-        NCSTR=6
-      ELSEIF(JSIZE.EQ.8)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:6)='LARGE'
-        NCSTR=6
-      ELSEIF(JSIZE.EQ.9)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:5)='huge'
-        NCSTR=5
-      ELSEIF(JSIZE.EQ.10)THEN
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:5)='Huge'
-        NCSTR=5
-      ELSE
-        ICSTR(1:1)=IBASLC
-        ICSTR(2:11)='normalsize'
-        NCSTR=11
-      ENDIF
+      IF(ILATDR.NE.'TIKZ')THEN
+        IF(JSIZE.EQ.1)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:5)='tiny'
+          NCSTR=5
+        ELSEIF(JSIZE.EQ.2)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:11)='scriptsize'
+          NCSTR=11
+        ELSEIF(JSIZE.EQ.3)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:13)='footnotesize'
+          NCSTR=13
+        ELSEIF(JSIZE.EQ.5)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:6)='small'
+          NCSTR=6
+        ELSEIF(JSIZE.EQ.5)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:11)='normalsize'
+          NCSTR=11
+        ELSEIF(JSIZE.EQ.6)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:6)='large'
+          NCSTR=6
+        ELSEIF(JSIZE.EQ.7)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:6)='Large'
+          NCSTR=6
+        ELSEIF(JSIZE.EQ.8)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:6)='LARGE'
+          NCSTR=6
+        ELSEIF(JSIZE.EQ.9)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:5)='huge'
+          NCSTR=5
+        ELSEIF(JSIZE.EQ.10)THEN
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:5)='Huge'
+          NCSTR=5
+        ELSE
+          ICSTR(1:1)=IBASLC
+          ICSTR(2:11)='normalsize'
+          NCSTR=11
+        ENDIF
 !
-      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ENDIF
       GO TO 9000
 !
 !               ******************************************************
@@ -33915,16 +32930,16 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'SETH')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRSETH--')
+     51   FORMAT('***** AT THE BEGINNING OF GRSETH--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)ICASE,IBUGG4,IMANUF,IMODEL
-   54   FORMAT('ICASE,IBUGG4,IMANUF,IMODEL = ',3(A4,2X),A4)
+     54   FORMAT('ICASE,IBUGG4,IMANUF,IMODEL = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,56)PTHICK,JTHICK
-   56   FORMAT('PTHICK,JTHICK = ',G15.7,I8)
+     56   FORMAT('PTHICK,JTHICK = ',G15.7,I8)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -34368,7 +33383,7 @@
 !               ******************************************************
 !
 15000 CONTINUE
-      IF(ILATLT.EQ.'HARD')THEN
+      IF(ILATLT.EQ.'HARD' .AND. ILATDR.NE.'TIKZ')THEN
         IF(PTHIC2.GE.0.25)THEN
           ICSTR(1:1)=IBASLC
           ICSTR(2:11)='Thicklines'
@@ -34478,13 +33493,13 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'TRCA')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRTRCA--')
+     51   FORMAT('***** AT THE BEGINNING OF GRTRCA--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)ITYPE,ICASE,IMANUF,IMODEL,IBUGG4
-   52   FORMAT('ITYPE,ICASE,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
+     52   FORMAT('ITYPE,ICASE,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -35475,8 +34490,8 @@
  65     CONTINUE
       ENDIF
 !
-   89 CONTINUE
-   49 CONTINUE
+     89 CONTINUE
+     49 CONTINUE
 !
       ISUBN0='TRCO'
       IERRG4='NO'
@@ -35485,19 +34500,19 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'TRCO')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,91)
-   91   FORMAT('***** AT THE BEGINNING OF GRTRCO--')
+     91   FORMAT('***** AT THE BEGINNING OF GRTRCO--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,92)IMANUF,IMODEL,IMODE2,IMODE3
-   92   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
+     92   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,93)ISOFT,ISOFT2,ISOFT3,IGCODE,IGUNIT
-   93   FORMAT('ISOFT,ISOFT2,ISOFT3,IGCODE = ',5(A4,2X),I8)
+     93   FORMAT('ISOFT,ISOFT2,ISOFT3,IGCODE = ',5(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,94)ICASE,ICOL,IBUGG4,JCOL,JINDEX
-   94   FORMAT('ICASE,ICOL,IBUGG4,JCOL,JINDEX = ',3(A4,2X),2I6)
+     94   FORMAT('ICASE,ICOL,IBUGG4,JCOL,JINDEX = ',3(A4,2X),2I6)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -36245,19 +35260,19 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'TRC2')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,91)
-   91   FORMAT('***** AT THE BEGINNING OF GRTRC2--')
+     91   FORMAT('***** AT THE BEGINNING OF GRTRC2--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,92)IMANUF,IMODEL,IMODE2,IMODE3
-   92   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
+     92   FORMAT('IMANUF,IMODEL,IMODE2,IMODE3 = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,93)ISOFT,ISOFT2,ISOFT3,IGCODE,IGUNIT
-   93   FORMAT('ISOFT,ISOFT2,ISOFT3,IGCODE = ',5(A4,2X),I8)
+     93   FORMAT('ISOFT,ISOFT2,ISOFT3,IGCODE = ',5(A4,2X),I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,94)ICOLR,ICOLG,ICOLB
-   94   FORMAT('ICOLR,ICOLG,ICOLB = ',3I5)
+     94   FORMAT('ICOLR,ICOLG,ICOLB = ',3I5)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -36749,16 +35764,16 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'TRDI')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRTRDI--')
+     51   FORMAT('***** AT THE BEGINNING OF GRTRDI--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)ICASE,IDIR,ANGLE
-   53   FORMAT('ICASE,IDIR,ANGLE = ',2(A4,2X),G15.7)
+     53   FORMAT('ICASE,IDIR,ANGLE = ',2(A4,2X),G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)IMANUF,IMODEL,IBUGG4
-   54   FORMAT('IMANUF,IMODEL,IBUGG4 = ',2(A4,2X),A4)
+     54   FORMAT('IMANUF,IMODEL,IBUGG4 = ',2(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -36839,16 +35854,16 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'TRFI')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRTRFI--')
+     51   FORMAT('***** AT THE BEGINNING OF GRTRFI--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)ICASE,IFILLT
-   53   FORMAT('ICASE,IFILLT = ',A4,2X,A4)
+     53   FORMAT('ICASE,IFILLT = ',A4,2X,A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)IMANUF,IMODEL,IBUGG4
-   54   FORMAT('IMANUF,IMODEL,IBUGG4 = ',2(A4,2X),A4)
+     54   FORMAT('IMANUF,IMODEL,IBUGG4 = ',2(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -36918,13 +35933,13 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'TRFO')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRTRFO--')
+     51   FORMAT('***** AT THE BEGINNING OF GRTRFO--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)ICASE,IFONT,IMANUF,IMODEL,IBUGG4
-   54   FORMAT('ICASE,IFONT,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
+     54   FORMAT('ICASE,IFONT,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -37001,13 +36016,13 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'TRJU')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRTRJU--')
+     51   FORMAT('***** AT THE BEGINNING OF GRTRJU--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)ICASE,IJUST,IMANUF,IMODEL,IBUGG4
-   54   FORMAT('ICASE,IJUST,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
+     54   FORMAT('ICASE,IJUST,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -37141,16 +36156,16 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'TRPA')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRTRPA--')
+     51   FORMAT('***** AT THE BEGINNING OF GRTRPA--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)ICASE,IPATTT,IMANUF,IMODEL,IBUGG4
-   53   FORMAT('ICASE,IPATTT,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
+     53   FORMAT('ICASE,IPATTT,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)PXSPA,PYSPA
-   54   FORMAT('PXSPA,PYSPA = ',2G15.7)
+     54   FORMAT('PXSPA,PYSPA = ',2G15.7)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -38483,16 +37498,16 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'TRSI')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRTRSI--')
+     51   FORMAT('***** AT THE BEGINNING OF GRTRSI--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)ICASE,IFONT,IMANUF,IMODEL,IBUGG4
-   52   FORMAT('ICASE,IFONT,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
+     52   FORMAT('ICASE,IFONT,IMANUF,IMODEL,IBUGG4 = ',4(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)PHEIGH,PWIDTH,PVEGAP,PHOGAP
-   53   FORMAT('PHEIGH,PWIDTH,PVEGAP,PHOGAP = ',4G15.7)
+     53   FORMAT('PHEIGH,PWIDTH,PVEGAP,PHOGAP = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -39535,50 +38550,97 @@
 !      10. \Huge          = 17 POINT  = 71 PIXELS
 !
 15000 CONTINUE
-      PHEIPP=ANUMVP*PHEIG2/100.
-      IF(PHEIPP.LE.29.0)THEN
-        JSIZE=1
-        APNT=6.0
-      ELSEIF(PHEIPP.LE.37.0)THEN
-        JSIZE=2
-        APNT=8.0
-      ELSEIF(PHEIPP.LE.42.0)THEN
-        JSIZE=3
-        APNT=10.0
-      ELSEIF(PHEIPP.LE.46.0)THEN
-        JSIZE=4
-        APNT=10.0
-      ELSEIF(PHEIPP.LE.58.0)THEN
-        JSIZE=5
-        APNT=12.0
-      ELSEIF(PHEIPP.LE.70.0)THEN
-        JSIZE=6
-        APNT=12.0
-      ELSEIF(PHEIPP.LE.75.0)THEN
-        JSIZE=7
-        APNT=17.0
-      ELSEIF(PHEIPP.LE.80.0)THEN
-        JSIZE=8
-        APNT=17.0
-      ELSEIF(PHEIPP.LE.85.0)THEN
-        JSIZE=9
-        APNT=17.0
+      IF(ILATDR.EQ.'TIKZ')THEN
+        PHEIPP=ANUMVP*PHEIG2/100.
+        IF(PHEIPP.LE.6.0)THEN
+          JSIZE=1
+          APNT=6.0
+        ELSEIF(PHEIPP.LE.8.0)THEN
+          JSIZE=2
+          APNT=8.0
+        ELSEIF(PHEIPP.LE.10.0)THEN
+          JSIZE=3
+          APNT=10.0
+        ELSEIF(PHEIPP.LE.10.95)THEN
+          JSIZE=4
+          APNT=10.95
+        ELSEIF(PHEIPP.LE.12.0)THEN
+          JSIZE=5
+          APNT=12.0
+        ELSEIF(PHEIPP.LE.14.4)THEN
+          JSIZE=6
+          APNT=14.4
+        ELSEIF(PHEIPP.LE.17.28)THEN
+          JSIZE=7
+          APNT=17.28
+        ELSEIF(PHEIPP.LE.20.74)THEN
+          JSIZE=8
+          APNT=20.74
+        ELSEIF(PHEIPP.LE.24.88)THEN
+          JSIZE=9
+          APNT=24.88
+        ELSE
+          JSIZE=10
+          APNT=24.88
+        ENDIF
+        PHEIPP=APNT*4.16
+        PVEGPP=0.0
+        PWIDPP=PHEIPP*0.6
+        PHOGPP=0.0
+        JHEIG2=INT(PHEIPP+0.5)
+        JVEGA2=INT(PVEGPP+0.5)
+        JWIDT2=INT(PWIDPP+0.5)
+        JHOGA2=INT(PHOGPP+0.5)
+        PWIDT2=(PWIDPP/ANUMHP)*100.0
+        PHOGA2=0.0
+        PHEIG2=0.75*(PHEIPP/ANUMVP)*100.0
+        PVEGA2=0.25*(PHEIPP/ANUMVP)*100.0
       ELSE
-        JSIZE=10
-        APNT=17.0
+        PHEIPP=ANUMVP*PHEIG2/100.
+        IF(PHEIPP.LE.29.0)THEN
+          JSIZE=1
+          APNT=6.0
+        ELSEIF(PHEIPP.LE.37.0)THEN
+          JSIZE=2
+          APNT=8.0
+        ELSEIF(PHEIPP.LE.42.0)THEN
+          JSIZE=3
+          APNT=10.0
+        ELSEIF(PHEIPP.LE.46.0)THEN
+          JSIZE=4
+          APNT=10.0
+        ELSEIF(PHEIPP.LE.58.0)THEN
+          JSIZE=5
+          APNT=12.0
+        ELSEIF(PHEIPP.LE.70.0)THEN
+          JSIZE=6
+          APNT=12.0
+        ELSEIF(PHEIPP.LE.75.0)THEN
+          JSIZE=7
+          APNT=17.0
+        ELSEIF(PHEIPP.LE.80.0)THEN
+          JSIZE=8
+          APNT=17.0
+        ELSEIF(PHEIPP.LE.85.0)THEN
+          JSIZE=9
+          APNT=17.0
+        ELSE
+          JSIZE=10
+          APNT=17.0
+        ENDIF
+        PHEIPP=APNT*4.16
+        PVEGPP=0.0
+        PWIDPP=PHEIPP*0.6
+        PHOGPP=0.0
+        JHEIG2=INT(PHEIPP+0.5)
+        JVEGA2=INT(PVEGPP+0.5)
+        JWIDT2=INT(PWIDPP+0.5)
+        JHOGA2=INT(PHOGPP+0.5)
+        PWIDT2=(PWIDPP/ANUMHP)*100.0
+        PHOGA2=0.0
+        PHEIG2=0.75*(PHEIPP/ANUMVP)*100.0
+        PVEGA2=0.25*(PHEIPP/ANUMVP)*100.0
       ENDIF
-      PHEIPP=APNT*4.16
-      PVEGPP=0.0
-      PWIDPP=PHEIPP*0.6
-      PHOGPP=0.0
-      JHEIG2=INT(PHEIPP+0.5)
-      JVEGA2=INT(PVEGPP+0.5)
-      JWIDT2=INT(PWIDPP+0.5)
-      JHOGA2=INT(PHOGPP+0.5)
-      PWIDT2=(PWIDPP/ANUMHP)*100.0
-      PHOGA2=0.0
-      PHEIG2=0.75*(PHEIPP/ANUMVP)*100.0
-      PVEGA2=0.25*(PHEIPP/ANUMVP)*100.0
       GO TO 9000
 !
 !               ******************************************************
@@ -39745,13 +38807,13 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'TRTH')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRTRTH--')
+     51   FORMAT('***** AT THE BEGINNING OF GRTRTH--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)PTHICK,ICASE,IMANUF,IMODEL,IBUGG4
-   52   FORMAT('PTHICK,ICASE,IMANUF,IMODEL,IBUGG4 = ',G15.7,3(A4,2X),A4)
+     52   FORMAT('PTHICK,ICASE,IMANUF,IMODEL,IBUGG4 = ',G15.7,3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -40202,25 +39264,50 @@
 !               ******************************************************
 !
 15000 CONTINUE
-      IF(ILATLT.EQ.'HARD')THEN
-        JTHICK=-1
-        IF(PTHICK.GE.0.25)THEN
-          PTHIC2=0.3
-        ELSEIF(PTHICK.GE.0.15)THEN
-          PTHIC2=0.2
+      IF(ILATDR.EQ.'TIKZ')THEN
+        IF(ILATLT.EQ.'HARD' .OR. ILATLT.EQ.'ON')THEN
+          IF(PTHICK.LT.0.05)THEN
+            JTHICK=-1
+            PTHIC2=0.1
+          ELSEIF(PTHICK.GE.0.05 .AND. PTHICK.LT.0.08)THEN
+            JTHICK=-2
+            PTHIC2=0.1
+          ELSEIF(PTHICK.GE.0.08 .AND. PTHICK.LT.0.15)THEN
+            JTHICK=-3
+            PTHIC2=0.1
+          ELSEIF(PTHICK.GE.0.15 .AND. PTHICK.LT.0.25)THEN
+            JTHICK=-4
+            PTHIC2=0.2
+          ELSEIF(PTHICK.GE.0.25)THEN
+            JTHICK=-5
+            PTHIC2=0.3
+          ENDIF
         ELSE
-          PTHIC2=0.1
+          APIX=2.0
+          PTHIC2=100.*(APIX/ANUMVP)
+          GO TO 8000
         ENDIF
       ELSE
+        IF(ILATLT.EQ.'HARD')THEN
+          JTHICK=-1
+          IF(PTHICK.GE.0.25)THEN
+            PTHIC2=0.3
+          ELSEIF(PTHICK.GE.0.15)THEN
+            PTHIC2=0.2
+          ELSE
+            PTHIC2=0.1
+          ENDIF
+        ELSE
 !
-!       FOR LATEX, ASSUME SINGLE LINE WIDTH IS 1 POINT WIDE.
-!       SINCE OUR COORDINATE SYSTEM IS SET TO 300 DPI (ONE
-!       POINT IS 1/72 OF AN INCH), THIS TRANSLATES TO
-!       ABOUT 4 PIXEL UNITS.
+!         FOR LATEX, ASSUME SINGLE LINE WIDTH IS 1 POINT WIDE.
+!         SINCE OUR COORDINATE SYSTEM IS SET TO 300 DPI (ONE
+!         POINT IS 1/72 OF AN INCH), THIS TRANSLATES TO
+!         ABOUT 4 PIXEL UNITS.
 !
-        APIX=2.0
-        PTHIC2=100.*(APIX/ANUMVP)
-        GO TO 8000
+          APIX=2.0
+          PTHIC2=100.*(APIX/ANUMVP)
+          GO TO 8000
+        ENDIF
       ENDIF
       GO TO 9000
 !
@@ -40422,6 +39509,7 @@
 !     UPDATED         --OCTOBER   2023. SCALABLE FONTS FOR X11
 !     UPDATED         --JUNE      2024. FOR GD DEVICE, CHECK IF FONT
 !                                       FILE EXISTS
+!     UPDATED         --AUGUST    2026. SUPPORT TIKZ FOR LATEX
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 !
@@ -40576,9 +39664,9 @@
       CHARACTER*1 ICARAT
       CHARACTER*1 IQUOTE
       CHARACTER*2 ICJUNK
-      CHARACTER*130 ICSTR
-      CHARACTER*130 ICSTR2
-      CHARACTER*130 ICSTR3
+      CHARACTER*240 ICSTR
+      CHARACTER*240 ICSTR2
+      CHARACTER*240 ICSTR3
       CHARACTER*4 ISUBN0
       CHARACTER*4 IERROR
       CHARACTER*4 ISUBRO
@@ -40630,6 +39718,7 @@
 !
       PARAMETER(MAXCLR=163)
       INTEGER IRED(MAXCLR), IBLUE(MAXCLR), IGREEN(MAXCLR)
+      CHARACTER*4 COLOR_NAMES(MAXCLR)
 !
       INCLUDE 'DPCOCT.INC'
       INCLUDE 'DPCOP2.INC'
@@ -40653,55 +39742,55 @@
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'WRTH')THEN
         WRITE(ICOUT,999)
-  999   FORMAT(1X)
+    999   FORMAT(1X)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,51)
-   51   FORMAT('***** AT THE BEGINNING OF GRWRTH--')
+     51   FORMAT('***** AT THE BEGINNING OF GRWRTH--')
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,53)PX1,PY1,NCTEXT
-   53   FORMAT('PX1,PY1,NCTEXT = ',2G15.7,I8)
+     53   FORMAT('PX1,PY1,NCTEXT = ',2G15.7,I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,55)(ICTEXT(I),I=1,MIN(25,NCTEXT))
-   55   FORMAT('(ICTEXT(I),I=1,NCTEXT) = ',25A4)
+     55   FORMAT('(ICTEXT(I),I=1,NCTEXT) = ',25A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,56)IGUNIT,JSIZE,IPATT,JPATT
-   56   FORMAT('IGUNIT,JSIZE,IPATT,JPATT = ',I8,2(2X,A4),I8)
+     56   FORMAT('IGUNIT,JSIZE,IPATT,JPATT = ',I8,2(2X,A4),I8)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,60)IFONT,JFONT,ICASE,JCASE,ISPAC
-   60   FORMAT('IFONT,JFONT,ICASE,JCASE,ISPAC = ',2(2X,A4,I8),2X,A4)
+     60   FORMAT('IFONT,JFONT,ICASE,JCASE,ISPAC = ',2(2X,A4,I8),2X,A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,62)IJUST,JJUST,IDIR,JDIR
-   62   FORMAT('IJUST,JJUST,IDIR,JDIR= ',2(2X,A4,I8))
+     62   FORMAT('IJUST,JJUST,IDIR,JDIR= ',2(2X,A4,I8))
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,64)ANGLE,ANGLE2
-   64   FORMAT('ANGLE,ANGLE2= ',2G15.7)
+     64   FORMAT('ANGLE,ANGLE2= ',2G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,65)IFILL,JFILL,ICOL,JCOL
-   65   FORMAT('IFILL,JFILL,ICOL,JCOL= ',2(2X,A4,I8))
+     65   FORMAT('IFILL,JFILL,ICOL,JCOL= ',2(2X,A4,I8))
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,67)PHEIGH,JHEIG2,PHEIG2
-   67   FORMAT('PHEIGH,JHEIG2,PHEIG2= ',G15.7,I8,G15.7)
+     67   FORMAT('PHEIGH,JHEIG2,PHEIG2= ',G15.7,I8,G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,68)PWIDTH,JWIDT2,PWIDT2
-   68   FORMAT('PWIDTH,JWIDT2,PWIDT2= ',G15.7,I8,G15.7)
+     68   FORMAT('PWIDTH,JWIDT2,PWIDT2= ',G15.7,I8,G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,69)PVEGAP,JVEGA2,PVEGA2
-   69   FORMAT('PVEGAP,JVEGA2,PVEGA2= ',G15.7,I8,G15.7)
+     69   FORMAT('PVEGAP,JVEGA2,PVEGA2= ',G15.7,I8,G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,70)PHOGAP,JHOGA2,PHOGA2
-   70   FORMAT('PHOGAP,JHOGA2,PHOGA2= ',G15.7,I8,G15.7)
+     70   FORMAT('PHOGAP,JHOGA2,PHOGA2= ',G15.7,I8,G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,71)PTHICK,JTHICK,PTHIC2
-   71   FORMAT('PTHICK,JTHICK,PTHIC2= ',G15.7,I8,G15.7)
+     71   FORMAT('PTHICK,JTHICK,PTHIC2= ',G15.7,I8,G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,73)PXLEC,PXLECG,PYLEC,PYLECG
-   73   FORMAT('PXLEC,PXLECG,PYLEC,PYLECG = ',4G15.7)
+     73   FORMAT('PXLEC,PXLECG,PYLEC,PYLECG = ',4G15.7)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,74)ISYMBL
-   74   FORMAT('ISYMBL = ',A24)
+     74   FORMAT('ISYMBL = ',A24)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,79)IBUGG4,ISUBG4,IERRG4
-   79   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',2(A4,2X),A4)
+     79   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',2(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
       ENDIF
 !
@@ -40736,70 +39825,70 @@
 !
       GO TO 910
 !
-  910 CONTINUE
+    910 CONTINUE
       PXINC=0.0
       PYINC=0.0
       IJUSTH='LEFT'
       IJUSTV='BOTT'
       GO TO 995
 !
-  920 CONTINUE
+    920 CONTINUE
       PXINC=PXLEC/2.0
       PYINC=0.0
       IJUSTH='CENT'
       IJUSTV='BOTT'
       GO TO 995
 !
-  930 CONTINUE
+    930 CONTINUE
       PXINC=PXLEC
       PYINC=0.0
       IJUSTH='RIGH'
       IJUSTV='BOTT'
       GO TO 995
 !
-  940 CONTINUE
+    940 CONTINUE
       PXINC=0.0
       PYINC=PYLEC/2.0
       IJUSTH='LEFT'
       IJUSTV='CENT'
       GO TO 995
 !
-  950 CONTINUE
+    950 CONTINUE
       PXINC=PXLEC/2.0
       PYINC=PYLEC/2.0
       IJUSTH='CENT'
       IJUSTV='CENT'
       GO TO 995
 !
-  960 CONTINUE
+    960 CONTINUE
       PXINC=PXLEC
       PYINC=PYLEC/2.0
       IJUSTH='RIGH'
       IJUSTV='CENT'
       GO TO 995
 !
-  970 CONTINUE
+    970 CONTINUE
       PXINC=0.0
       PYINC=PYLEC
       IJUSTH='LEFT'
       IJUSTV='TOP '
       GO TO 995
 !
-  980 CONTINUE
+    980 CONTINUE
       PXINC=PXLEC/2.0
       PYINC=PYLEC
       IJUSTH='CENT'
       IJUSTV='TOP '
       GO TO 995
 !
-  990 CONTINUE
+    990 CONTINUE
       PXINC=PXLEC
       PYINC=PYLEC
       IJUSTH='RIGH'
       IJUSTV='TOP '
       GO TO 995
 !
-  995 CONTINUE
+    995 CONTINUE
       PXINC2=PXINC*(100.0/(PWXMAX-PWXMIN))
       PYINC2=PYINC*(100.0/(PWYMAX-PWYMIN))
       PX1P=PX1-PXINC2
@@ -42482,7 +41571,156 @@
 !               ******************************************************
 !
 15000 CONTINUE
-      CALL GRTRSD(PX1,PY1P,IX,IY,ISUBN0)
+      CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
+      IF(ILATDR.EQ.'TIKZ')THEN
+!
+      NCCOLO=4
+      DO II=4,1,-1
+         IF(ICOL(II:II).NE.' ')THEN
+           NCCOLO=II
+           EXIT
+         ENDIF
+      ENDDO
+!
+      NCSTR=1
+      ICSTR(NCSTR:NCSTR)='\'
+      ICSTR(NCSTR+1:NCSTR+10)='node[text='
+      NCSTR=NCSTR+10
+      ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+      NCSTR=NCSTR+NCCOLO
+!
+      IF(ILATFF.EQ.'RMFA')THEN
+        IF(ILATST.EQ.'NORM')THEN
+          ICSTR(NCSTR+1:NCSTR+15)=',font=\rmfamily'
+          NCSTR=NCSTR+15
+        ELSEIF(ILATST.EQ.'BOLD')THEN
+          ICSTR(NCSTR+1:NCSTR+24)=',font=\rmfamily\bfseries'
+          NCSTR=NCSTR+24
+        ELSEIF(ILATST.EQ.'ITAL')THEN
+          ICSTR(NCSTR+1:NCSTR+23)=',font=\rmfamily\itshape'
+          NCSTR=NCSTR+23
+        ENDIF
+      ELSEIF(ILATFF.EQ.'SFFA')THEN
+        IF(ILATST.EQ.'NORM')THEN
+          ICSTR(NCSTR+1:NCSTR+15)=',font=\sffamily'
+          NCSTR=NCSTR+15
+        ELSEIF(ILATST.EQ.'BOLD')THEN
+          ICSTR(NCSTR+1:NCSTR+24)=',font=\sffamily\bfseries'
+          NCSTR=NCSTR+24
+        ELSEIF(ILATST.EQ.'ITAL')THEN
+          ICSTR(NCSTR+1:NCSTR+23)=',font=\sffamily\itshape'
+          NCSTR=NCSTR+23
+        ENDIF
+      ELSEIF(ILATFF.EQ.'TTFA')THEN
+        IF(ILATST.EQ.'NORM')THEN
+          ICSTR(NCSTR+1:NCSTR+15)=',font=\ttfamily'
+          NCSTR=NCSTR+15
+        ELSEIF(ILATST.EQ.'BOLD')THEN
+          ICSTR(NCSTR+1:NCSTR+24)=',font=\ttfamily\bfseries'
+          NCSTR=NCSTR+24
+        ELSEIF(ILATST.EQ.'ITAL')THEN
+          ICSTR(NCSTR+1:NCSTR+23)=',font=\ttfamily\itshape'
+          NCSTR=NCSTR+23
+        ENDIF
+      ENDIF
+
+      IF(JSIZE.EQ.1)THEN
+        ICSTR(NCSTR+1:NCSTR+5)='\tiny'
+        NCSTR=NCSTR+5
+      ELSEIF(JSIZE.EQ.2)THEN
+        ICSTR(NCSTR+1:NCSTR+11)='\scriptsize'
+        NCSTR=NCSTR+11
+      ELSEIF(JSIZE.EQ.3)THEN
+        ICSTR(NCSTR+1:NCSTR+13)='\footnotesize'
+        NCSTR=NCSTR+13
+      ELSEIF(JSIZE.EQ.4)THEN
+        ICSTR(NCSTR+1:NCSTR+6)='\small'
+        NCSTR=NCSTR+6
+      ELSEIF(JSIZE.EQ.5)THEN
+        ICSTR(NCSTR+1:NCSTR+11)='\normalsize'
+        NCSTR=NCSTR+11
+      ELSEIF(JSIZE.EQ.6)THEN
+        ICSTR(NCSTR+1:NCSTR+6)='\large'
+        NCSTR=NCSTR+6
+      ELSEIF(JSIZE.EQ.7)THEN
+        ICSTR(NCSTR+1:NCSTR+6)='\Large'
+        NCSTR=NCSTR+6
+      ELSEIF(JSIZE.EQ.8)THEN
+        ICSTR(NCSTR+1:NCSTR+5)='\LARGE'
+        NCSTR=NCSTR+6
+      ELSEIF(JSIZE.EQ.9)THEN
+        ICSTR(NCSTR+1:NCSTR+5)='\huge'
+        NCSTR=NCSTR+5
+      ELSEIF(JSIZE.EQ.11)THEN
+        ICSTR(NCSTR+1:NCSTR+5)='\HUGE'
+        NCSTR=NCSTR+5
+      ENDIF
+!       ICSTR(NCSTR+1:NCSTR+32)=', inner ysep=0pt, text depth=0pt'
+!       NCSTR=NCSTR+32
+!
+      IF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'CENT')THEN
+        CONTINUE
+      ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'TOP')THEN
+        ICSTR(NCSTR+1:NCSTR+14)=', anchor=north'
+        NCSTR=NCSTR+14
+      ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'BOTT')THEN
+        ICSTR(NCSTR+1:NCSTR+14)=', anchor=south'
+        NCSTR=NCSTR+14
+      ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'CENT')THEN
+        ICSTR(NCSTR+1:NCSTR+13)=', anchor=west'
+        NCSTR=NCSTR+13
+      ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'TOP')THEN
+        ICSTR(NCSTR+1:NCSTR+19)=', anchor=north west'
+        NCSTR=NCSTR+19
+      ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'BOTT')THEN
+        ICSTR(NCSTR+1:NCSTR+19)=', anchor=south west'
+        NCSTR=NCSTR+19
+      ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'CENT')THEN
+        ICSTR(NCSTR+1:NCSTR+13)=', anchor=east'
+        NCSTR=NCSTR+13
+      ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'TOP')THEN
+        ICSTR(NCSTR+1:NCSTR+19)=', anchor=north east'
+        NCSTR=NCSTR+19
+      ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'BOTT')THEN
+        ICSTR(NCSTR+1:NCSTR+19)=', anchor=south east'
+        NCSTR=NCSTR+19
+      ENDIF
+      ICSTR(NCSTR+1:NCSTR+6)='] at ('
+      NCSTR=NCSTR+6
+      IF(IX.GT.99)THEN
+        NCHTOT=3
+      ELSEIF(IX.GT.9)THEN
+        NCHTOT=2
+      ELSE
+        NCHTOT=1
+      ENDIF
+      CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+      ICSTR(NCSTR+1:NCSTR+3)='pt,'
+      NCSTR=NCSTR+3
+      IF(IY.GT.99)THEN
+        NCHTOT=3
+      ELSEIF(IY.GT.9)THEN
+        NCHTOT=2
+      ELSE
+        NCHTOT=1
+      ENDIF
+      CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+      ICSTR(NCSTR+1:NCSTR+5)='pt) {'
+      NCSTR=NCSTR+5
+      DO J=1,NCTEXT
+        ICSTR2(J:J)=ICTEXT(J)(1:1)
+      ENDDO
+      MAXWID=130
+      CALL LATCON(ICSTR2,NCTEXT,ICSTR3,NCTEX2,MAXWID,ISUBRO,IERROR)
+!
+      DO J=1,NCTEX2
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=ICSTR3(J:J)
+      ENDDO
+      ICSTR(NCSTR+1:NCSTR+2)='};'
+      NCSTR=NCSTR+2
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ELSE
       ICSTR(1:1)=IBASLC
       ICSTR(2:5)='put('
       NCSTR=5
@@ -42520,24 +41758,25 @@
       NCSTR=NCSTR+1
       ICSTR(NCSTR:NCSTR)=']'
 !
-      DO 15110 J=1,NCTEXT
+      DO J=1,NCTEXT
         ICSTR2(J:J)=ICTEXT(J)(1:1)
-15110 CONTINUE
+      ENDDO
       MAXWID=130
       CALL LATCON(ICSTR2,NCTEXT,ICSTR3,NCTEX2,MAXWID,ISUBRO,IERROR)
 !
       NCSTR=NCSTR+1
       ICSTR(NCSTR:NCSTR)='{'
       ICNT=NCSTR
-      DO 15120 J=1,NCTEX2
+      DO J=1,NCTEX2
         ICNT=ICNT+1
         ICSTR(ICNT:ICNT)=ICSTR3(J:J)
-15120 CONTINUE
+      ENDDO
       NCSTR=ICNT
       NCSTR=NCSTR+1
       ICSTR(NCSTR:NCSTR+1)='}}'
       NCSTR=NCSTR+1
       CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ENDIF
       GO TO 9000
 !
 !               ******************************************************
@@ -42558,11 +41797,11 @@
       CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
 !
       IF(IJUSTV.EQ.'TOP')THEN
-        IY=IY+JHEIG2
+      IY=IY+JHEIG2
       ELSEIF(IJUSTV.EQ.'CENT')THEN
-        IY=IY+(JHEIG2/2)
+      IY=IY+(JHEIG2/2)
       ELSE
-        CONTINUE
+      CONTINUE
       ENDIF
 !
       CALL DPCONA(34,IQUOTE)
@@ -42572,17 +41811,17 @@
       ICSTR(10:10)=IQUOTE
       NCSTR=10
       IF(ISVGLN.LE.9)THEN
-        NCHTOT=1
+      NCHTOT=1
       ELSEIF(ISVGLN.LE.99)THEN
-        NCHTOT=2
+      NCHTOT=2
       ELSEIF(ISVGLN.LE.999)THEN
-        NCHTOT=3
+      NCHTOT=3
       ELSEIF(ISVGLN.LE.9999)THEN
-        NCHTOT=4
+      NCHTOT=4
       ELSEIF(ISVGLN.LE.99999)THEN
-        NCHTOT=5
+      NCHTOT=5
       ELSE
-        NCHTOT=6
+      NCHTOT=6
       ENDIF
       CALL GRTRIN(ISVGLN,NCHTOT,ICSTR,NCSTR)
       NCSTR=NCSTR+1
@@ -42590,216 +41829,216 @@
       CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
       IF(ISVGSS(1:3).EQ.'EXT')THEN
-        NCSTR=12
-        ICSTR(1:NCSTR)='      class='
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=IQUOTE
-        NCSTR=NCSTR+1
+      NCSTR=12
+      ICSTR(1:NCSTR)='      class='
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=IQUOTE
+      NCSTR=NCSTR+1
 !
-        IF(IJUSTH.EQ.'CENT')THEN
-          ICSTR(NCSTR:NCSTR+16)='center-horizontal'
-          NCSTR=NCSTR+17
-        ELSEIF(IJUSTH.EQ.'LEFT')THEN
-          ICSTR(NCSTR:NCSTR+14)='left-horizontal'
-          NCSTR=NCSTR+15
-        ELSEIF(IJUSTH.EQ.'RIGH')THEN
-          ICSTR(NCSTR:NCSTR+15)='right-horizontal'
-          NCSTR=NCSTR+16
-        ENDIF
+      IF(IJUSTH.EQ.'CENT')THEN
+        ICSTR(NCSTR:NCSTR+16)='center-horizontal'
+        NCSTR=NCSTR+17
+      ELSEIF(IJUSTH.EQ.'LEFT')THEN
+        ICSTR(NCSTR:NCSTR+14)='left-horizontal'
+        NCSTR=NCSTR+15
+      ELSEIF(IJUSTH.EQ.'RIGH')THEN
+        ICSTR(NCSTR:NCSTR+15)='right-horizontal'
+        NCSTR=NCSTR+16
+      ENDIF
 !
-        ICSTR(NCSTR:NCSTR)=IQUOTE
-        NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ICSTR(NCSTR:NCSTR)=IQUOTE
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-        CALL GRTRCO('FORE',ISVGFC,JCOL2)
-        IFLAG=1
-        ICSTR(1:12)='      style='
-        ICSTR(13:13)=IQUOTE
-        NCSTR=-13
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        NCSTR=19
-        ICSTR(1:NCSTR)='             fill:#'
-        NCHTOT=2
-        JTEMP=JCOL
-        IF(JTEMP.LE.0)THEN
+      CALL GRTRCO('FORE',ISVGFC,JCOL2)
+      IFLAG=1
+      ICSTR(1:12)='      style='
+      ICSTR(13:13)=IQUOTE
+      NCSTR=-13
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      NCSTR=19
+      ICSTR(1:NCSTR)='             fill:#'
+      NCHTOT=2
+      JTEMP=JCOL
+      IF(JTEMP.LE.0)THEN
 !
 !         DATAPLOT CURRENTLY ALLOWS GREYSCALE VALUES IN
 !         THE RANGE 0 TO 100.  FOR SPECIFYING COLOR TO SVG,
 !         SCALE THAT 0 TO 100 VALUE TO A 0 TO 255 VALUE.
 !
-          AVAL=(255./100.)*REAL(ABS(JTEMP))
-          IF(AVAL.LE.0.0)AVAL=0.0
-          IF(AVAL.GE.255.0)AVAL=255.0
-          IF(IRGBFL.EQ.0)THEN
-            JRED=INT(AVAL+0.5)
-            JBLUE=JRED
-            JGREEN=JRED
-          ELSE
-            JRED=ICOLR
-            JGREEN=ICOLG
-            JBLUE=ICOLB
-          ENDIF
+        AVAL=(255./100.)*REAL(ABS(JTEMP))
+        IF(AVAL.LE.0.0)AVAL=0.0
+        IF(AVAL.GE.255.0)AVAL=255.0
+        IF(IRGBFL.EQ.0)THEN
+          JRED=INT(AVAL+0.5)
+          JBLUE=JRED
+          JGREEN=JRED
         ELSE
-          IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
-          IF(IRGBFL.EQ.0)THEN
-            JRED=IRED(JTEMP)
-            JGREEN=IGREEN(JTEMP)
-            JBLUE=IBLUE(JTEMP)
-          ELSE
-            JRED=ICOLR
-            JGREEN=ICOLG
-            JBLUE=ICOLB
-          ENDIF
+          JRED=ICOLR
+          JGREEN=ICOLG
+          JBLUE=ICOLB
         ENDIF
-        CALL DPCONX(JRED,ICJUNK)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
-        NCSTR=NCSTR+1
-        CALL DPCONX(JGREEN,ICJUNK)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
-        NCSTR=NCSTR+1
-        CALL DPCONX(JBLUE,ICJUNK)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
-        NCSTR=NCSTR+2
-        ICSTR(NCSTR:NCSTR)=';'
-        NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        NCSTR=22
-        ICSTR(1:NCSTR)='            font-size:'
-        NCHTOT=3
-        CALL GRTRIN(JHEIG2,NCHTOT,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+2)='pt;'
-        NCSTR=NCSTR+2
-        NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        NCSTR=13
-        ICSTR(1:NCSTR)='             '
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=IQUOTE
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='>'
-        NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ELSE
+        IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
+        IF(IRGBFL.EQ.0)THEN
+          JRED=IRED(JTEMP)
+          JGREEN=IGREEN(JTEMP)
+          JBLUE=IBLUE(JTEMP)
+        ELSE
+          JRED=ICOLR
+          JGREEN=ICOLG
+          JBLUE=ICOLB
+        ENDIF
+      ENDIF
+      CALL DPCONX(JRED,ICJUNK)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
+      NCSTR=NCSTR+1
+      CALL DPCONX(JGREEN,ICJUNK)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
+      NCSTR=NCSTR+1
+      CALL DPCONX(JBLUE,ICJUNK)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
+      NCSTR=NCSTR+2
+      ICSTR(NCSTR:NCSTR)=';'
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      NCSTR=22
+      ICSTR(1:NCSTR)='            font-size:'
+      NCHTOT=3
+      CALL GRTRIN(JHEIG2,NCHTOT,ICSTR,NCSTR)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+2)='pt;'
+      NCSTR=NCSTR+2
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      NCSTR=13
+      ICSTR(1:NCSTR)='             '
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=IQUOTE
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)='>'
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
       ELSE
-        NCSTR=14
-        ICSTR(1:NCSTR)='        style='
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=IQUOTE
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      NCSTR=14
+      ICSTR(1:NCSTR)='        style='
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=IQUOTE
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-        NCSTR=21
-        ICSTR(1:NCSTR)='         font-family:'
-        DO 16010 I=32,1,-1
-          NCTEMP=I
-          IF(ISVGFN(I:I).NE.' ')GO TO 16011
+      NCSTR=21
+      ICSTR(1:NCSTR)='         font-family:'
+      DO 16010 I=32,1,-1
+        NCTEMP=I
+        IF(ISVGFN(I:I).NE.' ')GO TO 16011
 16010   CONTINUE
 16011   CONTINUE
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+NCTEMP-1)=ISVGFN(1:NCTEMP)
-        NCSTR=NCSTR+NCTEMP
-        ICSTR(NCSTR:NCSTR)=';'
-        NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        IF(ISVGFW.EQ.'NORM')THEN
-          NCSTR=28
-          ICSTR(1:NCSTR)='         font-weight:normal;'
-          NCSTR=-NCSTR
-        ELSE
-          NCSTR=26
-          ICSTR(1:NCSTR)='         font-weight:bold;'
-          NCSTR=-NCSTR
-        ENDIF
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        IF(ISVGST.EQ.'ITAL')THEN
-          NCSTR=27
-          ICSTR(1:NCSTR)='         font-style:italic;'
-          NCSTR=-NCSTR
-        ELSE
-          NCSTR=27
-          ICSTR(1:NCSTR)='         font-style:normal;'
-          NCSTR=-NCSTR
-        ENDIF
-        NCSTR=19
-        ICSTR(1:NCSTR)='         font-size:'
-        NCHTOT=3
-        CALL GRTRIN(JHEIG2,NCHTOT,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+2)='pt;'
-        NCSTR=NCSTR+2
-        NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+NCTEMP-1)=ISVGFN(1:NCTEMP)
+      NCSTR=NCSTR+NCTEMP
+      ICSTR(NCSTR:NCSTR)=';'
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IF(ISVGFW.EQ.'NORM')THEN
         NCSTR=28
-        ICSTR(1:NCSTR)='         stroke:none; fill:#'
-        NCHTOT=2
-        JTEMP=JCOL
-        IF(JTEMP.LE.0)THEN
+        ICSTR(1:NCSTR)='         font-weight:normal;'
+        NCSTR=-NCSTR
+      ELSE
+        NCSTR=26
+        ICSTR(1:NCSTR)='         font-weight:bold;'
+        NCSTR=-NCSTR
+      ENDIF
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IF(ISVGST.EQ.'ITAL')THEN
+        NCSTR=27
+        ICSTR(1:NCSTR)='         font-style:italic;'
+        NCSTR=-NCSTR
+      ELSE
+        NCSTR=27
+        ICSTR(1:NCSTR)='         font-style:normal;'
+        NCSTR=-NCSTR
+      ENDIF
+      NCSTR=19
+      ICSTR(1:NCSTR)='         font-size:'
+      NCHTOT=3
+      CALL GRTRIN(JHEIG2,NCHTOT,ICSTR,NCSTR)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+2)='pt;'
+      NCSTR=NCSTR+2
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+      NCSTR=28
+      ICSTR(1:NCSTR)='         stroke:none; fill:#'
+      NCHTOT=2
+      JTEMP=JCOL
+      IF(JTEMP.LE.0)THEN
 !
 !         DATAPLOT CURRENTLY ALLOWS GREYSCALE VALUES IN
 !         THE RANGE 0 TO 100.  FOR SPECIFYING COLOR TO SVG,
 !         SCALE THAT 0 TO 100 VALUE TO A 0 TO 255 VALUE.
 !
-          AVAL=(255./100.)*REAL(ABS(JTEMP))
-          IF(AVAL.LE.0.0)AVAL=0.0
-          IF(AVAL.GE.255.0)AVAL=255.0
-          IF(IRGBFL.EQ.0)THEN
-            JRED=INT(AVAL+0.5)
-            JBLUE=JRED
-            JGREEN=JRED
-          ELSE
-            JRED=ICOLR
-            JGREEN=ICOLG
-            JBLUE=ICOLB
-          ENDIF
+        AVAL=(255./100.)*REAL(ABS(JTEMP))
+        IF(AVAL.LE.0.0)AVAL=0.0
+        IF(AVAL.GE.255.0)AVAL=255.0
+        IF(IRGBFL.EQ.0)THEN
+          JRED=INT(AVAL+0.5)
+          JBLUE=JRED
+          JGREEN=JRED
         ELSE
-          IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
-          IF(IRGBFL.EQ.0)THEN
-            JRED=IRED(JTEMP)
-            JGREEN=IGREEN(JTEMP)
-            JBLUE=IBLUE(JTEMP)
-          ELSE
-            JRED=ICOLR
-            JGREEN=ICOLG
-            JBLUE=ICOLB
-          ENDIF
+          JRED=ICOLR
+          JGREEN=ICOLG
+          JBLUE=ICOLB
         ENDIF
-        CALL DPCONX(JRED,ICJUNK)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
-        NCSTR=NCSTR+1
-        CALL DPCONX(JGREEN,ICJUNK)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
-        NCSTR=NCSTR+1
-        CALL DPCONX(JBLUE,ICJUNK)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
-        NCSTR=NCSTR+2
-        ICSTR(NCSTR:NCSTR)=';'
+      ELSE
+        IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
+        IF(IRGBFL.EQ.0)THEN
+          JRED=IRED(JTEMP)
+          JGREEN=IGREEN(JTEMP)
+          JBLUE=IBLUE(JTEMP)
+        ELSE
+          JRED=ICOLR
+          JGREEN=ICOLG
+          JBLUE=ICOLB
+        ENDIF
+      ENDIF
+      CALL DPCONX(JRED,ICJUNK)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
+      NCSTR=NCSTR+1
+      CALL DPCONX(JGREEN,ICJUNK)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
+      NCSTR=NCSTR+1
+      CALL DPCONX(JBLUE,ICJUNK)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
+      NCSTR=NCSTR+2
+      ICSTR(NCSTR:NCSTR)=';'
 !
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=IQUOTE
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='>'
-        NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=IQUOTE
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)='>'
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
       ENDIF
 !
       IF(IX.LE.9)THEN
-        NCHTOT=1
+      NCHTOT=1
       ELSEIF(IX.LE.99)THEN
-        NCHTOT=2
+      NCHTOT=2
       ELSEIF(IX.LE.999)THEN
-        NCHTOT=3
+      NCHTOT=3
       ELSEIF(IX.LE.9999)THEN
-        NCHTOT=4
+      NCHTOT=4
       ELSE
-        NCHTOT=5
+      NCHTOT=5
       ENDIF
 !
       ICSTR(1:11)='   <text x='
@@ -42814,15 +42053,15 @@
       ICSTR(NCSTR:NCSTR)=IQUOTE
 !
       IF(IY.LE.9)THEN
-        NCHTOT=1
+      NCHTOT=1
       ELSEIF(IY.LE.99)THEN
-        NCHTOT=2
+      NCHTOT=2
       ELSEIF(IY.LE.999)THEN
-        NCHTOT=3
+      NCHTOT=3
       ELSEIF(IY.LE.9999)THEN
-        NCHTOT=4
+      NCHTOT=4
       ELSE
-        NCHTOT=5
+      NCHTOT=5
       ENDIF
 !
       CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
@@ -42834,14 +42073,14 @@
       NCSTR=NCSTR+8
       ICSTR(NCSTR:NCSTR)=IQUOTE
       IF(IJUSTH.EQ.'CENT')THEN
-        ICSTR(NCSTR+1:NCSTR+19)='text-anchor:middle;'
-        NCSTR=NCSTR+19
+      ICSTR(NCSTR+1:NCSTR+19)='text-anchor:middle;'
+      NCSTR=NCSTR+19
       ELSEIF(IJUSTH.EQ.'RIGH')THEN
-        ICSTR(NCSTR+1:NCSTR+16)='text-anchor:end;'
-        NCSTR=NCSTR+16
+      ICSTR(NCSTR+1:NCSTR+16)='text-anchor:end;'
+      NCSTR=NCSTR+16
       ELSE
-        ICSTR(NCSTR+1:NCSTR+18)='text-anchor:start;'
-        NCSTR=NCSTR+18
+      ICSTR(NCSTR+1:NCSTR+18)='text-anchor:start;'
+      NCSTR=NCSTR+18
       ENDIF
       NCSTR=NCSTR+1
       ICSTR(NCSTR:NCSTR)=IQUOTE
@@ -42856,26 +42095,26 @@
 !     2015/11: CHECK FOR "&".  NEED TO CONVERT THESE TO &amp; .
 !
       DO 16112 J=1,NCTEXT
-        IF(ICTEXT(J).EQ.'<')THEN
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR+3)='&lt;'
-          NCSTR=NCSTR+3
-        ELSEIF(ICTEXT(J).EQ.'>')THEN
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR+3)='&gt;'
-          NCSTR=NCSTR+3
-        ELSEIF(ICTEXT(J).EQ.'&')THEN
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR+4)='&amp;'
-          NCSTR=NCSTR+4
-        ELSE
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=ICTEXT(J)
-        ENDIF
-        IF(NCSTR.GE.120)THEN
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-          NCSTR=0
-        ENDIF
+      IF(ICTEXT(J).EQ.'<')THEN
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR+3)='&lt;'
+        NCSTR=NCSTR+3
+      ELSEIF(ICTEXT(J).EQ.'>')THEN
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR+3)='&gt;'
+        NCSTR=NCSTR+3
+      ELSEIF(ICTEXT(J).EQ.'&')THEN
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR+4)='&amp;'
+        NCSTR=NCSTR+4
+      ELSE
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=ICTEXT(J)
+      ENDIF
+      IF(NCSTR.GE.120)THEN
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        NCSTR=0
+      ENDIF
 16112 CONTINUE
 !
       ICSTR(NCSTR+1:NCSTR+7)='</text>'
@@ -42919,24 +42158,24 @@
       CALL GRTRSD(AX,AY,IX,IY,ISUBN0)
 !
       DO 17605 I=1,NCTEXT
-        IC1=ICTEXT(I)(1:1)
-        CALL DPCOAN(IC1,IJUNK)
-        STRING(I)=IJUNK
+      IC1=ICTEXT(I)(1:1)
+      CALL DPCOAN(IC1,IJUNK)
+      STRING(I)=IJUNK
 17605 CONTINUE
       STRING(NCTEXT+1)=0
 !
       ILAST=32
       DO 17611 I=1,80
-        IADE(I)=-1
+      IADE(I)=-1
 17611 CONTINUE
       DO 17610 I=32,1,-1
-        ILAST=I
-        IF(ICAIFN(I:I).NE.' ')GO TO 17619
+      ILAST=I
+      IF(ICAIFN(I:I).NE.' ')GO TO 17619
 17610 CONTINUE
 17619 CONTINUE
       DO 17620 I=1,ILAST
-        CALL DPCOAN(ICAIFN(I:I),IJUNK)
-        IADE(I)=IJUNK
+      CALL DPCOAN(ICAIFN(I:I),IJUNK)
+      IADE(I)=IJUNK
 17620 CONTINUE
       IADE(ILAST+1)=0
 !
@@ -42984,7 +42223,7 @@
       IVAL4=2
       IF(ICAIFW.EQ.'BOLD')IVAL4=2
       CALL CATXTH(IVAL2,STRING,AX,AY,IFONTH,IFONTV,AHEIG2,   &
-                  IADE,IVAL3,IVAL4,IERR)
+                IADE,IVAL3,IVAL4,IERR)
 !
 #endif
       GO TO 9000
@@ -43012,50 +42251,50 @@
 !
  9000 CONTINUE
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'WRTH')THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9011)
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9011)
  9011   FORMAT('***** AT THE END       OF GRWRTH--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9013)PX1,PY1,PXDEL,PYDEL
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9013)PX1,PY1,PXDEL,PYDEL
  9013   FORMAT('PX1,PY1,PXDEL,PYDEL = ',4G15.7)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9033)PXLEC,PXLECG,PYLEC,PYLECG
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9033)PXLEC,PXLECG,PYLEC,PYLECG
  9033   FORMAT('PXLEC,PXLECG,PYLEC,PYLECG= ',4G15.7)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9036)IC4,IC,IC1,IC2
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9036)IC4,IC,IC1,IC2
  9036   FORMAT('IC4,IC,IC1,IC2 = ',A4,3(2X,A1))
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9037)PXINC,PYINC,PXINC2,PYINC2
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9037)PXINC,PYINC,PXINC2,PYINC2
  9037   FORMAT('PXINC,PYINC,PXINC2,PYINC2, = ',4G15.7)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9043)NCSTR
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9043)NCSTR
  9043   FORMAT('NCSTR = ',I8)
-        CALL DPWRST('XXX','BUG ')
-        IF(NCSTR.LE.0)GO TO 9047
-          DO 9045 I=1,NCSTR
-            CALL DPCOAN(ICSTR(I:I),IASCNE)
-            WRITE(ICOUT,9046)I,ICSTR(I:I),IASCNE
+      CALL DPWRST('XXX','BUG ')
+      IF(NCSTR.LE.0)GO TO 9047
+        DO 9045 I=1,NCSTR
+          CALL DPCOAN(ICSTR(I:I),IASCNE)
+          WRITE(ICOUT,9046)I,ICSTR(I:I),IASCNE
  9046       FORMAT('I,ICSTR(I:I),IASCNE = ',I8,2X,A1,I8)
-            CALL DPWRST('XXX','BUG ')
+          CALL DPWRST('XXX','BUG ')
  9045     CONTINUE
  9047   CONTINUE
-        WRITE(ICOUT,9049)IBUGG4,ISUBG4,IERRG4
+      WRITE(ICOUT,9049)IBUGG4,ISUBG4,IERRG4
  9049   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-        CALL DPWRST('XXX','BUG ')
+      CALL DPWRST('XXX','BUG ')
       ENDIF
 !
       RETURN
       END SUBROUTINE GRWRTH
-      SUBROUTINE GRWRTV(PX1,PY1,ICTEXT,NCTEXT,                          &
-                        IPATT,IFONT,ICASE,IJUST,IDIR,ANGLE,IFILL,       &
-                        ICOL,ICOLR,ICOLG,ICOLB,IRGBFL,                  &
-                        JPATT,JFONT,JCASE,JJUST,JDIR,ANGLE2,JFILL,JCOL, &
-                        PHEIGH,PWIDTH,PVEGAP,PHOGAP,PTHICK,JSIZE,       &
-                        JHEIG2,JWIDT2,JVEGA2,JHOGA2,                    &
-                        PHEIG2,PWIDT2,PVEGA2,PHOGA2,                    &
-                        JTHICK,PTHIC2,PXLEC,PXLECG,PYLEC,PYLECG,        &
-                        ISYMBL,ISPAC,PX99,PY99)
+      SUBROUTINE GRWRTV(PX1,PY1,ICTEXT,NCTEXT,                        &
+                      IPATT,IFONT,ICASE,IJUST,IDIR,ANGLE,IFILL,       &
+                      ICOL,ICOLR,ICOLG,ICOLB,IRGBFL,                  &
+                      JPATT,JFONT,JCASE,JJUST,JDIR,ANGLE2,JFILL,JCOL, &
+                      PHEIGH,PWIDTH,PVEGAP,PHOGAP,PTHICK,JSIZE,       &
+                      JHEIG2,JWIDT2,JVEGA2,JHOGA2,                    &
+                      PHEIG2,PWIDT2,PVEGA2,PHOGA2,                    &
+                      JTHICK,PTHIC2,PXLEC,PXLECG,PYLEC,PYLECG,        &
+                      ISYMBL,ISPAC,PX99,PY99)
 !
 !     PURPOSE--FOR A SPECIFIC GRAPHICS DEVICE, AND FOR THE STANDARD
 !              (HARDWARE-GENERATED) FONT, GO TO THE POINT (PX1,PY1) AND
@@ -43163,117 +42402,118 @@
 !     UPDATED         --OCTOBER   2023 SCALABLE FONTS FOR X11
 !     UPDATED         --JUNE      2024. FOR GD DEVICE, CHECK IF FONT
 !                                       FILE EXISTS
+!     UPDATED         --AUGUST    2026. SUPPORT TIKZ FOR LATEX
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 !
 #ifdef HAVE_QWIN
       USE IFQWIN
 #endif
-       use, intrinsic   :: iso_c_binding
+     use, intrinsic   :: iso_c_binding
 #ifdef HAVE_X11
-       interface
-           subroutine xtextv(string,ixpos,iypos,ijusth,ijustv,ierr) &
-                      bind(C,name="xtextv")
-              use, intrinsic                     :: iso_c_binding
-              integer(c_int), intent(inout)      :: string(*)
-              integer(c_int), intent(inout)      :: ixpos
-              integer(c_int), intent(inout)      :: iypos
-              integer(c_int), intent(inout)      :: ijusth
-              integer(c_int), intent(inout)      :: ijustv
-              integer(c_int), intent(inout)      :: ierr
-           end subroutine xtextv
-       end interface
-       interface
-           subroutine xtextv2(font,string,ixpos,iypos,ijusth,  &
-                              ijustv,ierr) &
-                      bind(C,name="xtextv2")
-              use, intrinsic                     :: iso_c_binding
-              integer(c_int), intent(inout)      :: font(*)
-              integer(c_int), intent(inout)      :: string(*)
-              integer(c_int), intent(inout)      :: ixpos
-              integer(c_int), intent(inout)      :: iypos
-              integer(c_int), intent(inout)      :: ijusth
-              integer(c_int), intent(inout)      :: ijustv
-              integer(c_int), intent(inout)      :: ierr
-           end subroutine xtextv2
-       end interface
-       interface
-           subroutine xtattr(font,ierr) bind(C,name="xtattr")
-              use, intrinsic                     :: iso_c_binding
-              integer(c_int), intent(inout)      :: font(*)
-              integer(c_int), intent(inout)      :: ierr
-           end subroutine xtattr
-       end interface
+     interface
+         subroutine xtextv(string,ixpos,iypos,ijusth,ijustv,ierr) &
+                    bind(C,name="xtextv")
+            use, intrinsic                     :: iso_c_binding
+            integer(c_int), intent(inout)      :: string(*)
+            integer(c_int), intent(inout)      :: ixpos
+            integer(c_int), intent(inout)      :: iypos
+            integer(c_int), intent(inout)      :: ijusth
+            integer(c_int), intent(inout)      :: ijustv
+            integer(c_int), intent(inout)      :: ierr
+         end subroutine xtextv
+     end interface
+     interface
+         subroutine xtextv2(font,string,ixpos,iypos,ijusth,  &
+                            ijustv,ierr) &
+                    bind(C,name="xtextv2")
+            use, intrinsic                     :: iso_c_binding
+            integer(c_int), intent(inout)      :: font(*)
+            integer(c_int), intent(inout)      :: string(*)
+            integer(c_int), intent(inout)      :: ixpos
+            integer(c_int), intent(inout)      :: iypos
+            integer(c_int), intent(inout)      :: ijusth
+            integer(c_int), intent(inout)      :: ijustv
+            integer(c_int), intent(inout)      :: ierr
+         end subroutine xtextv2
+     end interface
+     interface
+         subroutine xtattr(font,ierr) bind(C,name="xtattr")
+            use, intrinsic                     :: iso_c_binding
+            integer(c_int), intent(inout)      :: font(*)
+            integer(c_int), intent(inout)      :: ierr
+         end subroutine xtattr
+     end interface
 #endif
 #ifdef HAVE_GD
-       interface
-           subroutine gdtxtv(font,string,ifontz,ixpos,iypos,ijusth,ijustv,  &
-                      jcol,jheigh,ierr) bind(C,name="gdtxtv")
-              use, intrinsic                     :: iso_c_binding
-              integer(c_int), intent(in)         :: font(*)
-              integer(c_int), intent(in)         :: string(*)
-              integer(c_int), intent(in)  :: ifontz
-              integer(c_int), intent(in)  :: ixpos
-              integer(c_int), intent(in)  :: iypos
-              integer(c_int), intent(in)  :: ijusth
-              integer(c_int), intent(in)  :: ijustv
-              integer(c_int), intent(in)  :: jcol
-              integer(c_int), intent(in)  :: jheigh
-              integer(c_int), intent(in)  :: ierr
-           end subroutine gdtxtv
-       end interface
+     interface
+         subroutine gdtxtv(font,string,ifontz,ixpos,iypos,ijusth,ijustv,  &
+                    jcol,jheigh,ierr) bind(C,name="gdtxtv")
+            use, intrinsic                     :: iso_c_binding
+            integer(c_int), intent(in)         :: font(*)
+            integer(c_int), intent(in)         :: string(*)
+            integer(c_int), intent(in)  :: ifontz
+            integer(c_int), intent(in)  :: ixpos
+            integer(c_int), intent(in)  :: iypos
+            integer(c_int), intent(in)  :: ijusth
+            integer(c_int), intent(in)  :: ijustv
+            integer(c_int), intent(in)  :: jcol
+            integer(c_int), intent(in)  :: jheigh
+            integer(c_int), intent(in)  :: ierr
+         end subroutine gdtxtv
+     end interface
 #endif
 #ifdef HAVE_CAIRO
-       interface
-           subroutine catxtv(idev,string,ixpos,iypos,ijusth,ijustv,  &
-                      fontsize,font,islant,iweight,ierr) bind(C,name="catxtv")
-              use, intrinsic                     :: iso_c_binding
-              integer(c_int), intent(in)         :: idev
-              integer(c_int), intent(in)         :: string(*)
-              real(c_double), intent(in)         :: ixpos
-              real(c_double), intent(in)         :: iypos
-              integer(c_int), intent(in)         :: ijusth
-              integer(c_int), intent(in)         :: ijustv
-              real(c_double), intent(in)         :: fontsize
-              integer(c_int), intent(in)         :: font(*)
-              integer(c_int), intent(in)         :: islant
-              integer(c_int), intent(in)         :: iweight
-              integer(c_int), intent(in)         :: ierr
-           end subroutine catxtv
-       end interface
+     interface
+         subroutine catxtv(idev,string,ixpos,iypos,ijusth,ijustv,  &
+                    fontsize,font,islant,iweight,ierr) bind(C,name="catxtv")
+            use, intrinsic                     :: iso_c_binding
+            integer(c_int), intent(in)         :: idev
+            integer(c_int), intent(in)         :: string(*)
+            real(c_double), intent(in)         :: ixpos
+            real(c_double), intent(in)         :: iypos
+            integer(c_int), intent(in)         :: ijusth
+            integer(c_int), intent(in)         :: ijustv
+            real(c_double), intent(in)         :: fontsize
+            integer(c_int), intent(in)         :: font(*)
+            integer(c_int), intent(in)         :: islant
+            integer(c_int), intent(in)         :: iweight
+            integer(c_int), intent(in)         :: ierr
+         end subroutine catxtv
+     end interface
 #endif
 #ifdef HAVE_AQUA
-       interface
-           subroutine aqtxtv(string,ixpos,iypos,ijusth,  &
-                             ijustv,font,ierr)           &
-                      bind(C,name="aqtxtv")
-              use, intrinsic                     :: iso_c_binding
-              integer(c_int), intent(inout)      :: string(*)
-              integer(c_int), intent(inout)      :: ixpos
-              integer(c_int), intent(inout)      :: iypos
-              integer(c_int), intent(inout)      :: ijusth
-              integer(c_int), intent(inout)      :: ijustv
-              integer(c_int), intent(inout)      :: font(*)
-              integer(c_int), intent(inout)      :: ierr
-           end subroutine aqtxtv
-       end interface
+     interface
+         subroutine aqtxtv(string,ixpos,iypos,ijusth,  &
+                           ijustv,font,ierr)           &
+                    bind(C,name="aqtxtv")
+            use, intrinsic                     :: iso_c_binding
+            integer(c_int), intent(inout)      :: string(*)
+            integer(c_int), intent(inout)      :: ixpos
+            integer(c_int), intent(inout)      :: iypos
+            integer(c_int), intent(inout)      :: ijusth
+            integer(c_int), intent(inout)      :: ijustv
+            integer(c_int), intent(inout)      :: font(*)
+            integer(c_int), intent(inout)      :: ierr
+         end subroutine aqtxtv
+     end interface
 #endif
 #ifdef HAVE_LIBPLOT
-       interface
-           subroutine pltxtv(font,string,xpos,ypos,ijusth,  &
-                             ijustv,height,ierr)            &
-                      bind(C,name="pltxtv")
-              use, intrinsic                     :: iso_c_binding
-              integer(c_int), intent(inout)      :: font(*)
-              integer(c_int), intent(inout)      :: string(*)
-              real(c_double), intent(in)         :: xpos
-              real(c_double), intent(in)         :: ypos
-              integer(c_int), intent(inout)      :: ijusth
-              integer(c_int), intent(inout)      :: ijustv
-              integer(c_int), intent(inout)      :: ierr
-              real(c_double), intent(in)         :: height
-           end subroutine pltxtv
-       end interface
+     interface
+         subroutine pltxtv(font,string,xpos,ypos,ijusth,  &
+                           ijustv,height,ierr)            &
+                    bind(C,name="pltxtv")
+            use, intrinsic                     :: iso_c_binding
+            integer(c_int), intent(inout)      :: font(*)
+            integer(c_int), intent(inout)      :: string(*)
+            real(c_double), intent(in)         :: xpos
+            real(c_double), intent(in)         :: ypos
+            integer(c_int), intent(inout)      :: ijusth
+            integer(c_int), intent(inout)      :: ijustv
+            integer(c_int), intent(inout)      :: ierr
+            real(c_double), intent(in)         :: height
+         end subroutine pltxtv
+     end interface
 #endif
 #ifdef HAVE_WININTERACTER
       USE WINTERACTER
@@ -43371,6 +42611,7 @@
 !
       PARAMETER(MAXCLR=163)
       INTEGER IRED(MAXCLR), IBLUE(MAXCLR), IGREEN(MAXCLR)
+      CHARACTER*4 COLOR_NAMES(MAXCLR)
 !
       INCLUDE 'DPCOCT.INC'
       INCLUDE 'DPCOP2.INC'
@@ -43392,54 +42633,54 @@
       AFACT=(-999.0)
 !
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'WRTV')THEN
-        WRITE(ICOUT,999)
+      WRITE(ICOUT,999)
   999   FORMAT(1X)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,51)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,51)
    51   FORMAT('***** AT THE BEGINNING OF GRWRTV--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,53)PX1,PY1,PX99,PY99
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,53)PX1,PY1,PX99,PY99
    53   FORMAT('PX1,PY1,PX99,PY99 = ',4G15.7)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,55)NCTEXT,JSIZE,JPATT,JFONT,JCASE,JJUST,JDIR
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,55)NCTEXT,JSIZE,JPATT,JFONT,JCASE,JJUST,JDIR
    55   FORMAT('NCTEXT,JSIZE,JPATT,JFONT,JCASE,JJUST,JDIR = ',7I5)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,59)IPATT,IFONT,ICASE,IJUST,IDIR
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,59)IPATT,IFONT,ICASE,IJUST,IDIR
    59   FORMAT('IPATT,IFONT,ICASE,IJUST,IDIR = ',4(A4,2X),A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,56)(ICTEXT(I),I=1,MIN(25,NCTEXT))
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,56)(ICTEXT(I),I=1,MIN(25,NCTEXT))
    56   FORMAT('(ICTEXT(I),I=1,NCTEXT) = ',25A4)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,64)ANGLE,ANGLE2
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,64)ANGLE,ANGLE2
    64   FORMAT('ANGLE,ANGLE2= ',2G15.7)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,65)IFILL,ICOL,JFILL,JCOL
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,65)IFILL,ICOL,JFILL,JCOL
    65   FORMAT('IFILL,ICOL,JFILL,JCOL = ',2(A4,2X),2I8)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,67)PHEIGH,JHEIG2,PHEIG2
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,67)PHEIGH,JHEIG2,PHEIG2
    67   FORMAT('PHEIGH,JHEIG2,PHEIG2= ',G15.7,I8,G15.7)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,68)PWIDTH,JWIDT2,PWIDT2
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,68)PWIDTH,JWIDT2,PWIDT2
    68   FORMAT('PWIDTH,JWIDT2,PWIDT2= ',G15.7,I8,G15.7)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,69)PVEGAP,JVEGA2,PVEGA2
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,69)PVEGAP,JVEGA2,PVEGA2
    69   FORMAT('PVEGAP,JVEGA2,PVEGA2= ',G15.7,I8,G15.7)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,70)PHOGAP,JHOGA2,PHOGA2
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,70)PHOGAP,JHOGA2,PHOGA2
    70   FORMAT('PHOGAP,JHOGA2,PHOGA2= ',G15.7,I8,G15.7)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,71)PTHICK,JTHICK,PTHIC2
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,71)PTHICK,JTHICK,PTHIC2
    71   FORMAT('PTHICK,JTHICK,PTHIC2= ',G15.7,I8,G15.7)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,73)PXLEC,PXLECG,PYLEC,PYLECG
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,73)PXLEC,PXLECG,PYLEC,PYLECG
    73   FORMAT('PXLEC,PXLECG,PYLEC,PYLECG = ',4G15.7)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,75)ISPAC,ISYMBL
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,75)ISPAC,ISYMBL
    75   FORMAT('ISPAC,ISYMBL = ',A4,2X,A24)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,79)IBUGG4,ISUBG4,IERRG4
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,79)IBUGG4,ISUBG4,IERRG4
    79   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-        CALL DPWRST('XXX','BUG ')
+      CALL DPWRST('XXX','BUG ')
       ENDIF
 !
 !               ******************************************************
@@ -43667,8 +42908,8 @@
 !CCCC             FUDGE FACTOR TO COMPENSATE (PROBABLY NOT TOTALLY
 !CCCC             ACCURATE, BUT BETTER THAN NO ADJUSTMENT).
       IF(IMANUF.EQ.'POST')THEN
-        PY1P=PY1
-        PX1P=PX1-0.75*PXINC2
+      PY1P=PY1
+      PX1P=PX1-0.75*PXINC2
       ENDIF
 !
 !
@@ -43682,7 +42923,7 @@
       PY99=PY1P-ANCTEX*AFACT*(PHEIG2+PVEGA2)
 !
   998 CONTINUE
-                                                                                                                                  
+                                                                                                                                
 !               ********************************************
 !               **  STEP 1--                              **
 !               **  BRANCH ACCORDING TO THE MANUFACTURER  **
@@ -43690,63 +42931,63 @@
 !               ********************************************
 !
       IF(IMANUF.EQ.'QWIN')THEN
-        GO TO 4700
+      GO TO 4700
       ELSEIF(IMANUF.EQ.'POST')THEN
-        GO TO 8600
+      GO TO 8600
       ELSEIF(IMANUF.EQ.'X11 ')THEN
-        GO TO 9600
+      GO TO 9600
       ELSEIF(IMANUF.EQ.'AQUA')THEN
-        GO TO 13500
+      GO TO 13500
       ELSEIF(IMANUF.EQ.'GENE')THEN
-        IF(IMODEL.EQ.'CODE')GO TO 3200
-        IF(IMODEL.EQ.'CGM')GO TO 3300
-        IF(IMODEL.EQ.'CGMB')GO TO 3400
-        GO TO 3100
+      IF(IMODEL.EQ.'CODE')GO TO 3200
+      IF(IMODEL.EQ.'CGM')GO TO 3300
+      IF(IMODEL.EQ.'CGMB')GO TO 3400
+      GO TO 3100
       ELSEIF(IMANUF.EQ.'SVG ')THEN
-        GO TO 16000
+      GO TO 16000
       ELSEIF(IMANUF.EQ.'GD  ')THEN
-        GO TO 12000
+      GO TO 12000
       ELSEIF(IMANUF.EQ.'LATE')THEN
-        GO TO 15000
+      GO TO 15000
       ELSEIF(IMANUF.EQ.'CAIR')THEN
-        GO TO 17000
+      GO TO 17000
       ELSEIF(IMANUF.EQ.'D3  ')THEN
-        GO TO 19000
+      GO TO 19000
       ELSEIF(IMANUF.EQ.'WMF ')THEN
-        GO TO 18000
+      GO TO 18000
       ELSEIF(IMANUF.EQ.'OPGL')THEN
-        GO TO 4800
+      GO TO 4800
       ELSEIF(IMANUF.EQ.'TEKT')THEN
-        GO TO 1100
+      GO TO 1100
       ELSEIF(IMANUF.EQ.'HP')THEN
-        IF(IMODEL.EQ.'7221')GO TO 2100
-        IF(IMODEL.EQ.'2622')GO TO 2300
-        IF(IMODEL.EQ.'2623')GO TO 2300
-        IF(IMODEL.EQ.'2627')GO TO 2300
-        IF(IMODEL.EQ.'2647')GO TO 2300
-        GO TO 2200
+      IF(IMODEL.EQ.'7221')GO TO 2100
+      IF(IMODEL.EQ.'2622')GO TO 2300
+      IF(IMODEL.EQ.'2623')GO TO 2300
+      IF(IMODEL.EQ.'2627')GO TO 2300
+      IF(IMODEL.EQ.'2647')GO TO 2300
+      GO TO 2200
       ELSEIF(IMANUF.EQ.'LIBP')THEN
-        GO TO 2600
+      GO TO 2600
       ELSEIF(IMANUF.EQ.'REGI')THEN
-        GO TO 8100
+      GO TO 8100
       ELSEIF(IMANUF.EQ.'GKS ')THEN
-        GO TO 11000
+      GO TO 11000
       ELSEIF(IMANUF.EQ.'LAHE')THEN
-        IF(IMODEL.EQ.'INTE')GO TO 4900
-        IF(IMODEL.EQ.'WINT')GO TO 4950
-        GO TO 4600
+      IF(IMODEL.EQ.'INTE')GO TO 4900
+      IF(IMODEL.EQ.'WINT')GO TO 4950
+      GO TO 4600
       ELSEIF(IMANUF.EQ.'ABSO' .OR. IMANUF.EQ.'PLPL')THEN
-        GO TO 13000
+      GO TO 13000
       ELSEIF(IMANUF.EQ.'QUIC')THEN
-        GO TO 9100
+      GO TO 9100
       ELSEIF(IMANUF.EQ.'CALC')THEN
-        GO TO 4100
+      GO TO 4100
       ELSEIF(IMANUF.EQ.'ZETA')THEN
-        GO TO 5100
+      GO TO 5100
       ELSEIF(IMANUF.EQ.'TURB')THEN
-        GO TO 10000
+      GO TO 10000
       ELSEIF(IMANUF.EQ.'SUN ')THEN
-        GO TO 6600
+      GO TO 6600
       ENDIF
       GO TO 9000
 !
@@ -43758,18 +42999,18 @@
  1100 CONTINUE
       IF(NUMHPP.GE.4000)IFACTO=1
       IF(NCTEXT.GT.0)THEN
-        DO 1110 I=1,NCTEXT
-          ICSTR(1:1)=IGSC
-          NCSTR=1
-          IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
-          CALL GRTRSD(PX1P,PY1P,IX1P,IY1P,ISUBN0)
-          CALL TKTRPT(IX1P,IY1P,IFACTO,ICSTR,NCSTR,ISUBN0)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=IUSC
-          NCSTR=NCSTR+1
-          ICTEMP=ICTEXT(I)
-          ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      DO 1110 I=1,NCTEXT
+        ICSTR(1:1)=IGSC
+        NCSTR=1
+        IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
+        CALL GRTRSD(PX1P,PY1P,IX1P,IY1P,ISUBN0)
+        CALL TKTRPT(IX1P,IY1P,IFACTO,ICSTR,NCSTR,ISUBN0)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=IUSC
+        NCSTR=NCSTR+1
+        ICTEMP=ICTEXT(I)
+        ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
  1110   CONTINUE
       ENDIF
       GO TO 9000
@@ -43801,21 +43042,21 @@
  2100 CONTINUE
 !
       IF(NCTEXT.GT.0)THEN
-        DO 2110 I=1,NCTEXT
-          ICSTR(1:1)='p'
-          NCSTR=1
-          IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
-          CALL GRTRSD(PX1P,PY1P,IX,IY,ISUBN0)
-          CALL HPTRPT(IX,IY,ICSTR,NCSTR,ISUBN0)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='}'
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-          ICSTR(1:2)='~'''
-          ICTEMP=ICTEXT(I)
-          ICSTR(3:3)=ICTEMP(1:1)
-          ICSTR(4:4)=IETXC
-          NCSTR=4
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      DO 2110 I=1,NCTEXT
+        ICSTR(1:1)='p'
+        NCSTR=1
+        IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
+        CALL GRTRSD(PX1P,PY1P,IX,IY,ISUBN0)
+        CALL HPTRPT(IX,IY,ICSTR,NCSTR,ISUBN0)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)='}'
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        ICSTR(1:2)='~'''
+        ICTEMP=ICTEXT(I)
+        ICSTR(3:3)=ICTEMP(1:1)
+        ICSTR(4:4)=IETXC
+        NCSTR=4
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
  2110   CONTINUE
       ENDIf
       GO TO 9000
@@ -43850,27 +43091,27 @@
  2200 CONTINUE
 !
       IF(NCTEXT.GT.0)THEN
-        DO 2210 I=1,NCTEXT
-          IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
-          CALL GRTRSD(PX1P,PY1P,IX,IY,ISUBN0)
-          ICSTR(1:5)='PU;PA'
-          NCSTR=5
-          NCHTOT=5
-          CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-          ICSTR(11:11)=','
-          NCSTR=11
-          CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-          ICSTR(17:17)=';'
-          NCSTR=17
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-          ICSTR(1:2)='LB'
-          NCSTR=2
-          ICTEMP=ICTEXT(I)
-          ICSTR(3:3)=ICTEMP(1:1)
-          ICSTR(4:4)=IETXC
-          ICSTR(5:5)=';'
-          NCSTR=5
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      DO 2210 I=1,NCTEXT
+        IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
+        CALL GRTRSD(PX1P,PY1P,IX,IY,ISUBN0)
+        ICSTR(1:5)='PU;PA'
+        NCSTR=5
+        NCHTOT=5
+        CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+        ICSTR(11:11)=','
+        NCSTR=11
+        CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+        ICSTR(17:17)=';'
+        NCSTR=17
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        ICSTR(1:2)='LB'
+        NCSTR=2
+        ICTEMP=ICTEXT(I)
+        ICSTR(3:3)=ICTEMP(1:1)
+        ICSTR(4:4)=IETXC
+        ICSTR(5:5)=';'
+        NCSTR=5
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
  2210   CONTINUE
       ENDIF
       GO TO 9000
@@ -43893,41 +43134,41 @@
 !
  2300 CONTINUE
       IF(NCTEXT.GT.0)THEN
-        NCSTR=0
-        DO 2310 I=1,NCTEXT
-          IF(I.GE.2)PY1P=PY1P-AFACT*2.0*(PHEIG2+PVEGA2)
-          CALL GRTRSD(PX1P,PY1P,IX,IY,ISUBN0)
-          IF(NCSTR.GT.84)THEN
-            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-            NCSTR=0
-          ENDIF
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=IESCC
-          NCSTR=NCSTR+1
-          NCSTR2=NCSTR+2
-          ICSTR(NCSTR:NCSTR2)='*pa'
-          NCSTR=NCSTR2
-          NCHTOT=5
-          CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=','
-          CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)='Z'
+      NCSTR=0
+      DO 2310 I=1,NCTEXT
+        IF(I.GE.2)PY1P=PY1P-AFACT*2.0*(PHEIG2+PVEGA2)
+        CALL GRTRSD(PX1P,PY1P,IX,IY,ISUBN0)
+        IF(NCSTR.GT.84)THEN
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          NCSTR=0
+        ENDIF
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=IESCC
+        NCSTR=NCSTR+1
+        NCSTR2=NCSTR+2
+        ICSTR(NCSTR:NCSTR2)='*pa'
+        NCSTR=NCSTR2
+        NCHTOT=5
+        CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=','
+        CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)='Z'
 !
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=IESCC
-          NCSTR=NCSTR+1
-          NCSTR2=NCSTR+1
-          ICSTR(NCSTR:NCSTR2)='*l'
-          NCSTR=NCSTR2+1
-          ICTEMP=ICTEXT(I)
-          ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=ICRC
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=IESCC
+        NCSTR=NCSTR+1
+        NCSTR2=NCSTR+1
+        ICSTR(NCSTR:NCSTR2)='*l'
+        NCSTR=NCSTR2+1
+        ICTEMP=ICTEXT(I)
+        ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=ICRC
 !
  2310   CONTINUE
-        IF(NCSTR.GT.0)CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IF(NCSTR.GT.0)CALL GRWRST(ICSTR,NCSTR,ISUBN0)
       ENDIF
       GO TO 9000
 !
@@ -43941,21 +43182,21 @@
 !
       CALL LIBPTR(ICTEXT,NCTEXT,ICTEX2,NCTEX2,ICASE,ISUBRO,IBUGG4)
       DO 2605 I=1,NCTEX2
-        IC1=ICTEX2(I)(1:1)
-        CALL DPCOAN(IC1,IJUNK)
-        STRING(I)=IJUNK
+      IC1=ICTEX2(I)(1:1)
+      CALL DPCOAN(IC1,IJUNK)
+      STRING(I)=IJUNK
  2605 CONTINUE
       STRING(NCTEX2+1)=0
 !
       ILAST=80
       DO 2610 I=80,1,-1
-        ILAST=I
-        IF(ILPLFN(I:I).NE.' ')GO TO 2619
+      ILAST=I
+      IF(ILPLFN(I:I).NE.' ')GO TO 2619
  2610 CONTINUE
  2619 CONTINUE
       DO 2620 I=1,ILAST
-        CALL DPCOAN(ILPLFN(I:I),IJUNK)
-        IADE(I)=IJUNK
+      CALL DPCOAN(ILPLFN(I:I),IJUNK)
+      IADE(I)=IJUNK
  2620 CONTINUE
       IADE(ILAST+1)=0
 !
@@ -43994,7 +43235,7 @@
       IERR=0
 !
       CALL PLTXTV(IADE,STRING,DBLE(PX1),DBLE(PY1),IFONTH,IFONTV,   &
-                  DBLE(PHEIG2),IERR)
+                DBLE(PHEIG2),IERR)
 !
 #endif
       GO TO 9000
@@ -44026,9 +43267,9 @@
       ICSTR(1:11)='WRITE TEXT '
       NCSTR=11
       DO 3160 I=1,NCTEXT
-        ICTEMP=ICTEXT(I)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
+      ICTEMP=ICTEXT(I)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
  3160 CONTINUE
       CALL GRWRST(ICSTR,NCSTR,ISUBN0)
       GO TO 9000
@@ -44046,48 +43287,48 @@
 !                   OR LET THE POST PROCESSOR DO IT
 !
       IF(IMODE2.EQ.'PACK'.OR.IMODE2.EQ.'GUI')THEN
-        CALL GRTRSA(PX1,PY1,AX,AY,ISUBN0)
-        IPXTMP=INT(AX*10.**IGENFA+0.5)
-        IPYTMP=INT(AY*10.**IGENFA+0.5)
-        ICSTR(1:2)='M '
-        NCSTR=2
-        NCHTOT=IGENFA+3
-        CALL GRTRIN(IPXTMP,NCHTOT,ICSTR,NCSTR)
+      CALL GRTRSA(PX1,PY1,AX,AY,ISUBN0)
+      IPXTMP=INT(AX*10.**IGENFA+0.5)
+      IPYTMP=INT(AY*10.**IGENFA+0.5)
+      ICSTR(1:2)='M '
+      NCSTR=2
+      NCHTOT=IGENFA+3
+      CALL GRTRIN(IPXTMP,NCHTOT,ICSTR,NCSTR)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)='  '
+      CALL GRTRIN(IPYTMP,NCHTOT,ICSTR,NCSTR)
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ICSTR(1:5)='WRTE '
+      NCSTR=5
+      DO 3285 I=1,NCTEXT
+        ICTEMP=ICTEXT(I)
         NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='  '
-        CALL GRTRIN(IPYTMP,NCHTOT,ICSTR,NCSTR)
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        ICSTR(1:5)='WRTE '
-        NCSTR=5
-        DO 3285 I=1,NCTEXT
-          ICTEMP=ICTEXT(I)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
+        ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
  3285   CONTINUE
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
       ELSE
-        PX1P=PX1
-        PY1P=PY1
-        ICSTR(1:5)='MOTO '
-        NCSTR=5
-        NCHTOT=10
-        NCHDEC=5
-        CALL GRTRSA(PX1P,PY1P,AX,AY,ISUBN0)
-        PX1P=AX
-        PY1P=AY
-        CALL GRTRRE(PX1P,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        ICSTR(16:17)='  '
-        NCSTR=17
-        CALL GRTRRE(PY1P,NCHTOT,NCHDEC,ICSTR,NCSTR)
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        ICSTR(1:5)='WRTE '
-        NCSTR=5
-        DO 3260 I=1,NCTEXT
-          ICTEMP=ICTEXT(I)
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
+      PX1P=PX1
+      PY1P=PY1
+      ICSTR(1:5)='MOTO '
+      NCSTR=5
+      NCHTOT=10
+      NCHDEC=5
+      CALL GRTRSA(PX1P,PY1P,AX,AY,ISUBN0)
+      PX1P=AX
+      PY1P=AY
+      CALL GRTRRE(PX1P,NCHTOT,NCHDEC,ICSTR,NCSTR)
+      ICSTR(16:17)='  '
+      NCSTR=17
+      CALL GRTRRE(PY1P,NCHTOT,NCHDEC,ICSTR,NCSTR)
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ICSTR(1:5)='WRTE '
+      NCSTR=5
+      DO 3260 I=1,NCTEXT
+        ICTEMP=ICTEXT(I)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
  3260   CONTINUE
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
       ENDIF
       GO TO 9000
 !
@@ -44122,8 +43363,8 @@
       NCSTR=1
       K=0
       DO 3362 J=1,NCTEXT
-        K=J+NCSTR
-        ICSTR(K:K)=ICTEXT(J)
+      K=J+NCSTR
+      ICSTR(K:K)=ICTEXT(J)
  3362 CONTINUE
       K=K+1
       ICSTR(K:K)='"'
@@ -44156,7 +43397,7 @@
 #ifdef HAVE_CALCOMP
       CALL CALCPT(PX1P,PY1P,AX1,AY1,ISUBN0)
       DO 4112 J=1,NCTEXT
-        ICSTR(J:J)=ICTEXT(J)
+      ICSTR(J:J)=ICTEXT(J)
  4112 CONTINUE
       ANGLE=90.
       AXTEMP=0.
@@ -44178,10 +43419,10 @@
 #ifdef HAVE_LAHEY_CALCOMP
       CLAHEY=0
       DO 4601 I=1,7
-        RLAHEY(I)=0.0
+      RLAHEY(I)=0.0
 4601  CONTINUE
       DO 4603 I=1,9
-        ILAHEY(I)=0.0
+      ILAHEY(I)=0.0
 4603  CONTINUE
       IF(NCTEXT.LE.0)GO TO 9000
       CALL GRINFO(ILAHEY,RLAHEY,CLAHEY)
@@ -44191,35 +43432,35 @@
       ICOLMN=INT(REAL(ILAHEY(8))*(AX1*RLAHEY(1)/11.0)+0.5)
       ILINE=INT(REAL(ILAHEY(9))*(RLAHEY(1)*(8.5-AY1)/8.5)+0.5)
       IF(IJUSTH.EQ.'LEFT')THEN
-        NSHIFT=0
+      NSHIFT=0
       ELSEIF(IJUSTH.EQ.'CENT')THEN
-        NSHIFT=1
+      NSHIFT=1
       ELSEIF(IJUSTH.EQ.'RIGH')THEN
-        NSHIFT=1
+      NSHIFT=1
       ELSE
-        NSHIFT=0
+      NSHIFT=0
       ENDIF
       ICOLMN=ICOLMN-NSHIFT
       IF(ICOLMN.LT.1)ICOLMN=1
       IF(ICOLMN.GT.ILAHEY(8))ICOLMN=ILAHEY(8)
       IF(IJUSTV.EQ.'TOP ')THEN
-        NSHIFT=0
+      NSHIFT=0
       ELSEIF(IJUSTV.EQ.'CENT')THEN
-        NSHIFT=NCTEXT/2
+      NSHIFT=NCTEXT/2
       ELSEIF(IJUSTV.EQ.'BOTT')THEN
-        NSHIFT=NCTEXT
+      NSHIFT=NCTEXT
       ELSE
-        NSHIFT=0
+      NSHIFT=0
       ENDIF
       ILINE=ILINE-NSHIFT
       IF(ILINE.LT.1)ILINE=1
       IF(ILINE.GT.ILAHEY(9))ILINE=ILAHEY(9)
       DO 4610 I=1,NCTEXT
-        ICTEMP=' '
-        ICTEMP(1:1)=ICTEXT(I)
-        IF(ILINE.GE.1.AND.ILINE.LE.ILAHEY(9))   &
-           CALL GTEXT(ILINE,ICOLMN,ICTEMP)
-        ILINE=ILINE+1
+      ICTEMP=' '
+      ICTEMP(1:1)=ICTEXT(I)
+      IF(ILINE.GE.1.AND.ILINE.LE.ILAHEY(9))   &
+         CALL GTEXT(ILINE,ICOLMN,ICTEMP)
+      ILINE=ILINE+1
  4610 CONTINUE
 #endif
       GO TO 9000
@@ -44234,7 +43475,7 @@
 #ifdef HAVE_QWIN
       ICSTR=' '
       DO 4712 J=1,NCTEXT
-        ICSTR(J:J)=ICTEXT(J)
+      ICSTR(J:J)=ICTEXT(J)
  4712 CONTINUE
       CALL GRTRSD(PX1,PY1,IX1,IY1,ISUBN0)
       CALL SETGTEXTROTATION(900)
@@ -44324,74 +43565,74 @@
       IF(IOPGOF.EQ.'OFF')GO TO 9000
 !
       DO 4805 I=1,NCTEXT
-        IC1=ICTEXT(I)(1:1)
-        CALL DPCOAN(IC1,IJUNK)
-        STRING(I)=IJUNK
+      IC1=ICTEXT(I)(1:1)
+      CALL DPCOAN(IC1,IJUNK)
+      STRING(I)=IJUNK
  4805 CONTINUE
       STRING(NCTEXT+1)=0
 !
       ILAST=80
       DO 4810 I=80,1,-1
-        ILAST=I
-        IF(IX11FN(I:I).NE.' ')GO TO 4819
+      ILAST=I
+      IF(IX11FN(I:I).NE.' ')GO TO 4819
  4810 CONTINUE
  4819 CONTINUE
       DO 4820 I=1,ILAST
-        CALL DPCOAN(IX11FN(I:I),IJUNK)
-        IADE(I)=IJUNK
+      CALL DPCOAN(IX11FN(I:I),IJUNK)
+      IADE(I)=IJUNK
  4820 CONTINUE
       IADE(ILAST+1)=0
 !
       CALL GLTATT(IADE,IXERR)
       IF(IXERR.EQ.1) THEN
-        WRITE(ICOUT,4821)
+      WRITE(ICOUT,4821)
  4821   FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND--USE CURRENT FONT')
-        CALL DPWRST('XXX','BUG ')
+      CALL DPWRST('XXX','BUG ')
       ELSEIF(IXERR.EQ.2)THEN
-        WRITE(ICOUT,4822)
+      WRITE(ICOUT,4822)
  4822   FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND--USE DEFAULT FONT')
-        CALL DPWRST('XXX','BUG ')
+      CALL DPWRST('XXX','BUG ')
       END IF
 !
       IFONTH=0
       IFONTV=0
 !
       IF(IJUST.EQ.'LEFT'.OR.IJUST.EQ.'LJUS')THEN
-        IFONTH=1
-        IFONTV=1
+      IFONTH=1
+      IFONTV=1
       ELSEIF(IJUST.EQ.'CENT'.OR.IJUST.EQ.'CJUS')THEN
-        IFONTH=1
-        IFONTV=0
+      IFONTH=1
+      IFONTV=0
       ELSEIF(IJUST.EQ.'RIGH'.OR.IJUST.EQ.'RJUS')THEN
-        IFONTH=1
-        IFONTV=2
+      IFONTH=1
+      IFONTV=2
       ELSEIF(IJUST.EQ.'LEBO')THEN
-        IFONTH=0
-        IFONTV=1
+      IFONTH=0
+      IFONTV=1
       ELSEIF(IJUST.EQ.'CEBO')THEN
-        IFONTH=1
-        IFONTV=1
+      IFONTH=1
+      IFONTV=1
       ELSEIF(IJUST.EQ.'RIBO')THEN
-        IFONTH=2
-        IFONTV=1
+      IFONTH=2
+      IFONTV=1
       ELSEIF(IJUST.EQ.'LECE')THEN
-        IFONTH=0
-        IFONTV=0
+      IFONTH=0
+      IFONTV=0
       ELSEIF(IJUST.EQ.'CECE')THEN
-        IFONTH=1
-        IFONTV=0
+      IFONTH=1
+      IFONTV=0
       ELSEIF(IJUST.EQ.'RICE')THEN
-        IFONTH=2
-        IFONTV=0
+      IFONTH=2
+      IFONTV=0
       ELSEIF(IJUST.EQ.'LETO')THEN
-        IFONTH=0
-        IFONTV=2
+      IFONTH=0
+      IFONTV=2
       ELSEIF(IJUST.EQ.'CETO')THEN
-        IFONTH=1
-        IFONTV=2
+      IFONTH=1
+      IFONTV=2
       ELSEIF(IJUST.EQ.'RITO')THEN
-        IFONTH=2
-        IFONTV=2
+      IFONTH=2
+      IFONTV=2
       ENDIF
 !
       IXERR=0
@@ -44420,8 +43661,8 @@
       NCSTR=0
       PY1P=PY1P+PHEIG2
       DO 4910 I=1,NCTEXT
-        IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
-        CALL IGrCharOut(PX1,PY1+PY1P,ICSTR(I:I))
+      IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
+      CALL IGrCharOut(PX1,PY1+PY1P,ICSTR(I:I))
  4910 CONTINUE
 #endif
       GO TO 9000
@@ -44455,7 +43696,7 @@
 #ifdef HAVE_ZETA
       CALL CALCPT(PX1P,PY1P,AX1,AY1,ISUBN0)
       DO 5112 J=1,NCTEXT
-        ICSTR(J:J)=ICTEXT(J)
+      ICSTR(J:J)=ICTEXT(J)
  5112 CONTINUE
       ANGLE=90.
       AXTEMP=0.
@@ -44473,14 +43714,14 @@
 #ifdef HAVE_SUN
       IF(NCTEXT.LE.0)GO TO 9000
       DO 6610 I=1,NCTEXT
-        NCSTR=1
-        IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
-        ICTEMP=ICTEXT(I)
-        ICSTR(1:1)=ICTEMP(1:1)
-        ITEMP=0
-        CALL DPCONA(ITEMP,ICSTR(2:2))
-        CALL GRTRSD(PX1P,PY1P,IX1P,IY1P,ISUBN0)
-        CALL cftext(IX1P,IY1P,ICSTR(1:2))
+      NCSTR=1
+      IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
+      ICTEMP=ICTEXT(I)
+      ICSTR(1:1)=ICTEMP(1:1)
+      ITEMP=0
+      CALL DPCONA(ITEMP,ICSTR(2:2))
+      CALL GRTRSD(PX1P,PY1P,IX1P,IY1P,ISUBN0)
+      CALL cftext(IX1P,IY1P,ICSTR(1:2))
  6610 CONTINUE
 #endif
       GO TO 9000
@@ -44512,32 +43753,32 @@
       MAXREG=130
       PY1P=PY1P+PHEIG2
       DO 8110 I=1,NCTEXT
-        IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
-        IF(NCSTR.GT.MAXREG-18)THEN
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-          NCSTR=0
-        END IF
-        CALL GRTRSD(PX1P,PY1P,IX,IY,ISUBN0)
-        NCSTR=NCSTR+1
-        NCSTR2=NCSTR+1
-        ICSTR(NCSTR:NCSTR2)='P['
-        NCSTR=NCSTR2
-        CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=','
-        CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=']'
+      IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
+      IF(NCSTR.GT.MAXREG-18)THEN
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        NCSTR=0
+      END IF
+      CALL GRTRSD(PX1P,PY1P,IX,IY,ISUBN0)
+      NCSTR=NCSTR+1
+      NCSTR2=NCSTR+1
+      ICSTR(NCSTR:NCSTR2)='P['
+      NCSTR=NCSTR2
+      CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=','
+      CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=']'
 !
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='T'
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=''''
-        NCSTR=NCSTR+1
-        ICTEMP=ICTEXT(I)
-        ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=''''
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)='T'
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=''''
+      NCSTR=NCSTR+1
+      ICTEMP=ICTEXT(I)
+      ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=''''
 !
  8110 CONTINUE
       IF(NCSTR.GT.0)CALL GRWRST(ICSTR,NCSTR,ISUBN0)
@@ -44569,96 +43810,96 @@
 !
       IFLAGG=0
       CALL POSTTR(ICTEXT,NCTEXT,ICASE,MAXSYM,   &
-                  ISTARV,ISTOPV,IFONTP,SIZEV,OFFSEV,NSTRIN,NSPEC,   &
-                  IFLAGG,   &
-                  ISUBRO,IBUGG4)
+                ISTARV,ISTOPV,IFONTP,SIZEV,OFFSEV,NSTRIN,NSPEC,   &
+                IFLAGG,   &
+                ISUBRO,IBUGG4)
 !
       IF(NSPEC.LT.1)THEN
 !
-        IPSTPS=INT(JHEIG2+0.5)
-        IF(IPSTFN.EQ.IPSTFC.AND.IPSTPC.EQ.IPSTPS)GO TO 8605
-        IJUNK=7
-        DO 8695 I=1,IPSTMF
-          IF(IPSTFN.NE.IPSTT1(I))GO TO 8695
-          IJUNK=I
-          GO TO 8697
+      IPSTPS=INT(JHEIG2+0.5)
+      IF(IPSTFN.EQ.IPSTFC.AND.IPSTPC.EQ.IPSTPS)GO TO 8605
+      IJUNK=7
+      DO 8695 I=1,IPSTMF
+        IF(IPSTFN.NE.IPSTT1(I))GO TO 8695
+        IJUNK=I
+        GO TO 8697
  8695   CONTINUE
  8697   CONTINUE
-        ICSTR(1:1)='/'
-        ICSTR(2:41)=IPSTT2(IJUNK)(1:40)
-        ICSTR(42:51)=' findfont '
-        NCHTOT=5
-        NCSTR=51
-        CALL GRTRIN(IPSTPS,NCHTOT,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        NCSTR2=NCSTR+17
-        ICSTR(NCSTR:NCSTR2)=' scalefont setfont'
-        NCSTR=NCSTR2
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        IPSTFC=IPSTFN
-        IPSTPC=IPSTPS
+      ICSTR(1:1)='/'
+      ICSTR(2:41)=IPSTT2(IJUNK)(1:40)
+      ICSTR(42:51)=' findfont '
+      NCHTOT=5
+      NCSTR=51
+      CALL GRTRIN(IPSTPS,NCHTOT,ICSTR,NCSTR)
+      NCSTR=NCSTR+1
+      NCSTR2=NCSTR+17
+      ICSTR(NCSTR:NCSTR2)=' scalefont setfont'
+      NCSTR=NCSTR2
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IPSTFC=IPSTFN
+      IPSTPC=IPSTPS
 !
  8605   CONTINUE
-        ICSTR(1:4)='/IX '
-        NCSTR=4
-        CALL GRTRSD(PX1P,PY1P,IX,IY,ISUBN0)
-        NCHTOT=5
-        CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-        ICSTR(10:18)=' def /IY '
-        NCSTR=18
-        CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-        ICSTR(24:54)=' def newpath IX IY moveto gsave'
-        NCSTR=54
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ICSTR(1:4)='/IX '
+      NCSTR=4
+      CALL GRTRSD(PX1P,PY1P,IX,IY,ISUBN0)
+      NCHTOT=5
+      CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+      ICSTR(10:18)=' def /IY '
+      NCSTR=18
+      CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+      ICSTR(24:54)=' def newpath IX IY moveto gsave'
+      NCSTR=54
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-        ICSTR(1:1)='('
-        NCSTR=1
-        DO 8612 J=1,NCTEXT
-          IF(ICTEXT(J).NE.'('.AND.ICTEXT(J).NE.')'.AND.   &
-             ICTEXT(J).NE.IBASLC)GO TO 8613
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=IBASLC
- 8613     CONTINUE
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=ICTEXT(J)
- 8612   CONTINUE
+      ICSTR(1:1)='('
+      NCSTR=1
+      DO 8612 J=1,NCTEXT
+        IF(ICTEXT(J).NE.'('.AND.ICTEXT(J).NE.')'.AND.   &
+           ICTEXT(J).NE.IBASLC)GO TO 8613
         NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=')'
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        IF(IJUST(1:4).EQ.'BOTT')ICSTR(1:10)='vleftshow '
-        IF(IJUST(1:4).EQ.'CENT')ICSTR(1:10)='vcentshow '
-        IF(IJUST(1:4).EQ.'TOP ')ICSTR(1:10)='vrightshow'
-        IF(IJUST(3:4).EQ.'BO')ICSTR(1:10)='vleftshow '
-        IF(IJUST(3:4).EQ.'CE')ICSTR(1:10)='vcentshow '
-        IF(IJUST(3:4).EQ.'TO')ICSTR(1:10)='vrightshow'
-        IF(IJUST.EQ.'LEFT')ICSTR(1:10)='vleftshow '
-        IF(IJUST.EQ.'LJUS')ICSTR(1:10)='vleftshow '
-        IF(IJUST.EQ.'CENT')ICSTR(1:10)='vcentshow '
-        IF(IJUST.EQ.'CJUS')ICSTR(1:10)='vcentshow '
-        IF(IJUST.EQ.'RIGH')ICSTR(1:10)='vrightshow'
-        IF(IJUST.EQ.'RJUS')ICSTR(1:10)='vrightshow'
-        NCSTR=10
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        ICSTR(NCSTR:NCSTR)=IBASLC
+ 8613     CONTINUE
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=ICTEXT(J)
+ 8612   CONTINUE
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=')'
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IF(IJUST(1:4).EQ.'BOTT')ICSTR(1:10)='vleftshow '
+      IF(IJUST(1:4).EQ.'CENT')ICSTR(1:10)='vcentshow '
+      IF(IJUST(1:4).EQ.'TOP ')ICSTR(1:10)='vrightshow'
+      IF(IJUST(3:4).EQ.'BO')ICSTR(1:10)='vleftshow '
+      IF(IJUST(3:4).EQ.'CE')ICSTR(1:10)='vcentshow '
+      IF(IJUST(3:4).EQ.'TO')ICSTR(1:10)='vrightshow'
+      IF(IJUST.EQ.'LEFT')ICSTR(1:10)='vleftshow '
+      IF(IJUST.EQ.'LJUS')ICSTR(1:10)='vleftshow '
+      IF(IJUST.EQ.'CENT')ICSTR(1:10)='vcentshow '
+      IF(IJUST.EQ.'CJUS')ICSTR(1:10)='vcentshow '
+      IF(IJUST.EQ.'RIGH')ICSTR(1:10)='vrightshow'
+      IF(IJUST.EQ.'RJUS')ICSTR(1:10)='vrightshow'
+      NCSTR=10
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-        ICSTR(1:8)='grestore'
-        NCSTR=8
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ICSTR(1:8)='grestore'
+      NCSTR=8
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
       ELSE
 !
 !       DEFINE THE INITIAL POSITION.
 !
-        NCSTR=8
-        ICSTR(1:NCSTR)='newpath '
-        CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
-        NCHTOT=5
-        CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-        NCSTR=14
-        ICSTR(NCSTR:NCSTR)=' '
-        CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-        ICSTR(20:26)=' moveto'
-        NCSTR=26
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      NCSTR=8
+      ICSTR(1:NCSTR)='newpath '
+      CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
+      NCHTOT=5
+      CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+      NCSTR=14
+      ICSTR(NCSTR:NCSTR)=' '
+      CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+      ICSTR(20:26)=' moveto'
+      NCSTR=26
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
 !       CASE WHERE WE SPLIT THE STRING INTO A SERIES OF
 !       SUBSTRINGS.
@@ -44677,108 +43918,32 @@
 !       WE CAN THEN DEFINE THE INITIAL STARTING POINT AND THEN
 !       JUST USE THE BOTTOM JUSTIFIED ALGORITHM.
 !
-        IJUSTV='BOTT'
-        IF(IJUST(3:4).EQ.'BO')IJUSTV='BOTT'
-        IF(IJUST(3:4).EQ.'CE')IJUSTV='CENT'
-        IF(IJUST(3:4).EQ.'TO')IJUSTV='TOP '
-        IF(IJUST.EQ.'LEFT')IJUSTV='BOTT'
-        IF(IJUST.EQ.'LJUS')IJUSTV='BOTT'
-        IF(IJUST.EQ.'CENT')IJUSTV='CENT'
-        IF(IJUST.EQ.'CJUS')IJUSTV='CENT'
-        IF(IJUST.EQ.'RIGH')IJUSTV='TOP '
-        IF(IJUST.EQ.'RJUS')IJUSTV='TOP '
+      IJUSTV='BOTT'
+      IF(IJUST(3:4).EQ.'BO')IJUSTV='BOTT'
+      IF(IJUST(3:4).EQ.'CE')IJUSTV='CENT'
+      IF(IJUST(3:4).EQ.'TO')IJUSTV='TOP '
+      IF(IJUST.EQ.'LEFT')IJUSTV='BOTT'
+      IF(IJUST.EQ.'LJUS')IJUSTV='BOTT'
+      IF(IJUST.EQ.'CENT')IJUSTV='CENT'
+      IF(IJUST.EQ.'CJUS')IJUSTV='CENT'
+      IF(IJUST.EQ.'RIGH')IJUSTV='TOP '
+      IF(IJUST.EQ.'RJUS')IJUSTV='TOP '
 !
-        IF(IJUSTV(1:1).EQ.'C' .OR. IJUSTV(1:1).EQ.'T')THEN
+      IF(IJUSTV(1:1).EQ.'C' .OR. IJUSTV(1:1).EQ.'T')THEN
 !         FOR CENTER AND TOP JUSTIFIED STRINGS, MAKE A PASS
 !         TO DETERMINE THE LENGTH OF THE STRING.  FOR THIS CASE,
 !         WE CAN IGNORE THE OFFSET.  HOWEVER, WE DO
 !         NEED TO KEEP TRACK OF THE FONT AND SIZE OF EACH SUBSTRING.
 !
-          IPSTSV=INT(JHEIG2+0.5)
-          IPSTCR=IPSTSV
-          PY1PC=PY1P
-          DO 8820 I=1,NSTRIN
-            IF(ISTARV(I).GT.ISTOPV(I))GO TO 8820
-            ASIZE=SIZEV(I)
-            IFONTT=IFONTP(I)
-!
-!           SET FONT AND FONT SIZE
-!
-            IF(ASIZE.LT.0.0)THEN
-              IPSTCR=IPSTCR/2
-            ELSEIF(ASIZE.GT.0.0)THEN
-              IPSTCR=2*IPSTCR
-            ELSE
-              IPSTCR=IPSTSV
-            ENDIF
-            ICSTR(1:9)='/PSFONT /'
-            IF(IFONTT.EQ.1)THEN
-              ICSTR(10:15)='Symbol'
-              ICSTR(16:49)=' '
-            ELSE
-              IJUNK=7
-              DO 8825 II=1,IPSTMF
-                IF(IPSTFN.NE.IPSTT1(II))GO TO 8825
-                IJUNK=II
-                GO TO 8827
- 8825         CONTINUE
- 8827         CONTINUE
-              ICSTR(10:49)=IPSTT2(IJUNK)(1:40)
-            ENDIF
-            ICSTR(50:62)=' def /PSSIZE '
-            NCHTOT=5
-            NCSTR=62
-            CALL GRTRIN(IPSTCR,NCHTOT,ICSTR,NCSTR)
-            NCSTR=NCSTR+1
-            NCSTR2=NCSTR+13
-            ICSTR(NCSTR:NCSTR2)=' def setpsfont'
-            NCSTR=NCSTR2
-            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-!           DETERMINE LENGTH OF CURRENT STRING AND ADD IT TO
-!           THE TOTAL.
-!
-            ICSTR(1:1)='('
-            NCSTR=1
-            DO 8832 J=ISTARV(I),ISTOPV(I)
-              IF(ICTEXT(J).NE.'('.AND.ICTEXT(J).NE.')'.AND.   &
-                ICTEXT(J).NE.IBASLC)GO TO 8833
-              NCSTR=NCSTR+1
-              ICSTR(NCSTR:NCSTR)=IBASLC
- 8833         CONTINUE
-              NCSTR=NCSTR+1
-              ICSTR(NCSTR:NCSTR)=ICTEXT(J)
- 8832       CONTINUE
-!
-            NCSTR=NCSTR+1
-            ICSTR(NCSTR:NCSTR)=')'
-            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-            IF(IJUSTV(1:1).EQ.'C')THEN
-              NCSTR=15
-              ICSTR(1:NCSTR)='psstringwidthcv'
-              CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-            ELSEIF(IJUSTV(1:1).EQ.'T')THEN
-              NCSTR=15
-              ICSTR(1:NCSTR)='psstringwidthtv'
-              CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-            ENDIF
-!
- 8820     CONTINUE
-!
-        ENDIF
-!
-!       NOW DRAW EACH OF THE SUBSTRINGS
-!
         IPSTSV=INT(JHEIG2+0.5)
         IPSTCR=IPSTSV
         PY1PC=PY1P
-        DO 8720 I=1,NSTRIN
-          IF(ISTARV(I).GT.ISTOPV(I))GO TO 8720
+        DO 8820 I=1,NSTRIN
+          IF(ISTARV(I).GT.ISTOPV(I))GO TO 8820
           ASIZE=SIZEV(I)
-          AOFFS=OFFSEV(I)
           IFONTT=IFONTP(I)
 !
-!         STEP 2A: SET FONT AND FONT SIZE
+!           SET FONT AND FONT SIZE
 !
           IF(ASIZE.LT.0.0)THEN
             IPSTCR=IPSTCR/2
@@ -44793,12 +43958,12 @@
             ICSTR(16:49)=' '
           ELSE
             IJUNK=7
-            DO 8725 II=1,IPSTMF
-              IF(IPSTFN.NE.IPSTT1(II))GO TO 8725
+            DO 8825 II=1,IPSTMF
+              IF(IPSTFN.NE.IPSTT1(II))GO TO 8825
               IJUNK=II
-              GO TO 8727
- 8725       CONTINUE
- 8727       CONTINUE
+              GO TO 8827
+ 8825         CONTINUE
+ 8827         CONTINUE
             ICSTR(10:49)=IPSTT2(IJUNK)(1:40)
           ENDIF
           ICSTR(50:62)=' def /PSSIZE '
@@ -44811,75 +43976,72 @@
           NCSTR=NCSTR2
           CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-!         STEP 2B: SET RELATIVE VERTICAL OFFSET IF NEEDED
-!
-          IF(AOFFS.GT.0.0)THEN
-            PYTEMP=0.0
-            POFFST=PYLEC/2.0
-            CALL GRTRSD(POFFST,PYTEMP,IX,IY,ISUBN0)
-            IX=-IX
-            NCHTOT=5
-            NCSTR=0
-            CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-            NCSTR=NCSTR+1
-            ICSTR(NCSTR:NCSTR)=' '
-            CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-            NCSTR=NCSTR+1
-            NCSTR2=NCSTR+7
-            ICSTR(NCSTR:NCSTR2)=' rmoveto'
-            NCSTR=NCSTR2
-            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-          ELSEIF(AOFFS.LT.0.0)THEN
-            PYTEMP=0.0
-            POFFST=PYLEC/2.0
-            CALL GRTRSD(POFFST,PYTEMP,IX,IY,ISUBN0)
-            NCHTOT=5
-            NCSTR=0
-            CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-            NCSTR=NCSTR+1
-            ICSTR(NCSTR:NCSTR)=' '
-            CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-            NCSTR=NCSTR+1
-            NCSTR2=NCSTR+7
-            ICSTR(NCSTR:NCSTR2)=' rmoveto'
-            NCSTR=NCSTR2
-            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-          ENDIF
-!
-!         STEP 2C: PRINT CURRENT SUBSTRING
+!           DETERMINE LENGTH OF CURRENT STRING AND ADD IT TO
+!           THE TOTAL.
 !
           ICSTR(1:1)='('
           NCSTR=1
-          DO 8732 J=ISTARV(I),ISTOPV(I)
+          DO 8832 J=ISTARV(I),ISTOPV(I)
             IF(ICTEXT(J).NE.'('.AND.ICTEXT(J).NE.')'.AND.   &
-              ICTEXT(J).NE.IBASLC)GO TO 8733
+              ICTEXT(J).NE.IBASLC)GO TO 8833
             NCSTR=NCSTR+1
             ICSTR(NCSTR:NCSTR)=IBASLC
- 8733       CONTINUE
+ 8833         CONTINUE
             NCSTR=NCSTR+1
             ICSTR(NCSTR:NCSTR)=ICTEXT(J)
- 8732     CONTINUE
+ 8832       CONTINUE
 !
           NCSTR=NCSTR+1
           ICSTR(NCSTR:NCSTR)=')'
           CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-          NCSTR=11
-          ICSTR(1:NCSTR)='vleftshow2 '
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          IF(IJUSTV(1:1).EQ.'C')THEN
+            NCSTR=15
+            ICSTR(1:NCSTR)='psstringwidthcv'
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          ELSEIF(IJUSTV(1:1).EQ.'T')THEN
+            NCSTR=15
+            ICSTR(1:NCSTR)='psstringwidthtv'
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+          ENDIF
 !
- 8720   CONTINUE
+ 8820     CONTINUE
 !
-!       RESET DEFAULT FONT AND POINT SIZE
+      ENDIF
 !
+!       NOW DRAW EACH OF THE SUBSTRINGS
+!
+      IPSTSV=INT(JHEIG2+0.5)
+      IPSTCR=IPSTSV
+      PY1PC=PY1P
+      DO 8720 I=1,NSTRIN
+        IF(ISTARV(I).GT.ISTOPV(I))GO TO 8720
+        ASIZE=SIZEV(I)
+        AOFFS=OFFSEV(I)
+        IFONTT=IFONTP(I)
+!
+!         STEP 2A: SET FONT AND FONT SIZE
+!
+        IF(ASIZE.LT.0.0)THEN
+          IPSTCR=IPSTCR/2
+        ELSEIF(ASIZE.GT.0.0)THEN
+          IPSTCR=2*IPSTCR
+        ELSE
+          IPSTCR=IPSTSV
+        ENDIF
         ICSTR(1:9)='/PSFONT /'
-        IJUNK=7
-        DO 8925 II=1,IPSTMF
-          IF(IPSTFN.NE.IPSTT1(II))GO TO 8925
-          IJUNK=II
-          GO TO 8927
- 8925   CONTINUE
- 8927   CONTINUE
-        ICSTR(10:49)=IPSTT2(IJUNK)(1:40)
+        IF(IFONTT.EQ.1)THEN
+          ICSTR(10:15)='Symbol'
+          ICSTR(16:49)=' '
+        ELSE
+          IJUNK=7
+          DO 8725 II=1,IPSTMF
+            IF(IPSTFN.NE.IPSTT1(II))GO TO 8725
+            IJUNK=II
+            GO TO 8727
+ 8725       CONTINUE
+ 8727       CONTINUE
+          ICSTR(10:49)=IPSTT2(IJUNK)(1:40)
+        ENDIF
         ICSTR(50:62)=' def /PSSIZE '
         NCHTOT=5
         NCSTR=62
@@ -44889,6 +44051,85 @@
         ICSTR(NCSTR:NCSTR2)=' def setpsfont'
         NCSTR=NCSTR2
         CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+!         STEP 2B: SET RELATIVE VERTICAL OFFSET IF NEEDED
+!
+        IF(AOFFS.GT.0.0)THEN
+          PYTEMP=0.0
+          POFFST=PYLEC/2.0
+          CALL GRTRSD(POFFST,PYTEMP,IX,IY,ISUBN0)
+          IX=-IX
+          NCHTOT=5
+          NCSTR=0
+          CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=' '
+          CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          NCSTR2=NCSTR+7
+          ICSTR(NCSTR:NCSTR2)=' rmoveto'
+          NCSTR=NCSTR2
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        ELSEIF(AOFFS.LT.0.0)THEN
+          PYTEMP=0.0
+          POFFST=PYLEC/2.0
+          CALL GRTRSD(POFFST,PYTEMP,IX,IY,ISUBN0)
+          NCHTOT=5
+          NCSTR=0
+          CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=' '
+          CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+          NCSTR=NCSTR+1
+          NCSTR2=NCSTR+7
+          ICSTR(NCSTR:NCSTR2)=' rmoveto'
+          NCSTR=NCSTR2
+          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        ENDIF
+!
+!         STEP 2C: PRINT CURRENT SUBSTRING
+!
+        ICSTR(1:1)='('
+        NCSTR=1
+        DO 8732 J=ISTARV(I),ISTOPV(I)
+          IF(ICTEXT(J).NE.'('.AND.ICTEXT(J).NE.')'.AND.   &
+            ICTEXT(J).NE.IBASLC)GO TO 8733
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=IBASLC
+ 8733       CONTINUE
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=ICTEXT(J)
+ 8732     CONTINUE
+!
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=')'
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        NCSTR=11
+        ICSTR(1:NCSTR)='vleftshow2 '
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+ 8720   CONTINUE
+!
+!       RESET DEFAULT FONT AND POINT SIZE
+!
+      ICSTR(1:9)='/PSFONT /'
+      IJUNK=7
+      DO 8925 II=1,IPSTMF
+        IF(IPSTFN.NE.IPSTT1(II))GO TO 8925
+        IJUNK=II
+        GO TO 8927
+ 8925   CONTINUE
+ 8927   CONTINUE
+      ICSTR(10:49)=IPSTT2(IJUNK)(1:40)
+      ICSTR(50:62)=' def /PSSIZE '
+      NCHTOT=5
+      NCSTR=62
+      CALL GRTRIN(IPSTCR,NCHTOT,ICSTR,NCSTR)
+      NCSTR=NCSTR+1
+      NCSTR2=NCSTR+13
+      ICSTR(NCSTR:NCSTR2)=' def setpsfont'
+      NCSTR=NCSTR2
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
       ENDIF
 !
@@ -44911,13 +44152,13 @@
       IF(NCTEXT.LE.0)GO TO 9000
       IFONTT=IQUIFN
       IF(IORNSW.EQ.'PORT'.AND.(   &
-         IFONTT.EQ.521 .OR. IFONTT.EQ.522 .OR.   &
-         IFONTT.EQ.523 .OR. IFONTT.EQ.524))IFONTT=10
+       IFONTT.EQ.521 .OR. IFONTT.EQ.522 .OR.   &
+       IFONTT.EQ.523 .OR. IFONTT.EQ.524))IFONTT=10
       IF(IORNSW.NE.'PORT'.AND.(   &
-         IFONTT.EQ.124 .OR. IFONTT.EQ.144 .OR.   &
-         IFONTT.EQ.16  .OR. IFONTT.EQ.328 .OR.   &
-         IFONTT.EQ.998 .OR. IFONTT.EQ.404 .OR.   &
-         IFONTT.EQ.444 .OR. IFONTT.EQ.532))IFONTT=10
+       IFONTT.EQ.124 .OR. IFONTT.EQ.144 .OR.   &
+       IFONTT.EQ.16  .OR. IFONTT.EQ.328 .OR.   &
+       IFONTT.EQ.998 .OR. IFONTT.EQ.404 .OR.   &
+       IFONTT.EQ.444 .OR. IFONTT.EQ.532))IFONTT=10
       CALL DPCONA(94,ICARAT)
       IF(IFONTT.EQ.IQUIFC)GO TO 9105
       ICSTR(1:1)=ICARAT
@@ -44933,21 +44174,21 @@
  9105 CONTINUE
       NCHTOT=-5
       DO 9110 I=1,NCTEXT
-        IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
-        PYTEMP=100.-PY1P
-        CALL QUICPT(PX1P,PYTEMP,IX,IY,ISUBN0)
-        ICSTR(1:1)=ICARAT
-        ICSTR(2:3)='IH'
-        NCSTR=3
-        CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-        ICSTR(9:9)=ICARAT
-        ICSTR(10:11)='IV'
-        NCSTR=11
-        CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-        NCSTR=17
-        ICTEMP=ICTEXT(I)
-        ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IF(I.GE.2)PY1P=PY1P-AFACT*(PHEIG2+PVEGA2)
+      PYTEMP=100.-PY1P
+      CALL QUICPT(PX1P,PYTEMP,IX,IY,ISUBN0)
+      ICSTR(1:1)=ICARAT
+      ICSTR(2:3)='IH'
+      NCSTR=3
+      CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+      ICSTR(9:9)=ICARAT
+      ICSTR(10:11)='IV'
+      NCSTR=11
+      CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+      NCSTR=17
+      ICTEMP=ICTEXT(I)
+      ICSTR(NCSTR:NCSTR)=ICTEMP(1:1)
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
  9110 CONTINUE
       GO TO 9000
 !
@@ -44969,140 +44210,140 @@
       CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
 !
       DO 9605 I=1,NCTEXT
-        IC1=ICTEXT(I)(1:1)
-        CALL DPCOAN(IC1,IJUNK)
-        STRING(I)=IJUNK
+      IC1=ICTEXT(I)(1:1)
+      CALL DPCOAN(IC1,IJUNK)
+      STRING(I)=IJUNK
  9605 CONTINUE
       STRING(NCTEXT+1)=0
 !
 !     CHECK IF SCALABLE FONTS REQUESTED
 !
       IF(IX11FT.EQ.'FIXE')THEN
-        IFTYPE=0
+      IFTYPE=0
       ELSE
-        IFTYPE=1
-        IF(IX11SF(1:4).EQ.'NULL')IFTYPE=0
+      IFTYPE=1
+      IF(IX11SF(1:4).EQ.'NULL')IFTYPE=0
       ENDIF
 !
       IF(IFTYPE.EQ.0)THEN
-        ILAST=80
-        DO 9610 I=80,1,-1
-          ILAST=I
-          IF(IX11FN(I:I).NE.' ')GO TO 9619
+      ILAST=80
+      DO 9610 I=80,1,-1
+        ILAST=I
+        IF(IX11FN(I:I).NE.' ')GO TO 9619
  9610   CONTINUE
  9619   CONTINUE
-        DO 9620 I=1,ILAST
-          CALL DPCOAN(IX11FN(I:I),IJUNK)
-          IADE(I)=IJUNK
+      DO 9620 I=1,ILAST
+        CALL DPCOAN(IX11FN(I:I),IJUNK)
+        IADE(I)=IJUNK
  9620   CONTINUE
-        IADE(ILAST+1)=0
-        CALL XTATTR(IADE,IXERR)
-        IF(IXERR.EQ.1) THEN
-          WRITE(ICOUT,9621)
+      IADE(ILAST+1)=0
+      CALL XTATTR(IADE,IXERR)
+      IF(IXERR.EQ.1) THEN
+        WRITE(ICOUT,9621)
  9621     FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND--USE CURRENT ',   &
-                 'FONT')
-          CALL DPWRST('XXX','BUG ')
-        ELSEIF(IXERR.EQ.2)THEN
-          WRITE(ICOUT,9622)
+               'FONT')
+        CALL DPWRST('XXX','BUG ')
+      ELSEIF(IXERR.EQ.2)THEN
+        WRITE(ICOUT,9622)
  9622     FORMAT(1X,'WARNING: X11 FONT NAME NOT FOUND--USE DEFAULT ',   &
-                 'FONT')
-          CALL DPWRST('XXX','BUG ')
-        END IF
+               'FONT')
+        CALL DPWRST('XXX','BUG ')
+      END IF
       ELSE
-        ILAST=80
-        DO 9630 I=80,1,-1
-          ILAST=I
-          IF(IX11SF(I:I).NE.' ')GO TO 9639
+      ILAST=80
+      DO 9630 I=80,1,-1
+        ILAST=I
+        IF(IX11SF(I:I).NE.' ')GO TO 9639
  9630   CONTINUE
  9639   CONTINUE
 !
 !       ADD SIZE TO FONT STRING
 !
-        ICSTR=' '
-        JSIZET=JSIZE
-        IF(JSIZET.LE.6)JSIZET=6
-        IF(JSIZET.GE.24)JSIZET=24
-        ICSTR(1:ILAST)=IX11SF(1:ILAST)
-        ICSTR(ILAST+1:ILAST+6)=':size='
-        ILAST=ILAST+6
-        IF(JSIZET.LE.9)THEN
-          NCHTOT=1
-        ELSEIF(JSIZET.LE.99)THEN
-          NCHTOT=2
-        ELSE
-          NCHTOT=3
-        ENDIF
-        CALL GRTRIN(JSIZET,NCHTOT,ICSTR,ILAST)
+      ICSTR=' '
+      JSIZET=JSIZE
+      IF(JSIZET.LE.6)JSIZET=6
+      IF(JSIZET.GE.24)JSIZET=24
+      ICSTR(1:ILAST)=IX11SF(1:ILAST)
+      ICSTR(ILAST+1:ILAST+6)=':size='
+      ILAST=ILAST+6
+      IF(JSIZET.LE.9)THEN
+        NCHTOT=1
+      ELSEIF(JSIZET.LE.99)THEN
+        NCHTOT=2
+      ELSE
+        NCHTOT=3
+      ENDIF
+      CALL GRTRIN(JSIZET,NCHTOT,ICSTR,ILAST)
 !
-        DO 9640 I=1,ILAST
-          CALL DPCOAN(IX11SF(I:I),IJUNK)
-          IADE(I)=IJUNK
+      DO 9640 I=1,ILAST
+        CALL DPCOAN(IX11SF(I:I),IJUNK)
+        IADE(I)=IJUNK
  9640   CONTINUE
-        IADE(ILAST+1)=0
+      IADE(ILAST+1)=0
       ENDIF
 !
       IFONTH=0
       IFONTV=0
 !
       IF(IJUST.EQ.'LEFT'.OR.IJUST.EQ.'LJUS')THEN
-        IFONTH=1
-        IFONTV=1
+      IFONTH=1
+      IFONTV=1
       ELSEIF(IJUST.EQ.'CENT'.OR.IJUST.EQ.'CJUS')THEN
-        IFONTH=1
-        IFONTV=0
+      IFONTH=1
+      IFONTV=0
       ELSEIF(IJUST.EQ.'RIGH'.OR.IJUST.EQ.'RJUS')THEN
-        IFONTH=1
-        IFONTV=2
+      IFONTH=1
+      IFONTV=2
       ELSEIF(IJUST.EQ.'LEBO')THEN
-        IFONTH=0
-        IFONTV=1
+      IFONTH=0
+      IFONTV=1
       ELSEIF(IJUST.EQ.'CEBO')THEN
-        IFONTH=1
-        IFONTV=1
+      IFONTH=1
+      IFONTV=1
       ELSEIF(IJUST.EQ.'RIBO')THEN
-        IFONTH=2
-        IFONTV=1
+      IFONTH=2
+      IFONTV=1
       ELSEIF(IJUST.EQ.'LECE')THEN
-        IFONTH=0
-        IFONTV=0
+      IFONTH=0
+      IFONTV=0
       ELSEIF(IJUST.EQ.'CECE')THEN
-        IFONTH=1
-        IFONTV=0
+      IFONTH=1
+      IFONTV=0
       ELSEIF(IJUST.EQ.'RICE')THEN
-        IFONTH=2
-        IFONTV=0
+      IFONTH=2
+      IFONTV=0
       ELSEIF(IJUST.EQ.'LETO')THEN
-        IFONTH=0
-        IFONTV=2
+      IFONTH=0
+      IFONTV=2
       ELSEIF(IJUST.EQ.'CETO')THEN
-        IFONTH=1
-        IFONTV=2
+      IFONTH=1
+      IFONTV=2
       ELSEIF(IJUST.EQ.'RITO')THEN
-        IFONTH=2
-        IFONTV=2
+      IFONTH=2
+      IFONTV=2
       ENDIF
 !
       IXERR=0
       IF(IFTYPE.EQ.0)THEN
-        CALL XTEXTV(STRING,IX,IY,IFONTH,IFONTV,IXERR)
+      CALL XTEXTV(STRING,IX,IY,IFONTH,IFONTV,IXERR)
       ELSE
-        CALL XTEXTV2(IADE,STRING,IX,IY,IFONTH,IFONTV,IXERR)
-        IF(IXERR.EQ.1)THEN
-          WRITE(ICOUT,999)
-          CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,9661)
+      CALL XTEXTV2(IADE,STRING,IX,IY,IFONTH,IFONTV,IXERR)
+      IF(IXERR.EQ.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9661)
  9661     FORMAT('IN GRWRTV: UNABLE TO LOAD SCALABLE X11 FONT')
-          CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,9663)ICSTR(1:ILAST)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9663)ICSTR(1:ILAST)
  9663     FORMAT('FONT NAME: ',A130)
-          CALL DPWRST('XXX','BUG ')
-        ELSEIF(IXERR.EQ.2)THEN
-          WRITE(ICOUT,999)
-          CALL DPWRST('XXX','BUG ')
-          WRITE(ICOUT,9671)
+        CALL DPWRST('XXX','BUG ')
+      ELSEIF(IXERR.EQ.2)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9671)
  9671     FORMAT('IN GRWRTV: UNABLE TO ALLOCTE Xft COLOR')
-          CALL DPWRST('XXX','BUG ')
-        ENDIF
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
       ENDIF
 !
 #endif
@@ -45200,144 +44441,144 @@
       IF(IGDFN(1:5).EQ.'GIANT')IFONTZ=4
       IF(IGDFN(1:4).EQ.'TINY')IFONTZ=5
       IF(IGDFN(1:4).EQ.'Null')THEN
-        IFONTZ=3
-        GO TO 12603
+      IFONTZ=3
+      GO TO 12603
       ENDIF
 !
       IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TXTV')THEN
-        WRITE(ICOUT,12673)IFONTZ,IGDFN
+      WRITE(ICOUT,12673)IFONTZ,IGDFN
 12673   FORMAT('GRWRTH GD DEVICE: IFONTZ,IGDFN = ',I6,2X,A80)
-        CALL DPWRST('XXX','BUG ')
+      CALL DPWRST('XXX','BUG ')
       ENDIF
 !
       IFILE2=' '
       IF(IFONTZ.EQ.0)THEN
-        CALL DPINFI(IGDFN,IEXIST,IOPEN,IACC,ISUBN0,   &
-                    IBUGG4,ISUBG4,IERRG4)
+      CALL DPINFI(IGDFN,IEXIST,IOPEN,IACC,ISUBN0,   &
+                  IBUGG4,ISUBG4,IERRG4)
 !
-        IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TXTV')THEN
-          WRITE(ICOUT,12675)IEXIST
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TXTV')THEN
+        WRITE(ICOUT,12675)IEXIST
 12675     FORMAT('AFTER DPINIF: IEXIST = ',A4)
-          CALL DPWRST('XXX','BUG ')
-        ENDIF
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 !
 !       FILE NOT FOUND, CHECK THE FONTS DIRECTORY
 !
-        ILAST=80
-        DO 12601 II=80,1,-1
-          IF(IGDFN(II:II).NE.' ')THEN
-            ILAST=II
-            GO TO 12602
-          ENDIF
+      ILAST=80
+      DO 12601 II=80,1,-1
+        IF(IGDFN(II:II).NE.' ')THEN
+          ILAST=II
+          GO TO 12602
+        ENDIF
 12601   CONTINUE
-        IFONTZ=3
-        GO TO 12603
+      IFONTZ=3
+      GO TO 12603
 !
 12602   CONTINUE
 !
-        IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TXTV')THEN
-          WRITE(ICOUT,12677)IEXIST
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TXTV')THEN
+        WRITE(ICOUT,12677)IEXIST
 12677     FORMAT('AT 12602: IEXIST = ',A4)
-          CALL DPWRST('XXX','BUG ')
-        ENDIF
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 !
-        IF(IEXIST.EQ.'NO')THEN
-          IF(IOPSY1.EQ.'UNIX')THEN
-            IFILE2(1:IUNXNC)=UNIXPN(1:IUNXNC)
-            NC1=IUNXNC
-            IF(IFILE2(NC1:NC1).NE.'/')THEN
-              NC1=NC1+1
-              IFILE2(NC1:NC1)='/'
-            ENDIF
-          ELSE
-            IFILE2(1:NCPATH)=PATH(1:NCPATH)
-            NC1=NCPATH
-            IF(IFILE2(NC1:NC1).NE.'\')THEN
-              NC1=NC1+1
-              IFILE2(NC1:NC1)='\'
-            ENDIF
+      IF(IEXIST.EQ.'NO')THEN
+        IF(IOPSY1.EQ.'UNIX')THEN
+          IFILE2(1:IUNXNC)=UNIXPN(1:IUNXNC)
+          NC1=IUNXNC
+          IF(IFILE2(NC1:NC1).NE.'/')THEN
+            NC1=NC1+1
+            IFILE2(NC1:NC1)='/'
           ENDIF
-          IFILE2(NC1+1:NC1+5)='fonts'
-          NC1=NC1+5
-          IF(IOPSY1.EQ.'UNIX')THEN
-            IFILE2(NC1+1:NC1+1)='/'
-            NC1=NC1+1
-          ELSE
-            IFILE2(NC1+1:NC1+1)='\'
-            NC1=NC1+1
-          ENDIF
-          DO 12607 II=1,ILAST
-            NC1=NC1+1
-            IFILE2(NC1:NC1)=IGDFN(II:II)
-12607     CONTINUE
-        ENDIF
-!
-        IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TXTV')THEN
-          WRITE(ICOUT,12679)NC1,IFILE2
-12679     FORMAT('AT 12607: NC1,IFILE2 = ',I6,2X,A255)
-          CALL DPWRST('XXX','BUG ')
-        ENDIF
-!
-        CALL DPINFI(IFILE2,IEXIST2,IOPEN,IACC,ISUBN0,   &
-                    IBUGG4,ISUBG4,IERRG4)
-!
-        IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TXTV')THEN
-          WRITE(ICOUT,12681)IEXIST2
-12681     FORMAT('AFTER SECOND DPINFI CALL: IEXIST2 = ',A4)
-          CALL DPWRST('XXX','BUG ')
-        ENDIF
-!
-        IF(IEXIST2.EQ.'NO')THEN
-          IFONTZ=3
-          GO TO 12603
         ELSE
-          GO TO 12604
+          IFILE2(1:NCPATH)=PATH(1:NCPATH)
+          NC1=NCPATH
+          IF(IFILE2(NC1:NC1).NE.'\')THEN
+            NC1=NC1+1
+            IFILE2(NC1:NC1)='\'
+          ENDIF
         ENDIF
+        IFILE2(NC1+1:NC1+5)='fonts'
+        NC1=NC1+5
+        IF(IOPSY1.EQ.'UNIX')THEN
+          IFILE2(NC1+1:NC1+1)='/'
+          NC1=NC1+1
+        ELSE
+          IFILE2(NC1+1:NC1+1)='\'
+          NC1=NC1+1
+        ENDIF
+        DO 12607 II=1,ILAST
+          NC1=NC1+1
+          IFILE2(NC1:NC1)=IGDFN(II:II)
+12607     CONTINUE
+      ENDIF
+!
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TXTV')THEN
+        WRITE(ICOUT,12679)NC1,IFILE2
+12679     FORMAT('AT 12607: NC1,IFILE2 = ',I6,2X,A255)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      CALL DPINFI(IFILE2,IEXIST2,IOPEN,IACC,ISUBN0,   &
+                  IBUGG4,ISUBG4,IERRG4)
+!
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TXTV')THEN
+        WRITE(ICOUT,12681)IEXIST2
+12681     FORMAT('AFTER SECOND DPINFI CALL: IEXIST2 = ',A4)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IF(IEXIST2.EQ.'NO')THEN
+        IFONTZ=3
+        GO TO 12603
       ELSE
-        IFILE2(1:ILAST)=IGDFN(1:ILAST)
-        NC1=ILAST
-!
-        IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TXTV')THEN
-          WRITE(ICOUT,12683)NC1,IFILE2
-12683     FORMAT('FONT FOUND: NC1,IFILE2 = ',I6,2X,A255)
-          CALL DPWRST('XXX','BUG ')
-        ENDIF
-!
         GO TO 12604
+      ENDIF
+      ELSE
+      IFILE2(1:ILAST)=IGDFN(1:ILAST)
+      NC1=ILAST
+!
+      IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TXTV')THEN
+        WRITE(ICOUT,12683)NC1,IFILE2
+12683     FORMAT('FONT FOUND: NC1,IFILE2 = ',I6,2X,A255)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      GO TO 12604
       ENDIF
 !
 12603 CONTINUE
       IF(IFONTZ.EQ.1)THEN
-        IFILE2='SMALL'
-        NC1=5
+      IFILE2='SMALL'
+      NC1=5
       ELSEIF(IFONTZ.EQ.2)THEN
-        IFILE2='LARGE'
-        NC1=5
+      IFILE2='LARGE'
+      NC1=5
       ELSEIF(IFONTZ.EQ.3)THEN
-        IFILE2='MEDIUMBOLD'
-        NC1=10
+      IFILE2='MEDIUMBOLD'
+      NC1=10
       ELSEIF(IFONTZ.EQ.4)THEN
-        IFILE2='GIANT'
-        NC1=5
+      IFILE2='GIANT'
+      NC1=5
       ELSEIF(IFONTZ.EQ.5)THEN
-        IFILE2='TINY'
-        NC1=5
+      IFILE2='TINY'
+      NC1=5
       ELSE
-        IFILE2='MEDIUMBOLD'
-        NC1=10
+      IFILE2='MEDIUMBOLD'
+      NC1=10
       ENDIF
 !
       IF(IBUGG4.EQ.'ON' .OR. ISUBG4.EQ.'TXTV')THEN
-        WRITE(ICOUT,12685)NC1,IFILE2
+      WRITE(ICOUT,12685)NC1,IFILE2
 12685   FORMAT('AT 12603: NC1,IFILE2 = ',I6,2X,A255)
-        CALL DPWRST('XXX','BUG ')
+      CALL DPWRST('XXX','BUG ')
       ENDIF
 !
 12604 CONTINUE
       DO 12605 I=1,NCTEXT
-        IC1=ICTEXT(I)(1:1)
-        CALL DPCOAN(IC1,IJUNK)
-        STRING(I)=IJUNK
+      IC1=ICTEXT(I)(1:1)
+      CALL DPCOAN(IC1,IJUNK)
+      STRING(I)=IJUNK
 12605 CONTINUE
       STRING(NCTEXT+1)=0
 !
@@ -45348,8 +44589,8 @@
 !12610 CONTINUE
 !12619 CONTINUE
       DO 12620 I=1,NC1
-        CALL DPCOAN(IFILE2(I:I),IJUNK)
-        IADE(I)=IJUNK
+      CALL DPCOAN(IFILE2(I:I),IJUNK)
+      IADE(I)=IJUNK
 12620 CONTINUE
       NC1=NC1+1
       IADE(NC1)=0
@@ -45389,7 +44630,7 @@
       IERR=0
 !
       CALL GDTXTV(IADE,STRING,IFONTZ,IX,IY,IFONTH,IFONTV,   &
-                  JCOL,JHEIG2,IERR)
+                JCOL,JHEIG2,IERR)
 !
 #endif
       GO TO 9000
@@ -45413,21 +44654,21 @@
       CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
 !
       DO 13505 I=1,NCTEXT
-        IC1=ICTEXT(I)(1:1)
-        CALL DPCOAN(IC1,IJUNK)
-        STRING(I)=IJUNK
+      IC1=ICTEXT(I)(1:1)
+      CALL DPCOAN(IC1,IJUNK)
+      STRING(I)=IJUNK
 13505 CONTINUE
       STRING(NCTEXT+1)=0
 !
       ILAST=80
       DO 13510 I=80,1,-1
-        ILAST=I
-        IF(IAQUFN(I:I).NE.' ')GO TO 13519
+      ILAST=I
+      IF(IAQUFN(I:I).NE.' ')GO TO 13519
 13510 CONTINUE
 13519 CONTINUE
       DO 13520 I=1,ILAST
-        CALL DPCOAN(IAQUFN(I:I),IJUNK)
-        IADE(I)=IJUNK
+      CALL DPCOAN(IAQUFN(I:I),IJUNK)
+      IADE(I)=IJUNK
 13520 CONTINUE
       IADE(ILAST+1)=0
 !
@@ -45451,16 +44692,169 @@
 !
 15000 CONTINUE
 !
-!CCCC NOTE: ALTHOUGH THE ROTATEBOX APPROACH IS DESIRED (SO
-!CCCC       VERTICAL TEXT WILL BE ROTATED), THIS DOES NOT
-!CCCC       SEEM TO WORK WITH MBOX (I NEED MBOX IN ORDER TO
-!CCCC       GENERATE THE APPROPRIATE JUSTIFICATION).  SO
-!CCCC       FOR NOW, USE THE SHORTSTACK APPROACH INSTEAD
-!CCCC       (THIS PLOTS THE VERTICAL STRING AS A COLUMN OF
-!CCCC       HORIZONTAL CHARACTERS).
-!
       NCSTR=0
       CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
+      IF(ILATDR.EQ.'TIKZ')THEN
+!
+!       TKIZ DRIVER
+!
+      NCCOLO=4
+      DO II=4,1,-1
+         IF(ICOL(II:II).NE.' ')THEN
+           NCCOLO=II
+           EXIT
+         ENDIF
+      ENDDO
+!
+      NCSTR=1
+      ICSTR(NCSTR:NCSTR)='\'
+      ICSTR(NCSTR+1:NCSTR+20)='node[rotate=90,text='
+      NCSTR=NCSTR+20
+      ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+      NCSTR=NCSTR+NCCOLO
+!
+      IF(ILATFF.EQ.'RMFA')THEN
+        IF(ILATST.EQ.'NORM')THEN
+          ICSTR(NCSTR+1:NCSTR+15)=',font=\rmfamily'
+          NCSTR=NCSTR+15
+        ELSEIF(ILATST.EQ.'BOLD')THEN
+          ICSTR(NCSTR+1:NCSTR+24)=',font=\rmfamily\bfseries'
+          NCSTR=NCSTR+24
+        ELSEIF(ILATST.EQ.'ITAL')THEN
+          ICSTR(NCSTR+1:NCSTR+23)=',font=\rmfamily\itshape'
+          NCSTR=NCSTR+23
+        ENDIF
+      ELSEIF(ILATFF.EQ.'SFFA')THEN
+        IF(ILATST.EQ.'NORM')THEN
+          ICSTR(NCSTR+1:NCSTR+15)=',font=\sffamily'
+          NCSTR=NCSTR+15
+        ELSEIF(ILATST.EQ.'BOLD')THEN
+          ICSTR(NCSTR+1:NCSTR+24)=',font=\sffamily\bfseries'
+          NCSTR=NCSTR+24
+        ELSEIF(ILATST.EQ.'ITAL')THEN
+          ICSTR(NCSTR+1:NCSTR+23)=',font=\sffamily\itshape'
+          NCSTR=NCSTR+23
+        ENDIF
+      ELSEIF(ILATFF.EQ.'TTFA')THEN
+        IF(ILATST.EQ.'NORM')THEN
+          ICSTR(NCSTR+1:NCSTR+15)=',font=\ttfamily'
+          NCSTR=NCSTR+15
+        ELSEIF(ILATST.EQ.'BOLD')THEN
+          ICSTR(NCSTR+1:NCSTR+24)=',font=\ttfamily\bfseries'
+          NCSTR=NCSTR+24
+        ELSEIF(ILATST.EQ.'ITAL')THEN
+          ICSTR(NCSTR+1:NCSTR+23)=',font=\ttfamily\itshape'
+          NCSTR=NCSTR+23
+        ENDIF
+      ENDIF
+      IF(JSIZE.EQ.1)THEN
+        ICSTR(NCSTR+1:NCSTR+5)='\tiny'
+        NCSTR=NCSTR+5
+      ELSEIF(JSIZE.EQ.2)THEN
+        ICSTR(NCSTR+1:NCSTR+11)='\scriptsize'
+        NCSTR=NCSTR+11
+      ELSEIF(JSIZE.EQ.3)THEN
+        ICSTR(NCSTR+1:NCSTR+13)='\footnotesize'
+        NCSTR=NCSTR+13
+      ELSEIF(JSIZE.EQ.4)THEN
+        ICSTR(NCSTR+1:NCSTR+6)='\small'
+        NCSTR=NCSTR+6
+      ELSEIF(JSIZE.EQ.5)THEN
+        ICSTR(NCSTR+1:NCSTR+11)='\normalsize'
+        NCSTR=NCSTR+11
+      ELSEIF(JSIZE.EQ.6)THEN
+        ICSTR(NCSTR+1:NCSTR+6)='\large'
+        NCSTR=NCSTR+6
+      ELSEIF(JSIZE.EQ.7)THEN
+        ICSTR(NCSTR+1:NCSTR+6)='\Large'
+        NCSTR=NCSTR+6
+      ELSEIF(JSIZE.EQ.8)THEN
+        ICSTR(NCSTR+1:NCSTR+5)='\LARGE'
+        NCSTR=NCSTR+6
+      ELSEIF(JSIZE.EQ.9)THEN
+        ICSTR(NCSTR+1:NCSTR+5)='\huge'
+        NCSTR=NCSTR+5
+      ELSEIF(JSIZE.EQ.11)THEN
+        ICSTR(NCSTR+1:NCSTR+5)='\HUGE'
+        NCSTR=NCSTR+5
+      ENDIF
+!       ICSTR(NCSTR+1:NCSTR+32)=', inner ysep=0pt, text depth=0pt'
+!       NCSTR=NCSTR+32
+!
+      IF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'CENT')THEN
+        CONTINUE
+      ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'TOP')THEN
+        ICSTR(NCSTR+1:NCSTR+14)=', anchor=north'
+        NCSTR=NCSTR+14
+      ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'BOTT')THEN
+        ICSTR(NCSTR+1:NCSTR+14)=', anchor=south'
+        NCSTR=NCSTR+14
+      ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'CENT')THEN
+        ICSTR(NCSTR+1:NCSTR+13)=', anchor=west'
+        NCSTR=NCSTR+13
+      ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'TOP')THEN
+        ICSTR(NCSTR+1:NCSTR+19)=', anchor=north west'
+        NCSTR=NCSTR+19
+      ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'BOTT')THEN
+        ICSTR(NCSTR+1:NCSTR+19)=', anchor=south west'
+        NCSTR=NCSTR+19
+      ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'CENT')THEN
+        ICSTR(NCSTR+1:NCSTR+13)=', anchor=east'
+        NCSTR=NCSTR+13
+      ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'TOP')THEN
+        ICSTR(NCSTR+1:NCSTR+19)=', anchor=north east'
+        NCSTR=NCSTR+19
+      ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'BOTT')THEN
+        ICSTR(NCSTR+1:NCSTR+19)=', anchor=south east'
+        NCSTR=NCSTR+19
+      ENDIF
+      ICSTR(NCSTR+1:NCSTR+6)='] at ('
+      NCSTR=NCSTR+6
+      IF(IX.GT.99)THEN
+        NCHTOT=3
+      ELSEIF(IX.GT.9)THEN
+        NCHTOT=2
+      ELSE
+        NCHTOT=1
+      ENDIF
+      CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+      ICSTR(NCSTR+1:NCSTR+3)='pt,'
+      NCSTR=NCSTR+3
+      IF(IY.GT.99)THEN
+        NCHTOT=3
+      ELSEIF(IY.GT.9)THEN
+        NCHTOT=2
+      ELSE
+        NCHTOT=1
+      ENDIF
+      CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+      ICSTR(NCSTR+1:NCSTR+5)='pt) {'
+      NCSTR=NCSTR+5
+      DO J=1,NCTEXT
+        ICSTR2(J:J)=ICTEXT(J)(1:1)
+      ENDDO
+      MAXWID=130
+      CALL LATCON(ICSTR2,NCTEXT,ICSTR3,NCTEX2,MAXWID,ISUBRO,IERROR)
+!
+      DO J=1,NCTEX2
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=ICSTR3(J:J)
+      ENDDO
+      ICSTR(NCSTR+1:NCSTR+2)='};'
+      NCSTR=NCSTR+2
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ELSE
+!
+!       epic/eepic DRIVER
+!
+!CCCC   NOTE: ALTHOUGH THE ROTATEBOX APPROACH IS DESIRED (SO
+!CCCC         VERTICAL TEXT WILL BE ROTATED), THIS DOES NOT
+!CCCC         SEEM TO WORK WITH MBOX (I NEED MBOX IN ORDER TO
+!CCCC         GENERATE THE APPROPRIATE JUSTIFICATION).  SO
+!CCCC         FOR NOW, USE THE SHORTSTACK APPROACH INSTEAD
+!CCCC         (THIS PLOTS THE VERTICAL STRING AS A COLUMN OF
+!CCCC         HORIZONTAL CHARACTERS).
+!
       NCSTR=NCSTR+1
       ICSTR(NCSTR:NCSTR)=IBASLC
       NCSTR=NCSTR+1
@@ -45500,9 +44894,9 @@
       NCSTR=NCSTR+1
       ICSTR(NCSTR:NCSTR)=']'
 !
-      DO 15110 J=1,NCTEXT
+      DO J=1,NCTEXT
         ICSTR2(J:J)=ICTEXT(J)(1:1)
-15110 CONTINUE
+      ENDDO
       MAXWID=130
       CALL LATCON(ICSTR2,NCTEXT,ICSTR3,NCTEX2,MAXWID,ISUBRO,IERROR)
 !
@@ -45514,10 +44908,10 @@
       ICSTR(NCSTR:NCSTR+13)='rotatebox{90}{'
       NCSTR=NCSTR+13
       ICNT=NCSTR
-      DO 15102 J=1,NCTEX2
+      DO J=1,NCTEX2
         ICNT=ICNT+1
         ICSTR(ICNT:ICNT)=ICSTR3(J:J)
-15102 CONTINUE
+      ENDDO
       NCSTR=ICNT
       NCSTR=NCSTR+1
       ICSTR(NCSTR:NCSTR+2)='}}}'
@@ -45525,6 +44919,7 @@
 !
       CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
+      ENDIF
       GO TO 9000
 !
 !               ******************************************************
@@ -45545,11 +44940,11 @@
       CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
 !
       IF(IJUSTV.EQ.'TOP')THEN
-        IX=IX+JHEIG2
+      IX=IX+JHEIG2
       ELSEIF(IJUSTV.EQ.'CENT')THEN
-        IY=IY+(JHEIG2/2)
+      IY=IY+(JHEIG2/2)
       ELSE
-        CONTINUE
+      CONTINUE
       ENDIF
 !
       CALL DPCONA(34,IQUOTE)
@@ -45559,17 +44954,17 @@
       ICSTR(10:10)=IQUOTE
       NCSTR=10
       IF(ISVGLN.LE.9)THEN
-        NCHTOT=1
+      NCHTOT=1
       ELSEIF(ISVGLN.LE.99)THEN
-        NCHTOT=2
+      NCHTOT=2
       ELSEIF(ISVGLN.LE.999)THEN
-        NCHTOT=3
+      NCHTOT=3
       ELSEIF(ISVGLN.LE.9999)THEN
-        NCHTOT=4
+      NCHTOT=4
       ELSEIF(ISVGLN.LE.99999)THEN
-        NCHTOT=5
+      NCHTOT=5
       ELSE
-        NCHTOT=6
+      NCHTOT=6
       ENDIF
       CALL GRTRIN(ISVGLN,NCHTOT,ICSTR,NCSTR)
       NCSTR=NCSTR+1
@@ -45596,200 +44991,200 @@
       CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
       IF(ISVGSS(1:3).EQ.'EXT')THEN
-        NCSTR=22
-        ICSTR(1:NCSTR)='      class="vertical"'
-        NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      NCSTR=22
+      ICSTR(1:NCSTR)='      class="vertical"'
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-        CALL GRTRCO('FORE',ISVGFC,JCOL2)
-        ICSTR(1:12)='      style='
-        ICSTR(13:13)=IQUOTE
-        NCSTR=-13
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        NCSTR=19
-        ICSTR(1:NCSTR)='             fill:#'
-        NCHTOT=2
-        JTEMP=JCOL
-        IF(JTEMP.LE.0)THEN
+      CALL GRTRCO('FORE',ISVGFC,JCOL2)
+      ICSTR(1:12)='      style='
+      ICSTR(13:13)=IQUOTE
+      NCSTR=-13
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      NCSTR=19
+      ICSTR(1:NCSTR)='             fill:#'
+      NCHTOT=2
+      JTEMP=JCOL
+      IF(JTEMP.LE.0)THEN
 !
 !         DATAPLOT CURRENTLY ALLOWS GREYSCALE VALUES IN
 !         THE RANGE 0 TO 100.  FOR SPECIFYING COLOR TO SVG,
 !         SCALE THAT 0 TO 100 VALUE TO A 0 TO 255 VALUE.
 !
-          AVAL=(255./100.)*REAL(ABS(JTEMP))
-          IF(AVAL.LE.0.0)AVAL=0.0
-          IF(AVAL.GE.255.0)AVAL=255.0
-          IF(IRGBFL.EQ.0)THEN
-            JRED=INT(AVAL+0.5)
-            JBLUE=JRED
-            JGREEN=JRED
-          ELSE
-            JRED=ICOLR
-            JGREEN=ICOLG
-            JBLUE=ICOLB
-          ENDIF
+        AVAL=(255./100.)*REAL(ABS(JTEMP))
+        IF(AVAL.LE.0.0)AVAL=0.0
+        IF(AVAL.GE.255.0)AVAL=255.0
+        IF(IRGBFL.EQ.0)THEN
+          JRED=INT(AVAL+0.5)
+          JBLUE=JRED
+          JGREEN=JRED
         ELSE
-          IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
-          IF(IRGBFL.EQ.0)THEN
-            JRED=IRED(JTEMP)
-            JGREEN=IGREEN(JTEMP)
-            JBLUE=IBLUE(JTEMP)
-          ELSE
-            JRED=ICOLR
-            JGREEN=ICOLG
-            JBLUE=ICOLB
-          ENDIF
+          JRED=ICOLR
+          JGREEN=ICOLG
+          JBLUE=ICOLB
         ENDIF
-        CALL DPCONX(JRED,ICJUNK)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
-        NCSTR=NCSTR+1
-        CALL DPCONX(JGREEN,ICJUNK)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
-        NCSTR=NCSTR+1
-        CALL DPCONX(JBLUE,ICJUNK)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
-        NCSTR=NCSTR+2
-        ICSTR(NCSTR:NCSTR)=';'
-        NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        NCSTR=22
-        ICSTR(1:NCSTR)='            font-size:'
-        NCHTOT=3
-        CALL GRTRIN(JHEIG2,NCHTOT,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+2)='pt;'
-        NCSTR=NCSTR+2
-        NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        NCSTR=13
-        ICSTR(1:NCSTR)='             '
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=IQUOTE
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='>'
-        NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ELSE
+        IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
+        IF(IRGBFL.EQ.0)THEN
+          JRED=IRED(JTEMP)
+          JGREEN=IGREEN(JTEMP)
+          JBLUE=IBLUE(JTEMP)
+        ELSE
+          JRED=ICOLR
+          JGREEN=ICOLG
+          JBLUE=ICOLB
+        ENDIF
+      ENDIF
+      CALL DPCONX(JRED,ICJUNK)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
+      NCSTR=NCSTR+1
+      CALL DPCONX(JGREEN,ICJUNK)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
+      NCSTR=NCSTR+1
+      CALL DPCONX(JBLUE,ICJUNK)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
+      NCSTR=NCSTR+2
+      ICSTR(NCSTR:NCSTR)=';'
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      NCSTR=22
+      ICSTR(1:NCSTR)='            font-size:'
+      NCHTOT=3
+      CALL GRTRIN(JHEIG2,NCHTOT,ICSTR,NCSTR)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+2)='pt;'
+      NCSTR=NCSTR+2
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      NCSTR=13
+      ICSTR(1:NCSTR)='             '
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=IQUOTE
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)='>'
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
       ELSE
 !
-        NCSTR=14
-        ICSTR(1:NCSTR)='        style='
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=IQUOTE
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      NCSTR=14
+      ICSTR(1:NCSTR)='        style='
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=IQUOTE
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-        NCSTR=21
-        ICSTR(1:NCSTR)='         font-family:'
-        DO 16010 I=32,1,-1
-          NCTEMP=I
-          IF(ISVGFN(I:I).NE.' ')GO TO 16011
+      NCSTR=21
+      ICSTR(1:NCSTR)='         font-family:'
+      DO 16010 I=32,1,-1
+        NCTEMP=I
+        IF(ISVGFN(I:I).NE.' ')GO TO 16011
 16010   CONTINUE
 16011   CONTINUE
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+NCTEMP-1)=ISVGFN(1:NCTEMP)
-        NCSTR=NCSTR+NCTEMP
-        ICSTR(NCSTR:NCSTR)=';'
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+NCTEMP-1)=ISVGFN(1:NCTEMP)
+      NCSTR=NCSTR+NCTEMP
+      ICSTR(NCSTR:NCSTR)=';'
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IF(ISVGFW.EQ.'NORM')THEN
+        NCSTR=28
+        ICSTR(1:NCSTR)='         font-weight:normal;'
         NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        IF(ISVGFW.EQ.'NORM')THEN
-          NCSTR=28
-          ICSTR(1:NCSTR)='         font-weight:normal;'
-          NCSTR=-NCSTR
-        ELSE
-          NCSTR=26
-          ICSTR(1:NCSTR)='         font-weight:bold;'
-          NCSTR=-NCSTR
-        ENDIF
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-        IF(ISVGST.EQ.'ITAL')THEN
-          NCSTR=27
-          ICSTR(1:NCSTR)='         font-style:italic;'
-          NCSTR=-NCSTR
-        ELSE
-          NCSTR=27
-          ICSTR(1:NCSTR)='         font-style:normal;'
-          NCSTR=-NCSTR
-        ENDIF
-        NCSTR=19
-        ICSTR(1:NCSTR)='         font-size:'
-        NCHTOT=3
-        CALL GRTRIN(JHEIG2,NCHTOT,ICSTR,NCSTR)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+2)='pt;'
-        NCSTR=NCSTR+2
+      ELSE
+        NCSTR=26
+        ICSTR(1:NCSTR)='         font-weight:bold;'
         NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-!
-        ICSTR(1:27)='         stroke:none;fill:#'
+      ENDIF
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IF(ISVGST.EQ.'ITAL')THEN
         NCSTR=27
-        NCHTOT=2
-        JTEMP=JCOL
-        IF(JTEMP.LE.0)THEN
+        ICSTR(1:NCSTR)='         font-style:italic;'
+        NCSTR=-NCSTR
+      ELSE
+        NCSTR=27
+        ICSTR(1:NCSTR)='         font-style:normal;'
+        NCSTR=-NCSTR
+      ENDIF
+      NCSTR=19
+      ICSTR(1:NCSTR)='         font-size:'
+      NCHTOT=3
+      CALL GRTRIN(JHEIG2,NCHTOT,ICSTR,NCSTR)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+2)='pt;'
+      NCSTR=NCSTR+2
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+!
+      ICSTR(1:27)='         stroke:none;fill:#'
+      NCSTR=27
+      NCHTOT=2
+      JTEMP=JCOL
+      IF(JTEMP.LE.0)THEN
 !
 !         DATAPLOT CURRENTLY ALLOWS GREYSCALE VALUES IN
 !         THE RANGE 0 TO 100.  FOR SPECIFYING COLOR TO SVG,
 !         SCALE THAT 0 TO 100 VALUE TO A 0 TO 255 VALUE.
 !
-          AVAL=(255./100.)*REAL(ABS(JTEMP))
-          IF(AVAL.LE.0.0)AVAL=0.0
-          IF(AVAL.GE.255.0)AVAL=255.0
-          IF(IRGBFL.EQ.0)THEN
-            JRED=INT(AVAL+0.5)
-            JBLUE=JRED
-            JGREEN=JRED
-          ELSE
-            JRED=ICOLR
-            JGREEN=ICOLG
-            JBLUE=ICOLB
-          ENDIF
+        AVAL=(255./100.)*REAL(ABS(JTEMP))
+        IF(AVAL.LE.0.0)AVAL=0.0
+        IF(AVAL.GE.255.0)AVAL=255.0
+        IF(IRGBFL.EQ.0)THEN
+          JRED=INT(AVAL+0.5)
+          JBLUE=JRED
+          JGREEN=JRED
         ELSE
-          IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
-          IF(IRGBFL.EQ.0)THEN
-            JRED=IRED(JTEMP)
-            JGREEN=IGREEN(JTEMP)
-            JBLUE=IBLUE(JTEMP)
-          ELSE
-            JRED=ICOLR
-            JGREEN=ICOLG
-            JBLUE=ICOLB
-          ENDIF
+          JRED=ICOLR
+          JGREEN=ICOLG
+          JBLUE=ICOLB
         ENDIF
-        CALL DPCONX(JRED,ICJUNK)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
-        NCSTR=NCSTR+1
-        CALL DPCONX(JGREEN,ICJUNK)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
-        NCSTR=NCSTR+1
-        CALL DPCONX(JBLUE,ICJUNK)
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
-        NCSTR=NCSTR+2
-        ICSTR(NCSTR:NCSTR)=';'
+      ELSE
+        IF(JTEMP.LT.1 .OR. JTEMP.GT.MAXCLR)JTEMP=1
+        IF(IRGBFL.EQ.0)THEN
+          JRED=IRED(JTEMP)
+          JGREEN=IGREEN(JTEMP)
+          JBLUE=IBLUE(JTEMP)
+        ELSE
+          JRED=ICOLR
+          JGREEN=ICOLG
+          JBLUE=ICOLB
+        ENDIF
+      ENDIF
+      CALL DPCONX(JRED,ICJUNK)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
+      NCSTR=NCSTR+1
+      CALL DPCONX(JGREEN,ICJUNK)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
+      NCSTR=NCSTR+1
+      CALL DPCONX(JBLUE,ICJUNK)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR+1)=ICJUNK(1:2)
+      NCSTR=NCSTR+2
+      ICSTR(NCSTR:NCSTR)=';'
 !
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=IQUOTE
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='>'
-        NCSTR=-NCSTR
-        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=IQUOTE
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)='>'
+      NCSTR=-NCSTR
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
       ENDIF
 !
       IF(IX.LE.9)THEN
-        NCHTOT=1
+      NCHTOT=1
       ELSEIF(IX.LE.99)THEN
-        NCHTOT=2
+      NCHTOT=2
       ELSEIF(IX.LE.999)THEN
-        NCHTOT=3
+      NCHTOT=3
       ELSEIF(IX.LE.9999)THEN
-        NCHTOT=4
+      NCHTOT=4
       ELSE
-        NCHTOT=5
+      NCHTOT=5
       ENDIF
 !
       ICSTR(1:11)='   <text x='
@@ -45805,15 +45200,15 @@
       ICSTR(NCSTR:NCSTR)=IQUOTE
 !
       IF(IY.LE.9)THEN
-        NCHTOT=1
+      NCHTOT=1
       ELSEIF(IY.LE.99)THEN
-        NCHTOT=2
+      NCHTOT=2
       ELSEIF(IY.LE.999)THEN
-        NCHTOT=3
+      NCHTOT=3
       ELSEIF(IY.LE.9999)THEN
-        NCHTOT=4
+      NCHTOT=4
       ELSE
-        NCHTOT=5
+      NCHTOT=5
       ENDIF
 !
       CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
@@ -45825,14 +45220,14 @@
       ICSTR(NCSTR:NCSTR)=IQUOTE
 !
       IF(IJUST(1:2).EQ.'CE')THEN
-        ICSTR(NCSTR+1:NCSTR+19)='text-anchor:middle;'
-        NCSTR=NCSTR+19
+      ICSTR(NCSTR+1:NCSTR+19)='text-anchor:middle;'
+      NCSTR=NCSTR+19
       ELSEIF(IJUST(1:2).EQ.'RI')THEN
-        ICSTR(NCSTR+1:NCSTR+16)='text-anchor:end;'
-        NCSTR=NCSTR+16
+      ICSTR(NCSTR+1:NCSTR+16)='text-anchor:end;'
+      NCSTR=NCSTR+16
       ELSE
-        ICSTR(NCSTR+1:NCSTR+18)='text-anchor:start;'
-        NCSTR=NCSTR+18
+      ICSTR(NCSTR+1:NCSTR+18)='text-anchor:start;'
+      NCSTR=NCSTR+18
       ENDIF
 !
       NCSTR=NCSTR+1
@@ -45848,26 +45243,26 @@
 !     2015/11: CHECK FOR "&".  NEED TO CONVERT THESE TO &amp; .
 !
       DO 16112 J=1,NCTEXT
-        IF(ICTEXT(J).EQ.'<')THEN
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR+3)='&lt;'
-          NCSTR=NCSTR+3
-        ELSEIF(ICTEXT(J).EQ.'>')THEN
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR+3)='&gt;'
-          NCSTR=NCSTR+3
-        ELSEIF(ICTEXT(J).EQ.'&')THEN
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR+4)='&amp;'
-          NCSTR=NCSTR+4
-        ELSE
-          NCSTR=NCSTR+1
-          ICSTR(NCSTR:NCSTR)=ICTEXT(J)
-        ENDIF
-        IF(NCSTR.GE.120)THEN
-          CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-          NCSTR=0
-        ENDIF
+      IF(ICTEXT(J).EQ.'<')THEN
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR+3)='&lt;'
+        NCSTR=NCSTR+3
+      ELSEIF(ICTEXT(J).EQ.'>')THEN
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR+3)='&gt;'
+        NCSTR=NCSTR+3
+      ELSEIF(ICTEXT(J).EQ.'&')THEN
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR+4)='&amp;'
+        NCSTR=NCSTR+4
+      ELSE
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=ICTEXT(J)
+      ENDIF
+      IF(NCSTR.GE.120)THEN
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        NCSTR=0
+      ENDIF
 16112 CONTINUE
 !
       ICSTR(NCSTR+1:NCSTR+7)='</text>'
@@ -45911,21 +45306,21 @@
       CALL GRTRSD(AX,AY,IX,IY,ISUBN0)
 !
       DO 17605 I=1,NCTEXT
-        IC1=ICTEXT(I)(1:1)
-        CALL DPCOAN(IC1,IJUNK)
-        STRING(I)=IJUNK
+      IC1=ICTEXT(I)(1:1)
+      CALL DPCOAN(IC1,IJUNK)
+      STRING(I)=IJUNK
 17605 CONTINUE
       STRING(NCTEXT+1)=0
 !
       ILAST=32
       DO 17610 I=32,1,-1
-        ILAST=I
-        IF(ICAIFN(I:I).NE.' ')GO TO 17619
+      ILAST=I
+      IF(ICAIFN(I:I).NE.' ')GO TO 17619
 17610 CONTINUE
 17619 CONTINUE
       DO 17620 I=1,ILAST
-        CALL DPCOAN(ICAIFN(I:I),IJUNK)
-        IADE(I)=IJUNK
+      CALL DPCOAN(ICAIFN(I:I),IJUNK)
+      IADE(I)=IJUNK
 17620 CONTINUE
       IADE(ILAST+1)=0
 !
@@ -45973,7 +45368,7 @@
       IVAL4=2
       IF(ICAIFW.EQ.'BOLD')IVAL4=2
       CALL CATXTV(IVAL2,STRING,AX,AY,IFONTH,IFONTV,AHEIG2,   &
-                  IADE,IVAL3,IVAL4,IERR)
+                IADE,IVAL3,IVAL4,IERR)
 !
 #endif
       GO TO 9000
@@ -46000,32 +45395,32 @@
 !
  9000 CONTINUE
       IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'WRTV')THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9011)
+      WRITE(ICOUT,999)
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9011)
  9011   FORMAT('***** AT THE END       OF GRWRTV--')
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9035)PXDEL,PYDEL,NCSTR
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9035)PXDEL,PYDEL,NCSTR
  9035   FORMAT('PXDEL,PYDEL,NCSTR = ',2G15.7,I8)
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9036)IC4,IC,IC1,IC2
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9036)IC4,IC,IC1,IC2
  9036   FORMAT('IC4,IC,IC1,IC2 = ',A4,3(2X,A1))
-        CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,9037)PXINC,PYINC,PXINC2,PYINC2
+      CALL DPWRST('XXX','BUG ')
+      WRITE(ICOUT,9037)PXINC,PYINC,PXINC2,PYINC2
  9037   FORMAT('PXINC,PYINC,PXINC2,PYINC2 = ',4G15.7)
-        CALL DPWRST('XXX','BUG ')
-        IF(NCSTR.GE.1)THEN
-          DO 9045 I=1,NCSTR
+      CALL DPWRST('XXX','BUG ')
+      IF(NCSTR.GE.1)THEN
+        DO 9045 I=1,NCSTR
 !CCCC       IASCNE=ICHAR(ICSTR(I:I))
-            CALL DPCOAN(ICSTR(I:I),IASCNE)
-            WRITE(ICOUT,9046)I,ICSTR(I:I),IASCNE
+          CALL DPCOAN(ICSTR(I:I),IASCNE)
+          WRITE(ICOUT,9046)I,ICSTR(I:I),IASCNE
  9046       FORMAT('I,ICSTR(I:I),IASCNE = ',I8,2X,A1,I8)
-            CALL DPWRST('XXX','BUG ')
+          CALL DPWRST('XXX','BUG ')
  9045     CONTINUE
-        ENDIF
-        WRITE(ICOUT,9049)IBUGG4,ISUBG4,IERRG4
+      ENDIF
+      WRITE(ICOUT,9049)IBUGG4,ISUBG4,IERRG4
  9049   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
-        CALL DPWRST('XXX','BUG ')
+      CALL DPWRST('XXX','BUG ')
       ENDIF
 !
       RETURN

@@ -3,7 +3,7 @@
 %     SET LATEX HEADER FILE  filename.tex
 % to specify your own header file.
 %
-% Note that there are 3 ways to incorporate graphics into the
+% Note that there are 4 ways to incorporate graphics into the
 % LaTeX file:
 %
 %   1. Define the PGRAPHIC and LGRAPHIC commands.  These will be
@@ -33,7 +33,7 @@
 % a LaTeX header file (Dataplot will insert the needed LaTeX commands
 %  automatically).
 %
-% This version of LaTeX header file is for method 2.
+% This version of LaTeX header file is for method 1.
 
 \documentclass[12pt]{article}
 
@@ -43,7 +43,12 @@
 \usepackage{epsfig}
 \usepackage{epic,eepic}
 \usepackage{graphics,color}
-\usepackage{graphicx}
+\newcommand {\PGRAPHIC}[1]{\begin{figure}[h]
+                       \epsfig{file=#1,width=6.0in}
+                       \end{figure}\newpage}
+\newcommand {\LGRAPHIC}[1]{\begin{figure}[h]
+                       \epsfig{file=#1,angle=-90,width=6.0in}
+                       \end{figure}\newpage}
 
 \begin{document}
 
@@ -51,9 +56,7 @@
 
 %% The following code, not active, gives an example of how you
 %% would import a PDF graph into your LaTeX document.
-%%\begin{figure}
-%%    \centering
-%%    \includegraphics[width=0.9\textwidth]{macros/run_order.pdf}
-%%    \caption{Plot by Run Order}
-%%\end{figure}
+%% \LGRAPHIC{file.ps}   % For Landscape orientation
+%%
+%% \PGRAPHIC{file.ps}   % For Portrait  orientation
 

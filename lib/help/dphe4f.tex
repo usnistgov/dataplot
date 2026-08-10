@@ -1,4 +1,4 @@
-50400.      (VERSION 2025.07)   total number of lines in file (including this line)
+50600.      (VERSION 2026.07)   total number of lines in file (including this line)
  4.                          number of     sections below
   100.    L                  first line number of L section
 20400.    M                  first line number of M section
@@ -3303,42 +3303,17 @@ Purpose:
     Create Latex format graphics files.
  
 Description:
-    Tex is a powerful typesetting program originally developed
-    by Donald Knuth.  LaTex was developed by Leslie Lamport and
-    is a program written on top of Tex.  LaTex provides access
+    TeX is a powerful typesetting program originally developed
+    by Donald Knuth.  LaTeX was developed by Leslie Lamport and
+    is a program written on top of TeX.  LaTeX provides access
     to the power of Tex, but with a simpler command language.
-   
-    The motivation for developing a LaTex graphics driver in
-    Dataplot is to help in producing publication quality
-    graphics with Dataplot.  Additional comments on utilizing
-    the typesetting capabilities of LaTex from within Dataplot are
-    given below.
 
-    The basic process in using LaTex is:
-
-       1) Create an ASCII text file with a ".tex" file extension
-          that contains the desired text along with the LaTex
-          formatting commands.
-
-       2) Run the "latex" command on this file to create a
-          device indpendent file (called a DVI file).
-
-       3) Run a driver program to generate the DVI file for
-          a specific device.  For example, on Unix platforms
-          the command "dvips" is typically run to generate a
-          Postscript from the DVI file.
-
-          Note that LaTex provides a "special" mechanism to
-          take advantage of features specific to a given output
-          device.  It is up to the DVI driver program to implement
-          these "special" options.  
-
-    Although Tex and Latex were written primarily for typesetting
+    Although TeX and LateX were written primarily for typesetting
     text, there are several ways that Latex provides for
     graphics:
 
-       1) LaTex supports a "picture" environment that provides
-          some capabilites for graphics in the LaTex language.
+       1. LaTeX supports a "picture" environment that provides
+          some capabilites for graphics in the LaTeX language.
 
           This environment has some serious limitations (e.g.,
           no direct color support, lines can only be drawn at
@@ -3347,59 +3322,78 @@ Description:
           In order to overcome these limitations, a number of
           "add-on" packages have been written to enhance the
           picture environment.  These packages may implement
-          some of their capabilites in LaTex (which will be
+          some of their capabilites in LaTeX (which will be
           available on all supported devices) and others using
           "special" features of a DVI driver (these may not be
           available on some devices).
 
-          The Dataplot LaTex graphics driver uses the LaTex
+          The Dataplot LATEX graphics driver uses the LaTeX
           picture environment along with the following packages:
 
-              1) epic
-              2) eepic
-              3) graphics
+              a) epic
+              b) eepic
+              c) graphics
 
-          If your local LaTex installation does not already
-          have these add-on packages available, then you need
-          to download and install them (they are freely
-          downloadable).
+          If your local LaTeX installation does not already have these
+          add-on packages available, then you need to download and
+          install them (they are freely downloadable).
 
-       2) The "epsfig" package can be used to import Postscript
-          graphics.  Dataplot Postscript graphics can be
-          incorporated into LaTex documents in this way.  In
-          particular, the SET POSTSCRIPT CONVERT and CAPTURE LATEX
-          commands can be used to automate this in Dataplot
-          (enter HELP CAPTURE LATEX for details).
+          Once you have created the LaTeX graphics file, a typical
+          processing sequence would be (assume the graph is generated
+          to the file sample_plot.tex)
 
-    Dataplot supports LaTex output in three ways:
+             latex sample_plot.tex
+             dvipdfmx  sample_plot
 
-       1) You can generate a "standalone" LaTex file.  You
-          can run the latex command on this file to generate
-          the desired graph.
+          The result will be the PDF file sample_plot.pdf.
 
-       2) You can generate a file without the LaTex preamble
-          and postamble commands.  This is useful if you want
-          to import the graphics into an already existing
-          LaTex file.
+          Note that the epic/eepic generated graphs are not compatible
+          with the "pdflatex" command.  The text will appear on the
+          graph, but the lines will be blank.
 
-       3) You can use the CAPTURE LATEX option to create a
-          LaTex file that has both the alphanumeric output
-          and the graphics generated by Dataplot in a single
-          file.
+       2. The TikZ/PGF package provides an alternative method for
+          generating graphics in LaTeX.  Dataplot does not currently
+          support TikZ/PGF.
 
-    Features of the LaTex driver are discussed in the Notes section
-    below.
+    LaTeX can also import Postscript/PDF graphs.  In most cases, this is
+    probably sufficient and may be more convenient than using the
+    LATEX driver in Dataplot.  However, the LATEX driver allows you
+    to access the sophisticated LaTeX typesetting capabilities for text
+    on a graph.  Although the primary usage of the LATEX driver is in
+    producing publication quality graphics for a LaTeX document, you can
+    generate a PDF file from the generated LaTeX code which can be used
+    to import the graph into other word processing or publishing
+    software.  Enter HELP LATEX CAPTURE for details on how to
+    automatically incorporate Dataplot generated Postscript/PDF
+    graphs into a Dataplot generated LaTeX file.
+
+    You can generate the LaTeX output in one of the following two ways.
+
+        1. You can create a stand alone file that is a complete
+           LaTeX program.  That is, you can use the latex and dvipdfmx
+           commands to generate a PDF file from the LaTeX code.  This
+           PDF file can then be imported into LaTeX or other
+           word processing/publishing software that supports PDF.
+           This is demonstrated in the Program 1 example below.
+
+        2. You can generate a file that contains the LaTeX code for the
+           graph but does not contain the LaTeX preamble or postamble
+           code.  This LaTeX code can not be processed directly.  This
+           method is intended for the case where you want to embed the
+           graph as part of a larger LaTeX document that contains the
+           needed header and footer code.  This is demonstrated in
+           the Program 2 example below.
 
 Syntax 1:
     DEVICE 2 LATEX STANDALONE
  
-    This syntax is used to generate a standalone LaTex file.
+    This syntax is used to generate a standalone LaTeX file.
  
 Syntax 2:
     DEVICE 2 LATEX
  
-    This syntax is used to generate a LaTex file that can be
-    imported into another LaTex file (i.e., you cannot run the
+    This syntax is used to generate a LaTeX file that can be
+    embedded into another LaTeX file (i.e., you cannot run the
     latex command directly on this file).
  
 Syntax 3:
@@ -3407,23 +3401,30 @@ Syntax 3:
  
     This syntax is used in conjunction with the CAPTURE LATEX
     command to incorporate Dataplot alphanumeric and graphics
-    output in a single LaTex file.  The Program 2 example below
-    gives an example of this.
- 
+    output in a single LaTeX file.  The Program 2 example below
+    demonstrates this.
+
+    If you use this syntax within a CAPTURE LATEX block, enter the
+    following command before the CAPTURE LATEX command
+
+        SET LATEX CAPTURE GRAPHICS LATEX
+
+    This option generates additional code in the LaTeX preamble.
+    The default for this option is PDF which assumes that graphs
+    are generated with a DEVICE 2 POSTSCRIPT command.
+
 Examples:
     DEVICE 2 LATEX STANDALONE
     DEVICE 2 LATEX
  
 Note:
-    One of the primary reasons for using the latex graphics
-    driver is to obtain publication quality text on your
-    graphs. 
+    One of the primary reasons for using the LATEX graphics driver is to
+    obtain publication quality text on your graphs. 
 
-    In particular, this applies to special characters such
-    as subscritps, superscripts, Greek characters, and
-    special mathematical symbols.  If your text does not
-    utilize these, you can obtain publication quality
-    text by simply using the Postscript driver.
+    In particular, this applies to special characters such as
+    subscripts, superscripts, Greek characters, and special mathematical
+    symbols.  If your text does not utilize these, you can obtain
+    publication quality text by simply using the Postscript driver.
 
     There are two ways to utilize these special symbols.
     
@@ -3436,9 +3437,9 @@ Note:
 
            For example, alph() will generate a Greek alpha.
 
-           The latex driver will convert these Dataplot
+           The LATEX driver will convert these Dataplot
            codings for special symbols to the corresponding
-           LaTex codings.
+           LaTeX codings.
 
            A few notes on this:
 
@@ -3456,7 +3457,7 @@ Note:
                 HBAR()  - HORIZONTAL BAR
                 LHNA()  - LONG HORIZONTAL BAR
  
-        2) Alternatively, you can put the appropriate LaTex
+        2) Alternatively, you can put the appropriate LaTeX
            code in the text yourself.  For example, to put
            an alpha squared in a title, enter the following:
 
@@ -3464,17 +3465,17 @@ Note:
               TITLE $\alpha^{2}$
 
            The "$" symbol is used to specify LaTex math mode
-           (you need to be in math mode for LaTex to properly
+           (you need to be in math mode for LaTeX to properly
            interpert the special symbols).  By default, Dataplot
            uses the "^" to denote replacement of parameters
-           and strings in Dataplot commands.  If your LaTex
+           and strings in Dataplot commands.  If your LaTeX
            codings use superscripts, then you need to modify
            the Dataplot replacement character before any
            commands that use "^" to specify superscripting
            to LaTex. 
 
            The primary advantage of this method is that it
-           gives you full access to the LaTex special symbol
+           gives you full access to the LaTeX special symbol
            library.  This library is extensive and contains
            many characters not currently supported in
            Dataplot.  In addition, you can do things such
@@ -3482,34 +3483,43 @@ Note:
 
            The primary disadvantage is that Dataplot does no
            error checking of the text you enter.  It is simply
-           passed to the LaTex file as entered.  If you have
-           non-matching braces or dollar signs, your LaTex file
+           passed to the LaTeX file as entered.  If you have
+           non-matching braces or dollar signs, your LaTeX file
            may not compile when you run the latex command.
-           
-Note:
-    In standalone mode, Dataplot will generate an appropriate
-    preamble at the beginning of the LaTex file and a
-    postamble at the end of the LaTex file.
 
-    If you want to provide your own preamble or postamble,
-    you can enter the following command:
+Note:
+    In standalone mode, Dataplot will generate an appropriate preamble
+    at the beginning of the LaTeX file and a postamble at the end of the
+    LaTeX file.
+
+    If you want to provide your own preamble or postamble, you can enter
+    the following command:
 
         SET LATEX HEADER FILE  <file>
         SET LATEX FOOTER FILE  <file>
 
-    The header file should contain the following two lines:
+    Typically, the default generated preamble and postamble should be
+    sufficient.  The only reason you might want to provide your own
+    preamble or postamble is if you want to add some additional LaTeX
+    code.  For the preamble, it is recommended that you use the
+    following file, located in the Dataplot help sub-directory, as a
+    template
 
-        \usepackage{epic,eepic}
-        \usepackage{graphics,color}
+         latexheader_latex_graphics.tex
+
+    You can add any additional desired LaTeX code to this basic
+    template.
+
+    Likewise, the latexfooter.tex file can be used a template for the
+    postamble.
 
 Note:
-    The generated LaTex file is an ASCII file.  If you have
-    some proficiency in LaTex, you can modify the LaTex output
-    using a text editor.  For example, you may want to have
-    LaTex load a different font (Dataplot uses the default LaTex
-    font).  If you entered a LaTex text coding incorrectly, you
-    can fix it in the generated LaTex file without rerunning the
-    Dataplot code that created the LaTex file.
+    The generated LaTeX file is an ASCII file.  If you have proficiency
+    in LaTeX, you can modify the LaTeX output using a text editor.  For
+    example, you may want to have LaTeX load a different font (Dataplot
+    uses the default LaTeX font).  If you entered a LaTeX text coding
+    incorrectly, you can fix it in the generated LaTeX file without
+    rerunning the Dataplot code that created the LaTeX file.
 
 Note:
     By default, the LaTex graphic file is generated without
@@ -3573,27 +3583,27 @@ Note:
         CHARACTER SIZE 3 ALL
 
     The default character size for the above commands is 2.
- 
+
     Note that Dataplot cannot specify a specific point size
-    for text to LaTex.  Instead, there are 10 commands
+    for text to LaTeX.  Instead, there are 10 commands
     (e.g., \normalsize, \footnotesize, \tiny, \large).  The
-    actual size LaTex generates depends on the font and the
-    default point size for the LaTex file.  Dataplot maps the
+    actual size LaTeX generates depends on the font and the
+    default point size for the LaTeX file.  Dataplot maps the
     requested character size to one of the 10 LaTex size
     commands based on a default point size of 12 and the
     default LaTex font.  Our testing shows that this
-    results in 5 distinct point sizes generated by LaTex.
+    results in 5 distinct point sizes generated by LaTeX.
 
     If you use a different font, Dataplot's best guess as
-    to the size LaTex will generate may not be accurate. 
-    Since Dataplot uses LaTex to justify text, this should
+    to the size LaTeX will generate may not be accurate. 
+    Since Dataplot uses LaTeX to justify text, this should
     typically not be a problem.  One case where it might
     be an issue is in the placement of tick mark labels.
     You can use the TIC MARK LABEL DISPLACEMENT comamnd to
     adjust their positioning if needed.
 
 Note:
-    Typically, you want LaTex files to have a ".tex" file
+    Typically, you want LaTeX files to have a ".tex" file
     extension.  You can do something like the following
     to modify the default plot file name:
 
@@ -3601,18 +3611,20 @@ Note:
         DEVICE 2 LATEX STANDALONE
 
 Note:
-    The CAPTURE LATEX command will generate the output from
-    Dataplot analysis commands in LaTex format.  This feature
-    is partially implemented.  For commands that have not
-    been implemented, the Dataplot output will be enclosed
-    in the "verbatim" environment.  Enter HELP CAPTURE LATEX
-    for a list of commands that will generate Latex specific
-    output and for details on the use of this command.
+    The CAPTURE LATEX command will generate the output from Dataplot
+    analysis commands in LaTeX format.  You can incorporate graphs
+    into the LaTeX output in one the following two ways
 
-    You can combine this with the DEVICE 1 LATEX command
-    to generate a LaTex file with both the analysis output
-    and the graphics output in the same file.  A typical
-    sequence of commands would be
+        1. Use DEVICE 1 LATEX to generate the graph in LaTeX format.
+
+        2. Import graphs created with the DEVICE 2 POSTSCRIPT
+           command automatically.
+
+    Enter HELP CAPTURE LATEX for details on importing Dataplot
+    Postscript graphs into the LaTeX document.
+
+    To use the DEVICE 1 LATEX method, a typical sequence of commands
+    would be
 
        FEEDBACK OFF
        CAPTURE LATEX  sample.tex
@@ -3627,36 +3639,35 @@ Note:
     DEVICE 1 CLOSE command should be entered before the
     END OF CAPTURE command.  If this sequence is not followed,
     some of the needed LaTex commands may not be written to
-    the LaTex file.
+    the LaTeX file.
      
 Note:
-    Even if you would like to import a presentation quality
-    graph into Word, WordPerfect, or some other Windows-based
-    word proceser, the LaTex driver can still be useful.
+    Although the LATEX driver is most commonly used in the context of
+    LaTeX documents, you can in fact use it to import presentation
+    quality graphs into word processing and publishing software that
+    supports the importing of PDF documents.  See above for the
+    commands to create a PDF file from the generated LaTeX code.
 
-    The steps involved are:
+    If your preferred software does not support PDF, then you can
+    still take advantage of the LaTeX graph by converting the PDF
+    to a bit map image.  Two methods that we have found to work
+    well are
 
-      1) Use the DEVICE 2 LATEX STANDALONE to generate a LaTex
-         file.
+       1. On Windows platforms, open the PDF file in the Adobe
+          Reader in full screen mode and copy the graph to the
+          clipboard.  Then use the Paste function (use Paste
+          Special in Microsoft Word) in your software to import
+          the graph.
 
-      2) Use the latex and dvips commands to create a Postscript
-         file of the graph.
+       2. GIMP is an open source image editing program available
+          on Linux, MacOS and Windows platforms.  Import the PDF
+          file into GIMP and then use the Export menu to convert
+          the PDF to your desired bit map format.
 
-      3) Import this Postscript graph into the Windows version
-         of Ghostview (which you should have typically installed
-         when installing the Windows version of Dataplot).  Use
-         the Convert menu under the File menu to convert the
-         graph into a format that can be imported by Word (or
-         whatever word processer you are using).  The JPEG
-         format should be supported in most cases.  The Convert
-         menu will allow you to preserve the 300 dot per inch
-         resolution.
-
-      4) Import the resulting JPEG format graph into Word in
-         the standard way.
-
-    This does require that LaTex (and the epic and eepic
-    packages) be installed on your local platform.
+    These are not the only methods for converting the PDF file to
+    a bit map format.  But whatever method you prefer, it is
+    recommended that anti-aliasing be applied when converting the
+    PDF to a bit map file.
 
 Default:
     None
@@ -3670,25 +3681,25 @@ Related Commands:
     POSTSCRIPT       = Create graphical output in Postscript format.
     SVG              = Create graphical output in SVG
                        (Scalable Vector Graphics) format.
-    DEVICE           = Specify certain actions for the graphics
-                       output.
  
 References:
-    "LaTEX: A Document Preparation System", Second Edition, Leslie Lamport,
-    Addison-Wesley, 1994.
+    Leslie Lamport (1994), "LaTEX: A Document Preparation System",
+    Second Edition, Addison-Wesley,
 
-    "The LATEX Companion", Second Edition, Frank Mittelbach and
-    Michel Goosens with Johannes Braams, David Carlisle, and
-    Chris Rowley, Addison-Wesley, 2004.
+    Frank Mittelbach and Michel Goosens with Johannes Braams, David
+    Carlisle, and Chris Rowley (2004), "The LATEX Companion",
+    Second Edition, Addison-Wesley.
 
-    "Guide to LATEX", Fourth Edition, Helmut Kopka and Patrick Daly,
-    Addison-Wesley, 2003.
+    Helmut Kopka and Patrick Daly (2003), "Guide to LATEX",
+    Fourth Edition, Addison-Wesley,
 
 Applications:
     Publication Quality Graphics
  
 Implementation Date:
-    2006/2: Original Implementation
+    2006/02: Original Implementation
+    2026/07: Additional code added to the preamble
+    2026/07: Added the SET LATEX CAPTURE GRAPHICS command
  
 Program 1:
     .  Demonstrate following features of Latex driver:
@@ -3742,33 +3753,27 @@ Program 1:
     .
     device 2 close
     system latex plot1.tex
-    system dvips plot1
-    .
+    system dvipdfmx plot1
+    system okular plot1.pdf; . This command is for Linux platforms
 
 Program 2:
-    .  Example of creating Dataplot output in a single
-    .  Latex file (i.e., both graphics and alphanumeric output
-    .
     .  Step 1: Read Data
     .
     skip 25
     read stutz86.dat y1 to y5 x
     .
-    .  Step 2: Generate the Consensus Means Output
+    .  Step 2: Generate Some Analysis Output
     .
+    set latex color on
+    set latex capture graphs latex
     feedback off
-    capture latex  consensus.tex
+    capture latex  stutz86.tex
     tabulate mean y1 x
     tabulate sd y1 x
-    consensus mean y1 x
     .
     .  Step 3: Generate Some Complementary Graphics
     .
     device 1 latex
-    .
-    multiplot corner coordinates 2 2 98 98
-    multiplot 2 2
-    multiplot scale factor 2
     .
     title offset 2
     title size 3
@@ -3788,14 +3793,14 @@ Program 2:
     fences on
     box plot y1 x
     .
-    end of multiplot
-    .
     device 1 close
     end of capture
     .
-    system latex consensus.tex
-    system dvips consensus.dvi > consensus.ps
+    . Step 3:   Close and convert to pdf
     .
+    device 2 close
+    system latex stutz86.tex
+    system dvipdfmx stutz86
 
 -----LATTICE-------------------------------------------------------
  
@@ -10429,7 +10434,7 @@ Related Commands:
     GRUBBS TEST        = Perform a Grubbs outlier test.
     NORMAL PROB PLOT   = Generate a normal probability plot.
     CAPTURE HTML       = Generate output in HTML format.
-    CAPTURE LATEX      = Generate output in Latek format.
+    CAPTURE LATEX      = Generate output in LaTex format.
     CAPTURE RTF        = Generate output in RTF format.
 
 Reference:
@@ -20392,11 +20397,6 @@ Program:
 
 
 
-
-
-
-
-
 -------------------------  *M*  ZZZZZ--------------------
 
 -----MACHINE CONSTANTS (SET)--------------------------------------------
@@ -20919,7 +20919,7 @@ Note:
     median.  The name of this command was changed from AAD TO MEDIAN
     to MAD TO MEDIAN and the computation was changed to use the MAD
     rather than the AAD.  That is, the COEFFICIENT OF DISPERSION
-    command was modified to compute what was previously 
+    command was modified to compute what was previously 
 
     This change was made to reflect the more common
 
@@ -49111,6 +49111,220 @@ Program:
     .
     print yloc1 yloc2 yloc3 yloc4
  
+-----ORDINARY LEAST PRODUCTS FIT---------------------------------
+ 
+ORDINARY LEAST PRODUCTS FIT
+ 
+Name:
+    ORDINARY LEAST PRODUCTS FIT
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Performs an ordinary least products regression for two paired
+    measurement processes.
+ 
+Description:
+    Ordinary least products regression is a special case of errors in
+    variables regression.  It is used for the case where we have n paired
+    measurements, (x(i),y(i)), where x and y denote measurements from
+    two measurement processes.
+
+    In ordinary least squares regression, the goal is to use the
+    value of the "X" variable to estimate the value of the "Y"
+    variable.  It is assumed that the "X" values are fixed.  In contrast,
+    when comparing two measurement processes we are interested in how
+    well the measurements agree and if there is a bias between the two
+    measurement processes.  If the measurement processes are equivalent,
+    we would expect the slope of the fitted line to be 1.  The intercept
+    of the fitted line is an indication of bias.  An intercept of zero
+    indicates there is no bias.  It is also assumed that both of the
+    measurement processes have measurement error.
+
+    There are a number of different approaches to the problem of
+    comparing two measurement approaches.  Ordinary least products
+    regression is an alternative to Deming regression and Passing
+    Bablock regression.
+
+    Specifically, ordinary least products regression fits the model
+
+        y(i) = b0 + b1*x(i)
+
+    where both y(i) and x(i) have measurement error.
+
+    The estimates for the slope (b1) and intercept (b0) are
+
+        b1 = sign(r)*s(y)/s(x)
+        b0 = ybar - b1*xbar
+
+    where
+
+        sign(r) = +1 if the correlation between x and y is positive
+                  and -1 if the correlation is negative
+        s(y)    = the standard deviation of y
+        s(x)    = the standard deviation of x
+        ybar    = the mean of y
+        xbar    = the mean of x
+
+    The standard error for the slope is
+
+        se(b1) = b1*sqrt((1 - r**2)/n)
+
+    with r and n denoting the correlation and sample size, respectively.
+
+    The standard error for the intercept is
+
+        se(b0) = sqrt(c1*c2)
+
+    where
+
+        c1 = s(y)**2*(1-r)/n
+        c2 = 2 + xbar**2*(1+r)/s(x)**2
+
+    Approximate confidence intervals can be obtained as
+
+         b1 +/- tppf(1-alpha/2,n-2)*se(b1)
+         b0 +/- tppf(1-alpha/2,n-2)*se(b0)
+
+    where alpha is the significance level (0.05 for a 95% confidence
+    interval) and tppf is the percent point function of the t
+    distribution.
+
+    Ludbrook gives an alternative confidence interval for the slope as
+
+         lower confidence level = b1*(sqrt(B+1) - sqrt(B))
+         upper confidence level = b1*(sqrt(B+1) + sqrt(B))
+
+    where
+
+         B    = fppf(1-alpha,1,n-2)*(1 - r**2)/(n-2)
+         fppf = the percent point function of the F distribution
+
+    The confidence intervals are also estimated using the
+    percentile bootstrap.  Note that the bootstrap confidence
+    intervals tend to be narrower than the analytic intervals.
+
+    If zero is not in the intercept confidence interval, this
+    is interpreted as a bias between the two methods.  If 1 is
+    not in the confidence interval for the slope, this is interpreted
+    as the two measurement processes not being equivalent.
+
+Syntax:
+    ORDINARY LEAST PRODUCTS FIT <y> <x>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable for the first measurement process;
+          <x> is the response variable for the second measurement process;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Examples:
+    ORDINARY LEAST PRODUCTS FIT Y X
+    ORDINARY LEAST PRODUCTS FIT Y X SUBSET TAG > 1
+
+Note:
+    Ordinary least products regression is also known as geometric mean
+    regression or standardized major axis regression.
+
+Note:
+    The assumptions of ordinary least products regression are
+
+        1. The relationship between X and Y is linear.  If the
+           relationship is non-linear, then transforming either
+           X or Y (or both) may improve the linearity.  If a
+           suitable transformation cannot be found to linearize
+           the relationship, then ordinary least products regression
+           should not be used.
+
+        2. The errors are independent both within (i.e., the X errors
+           are independent of each other and the Y errors are independent
+           of each other) and between (the X errors are independent of
+           the Y errors).
+
+        3. The variance of the errors is constant (homoscedasticity)
+           versus time and versus the predictions.
+
+        4. The errors are normally distributed.
+
+    Ordinary least products regression is considered reasonably robust
+    relative to assumptions 2 - 4.
+
+Note:
+    The following parameters are saved by the ORDINARY LEAST PRODUCTS FIT
+    command
+
+        B0       = the estimate of the intercept parameter.
+        B1       = the estimate of the slope parameter.
+        B0SE     = the estimate of the standard error of the intercept
+                   parameter.
+        B1SE     = the estimate of the standard error of the slope
+                   parameter.
+        B0SEBOOT = the estimate of the standard error of the intercept
+                   parameter based on the bootstrap.
+        B1SEBOOT = the estimate of the standard error of the slope
+                   parameter based on the bootstrap.
+        B0LCL    = the estimate of the 95% lower confidence interval for
+                   the intercept
+        B0UCL    = the estimate of the 95% upper confidence interval for
+                   the intercept
+        B1LCL    = the estimate of the 95% lower confidence interval for
+                   the slope
+        B1UCL    = the estimate of the 95% upper confidence interval for
+                   the slope
+        B0LCLBOO = the estimate of the 95% lower confidence interval for
+                   the intercept based on the bootstrap
+        B0UCLBOO = the estimate of the 95% upper confidence interval for
+                   the intercept based on the bootstrap
+        B1LCLBOO = the estimate of the 95% lower confidence interval for
+                   the slope based on the bootstrap
+        B1UCLBOO = the estimate of the 95% upper confidence interval for
+                   the slope based on the bootstrap
+
+    The estimates of the intercept and slope from the bootstrap samples
+    are written to the file dpst1f.dat.
+
+Default:
+    None
+ 
+Synonyms:
+    ORDINARY LEAST PRODUCTS REGRESSION
+ 
+Related Commands:
+    FIT                      = Carry out a linear or non-linear fit.
+    ORTHOGONAL DISTANCE FIT  = Carry out an orthogonal distance linear or
+                               non-linear fit.
+    DEMING FIT               = Carry out a Deming fit.
+    BLAND ALTMAN PLOT        = Generate a Bland-Altman plot.
+ 
+References:
+    Ludbrook (1997), "Comparing Methods of Measurement," Clinical and
+    Experimental Pharmacology and Physiology, Vol. 24, pp. 193-203.
+
+    Ludbrook (2010), "Linear Regresion Analysis for Comparing Two
+    Measurers or Methods of Measurement: But Which Regression?,"
+    Clinical and Experimental Pharmacology and Physiology, Vol. 37,
+    pp. 692-699.
+
+    Nascimento-Ferreira, Ferreira De Moraes, Carvalho (2020), "Ordinary
+    Least Products Regression: A Robust Statistical Tool for Assessing
+    Agreement Between Measures Attended by High Variability,"
+    url={https://api.semanticscholar.org/CorpusID:234654400}.
+
+Applications:
+    Comparing two measurement processes
+ 
+Implementation Date:
+    2026/04
+ 
+Program:
+    skip 25
+    read ludbrook.dat patient x y
+    .
+    . Step 2:   Perform the Orinary Least Products Regression
+    .
+    seed 29807
+    bootstrap samples 10000
+    ordinary least products fit y x
+ 
 -----ORD PLOT--------------------------------------
  
 ORD PLOT
@@ -50328,20 +50542,6 @@ Program:
  
  
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -887,8 +887,11 @@ IHARG                                   HOUSEKEE SWIT
 IHNAM2                                  HOUSEKEE SWIT
 IHNAME                                  HOUSEKEE SWIT
 INDEX    FIRS NOT  MATC                 INDEX    FIRS MATC
+INDEX    GREA THAN OR   EQUA TO         INDEX    GREA THAN
 INDEX    LAST MATC                      INDEX    FIRS MATC
 INDEX    LAST NOT  MATC                 INDEX    FIRS MATC
+INDEX    LESS THAN OR   EQUA TO         INDEX    GREA THAN
+INDEX    LESS THAN                      INDEX    GREA THAN
 INFLUENC                                INFLUENC CURV
 INFLUENC PLOT                           INFLUENC CURV
 IN                                      HOUSEKEE SWIT
@@ -961,7 +964,10 @@ KELVIN   FUNC                           BER
 KELVIN   KER  FUNC                      KER
 KENDALL  TAU  A                         KENDALL  TAU
 KENDALL  TAU  B                         KENDALL  TAU
+KENDALL  TAU  B    CONF INTE            KENDALL  TAU  B    CONF LIMI
 KENDALL  TAU  C                         KENDALL  TAU
+KENDALL  TAU  CONF INTE                 KENDALL  TAU  B    CONF LIMI
+KENDALL  TAU  CONF LIMI                 KENDALL  TAU  B    CONF LIMI
 KENDALL  TAU  DIST                      KENDALL  TAU  DISS
 KENDALL  TAU  SIMI                      KENDALL  TAU  DISS
 KER1                                    KER
@@ -1030,13 +1036,21 @@ LANDAU                                  PROBABIL FUNC
 LAPLACE  PPCC                           STATISTI PPCC
 LAST     MATC                           INDEX    FIRS MATC
 LAST     NOT  MATC                      INDEX    FIRS MATC
+LATEX    CAPT GRAP                      LATEX
+LATEX    CAPT                           CAPTURE  LATE
 LATEX    COLO                           LATEX
+LATEX    DRIV                           LATEX
 LATEX    GRAP                           LATEX
+LATEX    HARD FILL                      LATEX
+LATEX    IMPO PDF                       CAPTURE  LATE
 LATEX    LINE THIC                      LATEX
 LATEX    OUTP                           CAPTURE  LATE
 LATEX    RESI                           CAPTURE  LATE
+LATEX    TYPE                           CAPTURE  LATE
 LEADS    IN   COIN TOSS DIST            LCTPDF
 LEADS    IN   COIN TOSS                 LCTPDF
+LEAST    PROD FIT                       ORDINARY LEAS PROD FIT
+LEAST    PROD REGR                      ORDINARY LEAS PROD FIT
 LEAST    SQUA                           FIT
 LEGEND   RGB  COLO                      LEGEND   COLO
 LESS     THAN                           LT
@@ -1350,6 +1364,7 @@ NOTEQUAL                                AGREE
 NPLOTP                                  WORKSPAC SWIT
 NPV                                     NEGATIVE PRED VALU
 NUMARG                                  HOUSEKEE SWIT
+NUMBER   OF   COMM DIGI                 COMMON   DIGI
 NUMBPC                                  MACHINE  CONS
 NUMBPW                                  MACHINE  CONS
 NUMCPW                                  MACHINE  CONS
@@ -1394,6 +1409,7 @@ ONE      WAY  SUMM FIXE EFFE ANOV       ONE      WAY  ANOV
 ONE      WAY  SUMM RAND EFFE ANOV       ONE      WAY  ANOV
 ORDER    STAT SD                        ORDER    STAT MEAN
 ORDER    STAT STAN DEVI                 ORDER    STAT MEAN
+ORDINARY LEAS PROD REGR                 ORDINARY LEAS PROD FIT
 ORTHOGON DIST DELT                      ORTHOGON DIST FIT
 ORTHOGON DIST DELT WEIG                 ORTHOGON DIST FIT
 ORTHOGON DIST ERRO                      ORTHOGON DIST FIT
@@ -1436,6 +1452,7 @@ PARTIAL  REGR                           PARTIAL  REGR PLOT
 PARTIAL  RESI                           PARTIAL  RESI PLOT
 PARTITIO AROU MEDO                      CLUSTER
 PARTITIO CLUS                           CLUSTER
+PASSING  BABL REGR                      PASSING  BABL FIT
 PAUSE    CLIP                           CLIPBOAR
 PAUSE    LINE                           PAUS     LINE (SET
 PBDV1                                   PB
@@ -1891,9 +1908,15 @@ SET      KERN DENS PROB FUNC            KERNEL   DENS PLOT
 SET      KERN DENS RAND NUMB            KERNEL   DENS PLOT
 SET      KURT OUTL TEST CRIT VALU       KURTOSIS OUTL TEST
 SET      TWO  SAMP KOLM SMIR TEST       KOLMOGOR SMIR TWO  SAMP
+SET      LATE CAPT GRAP                 LATEX
+SET      LATE CAPT                      CAPTURE  LATE
 SET      LATE COLO                      LATEX
+SET      LATE DRIV                      LATEX
+SET      LATE HARD FILL                 LATEX
+SET      LATE IMPO GRAP                 CAPTURE  LATE
 SET      LATE LINE THIC                 LATEX
 SET      LATE RESI                      CAPTURE  LATE
+SET      LATE TYPE                      CAPTURE  LATE
 SET      LINE PAUS                      PAUS     LINE (SET
 SET      LIST LAUN                      LIST
 SET      LIST VIEW                      LIST
@@ -2233,6 +2256,7 @@ TABULATI PLOT X    INCR                 TABULATI PLOT
 TABULATI PLOT Y    INCR                 TABULATI PLOT
 TAIL                                    WRITE
 T        DIST                           PROBABIL FUNC
+THEIL    SEN  REGR                      THEIL    SEN  FIT
 THRESHOL MAXI                           THRESHOL
 THRESHOL                                THRESHOL
 TIC      COLO                           TIC      MARK COLO

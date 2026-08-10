@@ -3423,6 +3423,10 @@
       DIMENSION PDSCAL(*)
       DIMENSION IBACC2(*)
 !
+      PARAMETER(MAXCLR=163)
+      INTEGER IRED(MAXCLR), IBLUE(MAXCLR), IGREEN(MAXCLR)
+      CHARACTER*4 COLOR_NAMES(MAXCLR)
+!
 !-----COMMON----------------------------------------------------------
 !
       CHARACTER*4 IRTFMD
@@ -3438,6 +3442,7 @@
 !
 !-----COMMON VARIABLES (GENERAL)--------------------------------------
 !
+      INCLUDE 'DPCOCT.INC'
       INCLUDE 'DPCOP2.INC'
 !
 !-----START POINT-----------------------------------------------------
@@ -4404,33 +4409,39 @@
 !         FOLLOWING CODE IS ONLY APPLICABLE FOR THE LATEX CASE.
 !
           IF(ILATCG.EQ.'LATE')THEN
-            WRITE(ICOUT,3174)IBASLC
- 3174       FORMAT(A1,'usepackage{epic,eepic}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,3177)IBASLC
- 3177       FORMAT(A1,'usepackage{graphics,color}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,23170)
-23170       FORMAT('% --- prevent dvipdfmx color-stack overflow:')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,23171)
-23171       FORMAT('%     make \color replace rather than stack ---')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,23172)IBASLC
-23172       FORMAT(A1,'makeatletter')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,23173)IBASLC,IBASLC,IBASLC,IBASLC,IBASLC
-23173       FORMAT(A1,'def',A1,'set@color{',A1,'special{color pop}',   &
-                   A1,'special{color push ',A1,'current@color}}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,23174)IBASLC,IBASLC,IBASLC
-23174       FORMAT(A1,'let',A1,'reset@color',A1,'relax')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,23175)IBASLC
-23175       FORMAT(A1,'makeatother')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,999)
-            CALL DPWRST('XXX','WRIT')
+            IF(ILATDR.EQ.'TIKZ')THEN
+              WRITE(ICOUT,33184)IBASLC
+33184         FORMAT(A1,'usepackage{tikz}')
+              CALL DPWRST('XXX','WRIT')
+            ELSE
+              WRITE(ICOUT,3174)IBASLC
+ 3174         FORMAT(A1,'usepackage{epic,eepic}')
+              CALL DPWRST('XXX','WRIT')
+              WRITE(ICOUT,3177)IBASLC
+ 3177         FORMAT(A1,'usepackage{graphics,color}')
+              CALL DPWRST('XXX','WRIT')
+              WRITE(ICOUT,23170)
+23170         FORMAT('% --- prevent dvipdfmx color-stack overflow:')
+              CALL DPWRST('XXX','WRIT')
+              WRITE(ICOUT,23171)
+23171         FORMAT('%     make \color replace rather than stack ---')
+              CALL DPWRST('XXX','WRIT')
+              WRITE(ICOUT,23172)IBASLC
+23172         FORMAT(A1,'makeatletter')
+              CALL DPWRST('XXX','WRIT')
+              WRITE(ICOUT,23173)IBASLC,IBASLC,IBASLC,IBASLC,IBASLC
+23173         FORMAT(A1,'def',A1,'set@color{',A1,'special{color pop}', &
+                     A1,'special{color push ',A1,'current@color}}')
+              CALL DPWRST('XXX','WRIT')
+              WRITE(ICOUT,23174)IBASLC,IBASLC,IBASLC
+23174         FORMAT(A1,'let',A1,'reset@color',A1,'relax')
+              CALL DPWRST('XXX','WRIT')
+              WRITE(ICOUT,23175)IBASLC
+23175         FORMAT(A1,'makeatother')
+              CALL DPWRST('XXX','WRIT')
+              WRITE(ICOUT,999)
+              CALL DPWRST('XXX','WRIT')
+            ENDIF
           ELSE
             WRITE(ICOUT,3173)IBASLC
  3173       FORMAT(A1,'usepackage{epsfig}')
@@ -4507,273 +4518,24 @@
             WRITE(ICOUT,14113)IBASLC
 14113       FORMAT(A1,'definecolor{G100}{gray}{1.000}')
             CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14002)IBASLC
-14002       FORMAT(A1,'definecolor{WHIT}{rgb}{1.000,1.000,1.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14003)IBASLC
-14003       FORMAT(A1,'definecolor{BLAC}{rgb}{0.000,0.000,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14004)IBASLC
-14004       FORMAT(A1,'definecolor{RED }{rgb}{1.000,0.000,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14005)IBASLC
-14005       FORMAT(A1,'definecolor{BLUE}{rgb}{0.000,0.000,1.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14006)IBASLC
-14006       FORMAT(A1,'definecolor{GREE}{rgb}{0.000,1.000,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14007)IBASLC
-14007       FORMAT(A1,'definecolor{MAGE}{rgb}{1.000,0.000,1.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14008)IBASLC
-14008       FORMAT(A1,'definecolor{ORAN}{rgb}{1.000,0.647,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14009)IBASLC
-14009       FORMAT(A1,'definecolor{CYAN}{rgb}{0.000,1.000,1.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14010)IBASLC
-14010       FORMAT(A1,'definecolor{YELL}{rgb}{1.000,1.000,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14011)IBASLC
-14011       FORMAT(A1,'definecolor{YGRE}{rgb}{0.604,0.804,0.196}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14012)IBASLC
-14012       FORMAT(A1,'definecolor{DGRE}{rgb}{0.000,0.392,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14013)IBASLC
-14013       FORMAT(A1,'definecolor{LBLU}{rgb}{0.678,0.847,0.902}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14014)IBASLC
-14014       FORMAT(A1,'definecolor{VBLU}{rgb}{0.541,0.169,0.886}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14015)IBASLC
-14015       FORMAT(A1,'definecolor{VRED}{rgb}{0.816,0.125,0.565}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14016)IBASLC
-14016       FORMAT(A1,'definecolor{DGRE}{rgb}{0.184,0.310,0.310}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14017)IBASLC
-14017       FORMAT(A1,'definecolor{LGRE}{rgb}{0.827,0.827,0.827}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14018)IBASLC
-14018       FORMAT(A1,'definecolor{AQUA}{rgb}{0.498,1.000,0.831}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14019)IBASLC
-14019       FORMAT(A1,'definecolor{BROW}{rgb}{0.647,0.165,0.165}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14020)IBASLC
-14020       FORMAT(A1,'definecolor{CABL}{rgb}{0.373,0.620,0.627}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14021)IBASLC
-14021       FORMAT(A1,'definecolor{CORA}{rgb}{1.000,0.498,0.314}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14022)IBASLC
-14022       FORMAT(A1,'definecolor{CBLU}{rgb}{0.392,0.584,0.929}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14023)IBASLC
-14023       FORMAT(A1,'definecolor{DOGR}{rgb}{0.333,0.420,0.184}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14024)IBASLC
-14024       FORMAT(A1,'definecolor{DORC}{rgb}{0.600,0.196,0.800}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14025)IBASLC
-14025       FORMAT(A1,'definecolor{DSBL}{rgb}{0.282,0.239,0.545}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14026)IBASLC
-14026       FORMAT(A1,'definecolor{DTUR}{rgb}{0.000,0.808,0.820}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14027)IBASLC
-14027       FORMAT(A1,'definecolor{FIRE}{rgb}{0.698,0.133,0.133}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14028)IBASLC
-14028       FORMAT(A1,'definecolor{FGRE}{rgb}{0.133,0.545,0.133}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14029)IBASLC
-14029       FORMAT(A1,'definecolor{GOLD}{rgb}{1.000,0.843,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14030)IBASLC
-14030       FORMAT(A1,'definecolor{GLDR}{rgb}{0.855,0.647,0.125}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14031)IBASLC
-14031       FORMAT(A1,'definecolor{GRAY}{rgb}{0.753,0.753,0.753}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14032)IBASLC
-14032       FORMAT(A1,'definecolor{IRED}{rgb}{0.804,0.361,0.361}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14033)IBASLC
-14033       FORMAT(A1,'definecolor{KHAK}{rgb}{0.941,0.902,0.549}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14034)IBASLC
-14034       FORMAT(A1,'definecolor{DMGR}{rgb}{0.412,0.412,0.412}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14035)IBASLC
-14035       FORMAT(A1,'definecolor{LSBL}{rgb}{0.690,0.769,0.871}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14036)IBASLC
-14036       FORMAT(A1,'definecolor{LGRE}{rgb}{0.196,0.804,0.196}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14037)IBASLC
-14037       FORMAT(A1,'definecolor{MARO}{rgb}{0.690,0.188,0.376}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14038)IBASLC
-14038       FORMAT(A1,'definecolor{MAQU}{rgb}{0.400,0.804,0.667}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14039)IBASLC
-14039       FORMAT(A1,'definecolor{MBLU}{rgb}{0.000,0.000,0.804}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14040)IBASLC
-14040       FORMAT(A1,'definecolor{MFGR}{rgb}{0.420,0.557,0.137}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14041)IBASLC
-14041       FORMAT(A1,'definecolor{MGLD}{rgb}{0.980,0.980,0.824}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14042)IBASLC
-14042       FORMAT(A1,'definecolor{MORC}{rgb}{0.729,0.333,0.827}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14043)IBASLC
-14043       FORMAT(A1,'definecolor{MSGR}{rgb}{0.235,0.702,0.443}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14044)IBASLC
-14044       FORMAT(A1,'definecolor{MSBL}{rgb}{0.482,0.408,0.933}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14045)IBASLC
-14045       FORMAT(A1,'definecolor{MSPG}{rgb}{0.000,0.980,0.604}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14046)IBASLC
-14046       FORMAT(A1,'definecolor{MTUR}{rgb}{0.282,0.820,0.800}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14047)IBASLC
-14047       FORMAT(A1,'definecolor{MVRD}{rgb}{0.780,0.082,0.522}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14048)IBASLC
-14048       FORMAT(A1,'definecolor{MDBL}{rgb}{0.098,0.098,0.439}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14049)IBASLC
-14049       FORMAT(A1,'definecolor{NAVY}{rgb}{0.000,0.000,0.502}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14050)IBASLC
-14050       FORMAT(A1,'definecolor{ORED}{rgb}{1.000,0.271,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14051)IBASLC
-14051       FORMAT(A1,'definecolor{ORCH}{rgb}{0.855,0.439,0.839}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14052)IBASLC
-14052       FORMAT(A1,'definecolor{PGRE}{rgb}{0.596,0.984,0.596}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14053)IBASLC
-14053       FORMAT(A1,'definecolor{PINK}{rgb}{1.000,0.753,0.796}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14054)IBASLC
-14054       FORMAT(A1,'definecolor{PLUM}{rgb}{0.867,0.627,0.867}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14055)IBASLC
-14055       FORMAT(A1,'definecolor{PURP}{rgb}{0.627,0.125,0.941}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14056)IBASLC
-14056       FORMAT(A1,'definecolor{SALM}{rgb}{0.980,0.502,0.447}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14057)IBASLC
-14057       FORMAT(A1,'definecolor{SGRE}{rgb}{0.180,0.545,0.341}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14058)IBASLC
-14058       FORMAT(A1,'definecolor{SIEN}{rgb}{0.627,0.322,0.176}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14059)IBASLC
-14059       FORMAT(A1,'definecolor{SKBL}{rgb}{0.529,0.808,0.922}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14060)IBASLC
-14060       FORMAT(A1,'definecolor{SBLU}{rgb}{0.416,0.353,0.804}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14061)IBASLC
-14061       FORMAT(A1,'definecolor{SPGR}{rgb}{0.000,1.000,0.498}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14062)IBASLC
-14062       FORMAT(A1,'definecolor{STBL}{rgb}{0.275,0.510,0.706}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14063)IBASLC
-14063       FORMAT(A1,'definecolor{TAN }{rgb}{0.824,0.706,0.549}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14064)IBASLC
-14064       FORMAT(A1,'definecolor{THIS}{rgb}{0.847,0.749,0.847}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14065)IBASLC
-14065       FORMAT(A1,'definecolor{TURQ}{rgb}{0.251,0.878,0.816}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14066)IBASLC
-14066       FORMAT(A1,'definecolor{VIOL}{rgb}{0.933,0.510,0.933}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14067)IBASLC
-14067       FORMAT(A1,'definecolor{WHEA}{rgb}{0.961,0.871,0.702}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14068)IBASLC
-14068       FORMAT(A1,'definecolor{GYEL}{rgb}{0.678,1.000,0.184}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14069)IBASLC
-14069       FORMAT(A1,'definecolor{LCYA}{rgb}{0.878,1.000,1.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14070)IBASLC
-14070       FORMAT(A1,'definecolor{BLU2}{rgb}{0.000,0.000,0.933}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14071)IBASLC
-14071       FORMAT(A1,'definecolor{BLU3}{rgb}{0.000,0.000,0.804}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14072)IBASLC
-14072       FORMAT(A1,'definecolor{BLU4}{rgb}{0.000,0.000,0.545}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14073)IBASLC
-14073       FORMAT(A1,'definecolor{CYA2}{rgb}{0.000,0.933,0.933}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14074)IBASLC
-14074       FORMAT(A1,'definecolor{CYA3}{rgb}{0.000,0.804,0.804}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14075)IBASLC
-14075       FORMAT(A1,'definecolor{CYA4}{rgb}{0.000,0.545,0.545}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14076)IBASLC
-14076       FORMAT(A1,'definecolor{GRE2}{rgb}{0.000,0.933,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14077)IBASLC
-14077       FORMAT(A1,'definecolor{GRE3}{rgb}{0.000,0.804,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14078)IBASLC
-14078       FORMAT(A1,'definecolor{GRE4}{rgb}{0.000,0.545,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14079)IBASLC
-14079       FORMAT(A1,'definecolor{YEL2}{rgb}{0.933,0.933,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14080)IBASLC
-14080       FORMAT(A1,'definecolor{YEL3}{rgb}{0.804,0.804,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14081)IBASLC
-14081       FORMAT(A1,'definecolor{YEL4}{rgb}{0.545,0.545,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14082)IBASLC
-14082       FORMAT(A1,'definecolor{ORA2}{rgb}{0.933,0.604,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14083)IBASLC
-14083       FORMAT(A1,'definecolor{ORA3}{rgb}{0.804,0.522,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14084)IBASLC
-14084       FORMAT(A1,'definecolor{ORA4}{rgb}{0.545,0.353,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14085)IBASLC
-14085       FORMAT(A1,'definecolor{RED2}{rgb}{0.933,0.000,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14086)IBASLC
-14086       FORMAT(A1,'definecolor{RED3}{rgb}{0.804,0.000,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14087)IBASLC
-14087       FORMAT(A1,'definecolor{RED4}{rgb}{0.545,0.000,0.000}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14088)IBASLC
-14088       FORMAT(A1,'definecolor{MAG2}{rgb}{0.933,0.000,0.933}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14089)IBASLC
-14089       FORMAT(A1,'definecolor{MAG3}{rgb}{0.804,0.000,0.804}')
-            CALL DPWRST('XXX','WRIT')
-            WRITE(ICOUT,14090)IBASLC
-14090       FORMAT(A1,'definecolor{MAG4}{rgb}{0.545,0.000,0.545}')
-            CALL DPWRST('XXX','WRIT')
+            DO JJ=1,MAXCLR
+               AVAL1=REAL(IRED(JJ))/255.
+               AVAL2=REAL(IGREEN(JJ))/255.
+               AVAL3=REAL(IBLUE(JJ))/255.
+               IF(COLOR_NAMES(JJ)(4:4).EQ.' ')THEN
+                 WRITE(ICOUT,14115)IBASLC,COLOR_NAMES(JJ),             &
+                                   AVAL1,AVAL2,AVAL3
+14115            FORMAT(A1,'definecolor{',A3,'}{rgb}{',F5.3,',',       &
+                        F5.3,',',F5.3,'}')
+                 CALL DPWRST('XXX','WRIT')
+               ELSE
+                 WRITE(ICOUT,14117)IBASLC,COLOR_NAMES(JJ),             &
+                                   AVAL1,AVAL2,AVAL3
+14117            FORMAT(A1,'definecolor{',A4,'}{rgb}{',F5.3,',',       &
+                        F5.3,',',F5.3,'}')
+                 CALL DPWRST('XXX','WRIT')
+               ENDIF
+            ENDDO
           ELSE
 !
             IF(ILATPD.EQ.'LGRA')THEN

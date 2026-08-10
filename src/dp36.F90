@@ -33448,6 +33448,7 @@
 !                 DIFFERENCE OF PRODUCTS
 !                 DIFFERENCE OF INTEGRALS
 !                 DIFFERENCE OF BINOMIAL PROBABILITIES
+!                 FULL WIDTH HALF MAXIMUM
 !                 INDEX FIRST MATCH
 !                 INDEX LAST  MATCH
 !                 INDEX FIRST NOT MATCH
@@ -33962,6 +33963,7 @@
 !     UPDATED         --MAY       2026. INDEX GREATER THAN OR EQUAL TO
 !     UPDATED         --MAY       2026. INDEX LESS THAN
 !     UPDATED         --MAY       2026. INDEX LESS THAN OR EQUAL TO
+!     UPDATED         --AUGUST    2026. FULL WIDTH HALF MAXIMUM
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -33991,7 +33993,7 @@
       INCLUDE 'DPCOPA.INC'
 !CCCC INCLUDE 'DPCOZC.INC'
 !
-      PARAMETER (MAXSTA=1678)
+      PARAMETER (MAXSTA=1681)
       PARAMETER (MAXSCL=8)
       INTEGER      INFLAV(MAXSTA)
       CHARACTER*4  INAME(MAXSTA,MAXSCL)
@@ -44197,6 +44199,24 @@
       'INDE','    ','LESS','THAN','    ','    ','    ','    '/
       DATA INFLAV(1678)/1/
       DATA INLONG(1678)/'INDEX LESS THAN'/
+!
+      DATA INCASE(1679)/'FWHM'/
+      DATA (INAME(1679,J),J=1,MAXSCL)/   &
+      'FULL','    ','WIDT','HALF','MAXI','    ','    ','    '/
+      DATA INFLAV(1679)/2/
+      DATA INLONG(1679)/'FULL WIDTH HALF MAXIMUM'/
+!
+      DATA INCASE(1680)/'FWHM'/
+      DATA (INAME(1680,J),J=1,MAXSCL)/   &
+      'FULL','    ','WIDT','HALF','MAX ','    ','    ','    '/
+      DATA INFLAV(1680)/2/
+      DATA INLONG(1680)/'FULL WIDTH HALF MAXIMUM'/
+!
+      DATA INCASE(1681)/'FWHM'/
+      DATA (INAME(1681,J),J=1,MAXSCL)/   &
+      'FWHM','    ','    ','    ','    ','    ','    ','    '/
+      DATA INFLAV(1681)/2/
+      DATA INLONG(1681)/'FULL WIDTH HALF MAXIMUM'/
 !
 !-----START POINT-----------------------------------------------------
 !

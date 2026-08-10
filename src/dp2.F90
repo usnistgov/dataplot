@@ -6928,6 +6928,10 @@
 !     UPDATED         --JULY       2026.  SET LATEX CAPTION
 !     UPDATED         --JULY       2026.  SET LATEX TYPE
 !     UPDATED         --JULY       2026.  SET LATEX CAPTURE GRAPHS
+!     UPDATED         --JULY       2026.  SET LATEX TIKZ HEIGHT
+!     UPDATED         --JULY       2026.  SET LATEX TIKZ WIDTH
+!     UPDATED         --AUGUST     2026.  SET LATEX FONT STYPE
+!     UPDATED         --AUGUST     2026.  SET LATEX FONT FAMILY
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -8531,6 +8535,7 @@
         ENDIF
       ENDIF
 !
+!CCCC FOLLOWING SECTION ADDED JULY  2026
 !     ****************************************
 !     **  CHECK FOR LATEX CAPTURE GRAPHS    **
 !     ****************************************
@@ -8581,6 +8586,52 @@
                        IBUGS2,ISUBRO,IFOUND,IERROR)
            GO TO 9000
         ENDIF
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED JULY  2026
+!     ****************************************
+!     **  CHECK FOR LATEX TIKZ HEIGHT       **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='TIKZ'
+      IPART3='HEIG'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.      &
+         IHARG(3).EQ.IPART3)THEN
+         IF(NUMARG.EQ.3)THEN
+           PTIKHE=4.8
+         ELSEIF(IHV.EQ.'DEFA'.OR.IHV.EQ.'ON  '.OR.IHV.EQ.'TRUE'.OR.    &
+                IHV.EQ.'YES '.OR. IHV.EQ.'OFF'.OR.IHV.EQ.'NO  ')THEN
+           PTIKHE=4.8
+         ELSE
+           PTIKHE=AV
+           IF(PTIKHE.LT.1.0 .OR. PTIKHE.GT.9.0)PTIKHE=4.8
+         ENDIF
+         AV=PTIKHE
+         GO TO 5170
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED JULY  2026
+!     ****************************************
+!     **  CHECK FOR LATEX TIKZ WIDTH        **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='TIKZ'
+      IPART3='WIDT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.      &
+         IHARG(3).EQ.IPART3)THEN
+         IF(NUMARG.EQ.3)THEN
+           PTIKWI=4.8
+         ELSEIF(IHV.EQ.'DEFA'.OR.IHV.EQ.'ON  '.OR.IHV.EQ.'TRUE'.OR.    &
+                IHV.EQ.'YES '.OR. IHV.EQ.'OFF'.OR.IHV.EQ.'NO  ')THEN
+           PTIKWI=4.8
+         ELSE
+           PTIKWI=AV
+           IF(PTIKWI.LT.1.0 .OR. PTIKWI.GT.8.0)PTIKWI=6.26
+         ENDIF
+         AV=PTIKHE
+         GO TO 5170
       ENDIF
 !
 !CCCC FOLLOWING SECTION ADDED SEPTEMBER 2018
@@ -27941,7 +27992,7 @@
       IPART3='THIC'
       IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.   &
          IHARG(3).EQ.IPART3)THEN
-         IF(IHV.EQ.'HARD')IHV='ON'
+         IF(IHV.EQ.'HARD')IHV='HARD'
          IF(IHV.EQ.'DEFA')IHV='HARD'
          IF(IHV.EQ.'YES')IHV='HARD'
          IF(IHV.EQ.'TRUE')IHV='HARD'
@@ -28021,6 +28072,47 @@
            IHV='POST'
          ENDIF
          ILATTY=IHV
+         GO TO 5160
+      ENDIF
+!
+!     *******************************************************
+!     **  CHECK FOR LATEX FONT STYLE <NORMAL/BOLD/ITALIC>  **
+!     *******************************************************
+!
+      IPART1='LATE'
+      IPART2='FONT'
+      IPART3='STYL'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.    &
+         IHARG(3).EQ.IPART3)THEN
+         IF(IHV.EQ.'BOLD')THEN
+           IHV='BOLD'
+         ELSEIF(IHV.EQ.'ITAL')THEN
+           IHV='ITAL'
+         ELSE
+           IHV='NORM'
+         ENDIF
+         ILATST=IHV
+         GO TO 5160
+      ENDIF
+!
+!     ********************************************************
+!     **  CHECK FOR LATEX FONT FAMILY <RMDEFAULT/SFDEFAULT/ **
+!     **                               TTFAMILY>            **
+!     ********************************************************
+!
+      IPART1='LATE'
+      IPART2='FONT'
+      IPART3='FAMI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.    &
+         IHARG(3).EQ.IPART3)THEN
+         IF(IHV.EQ.'SFDE' .OR. IHV.EQ.'SFFA')THEN
+           IHV='SFFA'
+         ELSEIF(IHV.EQ.'TTDE' .OR. IHV.EQ.'TTFA')THEN
+           IHV='TTFA'
+         ELSE
+           IHV='RMFA'
+         ENDIF
+         ILATFF=IHV
          GO TO 5160
       ENDIF
 !
@@ -30715,6 +30807,10 @@
 !     UPDATED         --JULY       2026.  PROBE LATEX CAPTION
 !     UPDATED         --JULY       2026.  PROBE LATEX TYPE
 !     UPDATED         --JULY       2026.  PROBE LATEX CAPTURE GRAPHS
+!     UPDATED         --JULY       2026.  PROBE LATEX TIKZ HEIGHT
+!     UPDATED         --JULY       2026.  PROBE LATEX TIKZ WIDTH
+!     UPDATED         --AUGUST     2026.  PROBE LATEX FONT STYLE
+!     UPDATED         --AUGUST     2026.  PROBE LATEX FONT FAMILY
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -31328,6 +31424,58 @@
         ENDDO
         IPROBS(1:NCPROB)=ILATCA(1:NCPROB)
         GO TO 8100
+      ENDIF
+!
+!     ****************************************
+!     **  CHECK FOR LATEX TIKZ HEIGHT       **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='TIKZ'
+      IPART3='HEIG'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.                &
+         IHARG(3).EQ.IPART3)THEN
+        AV=PTIKHE
+        GO TO 5170
+      ENDIF
+!
+!     ****************************************
+!     **  CHECK FOR LATEX TIKZ WIDTH        **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='TKIZ'
+      IPART3='WIDT'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.                &
+         IHARG(3).EQ.IPART3)THEN
+        AV=PTIKWI
+        GO TO 5170
+      ENDIF
+!
+!     ****************************************
+!     **  CHECK FOR LATEX FONT STYLE        **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='FONT'
+      IPART3='STYL'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.                &
+         IHARG(3).EQ.IPART3)THEN
+        IHV=ILATST
+        GO TO 5160
+      ENDIF
+!
+!     ****************************************
+!     **  CHECK FOR LATEX FONT FAMILY       **
+!     ****************************************
+!
+      IPART1='LATE'
+      IPART2='FONT'
+      IPART3='FAMI'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.                &
+         IHARG(3).EQ.IPART3)THEN
+        IHV=ILATFF(1:4)
+        GO TO 5160
       ENDIF
 !
 !CCCC THE FOLLOWING SECTION WAS ADDED    OCTOBER  2014
