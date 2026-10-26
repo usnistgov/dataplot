@@ -1134,6 +1134,7 @@ QUIT                        SU-CO Exit from DATAPLOT (= STOP, END, etc.)
 R                           SU-CO Re-execute previous commands
 RADIANS                     SU-CO Set radians for trig calculations (ON/OFF)
 RENAME                      SU-CO Assign a different name to a variable
+RENDER ORDER                SU-CO Specify order for drawing characters, lines, bars and spikes
 REPEAT (or R)               SU-CO Re-execute previous commands
 REPEAT PLOT                 PC-CO Draw a plot created with SAVE PLOT
 REPLOT                      PC-CO Regenerate the most recently created plot
@@ -1319,6 +1320,8 @@ FOURIER TRANSFORM           SC-LE Compute the Fourier transform of a variable
 FOURTH CENTRAL MOMENT       SC-LE Compute the sample fourth central moment
 FRACTAL                     SC-LE Compute the values of a fractal curve
 FREQUENCY                   SC-LE Compute frequencies of distinct values
+FULL WIDTH HALF MAXIMUM     SC-LE Compute the full width half maximum
+FWHM                        SC-LE Compute the full width half maximum
 
 GAMMA RANDOM NUMBERS        SC-LE Generate gamma random numbers
 GENERATOR MULTIPLICATION    SC-LE Generate ...
@@ -1402,6 +1405,9 @@ POLYNOMIAL EVALUATION       SC-LE Carry out polynomial evaluation
 POLYNOMIAL MULTIPLICATION   SC-LE Carry out polynomial multiplication
 POLYNOMIAL SQUARE           SC-LE Carry out polynomial square
 POLYNOMIAL SUBTRACTION      SC-LE Carry out polynomial subtraction
+POOLED SD                   SC-LE Compute a pooled standard deviation
+POOLED STANDARD DEVIATION   SC-LE Compute a pooled standard deviation
+POOLED VARIANCE             SC-LE Compute a pooled variance
 PRIME NUMBERS               SC-LE Generate prime numbers
 PRINCIPLE COMPONENTS        SC-LE Generate matrix of prinple components
 PRIN COMP EIGENVECTORS      SC-LE Gen matrix of principle comp eigenvectors
@@ -1440,6 +1446,8 @@ SORTC                       SC-LE Sort elements in 1 var and carry another var
 STANDARD DEVI OF THE MEAN   SC-LE Compute the standard deviation of the mean
 STANDARD DEVIATION          SC-LE Compute the sample standard deviation
 SUM                         SC-LE Compute the sum of elements in a variable
+SUMMARY COMBINED SD         SC-LE Compute the sample combined standard deviation
+SUMMARY COMBINED VARIANCE   SC-LE Compute the sample combined variance
 
 T RANDOM NUMBERS            SC-LE Generate t random numbers
 STAND THIRD CENTRAL MOME    SC-LE Compute the sample third central moment
@@ -1529,6 +1537,7 @@ PREPOST                     SC-SE Define gr device for PREPLOT/POSTPLOT string
 READ FORMAT                 SC-SE Set format for (fast) READ
 READ REWIND                 SC-SE Set switch (ON/OFF) for READ rewind
 SUBSTITUTION CHARACTER      SC-SE Change the substitution character (from ^)
+TEMPORARY FILE              SC-SE Append proces-id to temporary files
 WRITE DECIMALS              SC-SE Set number of decimals for WRITE output
 WRITE FORMAT                SC-SE Set the format for WRITE output
 WRITE REWIND                SC-SE Set switch (ON/OFF) for WRITE rewind

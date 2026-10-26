@@ -9940,7 +9940,7 @@
   431 FORMAT('LOWER BOUND PROBABILITY (P0) GREATER THAN ',   &
        'UPPER BOUND PROBABILITY (P1)')
   441 FORMAT('LOWER BOUND PROBABILITY (P0) GREATER THAN ',   &
-       21HINPUT PROBABILITY (P))
+       'INPUT PROBABILITY (P)')
   451 FORMAT('UPPER BOUND PROBABILITY (P1) LESS    THAN ',   &
        'INPUT PROBABILITY (P)')
   611 FORMAT('BISECTION VALUE (X2) = LOWER BOUND (X0)')
@@ -21184,6 +21184,8 @@
       IFTEXP='+'
       IFTORD='DATA'
       IFORSW='E'
+      IH='    '
+      IH2='    '
 !
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
@@ -33684,14 +33686,19 @@
 !               **  WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT;
 !               ****************************************************************
 !
-      IF(IERASW.EQ.'ON')WRITE(ICOUT,504)
-  504 FORMAT(1H1)
-      IF(IERASW.EQ.'ON')CALL DPWRST('XXX','BUG ')
-      IF(IERASW.EQ.'OFF')WRITE(ICOUT,999)
-      IF(IERASW.EQ.'OFF')CALL DPWRST('XXX','BUG ')
-      IF(IMAXT.GE.1)WRITE(ICOUT,505)(ILABT(I),I=1,IMAXT)
-  505 FORMAT(240A1)
-      IF(IMAXT.GE.1)CALL DPWRST('XXX','BUG ')
+      IF(IERASW.EQ.'ON')THEN
+        WRITE(ICOUT,504)
+  504   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+      ELSEIF(IERASW.EQ.'OFF')THEN
+         WRITE(ICOUT,999)
+         CALL DPWRST('XXX','BUG ')
+      ENDIF
+      IF(IMAXT.GE.1)THEN
+        WRITE(ICOUT,505)(ILABT(I),I=1,IMAXT)
+  505   FORMAT(240A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 !
       DO 500 ICOL=1,NUMCOL
       ILINE(ICOL)=IHYPHE
@@ -34340,16 +34347,22 @@
 !               **  WRITE OUT THE TITLE (IF ANY);  **
 !               *************************************
 !
-      IF(IERASW.EQ.'ON')WRITE(ICOUT,2004)
- 2004 FORMAT(1H1)
-      IF(IERASW.EQ.'ON')CALL DPWRST('XXX','BUG ')
-      IF(IERASW.EQ.'OFF')WRITE(ICOUT,999)
-      IF(IERASW.EQ.'OFF')CALL DPWRST('XXX','BUG ')
-      IF(IMAXT.GE.1)WRITE(ICOUT,2005)(ILABT(I),I=1,IMAXT)
- 2005 FORMAT(240A1)
-      IF(IMAXT.GE.1)CALL DPWRST('XXX','BUG ')
-      IF(IMAXT.LE.0)WRITE(ICOUT,999)
-      IF(IMAXT.LE.0)CALL DPWRST('XXX','BUG ')
+      IF(IERASW.EQ.'ON')THEN
+        WRITE(ICOUT,2004)
+ 2004   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+      ELSEIF(IERASW.EQ.'OFF')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+      IF(IMAXT.GE.1)THEN
+        WRITE(ICOUT,2005)(ILABT(I),I=1,IMAXT)
+ 2005   FORMAT(240A1)
+        CALL DPWRST('XXX','BUG ')
+      ELSEIF(IMAXT.LE.0)THEN
+         WRITE(ICOUT,999)
+         CALL DPWRST('XXX','BUG ')
+      ENDIF
 !
 !               *********************************************
 !               **  STEP 10--                              **
@@ -34497,6 +34510,7 @@
 !     UPDATED         --JUNE      2025. TWEAKS FOR BULLET PLOT
 !     UPDATED         --JUNE      2025. TWEAKS FOR VARIABLE WIDTH BAR PLOT
 !     UPDATED         --JULY      2025. TWEAKS FOR CANDLESTICK PLOT
+!     UPDATED         --SEPTEMBER 2026. ADD IRENOR TO PLOTG2 CALL LIST
 !
 !-----NON-COMMON VARIABLES--------------------------------------------
 !
@@ -34755,7 +34769,7 @@
                       IWRLES,IDRTRS,ICLG2S,ICLGRS,                 &
                       IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,      &
                       ASETSZ,ISETSY,ISETCL,ISETFI,                 &
-                      NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,          &
+                      NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,   &
                       IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ELSEIF(ICAS3D.EQ.'ON')THEN
           CALL PLOTG3(X,X3D,Y,N,DSIZE,                             &
@@ -34896,7 +34910,7 @@
                       IDRTRS,ICLG2S,ICLGRS,                           &
                       IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                       ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                      NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                      NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                       IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ENDDO
         GO TO 1900
@@ -34955,7 +34969,7 @@
                       IWRLES,IDRTRS,ICLG2S,ICLGRS,                    &
                       IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                       ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                      NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                      NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                       IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
 !
         ENDDO
@@ -35007,7 +35021,7 @@
                         IWRLES,IDRTRS,ICLG2S,ICLGRS,                    &
                         IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                         ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                        NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                        NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                         IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
           ENDIF
         ENDDO
@@ -35063,7 +35077,7 @@
                         IWRLES,IDRTRS,ICLG2S,ICLGRS,                    &
                         IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                         ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                        NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                        NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                         IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
           ENDIF
 !
@@ -35100,7 +35114,7 @@
                         IWRLES,IDRTRS,ICLG2S,ICLGRS,                    &
                         IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                         ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                        NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                        NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                         IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
           ENDIF
 !
@@ -35150,7 +35164,7 @@
                          IWRLES,IDRTRS,ICLG2S,ICLGRS,                    &
                          IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                          ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                         NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                         NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                          IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
            ENDIF
         ENDDO
@@ -35198,7 +35212,7 @@
                          IWRLES,IDRTRS,ICLG2S,ICLGRS,                    &
                          IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                          ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                         NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                         NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                          IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
            ENDIF
         ENDDO
@@ -35231,7 +35245,7 @@
                          IWRLES,IDRTRS,ICLG2S,ICLGRS,                    &
                          IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                          ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                         NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                         NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                          IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
            ENDIF
         ENDDO
@@ -35279,7 +35293,7 @@
                          IWRLES,IDRTRS,ICLG2S,ICLGRS,                    &
                          IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                          ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                         NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                         NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                          IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
            ENDIF
         ENDDO
@@ -35342,7 +35356,7 @@
                           IDRTRS,ICLG2S,ICLGRS,                           &
                           IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                           ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                          NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                          NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                           IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
             ENDIF
           ENDDO
@@ -35429,7 +35443,7 @@
                     IWRLES,IDRTRS,ICLG2S,ICLGRS,                &
                     IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,     &
                     ASETSZ,ISETSY,ISETCL,ISETFI,                &
-                    NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,         &
+                    NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,  &
                     IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ELSEIF(ICAS3D.EQ.'ON')THEN
           CALL PLOTG3(X,X3D,Y,N,DSIZE,                        &
@@ -35503,7 +35517,7 @@
                       IWRLES,IDRTRS,ICLG2S,ICLGRS,                    &
                       IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                       ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                      NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                      NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                       IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ELSEIF(ICAS3D.EQ.'ON')THEN
           CALL PLOTG3(X2,X3D2,Y2,N2,DSYMB,                            &
@@ -35832,7 +35846,7 @@
                       IWRLES,IDRTRS,ICLG2S,ICLGRS,                    &
                       IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                       ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                      NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                      NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                       IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ELSEIF(ICAS3D.EQ.'ON')THEN
           CALL PLOTG3(X2,X3D2,Y2,N2,DSYMB,                            &
@@ -36130,7 +36144,7 @@
                       IWRLES,IDRTRS,ICLG2S,ICLGRS,                    &
                       IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,         &
                       ASETSZ,ISETSY,ISETCL,ISETFI,                    &
-                      NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,             &
+                      NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,      &
                       IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ELSEIF(ICAS3D.EQ.'ON')THEN
           CALL PLOTG3(X2,X3D2,Y2,N2,DSYMB,                            &
@@ -36196,7 +36210,7 @@
                     IWRLES,IDRTRS,ICLG2S,ICLGRS,                 &
                     IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,      &
                     ASETSZ,ISETSY,ISETCL,ISETFI,                 &
-                    NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,          &
+                    NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,   &
                     IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
         ELSEIF(ICAS3D.EQ.'ON')THEN
           CALL PLOTG3(X,X3D,Y,N,DSIZE,                           &
@@ -36263,7 +36277,7 @@
                         IDRTRS,ICLG2S,ICLGRS,                              &
                         IHNAME,IHNAM2,IUSE,IVALUE,VALUE,NUMNAM,            &
                         ASETSZ,ISETSY,ISETCL,ISETFI,                       &
-                        NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,                &
+                        NUMSBR,ICAPSW,IDEVO3,IDV2SP,IGRDOR,IRENOR,         &
                         IVSTAR,IVSTOP,IFUNC,NUMCHF,IREPCH,ISWTCH)
 !
 !     PURPOSE--GENERATE A COMPLETE 2-D PLOT OF A SINGLE TRACE OF Y VERSUS X
@@ -36363,6 +36377,7 @@
 !     UPDATED         --JUNE      2025. TWEAKS FOR VARIABLE WIDTH BAR PLOT
 !     UPDATED         --JULY      2025. TWEAKS FOR CANDLESTICK PLOT
 !     UPDATED         --AUGUST    2025. TWEAKS FOR DOT MATRIX PLOT
+!     UPDATED         --SEPTEMBER 2026. ADD IRENOR TO CALL LIST
 !
 !-----FOR NON-COMMON VARIABLES-----------------------------------------
 !
@@ -36376,6 +36391,7 @@
       CHARACTER*4 ICASPL
       CHARACTER*4 ICAS3D
       CHARACTER*4 IGRDOR
+      CHARACTER*4 IRENOR
       CHARACTER*24 ICH3PA
 !
       CHARACTER*4 ILI2SW
@@ -36584,8 +36600,8 @@
         WRITE(ICOUT,80)ITEXSY,ITEXSP,IBACCO,IANISW
    80   FORMAT('ITEXSY,ITEXSP,IBACCO,IANISW = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
-        WRITE(ICOUT,81)IMANUF,IMODEL
-   81   FORMAT('IMANUF,IMODEL = ',A4,2X,A4)
+        WRITE(ICOUT,81)IMANUF,IMODEL,IGRDOR,IRENOR
+   81   FORMAT('IMANUF,IMODEL,IGRDOR,IRENOR = ',3(A4,2X),A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,89)IBUGG4,ISUBG4,IERRG4
    89   FORMAT('IBUGG4,ISUBG4,IERRG4 = ',A4,2X,A4,2X,A4)
@@ -37775,8 +37791,14 @@
 !               **     4. SPIKES                           **
 !               *********************************************
 !
+        ICNT=0
+ 4000   CONTINUE
+!
+        ICNT=ICNT+1
+        IF(ICNT.GE.5)GO TO 4199
+!
         IF(IDRTRS.EQ.'ON')GO TO 4100
-        GO TO 4190
+        GO TO 4199
 !
  4100   CONTINUE
 !
@@ -37841,7 +37863,7 @@
             CALL DPWRST('XXX','BUG ')
           ENDIF
 !
-          IF(ICH2SW.EQ.'ON')   &
+          IF(ICH2SW.EQ.'ON' .AND. IRENOR(ICNT:ICNT).EQ.'C')   &
           CALL DPDRCH(Y,X,PY,PX,NP,PY2,PX2,NP2,X3D,   &
                       ICASPL,ICAS3D,ISORZZ,ARE2BA,   &
                       ICH2PA,ICH2FO,ICH2CA,ICH2JU,ICH2DI,   &
@@ -37857,7 +37879,7 @@
 !
           IF(IANISW.EQ.'ON')THEN
             ICH2CO=IBACCO
-            IF(ICH2SW.EQ.'ON')   &
+            IF(ICH2SW.EQ.'ON' .AND. IRENOR(ICNT:ICNT).EQ.'C')   &
               CALL DPDRCH(Y,X,PY,PX,NP,PY2,PX2,NP2,X3D,   &
                           ICASPL,ICAS3D,ISORZZ,ARE2BA,   &
                           ICH2PA,ICH2FO,ICH2CA,ICH2JU,ICH2DI,   &
@@ -37870,6 +37892,8 @@
                           IMPSW2,AMPSCH,AMPSCW)
           ENDIF
         ENDIF
+!
+        IF(IRENOR(ICNT:ICNT).NE.'L')GO TO 4119
 !
         IF(ICASPL.EQ.'DCON'.OR.ICASPL.EQ.'VIPL'.OR.ICASPL.EQ.'PCPL'.OR.   &
            ICASPL.EQ.'PCPG'.OR.ICASPL.EQ.'BNTR'.OR.ICASPL.EQ.'ASSO'.OR.   &
@@ -37944,13 +37968,15 @@
                          IX1TSC,IY1TSC)
         ENDIF
 !
-!4119   CONTINUE
+ 4119   CONTINUE
 !
         IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'OTG2')THEN
           WRITE(ICOUT,90006)
 90006     FORMAT('BEFORE CALL DPDRBA')
           CALL DPWRST('XXX','BUG ')
         ENDIF
+!
+        IF(IRENOR(ICNT:ICNT).NE.'B')GO TO 4129
 !
         IF(IBA2SW.EQ.'ON'.OR.   &
           (ICASPL.EQ.'HIST'.AND.ISET3.GT.NUMSBR).OR.                    &
@@ -37999,13 +38025,15 @@
                       IX1TSC,IY1TSC)
         ENDIF
 !
+ 4129   CONTINUE
+!
         IF(IBUGG4.EQ.'ON'.OR.ISUBG4.EQ.'OTG2')THEN
           WRITE(ICOUT,90007)
 90007     FORMAT('BEFORE CALL DPDRSP')
           CALL DPWRST('XXX','BUG ')
         ENDIF
 !
-        IF(ISP2SW.EQ.'ON')   &
+        IF(ISP2SW.EQ.'ON' .AND. IRENOR(ICNT:ICNT).EQ.'S')   &
           CALL DPDRSP(Y,X,PY,PX,NP,   &
                       ICASPL,ICAS3D,ISORSW,   &
                       ISP2LI,ISP2CO,ISP2CR,ISP2CG,ISP2CB,   &
@@ -38018,7 +38046,7 @@
 !
         IF(IANISW.EQ.'ON')THEN
           ISP2CO=IBACCO
-          IF(ISP2SW.EQ.'ON')   &
+          IF(ISP2SW.EQ.'ON' .AND. IRENOR(ICNT:ICNT).EQ.'S')   &
             CALL DPDRSP(Y,X,PY,PX,NP,   &
                         ICASPL,ICAS3D,ISORSW,   &
                         ISP2LI,ISP2CO,ISP2CR,ISP2CG,ISP2CB,   &
@@ -38029,13 +38057,14 @@
 !
         ENDIF
 !
+        GO TO 4000
+ 4199   CONTINUE
+!
 !       MARCH 2008: FOLLOWING CODE GENERATES "IMAGE" PLOTS
 !
         IF(ICASPL.EQ.'IMAG' .OR. ICASPL.EQ.'IMA2')THEN
           CALL DPDRIM(X,Y,PY,PX,PY2,PX2,NP,ICASCO,PCH2HE)
         ENDIF
-!
- 4190   CONTINUE
 !
 !               ********************************************************
 !               **  STEP 56--                                         **
@@ -39837,14 +39866,19 @@
 !               **  WRITE OUT THE TOP HORIZONTAL AXIS OF THE PLOT;
 !               ****************************************************************
 !
-      IF(IERASW.EQ.'ON')WRITE(ICOUT,504)
-  504 FORMAT(1H1)
-      IF(IERASW.EQ.'ON')CALL DPWRST('XXX','BUG ')
-      IF(IERASW.EQ.'OFF')WRITE(ICOUT,999)
-      IF(IERASW.EQ.'OFF')CALL DPWRST('XXX','BUG ')
-      IF(IMAXT.GE.1)WRITE(ICOUT,505)(ILABT(I),I=1,IMAXT)
-  505 FORMAT(240A1)
-      IF(IMAXT.GE.1)CALL DPWRST('XXX','BUG ')
+      IF(IERASW.EQ.'ON')THEN
+        WRITE(ICOUT,504)
+  504   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+      ELSEIF(IERASW.EQ.'OFF')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+      IF(IMAXT.GE.1)THEN
+        WRITE(ICOUT,505)(ILABT(I),I=1,IMAXT)
+  505   FORMAT(240A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 !
       DO 500 ICOL=1,NUMCOL
       ILINE(ICOL)=IHYPHE
@@ -40411,16 +40445,22 @@
 !               **  WRITE OUT THE TITLE (IF ANY);  **
 !               *************************************
 !
-      IF(IERASW.EQ.'ON')WRITE(ICOUT,2004)
- 2004 FORMAT(1H1)
-      IF(IERASW.EQ.'ON')CALL DPWRST('XXX','BUG ')
-      IF(IERASW.EQ.'OFF')WRITE(ICOUT,999)
-      IF(IERASW.EQ.'OFF')CALL DPWRST('XXX','BUG ')
-      IF(IMAXT.GE.1)WRITE(ICOUT,2005)(ILABT(I),I=1,IMAXT)
- 2005 FORMAT(240A1)
-      IF(IMAXT.GE.1)CALL DPWRST('XXX','BUG ')
-      IF(IMAXT.LE.0)WRITE(ICOUT,999)
-      IF(IMAXT.LE.0)CALL DPWRST('XXX','BUG ')
+      IF(IERASW.EQ.'ON')THEN
+        WRITE(ICOUT,2004)
+ 2004   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+      ELSEIF(IERASW.EQ.'OFF')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+      IF(IMAXT.GE.1)THEN
+        WRITE(ICOUT,2005)(ILABT(I),I=1,IMAXT)
+ 2005   FORMAT(240A1)
+        CALL DPWRST('XXX','BUG ')
+      ELSEIF(IMAXT.LE.0)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
 !
 !               *********************************************
 !               **  STEP 10--                              **
@@ -44924,7 +44964,8 @@
 !
 !              THE FORMULA FOR THE POOLED VARIANCE IS:
 !
-!                V(pooled) = {n1*s1**2 + n2*s2**2 + .. + nk*sk**2}/
+!                V(pooled) = {(n1-1)*s1**2 + (n2-1)*s2**2 + .. +
+!                             (nk-1)*sk**2}/
 !                            (n1 + n2 + ... + nk - k)
 !
 !              WHERE k IS THE NUMBER OF GROUPS, n1, n2, ...,  Nk
@@ -44932,7 +44973,7 @@
 !              DENOTE THE VARIANCES FOR THE GROUPS.
 !
 !              IF THE SAMPLE SIZES ARE EQUAL, THEN THE POOLED VARIANCE
-!              IS SIMPLY THE MEAN OF THE INDIIVIDUAL VARIANCES.
+!              IS SIMPLY THE MEAN OF THE INDIVIDUAL VARIANCES.
 !
 !              THE POOLED STANDARD DEVIATION IS SIMPLY THE SQUARE
 !              ROOT OF THE POOLED VARIANCE.
@@ -45118,9 +45159,9 @@
              SUM1=SUM1 + DBLE(NI-1)*SVAL
              SUM2=SUM2 + DBLE(NI)
           ENDDO
-          XVARP=SUM1/(SUM2 - REAL(N))
-          XSDP=SQRT(XVARP)
         ENDIF
+        XVARP=SUM1/(SUM2 - REAL(N))
+        XSDP=SQRT(XVARP)
       ELSE
         CALL DISTIN(X,N,IWRITET,XIDTEM,NUMSET,IBUGA3,IERROR)
         CALL SORT(XIDTEM,NUMSET,XIDTEM)

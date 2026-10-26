@@ -537,9 +537,9 @@
        ENDIF
 !
       IF(IHOST1.EQ.'IBM-')THEN
-        CALL DPCONA(92,IBSLC)
+        CALL DPCONA(92,IBSLC(1:1))
       ELSEIF(IOPSY1.EQ.'UNIX')THEN
-        CALL DPCONA(47,IBSLC)
+        CALL DPCONA(47,IBSLC(1:1))
       ELSE
         IBSLC=' '
       ENDIF
@@ -6932,6 +6932,9 @@
 !     UPDATED         --JULY       2026.  SET LATEX TIKZ WIDTH
 !     UPDATED         --AUGUST     2026.  SET LATEX FONT STYPE
 !     UPDATED         --AUGUST     2026.  SET LATEX FONT FAMILY
+!     UPDATED         --AUGUST     2026.  FOR "SET TEMPORARY FILES PID",
+!                                         RESET DEFAULT FILE NAMES
+!     UPDATED         --SEPTEMBER  2026.  SET RENDER ORDER
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -7011,6 +7014,7 @@
       CHARACTER*4 ISUBN1
       CHARACTER*4 ISUBN2
       CHARACTER*4 ISTEPN
+      CHARACTER*10 CPID
 !
 !-----COMMON----------------------------------------------------------
 !
@@ -10503,6 +10507,78 @@
           IHV='IGNO'
         ENDIF
         ITMPFI=IHV
+!
+!       2026/08: IF "PID" SET, THEN REDEFINE DEFAULT TEMPORARY FILE NAMES
+!
+        IF(ITMPFI.EQ.'PID')THEN
+          IPID=-1
+          NCPID=0
+          IF(ITMPFI.EQ.'PID ')THEN
+            IERROR='NO'
+            ISUBRO='XXXX'
+            CALL DPPID2(IPID,ISUBRO,IERROR)
+            IF(IERROR.EQ.'YES')IPID=-1
+          ENDIF
+          IF(IPID.GE.1)THEN
+            CPID=' '
+            WRITE(CPID,'(I10)')IPID
+            IFRST=1
+            ILAST=10
+            DO II=1,10
+               IF(CPID(II:II).NE.' ')THEN
+                 IFRST=II
+                 EXIT
+               ENDIF
+            ENDDO
+            DO II=10,1,-1
+               IF(CPID(II:II).NE.' ')THEN
+                 ILAST=II
+                 EXIT
+               ENDIF
+            ENDDO
+            NCPID=ILAST-IFRST+1
+            CPID(2:NCPID+1)=CPID(IFRST:ILAST)
+            CPID(1:1)='_'
+          ENDIF
+!
+!     ADJUST DEFAULT NAME FOR:
+!
+!         ISAVNA
+!         ISCRNA
+!         IDATNA
+!         IPL1NA
+!         IPL2NA
+!         IPRONA
+!         ICONNA
+!         ISACNA
+!         IOUTNA
+!         IST1NA
+!         IST2NA
+!         IST3NA
+!         IST4NA
+!         IST5NA
+!         IZCHNA
+!
+          IF(NCPID.GE.1)THEN
+            IVALT=255
+            CALL DPPIDF(ISAVNA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(ISCRNA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(IDATNA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(IPL1NA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(IPL2NA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(IPRONA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(ICONNA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(ISACNA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(IOUTNA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(IST1NA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(IST2NA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(IST3NA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(IST4NA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(IST5NA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+            CALL DPPIDF(IZCHNA,IVALT,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+          ENDIF
+!
+        ENDIF
         GO TO 5160
       ENDIF
 !
@@ -19453,7 +19529,7 @@
         GO TO 5160
       ENDIF
 !
-!CCCC FOLLOWING SECTION ADDED MAY  2016
+!CCCC FOLLOWING SECTION ADDED MAY  2026
 !     ****************************************************************
 !     **  SET THEIL SEN      CONFIDENCE LIMIT                       **
 !     **        <NONE/JACKNIFE/BOOTSTRAP>                           **
@@ -19475,6 +19551,82 @@
           IHV='NONE'
         ENDIF
         ITSRCI=IHV
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED SEPTEMBER  2026
+!     ****************************************************************
+!     **  SET RENDER ORDER <CHARACTER/LINE/BAR/SPIKE>               **
+!     ****************************************************************
+!
+      IPART1='REND'
+      IPART2='ORDE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IF(NUMARG.EQ.2)THEN
+          IHV='CLBS'
+        ELSEIF(NUMARG.EQ.6)THEN
+          IHV='CLBS'
+          IF(IHARG(3).EQ.'CHAR')THEN
+            IHV(1:1)='C'
+          ELSEIF(IHARG(3).EQ.'LINE')THEN
+            IHV(1:1)='L'
+          ELSEIF(IHARG(3).EQ.'BAR ')THEN
+            IHV(1:1)='B'
+          ELSEIF(IHARG(3).EQ.'SPIK ')THEN
+            IHV(1:1)='S'
+          ELSE
+            IHV(1:1)='C'
+          ENDIF
+          IF(IHARG(4).EQ.'CHAR')THEN
+            IHV(2:2)='C'
+          ELSEIF(IHARG(4).EQ.'LINE')THEN
+            IHV(2:2)='L'
+          ELSEIF(IHARG(4).EQ.'BAR ')THEN
+            IHV(2:2)='B'
+          ELSEIF(IHARG(4).EQ.'SPIK ')THEN
+            IHV(2:2)='S'
+          ELSE
+            IHV(2:2)='C'
+          ENDIF
+          IF(IHARG(5).EQ.'CHAR')THEN
+            IHV(3:3)='C'
+          ELSEIF(IHARG(5).EQ.'LINE')THEN
+            IHV(3:3)='L'
+          ELSEIF(IHARG(5).EQ.'BAR ')THEN
+            IHV(3:3)='B'
+          ELSEIF(IHARG(5).EQ.'SPIK ')THEN
+            IHV(3:3)='S'
+          ELSE
+            IHV(3:3)='C'
+          ENDIF
+          IF(IHARG(6).EQ.'CHAR')THEN
+            IHV(4:4)='C'
+          ELSEIF(IHARG(6).EQ.'LINE')THEN
+            IHV(4:4)='L'
+          ELSEIF(IHARG(6).EQ.'BAR ')THEN
+            IHV(4:4)='B'
+          ELSEIF(IHARG(6).EQ.'SPIK ')THEN
+            IHV(4:4)='S'
+          ELSE
+            IHV(4:4)='C'
+          ENDIF
+          IF(IHV(1:1).NE.'C' .AND. IHV(2:2).NE.'C' .AND.     &
+             IHV(3:3).NE.'C' .AND. IHV(4:4).NE.'C')THEN
+            IHV='CLBS'
+          ELSEIF(IHV(1:1).NE.'L' .AND. IHV(2:2).NE.'L' .AND.     &
+             IHV(3:3).NE.'L' .AND. IHV(4:4).NE.'L')THEN
+            IHV='CLBS'
+          ELSEIF(IHV(1:1).NE.'B' .AND. IHV(2:2).NE.'B' .AND.     &
+             IHV(3:3).NE.'B' .AND. IHV(4:4).NE.'B')THEN
+            IHV='CLBS'
+          ELSEIF(IHV(1:1).NE.'S' .AND. IHV(2:2).NE.'S' .AND.     &
+             IHV(3:3).NE.'S' .AND. IHV(4:4).NE.'S')THEN
+            IHV='CLBS'
+          ENDIF
+        ELSE
+          IHV='CLBS'
+        ENDIF
+        IRENOR=IHV
         GO TO 5160
       ENDIF
 !
@@ -30811,6 +30963,8 @@
 !     UPDATED         --JULY       2026.  PROBE LATEX TIKZ WIDTH
 !     UPDATED         --AUGUST     2026.  PROBE LATEX FONT STYLE
 !     UPDATED         --AUGUST     2026.  PROBE LATEX FONT FAMILY
+!     UPDATED         --SEPTEMBER  2026.  PROBE RENDER ORDER
+!     UPDATED         --SEPTEMBER  2026.  PROBE REGION BEFORE LINE
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -31706,7 +31860,7 @@
 !
 !CCCC THE FOLLOWING SECTION WAS ADDED        JANUARY  2019.
 !     ******************************************
-!     **  PROBE SHELL         R (LINUX ONLY)  **
+!     **  PROBE SHELL           (LINUX ONLY)  **
 !     ******************************************
 !
       IPART1='SHEL'
@@ -39365,6 +39519,35 @@
          IHARG(3).EQ.IPART3.AND.                          &
          (IHARG(4).EQ.IPART4.OR.IHARG(4).EQ.IPART5))THEN
         IHV=ITSRCI
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED SEPTEMBER    2026.
+!               *********************************************
+!               **  STEP 20.A--                            **
+!               **  PROBE RENDER ORDER                     **
+!               **        <CHARACTER/LINE/BAR/SPIKE>       **
+!               *********************************************
+!
+      IPART1='REND'
+      IPART2='ODER'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2)THEN
+        IHV=IRENOR
+        GO TO 5160
+      ENDIF
+!
+!CCCC FOLLOWING SECTION ADDED SEPTEMBER    2026.
+!               *********************************************
+!               **  STEP 20.A--                            **
+!               **  PROBE REGION BEFORE LINE <ON/OFF>      **
+!               *********************************************
+!
+      IPART1='REGI'
+      IPART2='BEFO'
+      IPART3='LINE'
+      IF(IHARG(1).EQ.IPART1.AND.IHARG(2).EQ.IPART2.AND.      &
+         IHARG(3).EQ.'LINE')THEN
+        IHV=IREGOR
         GO TO 5160
       ENDIF
 !

@@ -1,9 +1,9 @@
-69500.      (VERSION 2026.03)  total number of lines in file (including this line)
+70300.      (VERSION 2026.10)  total number of lines in file (including this line)
  4.                          number of     sections below
   100.    P                  first line number of P section
-22700.    Q                  first line number of Q section
-25800.    R                  first line number of R section
-45000.    S                  first line number of S section
+23200.    Q                  first line number of Q section
+26300.    R                  first line number of R section
+45700.    S                  first line number of S section
  
 ----------------------------------------------------------
  
@@ -3112,6 +3112,14 @@ Note:
         HELP BIWEIGHT MIDCORRELATION
         HELP PERCENTAGE BEND
 
+    There are several alternative formulations for Kendall's tau.  You
+    can specify which formulation to use with the command
+
+        SET KENDALL TAU DEFINITION <B/C/CONOVER>
+
+    with B denoting Kendall's Tau B, C denoting Kendall's Tau C and
+    CONOVER denoting Conover's formula, respectively.
+
 Note:
     Matrices are created with either the READ MATRIX command or the
     MATRIX DEFINITION command.  Enter HELP MATRIX DEFINITION and HELP
@@ -4434,6 +4442,371 @@ Program:
     CHARACTER X
     .
     MATRIX PARTIAL RESIDUAL PLOT Y X1 X2 X3 X4
+
+-----PASSING BABLOK FIT---------------------------------
+ 
+PASSING BABLOK FIT
+ 
+Name:
+    PASSING BABLOK FIT
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Performs a Passing-Bablok regression for two paired measurement
+    processes.
+ 
+Description:
+    Passing-Bablok regression is a special case of errors in variables
+    regression.  It is used for the case where we have n paired
+    measurements, (x(i),y(i)), where x and y denote measurements from
+    two measurement processes.
+
+    In ordinary least squares regression, the goal is to use the
+    value of the "X" variable to estimate the value of the "Y"
+    variable.  It is assumed that the "X" values are fixed.  In contrast,
+    when comparing two measurement processes we are interested in how
+    well the measurements agree and if there is a bias between the two
+    measurement processes.  If the measurement processes are equivalent,
+    we would expect the slope of the fitted line to be 1.  The intercept
+    of the fitted line is an indication of bias.  An intercept of zero
+    indicates there is no bias.  It is also assumed that both of the
+    measurement processes have measurement error.
+
+    There are a number of different approaches to the problem of
+    comparing two measurement approaches.  Passing-Bablok regression is
+    an alternative to Deming regression and ordinary least products
+    regression.  Some analysts prefer Passing-Bablok as it is more
+    resistant to outliers (it is related to Kendall's tau correlation
+    coefficient).
+
+    The assumptions for Passing-Bablok regression are
+
+       1. The two variables are highly positively correlated.
+
+       2. The relationship between the two variables is linear.
+
+    To estimate the parameters of the Passing-Bablok regression,
+    compute the n*(n-1)/2 pairwise slopes (for i < j)
+
+        S(ij) = (y(i) - y(j))/(x(i) - x(j))
+
+    Note the following special cases:
+
+      1. If x(i) = x(j) and y(i) = y(j), this results in a slope of
+         0/0.  This is undefined so these slopes are omitted.
+
+      2. If x(i) = x(j) and y(i) > y(j), the result is positive
+         infinity.  For this case, we set an arbitrarily large number
+         (Dataplot uses 999999).  Since Passing-Bablok is based on
+         medians, the specific value is not important.
+
+      3. If x(i) = x(j) and y(i) < y(j), the result is negative
+         infinity.  For this case, we set an arbitrarily small number
+         (Dataplot uses -999999).  Since Passing-Bablok is based on
+         medians, the specific value is not important.
+
+      4. If S(ij) = -1, omit the the slope.  If S(ij) < -1, keep the
+         slope, but keep a counter of how many times this occurs.
+
+    Sort the slopes and compute the shifted median as
+
+        Beta = S((NS + 1)/2 + k)                       if NS is odd
+        Beta = (S(NS/2 + k) + S((NS/2) + 1 + k))/2     if NS is even
+
+    with NS and k denoting the number of slopes and the number of
+    slopes < -1, respectively.
+
+    Compute y(i) - Beta*x(i).  The estimated intercept is the median
+    of these values.
+
+    Passing and Bablok suggested the following to obtain a confidence
+    interval for Beta:
+
+         C(alpha/2) = NORPPF(alpha/2)*SQRT(n*(n-1)*(2*n+5)/18)
+         M1 = (NS - C(alpha/2))/2 rounded to the nearest integer
+         M2 = N-M1+1
+
+    with NORPPF and NS denoting the percent point function of the
+    normal distribution and the number of slopes, respectively.
+
+    The lower confidence bound, Beta(L), is S(M1+k) and the upper
+    confidence bound, Beta(U), is S(M2+k) where k is defined above.
+    The lower confidence bound for the intercept, Alpha(L) is the
+    median of (y(i) - Beta(U)*x(i)) and the upper confidence bound,
+    Alpha(U), is the median of (y(i) - Beta(L)*x(i)).
+
+    Alternatively, the confidence intervals can be computed by the
+    jacknife or the bootstrap.
+
+    Note that Dataplot currently uses the "naive" approach that
+    computes the n*(n-1)/2 slopes.  For this reason, this command should
+    be limited to cases with at most a few thousand observations.
+
+Syntax:
+    PASSING BABLOK FIT <y> <x>     <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable for the first measurement process;
+          <x> is the response variable for the second measurement process;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Examples:
+    PASSING BABLOK FIT Y X
+    PASSING BABLOK FIT Y X SUBSET X > 1
+
+Note:
+    In addition to comparing two measurement processes, Passing-Bablok
+    regression can be used a robust linear regression method.  In this
+    case, the assumption of high positive correlation is removed.  The
+    parameter estimates are modified slightly.  As above, compute the
+    n*(n-1)/2 pairwise slopes (for i < j)
+
+        S(ij) = (y(i) - y(j))/(x(i) - x(j))
+
+    Note the following special cases:
+
+      1. If x(i) = x(j) and y(i) = y(j), this results in a slope of
+         0/0.  This is undefined so these slopes are omitted.
+
+      2. If x(i) = x(j) and y(i) > y(j), the result is positive
+         infinity.  For this case, we set an arbitrarily large number
+         (Dataplot uses 999999).  Since Passing-Bablok is based on
+         medians, the specific value is not important.
+
+      3. If x(i) = x(j) and y(i) < y(j), the result is negative
+         infinity.  For this case, we set an arbitrarily small number
+         (Dataplot uses -999999).  Since Passing-Bablok is based on
+         medians, the specific value is not important.
+
+      4. If x(i) > x(j) and y(i) = y(j), set S(ij) to positive zero.
+
+      5. If x(i) < x(j) and y(i) = y(j), set S(ij) to negative zero.
+
+    Let neg be the number of negative slopes (including the minus
+    infinities and the negative zeros).  Then set k = neg/2.
+
+    Sort the slopes and compute the shifted median as
+
+        Beta = S((NS + 1)/2 + k)                       if NS is odd
+        Beta = (S(NS/2 + k) + S((NS/2) + 1 + k))/2     if NS is even
+
+    with NS denoting the number of slopes.
+
+    Compute y(i) - Beta*x(i).  The estimated intercept is the median
+    of these values.
+
+    To specify this case, enter the command
+
+        SET PASSING BABLOK TYPE ROBUST REGRESSION
+
+    To reset the default of comparing two measurement processes, enter
+
+        SET PASSING BABLOK TYPE METHOD COMPARISON
+
+Note:
+    By default, only the Passing-Bablok confidence limits are computed.
+
+    To specify that the confidence intervals should also be computed
+    using a jacknife, enter
+
+         SET PASSING BABLOK CONFIDENCE INTERVAL JACKNIFE
+
+    To specify that the confidence intervals should also be computed
+    using a bootstrap, enter
+
+         SET PASSING BABLOK CONFIDENCE INTERVAL BOOTSTRAP
+
+    To specify that neither the jacknife or the bootstrap confidence
+    intervals are to be computed, enter
+
+         SET PASSING BABLOK CONFIDENCE INTERVAL NONE
+
+    Note that you cannot currently specify that both the jacknife and
+    the bootstrap be generated.
+
+    The number of bootstrap samples can be specified with the command
+
+         BOOTSTRAP SAMPLES <value>
+
+    The bootstrap samples are generated from the original data pairs.
+    The confidence interval is obtained from the percentiles of the
+    bootstrap samples.
+
+    The jacknife confidence intervals are obtained as
+
+        Beta  +/- tppf(1-alpha/2,N-1)*SE(jacknife)
+        Alpha +/- tppf(1-alpha/2,N-1)*SE(jacknife)
+
+    with tppf denoting the percent point function of the t distribution
+    and SE(jacknife) denoting the standard error of the jacknife
+    estimate.  The jacknife standard error is computed as:
+
+       1. Compute the estimate for the full sample (call this thetahat).
+
+       2. Generate the n "leave-one-out" estimates (call these
+          thetahat(-i)).
+
+       3. Compute the mean of the leave-one-out estimates (call this
+          thetabar(.)).
+
+       4. Then the standard error is
+
+             SE(jacknife) = SQRT{((n-1)/n)*SUM[i=1 to n]
+                            [(thetahat(-i) - theatabar(.))**2]}
+
+Note:
+    The following parameters are saved by the PASSING BABLOK FIT
+    command
+
+        ALPHA    = the estimate of the intercept parameter.
+        BETA     = the estimate of the slope parameter.
+        ALPHASE  = the estimate of the standard error of the intercept
+                   parameter (based on either the jacknife or the
+                   bootstrap).
+        BETASE   = the estimate of the standard error of the slope
+                   parameter (based on either the jacknife or the
+                   bootstrap).
+    The predicted and residual values are saved in the variables PRED
+    and RES, respectively.
+
+    The Passing-Bablok confidence intervals are written to the file
+    dpst1f.dat.  If the jacknife or bootstrap confidence intervals are
+    generated, these are written to file dpst2f.dat.
+
+    If jacknife confidence intervals are requested, the n
+    leave-one-out parameter estimates are written to dpst3f.dat.
+
+    If bootstrap confidence intervals are requested, the estimates
+    from the bootstrap samples are written to dpst3f.dat.
+
+    The sorted slopes are written to file dpst4f.dat.
+
+Note:
+    Passing and Bablok recommend a modified cusum test to check this
+    assumption.  This test is computed as follows:
+
+       1. Compute the number of observations where
+          y(i) > alpha + beta*x(i).  Call this npos.  Likewise,
+          compute the number of observations where
+          y(i) < alpha + beta*x(i).  Call this nneg.
+
+       2. Define the scores r(i)
+
+              r(i) = SQRT(nneg/npos)       y(i) > alpha + beta*x(i)
+                   = -SQRT(nneg/npos)      y(i) < alpha + beta*x(i)
+                   =  0                    y(i) = alpha + beta*x(i)
+
+       3. Define D(i) as
+
+              D(i) = {y(i) + (x(i)/beta) - alpha}/
+                     {SQRT(1 + (1/beta**2)}
+
+       4. Sort the r(i) in the order of the D(i).
+
+       5. Define cusum(i) as
+
+             cusum(i) = SUM[k=1 to i][r(k)]
+
+          and define MaxCusum as the maximum absolute value of cusum(i).
+
+       6. The test statistic is defined as MaxCusum/SQRT(nneg + 1).
+
+       7. This test statistic is compared to the Kolmogorov Smirnov
+          distribution.  Specifically, the 5% and 1% critical values
+          are 1.36 and 1.63, respectively.  Linearity is rejected
+          if the test statistic is greater than the critical value.
+
+    Dataplot prints the value of the test statistic and the critical
+    values for the method comparison case.  This information is
+    provided as guidance.  However, the regression will still be
+    performed even if the statistic is greater than the critical
+    value.
+
+Default:
+    None
+ 
+Synonyms:
+    PASSING BABLOK REGRESSION
+ 
+Related Commands:
+    FIT                         = Carry out a linear or non-linear fit.
+    ORTHOGONAL DISTANCE FIT     = Carry out an orthogonal distance linear
+                                  or non-linear fit.
+    KENDALL TAU                 = Compute Kendall's Tau correlation
+                                  coefficient.
+    DEMING FIT                  = Carry out a Deming fit.
+    ORDINARY LEAST PRODUCTS FIT = Carry out an ordinary least products
+                                  fit.
+    THEIL SEN FIT               = Carry out a Theil-Sen fit.
+    BLAND ALTMAN PLOT           = Generate a Bland-Altman plot.
+ 
+References:
+    Bablok, Passing, Bendeer and Schneider (1988), "A General Regressioni
+    Procedure for Method Transformation.  Application of Linear Regression
+    Procedures for Method Comparison Studies in Clinical Chemistry,
+    Part III," Clinical Chemistry in Laboratory Medicine, Vol. 26,
+    pp. 783-790.
+
+    Dufey (2020), "Derivation of Passing-Bablok Regression fro
+    Kendall's Tau," The International Journal of Biostatistics,
+    16(2) 20190157.
+
+Applications:
+    Comparing two measurement processes or robust regression
+ 
+Implementation Date:
+    2026/06
+ 
+Program 1:
+    . Step 1:   Define the Input Data
+    .
+    read x y
+     7.0   7.9
+     8.3   8.2
+    10.5   9.6
+     9.0   9.0
+     5.1   6.5
+     8.2   7.3
+    10.2  10.2
+    10.3  10.6
+    end of data
+    let n = size x
+    .
+    . Step 2:   Perform the Passing-Bablok fit
+    .
+    bootstrap samples 1000
+    set passing bablok confidence interval bootstrap
+    passing bablok fit y x
+ 
+Program 2:
+    . Step 1:   Define the Input Data
+    .
+    let x = data 10.1 12.2 15.3 14.8 19.1
+    let y = data 10.5 12.1 15.5 15.0 19.5
+    let n = size x
+    .
+    . Step 2:   Perform the Passing-Bablok Regression
+    .
+    set passing bablok confidence interval jacknife
+    passing bablok fit y x
+
+Program 3:
+    . Step 1:   Define the Input Data
+    .
+    skip 25
+    read creatinine.dat subject serum plasma
+    retain serum plasma subset serum > 0 subset plasma > 0
+    let n = size serum
+    let y = serum
+    let x = plasma
+    .
+    . Step 2:   Perform the Passing-Bablok Regression
+    .
+    bootstrap samples 1000
+    set passing bablok confidence interval bootstrap
+    passing bablok fit y x
+    set passing bablok confidence interval jacknife
+    passing bablok fit y x
 
 -----PATH (SET)--------------------------------------------
  
@@ -14377,6 +14750,119 @@ Program:
     SET WRITE DECIMALS 0
     WRITE Y1 Y2 Y3
  
+-----POOLED STANDARD DEVIATION (LET)-----------------------------
+ 
+POOLED STANDARD DEVIATION
+POOLED VARIANCE
+ 
+Name:
+    POOLED STANDARD DEVIATION (LET)
+    POOLED VARIANCE (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the pooled standard deviation (or variance) of a variable.
+ 
+Description:
+    The formula for the pooled variance is
+
+         s(pooled)**2 = ((n1-1)*s1**2 + (n2-1)*s2**2 + ... +
+                         (nk-1)*sk**2)/(n1 + n2 + ... + nk - k)
+
+    with ni, si**2 and k denoting the sample size of the i-th group, the
+    variance of the i-th group and the number of groups, respectively.
+    Note that if the sample sizes are equal, this is simply the mean of
+    the k sample variances.
+
+    The pooled standard deviation is the square root of the pooled
+    variance.
+
+    The data can be given as either raw data (i.e., a response variable
+    and a group-id variable) or as summary data (the variances/standard
+    deviations and sample sizes).
+
+Syntax 1:
+    LET <par> = POOLED STANDARD DEVIATION  <y> <x>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <x> is the group-id variable;
+          <par> is a parameter where the computed pooled sd is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax computes the pooled standard devation from the raw data.
+ 
+Syntax 2:
+    LET <par> = POOLED VARIANCE  <y> <x>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <x> is the group-id variable;
+          <par> is a parameter where the computed pooled variance is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax computes the pooled variance from the raw data.
+ 
+Syntax 3:
+    LET <par> = SUMMARY POOLED STANDARD DEVIATION  <ysd> <n>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <ysd> is a variable containing the sample standard deviations;
+          <n> is a variable containing the sample sizes;
+          <par> is a parameter where the computed pooled sd is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax computes the pooled standard devation from summary data.
+ 
+Syntax 4:
+    LET <par> = SUMMARY POOLED VARIANCE  <yvar> <n>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <yvar> is a variable containing the sample variances;
+          <n> is a variable containing the sample sizes;
+          <par> is a parameter where the computed pooled sd is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax computes the pooled variance from summary data.
+ 
+Examples:
+    LET POOLSD  = POOLED STANDARD DEVIATION Y X
+    LET POOLVAR = POOLED VARIANCE Y X
+    LET POOLSD  = POOLED STANDARD DEVIATION YSD  NX
+    LET POOLVAR = POOLED STANDARD DEVIATION YVAR NX
+    LET POOLSD  = POOLED STANDARD DEVIATION Y X   SUBSET Y > 0
+ 
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    POOLED SD is a synonym for POOLED STANDARD DEVIATION
+ 
+Related Commands:
+    MEAN                   = Compute the mean of a variable.
+    STANDARD DEVIATION     = Compute the standard deviation of a variable.
+    ROBUST POOLED SD       = Compute a robust pooled standard deviation.
+ 
+Applications:
+    Data Analysis
+ 
+Implementation Date:
+    2024/09
+ 
+Program:
+    SKIP 25
+    READ GEAR.DAT Y X
+    .
+    LET YPOOLSD  = POOLED STANDARD DEVIATION Y X
+    LET YPOOLVAR = POOLED VARIANCE           Y X
+    .
+    WRITE "Pooled Standard deviation:   ^ypoolsd"
+    WRITE "Pooled Variance:             ^ypoolvar"
+
 -----POOLED VARIANCE-COVARIANCE MATRIX (LET)-------------------------
  
 POOLED VARIANCE-COVARIANCE MATRIX
@@ -20938,8 +21424,8 @@ Type:
     Set Subcommand
  
 Purpose:
-    Specify the name of the directory where DATAPLOT's auxiliary files
-    are stored.
+    Specify whether data input line appears on the same line as the
+    prompt or on the next line.
  
 Description:
     When expecting a new command, Dataplot writes a prompt character
@@ -20963,13 +21449,14 @@ Description:
     Specifcally, the Intel Fortran compiler used for the Microsoft
     Windows implementation does not support this (note that earlier
     versions of this compiler did support support this).  The gfortran
-    compiler used for Linux/Unix and Mac OS X implementations does support
-    this feature.
+    compiler used for Linux/Unix and MacOSX implementations does
+    support this feature.
 
 Syntax:
     SET PROMPT ADVANCE <ON/OFF>
+
     where <ON> specifies that the carriage return/line feed will be
-               suppressed while <OFF> specifies that it will not.
+    suppressed while <OFF> specifies that it will not.
  
 Examples:
     SET PROMPT ADVANCE ON
@@ -22572,6 +23059,19 @@ Program 2:
     write2 ^fname3  "."
 
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -29337,6 +29837,7 @@ Description:
       19) Reading binary data
       20) Reading image data
       21) What if all of the data will not fit into memory?
+      22) What if numeric fields contain underscores?
 
     If you create the ASCII file yourself, it is recommended that
     you create it with variables of equal length (pick some numeric
@@ -29682,6 +30183,17 @@ Description:
     
               SET READ DELIMITER <character>
     
+          If you have tab delimited data, you can enter the command
+
+              SET READ TAB TO COMMA
+
+          This converts tabs to commas and then treats the data file as a
+          comma delimited file.  This is also useful if you have missing
+          cells in the data file.  To reset the default (i.e., tabs are
+          treated as spaces), enter the command
+
+              SET READ TAB TO SPACE
+
           The variable form of the COLUMN LIMITS, the
           SET READ MISSING VALUE, and the SET READ DELIMITER commands
           were introduced in the January, 2004 version.  The
@@ -30194,7 +30706,7 @@ Description:
 
     Dataplot was designed primarily for interactive usage.  For this reason,
     it reads all data into memory.  The current default is to have a
-    workspace that accomodates 10 columns with 1,500,000 rows (you can
+    workspace that accomodates 10 columns with 2,000,000 rows (you can
     re-dimension to obtain more columns at the expense of fewer rows, however
     you cannot increase the maximum number of rows).
 
@@ -30240,6 +30752,29 @@ Description:
           The STREAM READ command allows you to do a fair bit of exploratory
           analyses on these large data sets even though the full data set is
           not read into memory.
+
+    READING NUMERIC FIELDS WITH UNDERSCORES (OR COMMAS)
+
+    For clarity, numeric fields may sometimes contain underscores (or
+    commas).  For example
+
+       111_234_456.12
+
+    To ignore underscores in data fields, enter the command
+
+       SET READ NUMBERS CONTAIN UNDERSCORE
+
+    To reset the default of treating underscores as an error, enter
+
+       SET READ NUMBERS CONTAIN OFF
+
+    Alternatively, you can specify commas with the command
+
+       SET READ NUMBERS CONTAIN COMMAS
+
+    Note that commas can also be ignored by entering
+
+       SET READ COMMA IGNORE ON
 
 Syntax 1:
     READ  <x1>   <x2>   ... <xk>
@@ -30440,6 +30975,8 @@ Implementation Date:
     2016/06 Support for SET READ IP ADDRESSES
     2019/03 Support for SET READ ASTERISK IGNORE
     2019/12 Support for SET READ PERCENT SIGN IGNORE
+    2026/06 Support for SET READ TAB TO
+    2026/06 Support for SET READ NUMBERS CONTAIN
     Numerous bug fixes over the years
  
 Program 1:
@@ -37609,6 +38146,104 @@ Implementation Date:
 Program:
     XX
  
+-----RENDER ORDER (SET)----------------------------------
+ 
+RENDER ORDER
+ 
+Name:
+    RENDER ORDER (SET)
+ 
+Type:
+    Set Subcommand
+ 
+Purpose:
+    Specify the order in which characters, lines (and regions), bars and
+    spikes are rendered when generating a plot.
+ 
+Description:
+    In Dataplot, plot curves (traces) can be generated as characters,
+    lines, bars or spikes.  These are set independently of each other.
+
+    By default, Dataplot renders these in the following order
+
+       1. CHARACTER
+       2. LINES
+       3. BARS
+       4. SPIKES
+
+    Regions are rendered when drawing the LINES.
+
+    There may be occassions where you would like to modify this default
+    order.  In particular, if you are generating a plot character when
+    solid filled regions or bars are also generated, you may want to
+    generate these before the characters are drawn.
+ 
+Syntax:
+    SET RENDER ORDER <arg1> <arg2> <arg3> <arg4>
+    where <arg1> specifies the first element to be drawn, <arg2>
+          specifies the second element to be drawn, <arg3> specifies
+          the third element to be drawn and <arg4> specifies the fourth
+          element to be drawn.
+ 
+    Each of the <arg> values is one of CHARACTER, LINE, BAR or SPIKE.
+    CHARACTER, LINE, BAR and SPIKE must each be entered exactly once
+    on this command.  If not, the default order will be used.
+
+Examples:
+    SET RENDER ORDER LINE CHARACTER BAR SPIKE
+    SET RENDER ORDER LINE BAR CHARACTER SPIKE
+    SET RENDER ORDER LINE BAR SPIKE CHARACTER
+ 
+Default:
+    The default is CHARACTER LINE BAR SPIKE
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    CHARACTER      = Specify the plot characters.
+    LINES          = Specify the plot lines.
+    BAR            = Specify the plot bars.
+    SPIKE          = Specify the plot spikes.
+ 
+Applications:
+    Presentation Graphics
+ 
+Implementation Date:
+    2026/09
+ 
+Program:
+    . Define the data
+    LET Y = DATA 2930 2085 1816 4157 4949 228 84
+    LET X = DATA 1 2 3 4 5 6 7
+    .
+    X2FRAME OFF
+    Y2FRAME OFF
+    Y1TIC POSITION THROUGH
+    X1TIC POSITION THROUGH
+    YGRID ON
+    XGRID OFF
+    GRID COLOR g50
+    .
+    . Plotting
+    .
+    Y1LIMITS 0 5000
+    REGION FILL ON
+    REGION COLOR RED
+    CHARACTER CIRCLE
+    CHARACTER FILL ON
+    CHARACTER COLOR CYAN
+    CHARACTER HW 4 3
+    SET RENDER ORDER LINE CHARACTER BAR SPIKE
+    PLOT Y X
+    .
+    REGION FILL OFF
+    BAR ON
+    BAR FILL ON
+    BAR FILL COLOR RED
+    SET RENDER ORDER BAR LINE CHARACTER SPIKE
+    PLOT Y X
+
 -----REPAIR PLOT--------------------------------------
  
 REPAIR PLOT
@@ -44979,6 +45614,71 @@ Program:
     PLOT YIELD
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -68056,6 +68756,125 @@ Program:
     LET Y = NORMAL RANDOM NUMBERS FOR I = 1 1 100
     SUMMARY Y
  
+-----SUMMARY COMBINED STANDARD DEVIATION (LET)---------------------
+ 
+SUMMARY COMBINED STANDARD DEVIATION
+SUMMARY COMBINED VARIANCE
+ 
+Name:
+    SUMMARY COMBINED STANDARD DEVIATION (LET)
+    SUMMARY COMBINED VARIANCE (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the combined standard deviation (or variance) from summary
+    data for two or more groups.
+ 
+Description:
+    In some cases, you may only have summary information (mean, standard
+    deviation and sample size) for two or more groups.  This command is
+    used to compute the standard deviation of all of the data based on
+    the summary information.
+
+    The combined standard deviation is related to, but distinct from, the
+    pooled standard deviation.  The pooled standard deviation assumes that
+    the groups have a common standard deviation and it computes a weighted
+    average of the group standard deviations.  However, for the combined
+    standard deviation, we also have to take the mean into account
+
+    The formula for the pooled variance for two groups is
+
+         V(pooled) = ((n1-1)*s1**2 + (n2-1)*s2**2)/(n1 + n2 - 1)
+
+    with ni, si**2 and k denoting the sample size of the i-th group, the
+    variance of the i-th group and the number of groups, respectively.
+    Note that if the sample sizes are equal, this is simply the mean of
+    the two sample variances.  The pooled standard deviation is the square
+    root of the pooled variance.
+
+    The formula for the combined variance is
+
+        V(combined) = {(n1-1)*s1**2 + (n2-1)*s2**2 + C*(ybar1-ybar2)**2}/
+                      (n1 + n2 - 1)
+
+    with ybar1 and ybar2 denoting the means of the two groups and where
+
+        C = N1*N2/(N1+N2)
+
+    The combined standard deviation is the square root of the combined
+    variance.
+
+    If there are more than two groups, the combined standard deviation of
+    groups one and two is computed.  Then this combined standard deviation
+    is combined with group three.  This process is repeated until all of
+    the groups are combined.
+
+Syntax 1:
+    LET <par> = SUMMARY COMBINED STANDARD DEVIATION  <ymean> <ysd> <n>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <ymean> is a variable containing the sample group means;
+          <ysd> is a variable containing the sample group standard
+               deviations;
+          <n> is a variable containing the sample group sizes;
+          <par> is a parameter where the computed combined sd is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Syntax 4:
+    LET <par> = SUMMARY COMBINED VARIANCE  <ymean> <yvar> <n>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <ymean> is a variable containing the sample group means;
+          <ysd> is a variable containing the sample group standard
+               deviations;
+          <n> is a variable containing the sample sizes;
+          <par> is a parameter where the computed combined variance is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Examples:
+    LET COMBSD  = SUMMARY COMBINED STANDARD DEVIATION YMEAN YSD YN
+    LET COMBSD  = SUMMARY COMBINED VARIANCE           YMEAN YSD YN
+    LET COMBSD  = SUMMARY COMBINED VARIANCE           YMEAN YSD YN  SUBSET YSD > 0
+ 
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    SUMMARY COMBINED SD is a synonym for SUMMARY COMBINED STANDARD DEVIATION
+ 
+Related Commands:
+    MEAN                   = Compute the mean of a variable.
+    STANDARD DEVIATION     = Compute the standard deviation of a variable.
+    POOLED SD              = Compute a pooled standard deviation.
+    POOLED VARIANCE        = Compute a pooled variance.
+    ROBUST POOLED SD       = Compute a robust pooled standard deviation.
+ 
+Applications:
+    Data Analysis
+ 
+Implementation Date:
+    2026/10
+ 
+Program:
+    SKIP 25
+    READ GEAR.DAT Y X
+    SET LET CROSS TABULATE COLLAPSE
+    LET YMEAN = CROSS TABULATE MEAN Y X
+    LET YSD   = CROSS TABULATE SD   Y X
+    LET YN    = CROSS TABULATE        X
+    .
+    LET YCOMBSD  = SUMMARY COMBINED STANDARD DEVIATION YMEAN YSD YN
+    LET YCOMBVAR = SUMMARY COMBINED VARIANCE           YMEAN YSD YN
+    .
+    WRITE "Combined Standard deviation:   ^ycombsd"
+    WRITE "Combined Variance:             ^ycombvar"
+
 -----SUPERSCRIPT SCALE (SET)---------------------------------------
  
 SUPERSCRIPT SCALE
@@ -69463,25 +70282,6 @@ Program 2:
     feedback on
 
 ---------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

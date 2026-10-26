@@ -3765,6 +3765,8 @@
       IFTEXP='+'
       IFTORD='DATA'
       IFORSW='E'
+      IH='    '
+      IH2='    '
 !
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
@@ -33457,6 +33459,10 @@
 !
 !              CASE 3: THREE RESPONSE VARIABLES
 !
+!              SCALE STATISTICS:
+!                 SUMMARY COMBINED STANDARD DEVIATION
+!                 SUMMARY COMBINED VARIANCE
+!
 !              WEIGHTED STATISTICS:
 !                 GROUPED CORRELATION
 !                 WEIGHTED CORRELATION
@@ -33470,6 +33476,7 @@
 !                 EQUAL SLOPES CRITICAL VALUE
 !                 EQUAL SLOPES ONE SIDED PVALUE
 !                 EQUAL SLOPES TWO SIDED PVALUE
+!                 DINS ZETA
 !                 PARTIAL CORRELATION
 !                 PARTIAL CORRELATION ABSOLUTE VALUE
 !                 PARTIAL CORRELATION CDF
@@ -33964,6 +33971,9 @@
 !     UPDATED         --MAY       2026. INDEX LESS THAN
 !     UPDATED         --MAY       2026. INDEX LESS THAN OR EQUAL TO
 !     UPDATED         --AUGUST    2026. FULL WIDTH HALF MAXIMUM
+!     UPDATED         --AUGUST    2026. DINS ZETA
+!     UPDATED         --OCTOBER   2026. SUMMARY COMBINED STANDARD DEVIATION
+!     UPDATED         --OCTOBER   2026. SUMMARY COMBINED VARIANCE
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -33993,7 +34003,7 @@
       INCLUDE 'DPCOPA.INC'
 !CCCC INCLUDE 'DPCOZC.INC'
 !
-      PARAMETER (MAXSTA=1681)
+      PARAMETER (MAXSTA=1685)
       PARAMETER (MAXSCL=8)
       INTEGER      INFLAV(MAXSTA)
       CHARACTER*4  INAME(MAXSTA,MAXSCL)
@@ -44217,6 +44227,30 @@
       'FWHM','    ','    ','    ','    ','    ','    ','    '/
       DATA INFLAV(1681)/2/
       DATA INLONG(1681)/'FULL WIDTH HALF MAXIMUM'/
+!
+      DATA INCASE(1682)/'DINS'/
+      DATA (INAME(1682,J),J=1,MAXSCL)/   &
+      'DINS','    ','ZETA','    ','    ','    ','    ','    '/
+      DATA INFLAV(1682)/3/
+      DATA INLONG(1682)/'DINS ZETA'/
+!
+      DATA INCASE(1683)/'SCSD'/
+      DATA (INAME(1683,J),J=1,MAXSCL)/   &
+      'SUMM','    ','COMB','SD  ','    ','    ','    ','    '/
+      DATA INFLAV(1683)/3/
+      DATA INLONG(1683)/'SUMMARY COMBINED STANDARD DEVIATION'/
+!
+      DATA INCASE(1684)/'SCSD'/
+      DATA (INAME(1684,J),J=1,MAXSCL)/   &
+      'SUMM','    ','COMB','STAN','DEVI','    ','    ','    '/
+      DATA INFLAV(1684)/3/
+      DATA INLONG(1684)/'SUMMARY COMBINED STANDARD DEVIATION'/
+!
+      DATA INCASE(1685)/'SCVR'/
+      DATA (INAME(1685,J),J=1,MAXSCL)/   &
+      'SUMM','    ','COMB','VARI','    ','    ','    ','    '/
+      DATA INFLAV(1685)/3/
+      DATA INLONG(1685)/'SUMMARY COMBINED VARIANCE'/
 !
 !-----START POINT-----------------------------------------------------
 !

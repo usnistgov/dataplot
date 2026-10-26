@@ -1,4 +1,4 @@
-7200.       (VERSION 2025.07)  total number of lines in file (including this line)
+7300.       (VERSION 2026.06)  total number of lines in file (including this line)
 29.                          number of     sections below
    50.    OVERVIEW           first line number of OVERVIEW          section
   150.    GRAPHICS           first line number of GRAPHICS          section
@@ -27,8 +27,8 @@
  5200.    LINE TYPES         first line number of LINE TYPES        section
  5300.    COLOR TYPES        first line number of COLOR TYPES       section
  5600.    ASCII FILES        first line number of ASCII FILES       section
- 6600.    SYSTEM LIMITS      first line number of SYSTEM LIMITS     section
- 6800.    PROBABILITY DIST   first line number of DISTRIBUTIONS     section
+ 6700.    SYSTEM LIMITS      first line number of SYSTEM LIMITS     section
+ 6900.    PROBABILITY DIST   first line number of DISTRIBUTIONS     section
  
 ----------------------------------------------------------
 
@@ -3243,7 +3243,15 @@ Distribution:
 
 Miscellaneous:
    COMMON DIGITS
+   INDEX EXTREME
+   INDEX GREATER THAN
+   INDEX GREATER THAN OR EQUAL TO
+   INDEX LESS THAN
+   INDEX LESS THAN OR EQUAL TO
+   INDEX MAXIMUM
+   INDEX MINIMUM
    INTEGRAL
+   INTERVAL COUNT
    NUMBER OF COMMON DIGITS
    PRODUCT
    RAW SHANNON DIVERSITY INDEX
@@ -3597,6 +3605,15 @@ Miscellaneous:
    INDEX LAST  NOT MATCH
    PERCENTAGE DIFFERENCE OF THE MEAN
 
+Misscellaneous:
+   DIFFERENCE OF COUNTS
+   DIFFERENCE OF PRODUCTS
+   DIFFERENCE OF SUMS
+   INDEX FIRST MATCH
+   INDEX FIRST NOT MATCH
+   INDEX LAST MATCH
+   INDEX LAST NOT MATCH
+
 Case 3: Three Response Variables
 
 Fit/Correlation:
@@ -3673,23 +3690,6 @@ Consensus Means
    SUMMARY GRAYBILL DEAL ZHANG TWO STANDARD ERROR
 
 ----------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -5669,10 +5669,11 @@ topics are discussed:
   16. Reading monetary data (e.g., $23,461,58)
   17. Reading numeric values with trailing "+" or "-" or leading
       "<" or "">"
-  18. Commas withing character fields
+  18. Commas within character fields
   19. Reading binary data
   20. Reading image data
   21. What if all of the data will not fit into memory?
+  22. What if numeric fields contain underscores?
 
 If you create the ASCII file yourself, it is recommended that
 you create it with variables of equal length (pick some numeric
@@ -5992,7 +5993,7 @@ empty fields), you can try one of the following things.
 
     3. If your data has both columns of unequal length and
        inconsistent columns for given data fields, an alternative
-       is to use a comma delimited data file.  If there is no data data
+       is to use a comma delimited data file.  If there is no data
        between successive commas, this is treated as a missing value.
        The default is to assign a value of zero.  Alternatively, you
        can use the SET READ MISSING VALUE command described above.
@@ -6001,6 +6002,17 @@ empty fields), you can try one of the following things.
        command
 
           SET READ DELIMITER <character>
+
+       If you have tab delimited data, you can enter the command
+
+          SET READ TAB TO COMMA
+
+       This converts tabs to commas and then treats the data file as a
+       comma delimited file.  This is also useful if you have missing
+       cells in the data file.  To reset the default (i.e., tabs are
+       treated as spaces), enter the command
+
+          SET READ TAB TO SPACE
 
     4. You can use the following command
 
@@ -6576,7 +6588,95 @@ several things that can potentially be done
       The STREAM READ command can allow you to do a fair bit of
       exploratory analyses on these large data sets.  
 
+READING NUMERIC FIELDS WITH UNDERSCORES (OR COMMAS)
+
+For clarity, numeric fields may sometimes contain underscores (or
+commas).  For example
+
+   111_234_456.12
+
+To ignore underscores in data fields, enter the command
+
+   SET READ NUMBERS CONTAIN UNDERSCORE
+
+To reset the default of treating underscores as an error, enter
+
+   SET READ NUMBERS CONTAIN OFF
+
+Alternatively, you can specify commas with the command
+
+   SET READ NUMBERS CONTAIN COMMAS
+
+Note that commas can also be ignored by entering
+
+   SET READ COMMA IGNORE ON
+
 ----------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

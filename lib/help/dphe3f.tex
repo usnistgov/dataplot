@@ -1,13 +1,13 @@
- 82800.    (VERSION 2026.03)   total number of lines in file (including this line)
+ 83200.    (VERSION 2026.09)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    D                  first line number of D section
 19900.    E                  first line number of E section
 29000.    F                  first line number of F section
-39400.    G                  first line number of G section
-57600.    H                  first line number of H section
-64900.    I                  first line number of I section
-74200.    J                  first line number of J section
-76400.    K                  first line number of K section
+39500.    G                  first line number of G section
+57700.    H                  first line number of H section
+65000.    I                  first line number of I section
+74400.    J                  first line number of J section
+76600.    K                  first line number of K section
 
 ----------------------------------------------------------
  
@@ -38881,6 +38881,112 @@ Program:
     PLOT FTPPF(P,30) FOR X = 0  0.01  0.99
     END OF MULTIPLOT
  
+-----FULL WIDTH HALF MAXIMUM (LET)------------------------------------
+ 
+FULL WIDTH HALF MAXIMUM
+ 
+Name:
+    FULL WIDTH HALF MAXIMUM (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the full width half maximum of a curve.
+ 
+Description:
+    The full width half maximum (FWHM) is the distance between two
+    points on a curve where the value of the curve drops to half of
+    its maximum peak.
+
+    Given a set of points (X,Y), the FWHM is computed as follows:
+
+        1. Sort by the X variable.
+
+        2. Find the maximum value of Y and call this YMAX and call
+           the corresponding x-coordinate XMAX.
+
+        3. Divide the maximum value by 2 and call this YMAX2.
+
+        4. Find the first value of X to the left of XMAX where
+           the corresponding Y value is less than or equal to YMAX2.
+           Call this XLEFT.  If no Y values are less than or equal
+           to YMAX2, set XLEFT to X(1).
+
+        5. Find the first value of X to the right of XMAX where
+           the corresponding Y value is less than or equal to YMAX2.
+           Call this XRIGHT.  If no Y values are less than or equal to
+           YMAX2, set XRIGHT to X(N).
+
+        6. Then FWHM = XRIGHT - XLEFT.
+
+    Note that if there are duplicate X values an error will be returned.
+
+    FWHM is commonly used in spectroscopy and signal processing.
+
+Syntax:
+    LET <par> = FULL WIDTH HALF MAXIMUM <x> <y>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <x> is the horizontal axis response variable;
+          <y> is the vertical axis response variable;
+          <par> is a parameter containing the returned FWHM;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    The data does not need to be pre-sorted (Dataplot will automatically
+    sort by the <x> variable).
+
+Examples:
+    LET A = FULL WIDTH HALF MAXIMUM Y X
+    LET A = FULL WIDTH HALF MAXIMUM Y X  SUBSET X > 0
+ 
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    FULL WIDTH HALF MAX is a synonym for FULL WIDTH HALF MAXIMUM
+    FWHM is a synonym for FULL WIDTH HALF MAXIMUM
+ 
+Related Commands:
+    FFT              = Compute the fast Fourier transform.
+    SPECTRAL PLOT    = Generate a spectral plot.
+    LOW PASS FILTER  = Generate a low pass filter.
+    HIGH PASS FILTER = Generate a high pass filter.
+ 
+Applications:
+    Spectroscopy and signal processing
+ 
+Implementation Date:
+    2026/09
+ 
+Program:
+    . Step 1:   Create some data
+    .
+    let y = normal random numbers for i = 1 1 100000
+    kernel density plot y
+    let ymax = maximum yplot
+    let ymax2 = ymax/2
+    let ymax = round(ymax,5)
+    let ymax2 = round(ymax2,5)
+    .
+    let y2 = yplot
+    let x2 = xplot
+    let yfwhm = full width half maximum x2 y2
+    let yfwhm = round(yfwhm,5)
+    .
+    justification center
+    move 50 97
+    text Ymax: ^ymax, ymax/2: ^ymax2
+    move 50 93
+    text Full Width Half Maximum: ^fwhm
+    line color blue
+    drawdata -3.5 ymax2 3.5 ymax2
+
 -----FUNCTION BLOCK-----------------------------------------------------
  
 FUNCTION BLOCK
@@ -39291,12 +39397,6 @@ Program:
  
  
  
-
-
-
-
-
-
 
 
 
@@ -69296,6 +69396,118 @@ Program:
     print indx y1 y2
     print a1 a2 a3 a4
  
+-----INDEX GREATER THAN-------------------------------------------------
+ 
+INDEX GREATER THAN
+INDEX GREATER THAN OR EQUAL TO
+INDEX LESS THAN
+INDEX LESS THAN OR EQUAL TO
+
+Name:
+    INDEX GREATER THAN (LET)
+    INDEX GREATER THAN OR EQUAL TO (LET)
+    INDEX LESS THAN (LET)
+    INDEX LESS THAN OR EQUAL TO (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the index of the first value in a variable that is greater
+    than a specified cutoff.
+
+Description:
+    This is a utility routine for finding the first row in a variable
+    that is greater than a specified value.  Alternatively, you can
+    specify greater than or equal to, less than, or less than or equal to.
+
+    The cutoff value is specified with the command
+
+       LET CUTOFF = <value>
+
+    If the requested condition is not matched, an index of -1 will be
+    returned.
+
+Syntax 1:
+    LET <par> = INDEX GREATER THAN <resp>
+                                   <SUBSET/EXCEPT/FOR qualification>
+    where <resp> is the variable for which the index is determined;
+          <par> is a parameter where the index value is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax is used for the greater than case.
+
+Syntax 2:
+    LET <par> = INDEX GREATER THAN OR EQUAL TO <resp>
+                                   <SUBSET/EXCEPT/FOR qualification>
+    where <resp> is the variable for which the index is determined;
+          <par> is a parameter where the index value is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax is used for the greater than or equal to case.
+
+Syntax 3:
+    LET <par> = INDEX LESS THAN <resp>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <resp> is the variable for which the index is determined;
+          <par> is a parameter where the index value is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax is used for the less than case.
+
+Syntax 4:
+    LET <par> = INDEX LESS THAN OR EQUAL TO <resp>
+                                <SUBSET/EXCEPT/FOR qualification>
+    where <resp> is the variable for which the index is determined;
+          <par> is a parameter where the index value is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+    This syntax is used for the less than or equal to case.
+
+Examples:
+    LET I1 = INDEX GREATER THAN Y1
+    LET I1 = INDEX GREATER THAN OR EQUAL TO Y1
+    LET I1 = INDEX LESS    THAN Y1
+    LET I1 = INDEX LESS    THAN OR EQUAL TO Y1
+
+Note:
+    Since these commands return a scalar value, they are treated as
+    Statistic LET sub-commands.  Dataplot statistics can be used in a
+    number of commands.  For details, enter
+
+        HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    INDEX GREATER THAN OR EQUAL
+    INDEX LESS    THAN OR EQUAL
+ 
+Related Commands:
+    INDEX MINIMUM     = Compute the index for the maximum value of a
+                        variable.
+    INDEX MINIMUM     = Compute the index for the minimum value of a
+                        variable.
+    INDEX EXTREME     = Compute the index for the most extreme value of a
+                        variable.
+    INDEX FIRST MATCH = Compute the index of the first matching entry for
+                        two response variables.
+ 
+Applications:
+    Data Analysis
+ 
+Implementation Date:
+    2026/06
+ 
+Program:
+    LET Y1 = NORMAL RANDOM NUMBERS FOR I = 1 1 1000
+    LET CUTOFF = 2.5
+    LET IINDXMAX = INDEX GREATER THAN OR EQUAL TO Y1
+    LET CUTOFF = -2.5
+    LET IINDXMIN = INDEX LESS    THAN OR EQUAL TO Y1
+    PRINT IINDEXMAX IINDEXMIN
+ 
 -----INDEX MAXIMUM-------------------------------------------------
  
 INDEX MAXIMUM
@@ -74185,18 +74397,6 @@ Program:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 -------------------------  *J*  ZZZZZ--------------------
 
 -----J0INT (LET)--------------------------------
@@ -78289,6 +78489,10 @@ Syntax 2:
     and where the <SUBSET/EXCEPT/FOR qualification> is optional.
 
     This syntax computes Kendall's tau-a.
+
+    Note that since Kendall's tau-a is equivalent to Kendall's tau-b
+    when there are no ties and it assumes there are no ties, the
+    Kendall's tau-a will simply return the Kendall's tau-b value.
  
 Syntax 3:
     LET <par> = KENDALLS TAU B <y1> <y2>
@@ -78319,6 +78523,25 @@ Examples:
 Note:
     The two variables must have the same number of elements.
  
+Note:
+    Dataplot implements Kendall's tau by computing all the pairwise
+    slopes.  Although straightforward, this is not a particularly
+    efficient computational algorithm.
+
+    The 2026/04 version of Dataplot added the capability to compute
+    Kendall's tau-b with a more efficient algorithm.  Specifically, it
+    adapts the ktau.f routine from the R mcr package (some minor code
+    modifications were made for incorporation into Dataplot).  For larger
+    sample sizes, this can dramatically reduce the computational time
+    required.  Note that the computational time for smaller data sets is
+    typically not an issue.  To specify the sample size at which the more
+    efficient algorithm will be used (i.e., any sample size larger than or
+    equal to this will use the more efficient algorithm), enter the command
+
+         SET KENDALL TAU CUTOFF <value>
+
+    The default value is 100.
+
 Note:
     Dataplot statistics can be used in a number of commands.  For
     details, enter
@@ -78352,7 +78575,8 @@ Implementation Date:
     2019/08: Added KENDALL TAU A
     2019/08: Added KENDALL TAU B
     2019/08: Added KENDALL TAU C
- 
+    2026/04: More efficient algorithm for Kendall's tau-B
+
 Program:
     . Following data from page 320 of Conover, "Practical
     . Nonparametric Statistics", Third Edition, 1999, Wiley.
@@ -78362,6 +78586,158 @@ Program:
 
     The computed value of Kendall's tau is 0.4355.
  
+-----KENDALL TAU B CONFIDENCE LIMITS---------------------------------
+ 
+KENDALL TAU B CONFIDENCE LIMITS
+ 
+Name:
+    KENDALL TAU B CONFIDENCE LIMITS
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Generates a confidence interval for the Kendall's tau B correlation
+    between two response variables
+ 
+Description:
+    Assuming that the populations for two random variables follow a
+    bivariate normal distribution with population Kendall's tau-b
+    correlation rho, the Fisher's transformation of the sample Kendall's
+    tau-b correlation from r to z(r)
+
+        z(r) = 0.5*LN((1+r)/(1-r))
+
+    is approximately normally distributed with variance 1/(n-3).  A
+    confidence interval for z(r) is
+
+        z(r) +/- NORPPF(1-alpha/2)*SQRT(0.437/(n-4))
+
+    with NORPPF denoting the percent point function of the standard
+    normal distribution.  The interval for z(r) can be back transformed
+    to obtain a confidence interval for r
+
+        r(lower) = (EXP(2*z(r)(lower)) - 1)/(EXP(2*z(r)(lower)) + 1)
+        r(upper) = (EXP(2*z(r)(upper)) - 1)/(EXP(2*z(r)(upper)) + 1)
+
+    The derivation for this formula is from Fisher.
+
+Syntax:
+    KENDALL TAU B CONFIDENCE LIMITS  <y1> <y2>
+                                     <SUBSET/EXCEPT/FOR qualification>
+    where <y1> is the first response variable;
+          <y2> is the second response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+Syntax 2:
+    KENDALL TAU B CONFIDENCE LIMITS  <y1> ... <yk>
+                                     <SUBSET/EXCEPT/FOR qualification>
+    where <y1> ... <yk> is a list of 1 to 30 response variables;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+ 
+    This syntax is used to generate Kendall tau-b confidence limits
+    for all the pairwise combinations of <y1> to <yk>.
+
+Examples:
+    KENDALL TAU B CORRELATION CONFIDENCE LIMITS Y1 Y2
+    KENDALL TAU B CORRELATION CONFIDENCE LIMITS Y1 TO Y10
+    KENDALL TAU B CORRELATION CONFIDENCE LIMITS Y1  SUBSET TAG > 2
+ 
+Note:
+    A table of confidence intervals is printed for confidence limits
+    of 80.0, 90.0, 95.0, 99.0, and 99.9.
+ 
+Note:
+    Confidence limits for Kendall's Tau B can also be generated using the
+    bootstrap.  This is demonstrated in the Program 1 example below.
+
+    The bootstrap limits may be preferred if the bivariate normality
+    assumption is not valid.
+
+Default:
+    None
+ 
+Synonyms:
+    KENDALL TAU B CONFIDENCE INTERVAL
+    KENDALL TAU CONFIDENCE LIMITS
+    KENDALL TAU CONFIDENCE INTERVAL
+ 
+Related Commands:
+    KENDALL TAU B CORRELATION   =  Compute the Kendall Tau B correlation
+                                   between two variables.
+    CORRELATION CONFIDENCE LIMIT = Compute confidence limits for the
+                                   correlation coefficient.
+    CORRELATIION MATRIX          = Compute the correlation matrix of a
+                                   set of response variables.
+ 
+Reference:
+    Kendall, M. G. (1949), "Rank and product-moment correlation,"
+    Biometrika, 36(1/2), 177-193, doi: 10.2307/2332540.
+
+    Fisher, R. A. (1921), "On the probable error of a coefficient of
+    correlation deduced from a small sample," Metron, i (4), 1-32.
+
+    Fisher, R. A. (1925), "Statistical methods for research workers,"
+    London: Hafner Press.
+
+    Fieller, E. C., Hartley, H. O., and Pearson, E. S. (1957), "Tests
+    for rank correlation coefficients," Biometrika, 44(3/4), 470-481,
+    doi: 10.2307/2332878.
+
+    Bonnett, D. G. and Wright, T. A. 2000. 'Sample Size
+    Requirements for Estimating Pearson, Kendall and Spearman
+    Correlations.' Psychometrika, Vol 65, No 1 (March), 23-28.
+
+Applications:
+    Correlation
+ 
+Implementation Date:
+    2026/05
+ 
+Program 1:
+    . Step 1:   Read the data
+    .
+    skip 25
+    read berger1.dat y x
+    let n = size y
+    .
+    . Step 2:   Bootstrap estimate of confidence interval
+    .
+    bootstrap samples 10000
+    bootstrap kendall tau b plot x y
+    .
+    . Step 3:   Analytic estimates
+    .
+    kendall tau b confidence limit x y
+ 
+Program 2:
+    .  This data is from page 202 of
+    .
+    .  Peavy, Bremer, Varner, Hogben (1986), "OMNITAB 80:
+    .  An Interpretive System for Statistical and Numerical
+    .  Data Analysis," NBS Special Publication 701.
+    .
+    .  Original source of the data is from
+    .  Draper and Smith (1981), "Applied Regression Analysis",
+    .  Wiley, p. 373.
+    .
+    dimension 40 columns
+    .
+    read matrix m
+    42.2  11.2  31.9  167.1
+    48.6  10.6  13.2  174.4
+    42.6  10.6  28.7  160.8
+    39.0  10.4  26.1  162.0
+    34.7   9.3  30.1  140.8
+    44.5  10.8   8.5  174.6
+    39.1  10.7  24.3  163.7
+    40.1  10.0  18.6  174.5
+    45.9  12.0  20.4  185.7
+    end of data
+    .
+    set write decimals 4
+    kendall tau b confidence limits m1 m2 m3 m4
+
 -----KENDALL TAU DISSIMILARITY (LET)--------------------------------
  
 KENDALL TAU DISSIMILARITY
@@ -78446,6 +78822,15 @@ Examples:
 Note:
     The two variables must have the same number of elements.
  
+Note:
+    There are several alternative formulations for Kendall's tau.  You
+    can specify which formulation to use with the command
+
+        SET KENDALL TAU DEFINITION <B/C/CONOVER>
+
+    with B denoting Kendall's Tau B, C denoting Kendall's Tau C and
+    CONOVER denoting Conover's formula, respectively.  The default is B.
+
 Default:
     None
  
@@ -78482,6 +78867,7 @@ Implementation Date:
     2018/10: Added KENDALL TAU SIMILARITY
     2018/10: Added KENDALL TAU DISTANCE as a synonym for
              KENDALL TAU DISSIMILARITY
+    2026/04: Added SET KENDALL TAU DEFINITION command
  
 Program 1:
     SKIP 25
@@ -82682,6 +83068,20 @@ Program:
  
 -------------------------------------------------------------
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

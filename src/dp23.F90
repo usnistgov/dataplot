@@ -2703,6 +2703,7 @@
       ISUBN1='DPPT'
       ISUBN2='E2  '
       IERROR='NO'
+      IFLAGD='    '
 !
       N=-99
       STATVA=CPUMIN

@@ -12053,9 +12053,9 @@
       RETURN
       END SUBROUTINE DPTBTH
       SUBROUTINE DPTCCL(ICOM,IHARG,IHARG2,IARGT,IARG,ARG,NUMARG,   &
-                        IDEFCO,IRGBMX,   &
-                        IX1TCO,IX2TCO,IY1TCO,IY2TCO,   &
-                        IX1TC2,IX2TC2,IY1TC2,IY2TC2,   &
+                        IDEFCO,IRGBMX,                             &
+                        IX1TCO,IX2TCO,IY1TCO,IY2TCO,               &
+                        IX1TC2,IX2TC2,IY1TC2,IY2TC2,               &
                         IBUGPC,IFOUND,IERROR)
 !
 !     PURPOSE--DEFINE THE TIC MARK COLOR SWITCHES FOR ANY OF THE 4 FRAME
@@ -12088,6 +12088,8 @@
 !     ORIGINAL VERSION--OCTOBER   1980.
 !     UPDATED         --MAY       1982.
 !     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLORS
+!     UPDATED         --SEPTEMBER 2026. PRINT WARNING MESSAGE IF RGB
+!                                       COLOR IS OUT OF RANGE
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -12184,9 +12186,62 @@
               JHOLD1=IARG(NUMARG-2)
               JHOLD2=IARG(NUMARG-1)
               JHOLD3=IARG(NUMARG)
-              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+ 2011           FORMAT('****** WARNING IN TIC MARK RGB COLOR (DPTCCL)--')
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2113)IRGBMX
+ 2113           FORMAT('       THE RED CHANNEL IS OUTSIDE THE ',       &
+                       'RANGE (0,',I5,')')
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2015)JHOLD1
+ 2015           FORMAT('       THE RED CHANNEL VALUE IS ',I8)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+ 2017           FORMAT('       THE RGB COLOR WILL NOT BE USED.')
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2123)IRGBMX
+ 2123           FORMAT('       THE GREEN CHANNEL IS OUTSIDE THE ',     &
+                       'RANGE (0,',I5,')')
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2025)JHOLD2
+ 2025           FORMAT('       THE GREEN CHANNEL VALUE IS ',I8)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2133)IRGBMX
+ 2133           FORMAT('       THE GREEN CHANNEL IS OUTSIDE THE ',     &
+                       'RANGE (0,',I5,')')
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2035)JHOLD3
+ 2035           FORMAT('       THE BLUE CHANNEL VALUE IS ',I8)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
             ELSE
               JHOLD1=-1
               JHOLD2=-1
@@ -12234,10 +12289,10 @@
           ENDIF
         ENDIF
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE BOTTOM HORIZONTAL TIC MARKS ARE TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  BOTTOM HORIZONTAL TIC MARKS ARE TO BE CHANGED     **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'X1TI')THEN
         IFOUND='YES'
@@ -12257,9 +12312,51 @@
               JHOLD1=IARG(NUMARG-2)
               JHOLD2=IARG(NUMARG-1)
               JHOLD3=IARG(NUMARG)
-              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2113)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2015)JHOLD1
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2123)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2025)JHOLD2
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2133)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2035)JHOLD3
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
             ELSE
               JHOLD1=-1
               JHOLD2=-1
@@ -12300,10 +12397,10 @@
           ENDIF
         ENDIF
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE TOP    HORIZONTAL TIC MARKS ARE TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  TOP    HORIZONTAL TIC MARKS ARE TO BE CHANGED     **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'X2TI')THEN
         IFOUND='YES'
@@ -12323,9 +12420,51 @@
               JHOLD1=IARG(NUMARG-2)
               JHOLD2=IARG(NUMARG-1)
               JHOLD3=IARG(NUMARG)
-              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2113)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2015)JHOLD1
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2123)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2025)JHOLD2
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2133)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2035)JHOLD3
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
             ELSE
               JHOLD1=-1
               JHOLD2=-1
@@ -12389,9 +12528,51 @@
               JHOLD1=IARG(NUMARG-2)
               JHOLD2=IARG(NUMARG-1)
               JHOLD3=IARG(NUMARG)
-              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2113)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2015)JHOLD1
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2123)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2025)JHOLD2
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2133)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2035)JHOLD3
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
             ELSE
               JHOLD1=-1
               JHOLD2=-1
@@ -12436,10 +12617,10 @@
           ENDIF
         ENDIF
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE LEFT   VERTICAL   TIC MARKS ARE TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  LEFT   VERTICAL   TIC MARKS ARE TO BE CHANGED     **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'Y1TI')THEN
         IFOUND='YES'
@@ -12459,9 +12640,51 @@
               JHOLD1=IARG(NUMARG-2)
               JHOLD2=IARG(NUMARG-1)
               JHOLD3=IARG(NUMARG)
-              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2113)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2015)JHOLD1
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2123)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2025)JHOLD2
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2133)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2035)JHOLD3
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
             ELSE
               JHOLD1=-1
               JHOLD2=-1
@@ -12502,10 +12725,10 @@
           ENDIF
         ENDIF
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE RIGHT  VERTICAL   TIC MARKS ARE TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  RIGHT  VERTICAL   TIC MARKS ARE TO BE CHANGED     **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'Y2TI')THEN
         IFOUND='YES'
@@ -12525,9 +12748,51 @@
               JHOLD1=IARG(NUMARG-2)
               JHOLD2=IARG(NUMARG-1)
               JHOLD3=IARG(NUMARG)
-              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2113)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2015)JHOLD1
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2123)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2025)JHOLD2
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2133)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2035)JHOLD3
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
             ELSE
               JHOLD1=-1
               JHOLD2=-1
@@ -12592,9 +12857,51 @@
               JHOLD1=IARG(NUMARG-2)
               JHOLD2=IARG(NUMARG-1)
               JHOLD3=IARG(NUMARG)
-              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2113)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2015)JHOLD1
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2123)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2025)JHOLD2
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2133)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2035)JHOLD3
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
             ELSE
               JHOLD1=-1
               JHOLD2=-1
@@ -12650,8 +12957,8 @@
  1900 CONTINUE
       RETURN
       END SUBROUTINE DPTCCL
-      SUBROUTINE DPTCDP(ICOM,IHARG,IARG,NUMARG,   &
-                        IDEFDP,   &
+      SUBROUTINE DPTCDP(ICOM,IHARG,IARG,NUMARG,        &
+                        IDEFDP,                        &
                         IX1ZDP,IX2ZDP,IY1ZDP,IY2ZDP,   &
                         IFOUND,IERROR)
 !
@@ -18137,7 +18444,7 @@
  1199 CONTINUE
       RETURN
       END SUBROUTINE DPTICA
-      SUBROUTINE DPTICL(IHARG,IARG,NUMARG,IDEFCO,IRGBMX,ITITCO,ITITC2,   &
+      SUBROUTINE DPTICL(IHARG,IARG,NUMARG,IDEFCO,IRGBMX,ITITCO,ITITC2, &
                         IFOUND,IERROR)
 !
 !     PURPOSE--DEFINE THE COLOR FOR THE TITLE (THE HORIZONTAL STRING
@@ -18163,6 +18470,8 @@
 !     ORIGINAL VERSION--SEPTEMBER 1980.
 !     UPDATED         --MAY       1982.
 !     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
+!     UPDATED         --SEPTEMBER 2026. PRINT WARNING MESSAGE IF RGB
+!                                       COLOR IS OUT OF RANGE
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -18215,12 +18524,68 @@
           ITITC2(2)=-1
           ITITC2(3)=-1
         ELSE
-          ITITC2(1)=IARG(3)
-          ITITC2(2)=IARG(4)
-          ITITC2(3)=IARG(5)
-          IF(ITITC2(1).LT.0 .OR. ITITC2(1).GT.IRGBMX)ITITC2(1)=-1
-          IF(ITITC2(2).LT.0 .OR. ITITC2(2).GT.IRGBMX)ITITC2(2)=-1
-          IF(ITITC2(3).LT.0 .OR. ITITC2(3).GT.IRGBMX)ITITC2(3)=-1
+          JHOLD1=IARG(3)
+          JHOLD2=IARG(4)
+          JHOLD3=IARG(5)
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+ 2011       FORMAT('****** WARNING IN TITLE RGB COLOR (DPBACL)--')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2113)IRGBMX
+ 2113       FORMAT('       THE RED CHANNEL IS OUTSIDE THE RANGE (0,', &
+                   I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2015)JHOLD1
+ 2015       FORMAT('       THE RED CHANNEL VALUE IS ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+ 2017       FORMAT('       THE RGB COLOR WILL NOT BE USED.')
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2123)IRGBMX
+ 2123       FORMAT('       THE GREEN CHANNEL IS OUTSIDE THE RANGE (0,', &
+                   I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2025)JHOLD2
+ 2025       FORMAT('       THE GREEN CHANNEL VALUE IS ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2133)IRGBMX
+ 2133       FORMAT('       THE BLUE CHANNEL IS OUTSIDE THE RANGE (0,', &
+                   I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2035)JHOLD3
+ 2035       FORMAT('       THE BLUE CHANNEL VALUE IS ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          ITITC2(1)=JHOLD1
+          ITITC2(2)=JHOLD2
+          ITITC2(3)=JHOLD3
         ENDIF
 !
         IFOUND='YES'

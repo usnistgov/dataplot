@@ -6030,9 +6030,8 @@
 !
       RETURN
       END SUBROUTINE DPPOPL
-      SUBROUTINE DPPOTA(Y1,YSTAT,TEMPZ,MAXNXT,   &
-                        ISEED,   &
-                        ICAPSW,IFORSW,   &
+      SUBROUTINE DPPOTA(Y1,YSTAT,TEMPZ,MAXNXT,                    &
+                        ISEED,ICAPSW,IFORSW,                      &
                         IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
 !
 !     PURPOSE--GENERATE A POSITION-TABULATION FOR ONE OF DATAPLOT'S
@@ -6281,14 +6280,14 @@
       IF(IBUGA2.EQ.'ON'.OR.ISUBRO.EQ.'POTA')   &
       CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 !
-      CALL DPPOT9(Y1,YSTAT,NUMVAR,ICASPL,ISTANM,ISTARA,   &
-                  IVARN1,IVARN2,IVARTY,PVAR,   &
-                  ILIS,NRIGHT,ICOLR,ISUB,NQ,INAME,   &
-                  MAXCOL,V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,   &
-                  TEMPZ,XROW,XCOL,XTEMP1,XTEMP2,XTEMP3,XTEMP4,XTEMP5,   &
-                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,   &
-                  DTEMP1,DTEMP2,DTEMP3,   &
-                  ICAPSW,ICAPTY,IFORSW,MAXNXT,MAXN,ISEED,   &
+      CALL DPPOT9(Y1,YSTAT,NUMVAR,ICASPL,ISTANM,ISTARA,              &
+                  IVARN1,IVARN2,IVARTY,PVAR,                         &
+                  ILIS,NRIGHT,ICOLR,ISUB,NQ,INAME,                   &
+                  MAXCOL,V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,       &
+                  TEMPZ,XROW,XCOL,XTEMP1,XTEMP2,XTEMP3,XTEMP4,XTEMP5,&
+                  ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,         &
+                  DTEMP1,DTEMP2,DTEMP3,                              &
+                  ICAPSW,ICAPTY,IFORSW,MAXNXT,MAXN,ISEED,            &
                   ISUBRO,IBUGA3,IERROR)
 !
 !               *****************
@@ -6310,15 +6309,15 @@
 !
       RETURN
       END SUBROUTINE DPPOTA
-      SUBROUTINE DPPOT9(Y,YSTAT,NUMVAR,ICASPL,ISTANM,ISTARA,   &
-                        IVARN1,IVARN2,IVARTY,PVAR,   &
-                        ILIS,NRIGHT,ICOLR,ISUB,NQ,INAME,   &
-                        MAXCOL,V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,   &
-                        TEMPZ,XROW,XCOL,XTEMP1,XTEMP2,XTEMP3,   &
-                        XTEMP4,XTEMP5,   &
-                        ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,   &
-                        DTEMP1,DTEMP2,DTEMP3,   &
-                        ICAPSW,ICAPTY,IFORSW,MAXNXT,MAXN,ISEED,   &
+      SUBROUTINE DPPOT9(Y,YSTAT,NUMVAR,ICASPL,ISTANM,ISTARA,          &
+                        IVARN1,IVARN2,IVARTY,PVAR,                    &
+                        ILIS,NRIGHT,ICOLR,ISUB,NQ,INAME,              &
+                        MAXCOL,V,PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,  &
+                        TEMPZ,XROW,XCOL,XTEMP1,XTEMP2,XTEMP3,         &
+                        XTEMP4,XTEMP5,                                &
+                        ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,    &
+                        DTEMP1,DTEMP2,DTEMP3,                         &
+                        ICAPSW,ICAPTY,IFORSW,MAXNXT,MAXN,ISEED,       &
                         ISUBRO,IBUGA3,IERROR)
 !
 !     PURPOSE--GENERATE A POSITION-TABULATION FOR ONE OF DATAPLOT'S
@@ -6354,7 +6353,7 @@
       CHARACTER*4 IVARN2(*)
       CHARACTER*4 IVARTY(*)
       CHARACTER*40 INAME
-      CHARACTER*40 ISTANM
+      CHARACTER*60 ISTANM
       CHARACTER*4 ICASPL
       CHARACTER*4 ISTARA
       CHARACTER*4 ICAPSW
@@ -26271,6 +26270,8 @@
       ISUBN2='EF  '
       IERROR='NO'
       IPAROC(1)='NONE'
+      ICASEQ='    '
+      IKEY='    '
 !
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
@@ -26922,14 +26923,19 @@
 !
       IWD1='=   '
       IWD12='    '
-      IF(ICASEQ.EQ.'FULL')IWD2='    '
-      IF(ICASEQ.EQ.'FULL')IWD22='    '
-      IF(ICASEQ.EQ.'SUBS'.AND.IKEY.EQ.'SUBS')IWD2='SUBS'
-      IF(ICASEQ.EQ.'SUBS'.AND.IKEY.EQ.'SUBS')IWD22='ET  '
-      IF(ICASEQ.EQ.'SUBS'.AND.IKEY.EQ.'EXCE')IWD2='EXCE'
-      IF(ICASEQ.EQ.'SUBS'.AND.IKEY.EQ.'EXCE')IWD22='PT  '
-      IF(ICASEQ.EQ.'FOR')IWD2='FOR '
-      IF(ICASEQ.EQ.'FOR')IWD22='    '
+      IF(ICASEQ.EQ.'FULL')THEN
+        IWD2='    '
+        IWD22='    '
+      ELSEIF(ICASEQ.EQ.'SUBS'.AND.IKEY.EQ.'SUBS')THEN
+        IWD2='SUBS'
+        IWD22='ET  '
+      ELSEIF(ICASEQ.EQ.'SUBS'.AND.IKEY.EQ.'EXCE')THEN
+        IWD2='EXCE'
+        IWD22='PT  '
+      ELSEIF(ICASEQ.EQ.'FOR')THEN
+        IWD2='FOR '
+        IWD22='    '
+      ENDIF
 !
       IF(ICASFI.EQ.'FIT'.OR.ICASFI.EQ.'RFIT')THEN
         CALL DPEXST(IANS,IWIDTH,IWD1,IWD12,IWD2,IWD22,MAXN2,   &

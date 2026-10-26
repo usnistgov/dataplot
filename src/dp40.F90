@@ -15447,6 +15447,7 @@
 !     UPDATED         --MAY       2026.  IPBRTY, IPBRCI, IPBRBC
 !     UPDATED         --MAY       2026.  ITSRCI
 !     UPDATED         --JUNE      2026.  IREANC, IREATA
+!     UPDATED         --SEPTEMBER 2026.  IRENOR, IREGOR
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -18411,7 +18412,7 @@
 !               **  TREAT THE SET LOCAL FILES <PID/IGNORE>         **
 !               *****************************************************
 !
-      ITMPFI='PID'
+!     ITMPFI='IGNO'
 !
 !CCCC THE FOLLOWING SECTION WAS ADDED    MAY      2006
 !
@@ -20791,6 +20792,15 @@
 !               *******************************************************
 !
       ITSRCI='BOOT'
+!
+!CCCC THE FOLLOWING SECTION WAS ADDED    SEPTEMBER 2026
+!
+!               *******************************************************
+!               **  TREAT THE SET RENDER ORDER                       **
+!               **                <CHARACTER/LINE/BAR/SPIKE>         **
+!               *******************************************************
+!
+      IRENOR='CLBS'
 !
 !CCCC THE FOLLOWING SECTION WAS ADDED    MARCH 2013
 !
@@ -23225,6 +23235,8 @@
       IFTEXP='+'
       IFTORD='DATA'
       IFORSW='E'
+      IH='    '
+      IH2='    '
 !
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2

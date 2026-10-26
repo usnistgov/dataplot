@@ -2,17 +2,117 @@ FC = gfortran
 CC = gcc
 
 # FEATURES to enable during compilation
+#
+# Note that this has been updated to accomodate:
+#
+#    1. Cygwin
+#    2. MacOS with Homebrew
+#    3. MacOS with MacPorts
+#    4. MacOS with neither Homebrew or MacPorts
+#    5. All other Linux systems
+#
+# Certain FEATURES will be turned on based on which of the above 5 cases
+# applies.  Note that if you have both Homebrew and MacPorts installed,
+# you will need to comment out the code for one of these cases.
+#
 # all: READLINE NCURSES GD TIFF VPX AVIF HEIF CAIRO X11 GKS OPENGL PLOT XCLIP CYGWIN MACOSX TCL DISABLE_SYSTEM_COMMAND STACK_SIZE DEBUG ISOCLINE
 #FEATURES = GD TIFF VPX AVIF HEIF CAIRO X11 READLINE NCURSES XCLIP STACK_SIZE DEBUG ISOCLINE
-FEATURES = GD TIFF CAIRO X11 READLINE NCURSES XCLIP STACK_SIZE
+FEATURES = X11 STACK_SIZE
 
 # PREFIX is the parent of where are installed
 # for non-root install, consider PREFIX=$(HOME) or /var/tmp
 # DESTDIR is used by packaging programs (e.g., rpmbuild).
 PREFIX = $(DESTDIR)/usr/local
+#PREFIX = $(DESTDIR)/usr
 #PREFIX = $(HOME)
 BINDIR = $(PREFIX)/bin
 
+# Check if running Cygwin or MacOS (and if using Homebrew or MacPorts).
+# If you have both Homebrew and MacPorts installed, comment out the lines
+# for the one you do not want to use.
+#
+OS_NAME   := $(shell uname -s)
+OS_NAME_2 := $(shell uname -o 2>/dev/null)
+ARCH := $(shell uname -m)
+
+# Add features for Linux
+ifeq ($(OS_NAME),Linux)
+    FEATURES +=  READLINE NCURSES XCLIP GD TIFF CAIRO
+endif
+
+# Add features for Cygwin
+ifeq ($(OS_NAME_2),Cygwin)
+    FEATURES +=  CYGWIN READLINE NCURSES XCLIP GD TIFF CAIRO
+endif
+
+# Add features for MacOS (but determine if Homebrew or Macports is
+# installed).  Do in the following priority order:
+#
+#   1. Use Homebrew if installed
+#   2. Use MacPorts if Homebrew not installed but MacPorts is installed
+#   3. Neither Homebrew or MacPorts is installed
+#
+# Note that Aquaterm is no longer actively supported.  However, it is
+# supported by MacPorts (on both Intel and Silicon chips).  The current
+# AquaTerm "dmg" file works for Mac Intel chips, but not the current Silicon
+# (M1, M2, etc.) chips.  It is not supported on Silicon chips by Homebrew.
+# Although you can build it from source for Silicon chips, this is not
+# trivial for many MacOS users.  Check to see if the directory
+# "/Library/Frameworks/AquaTerm.framework" exists before turning on
+# "Aqua" feature.
+#
+ifeq ($(OS_NAME),Darwin)
+    FEATURES +=  MACOSX
+    IS_AQUA := $(shell test -d /Library/Frameworks/AquaTerm.framework && echo yes || echo no)
+    ifeq ($(ARCH),arm64)
+        # Silicon chips
+        FEATURES +=  MACOSX_M1
+        #CFLAGS += -target arm64-apple-macos
+    else
+        # Intel (x86_64)
+        #CFLAGS += -target x86_64-apple-macos
+    endif
+    #
+    BREW_PATH := $(shell command -v brew)
+    IS_MACPORTS := $(shell test -d /opt/local && echo yes || echo no)
+    ifeq ($(BREW_PATH),)
+        # Homebrew is missing, check for MacPorts
+        ifeq ($(IS_MACPORTS),yes)
+           FEATURES +=  AQ_MACPORTS MACPORTS MACOSX_M1 READLINE NCURSES
+           PREFIX = $(DESTDIR)/opt/local
+           BINDIR = $(PREFIX)/bin
+           FC = /opt/local/bin/gfortran
+           CC = /opt/local/bin/gcc
+           LDFLAGS += -L/opt/local/lib
+           CPPFLAGS += -I/opt/local/include -I/opt/local/include/freetype2
+           CFLAGS += -I/opt/local/include -I/opt/local/include/freetype2
+       else
+           # Neither Homebrew or MacPorts available
+           ifeq ($(ARCH),arm64)
+              # Silicon Chips
+              ifeq ($(IS_AQUA),yes)
+                 FEATURES +=  AQUA
+              endif
+           else
+              # Intel (x86_64)
+              FEATURES +=  AQUA
+           endif
+       endif
+    else
+        # Homebrew is found
+        FEATURES +=  HOMEBREW
+        ifeq ($(IS_AQUA),yes)
+           FEATURES +=  AQUA
+        endif
+        PREFIX = $(DESTDIR)/opt/homebrew
+        BINDIR = $(PREFIX)/bin
+        FC = /opt/homebrew/bin/gfortran
+        CC = /opt/homebrew/bin/gcc
+        LDFLAGS += -L/opt/homebrew/lib
+        CPPFLAGS += -I/opt/homebrew/include -I/opt/local/include/freetype2 -I/Applications/xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+        CFLAGS   += -I/opt/homebrew/include -I/opt/local/include/freetype2 -I/Applications/xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+    endif
+endif
 # where to find additional dataplot files (help, menus, etc).
 DPLIBDIR=$(PREFIX)/lib/dataplot
 
@@ -27,6 +127,14 @@ ifneq (,$(findstring DISABLE_SYSTEM_COMMAND,$(FEATURES)))
 DP1FLAGS += -DDISABLE_SYSTEM_COMMAND
 endif
 
+ifneq (,$(findstring MACOSX,$(FEATURES)))
+FFLAGS4 += -DMACOSX
+endif
+
+#  MACOSX_M1 is used to specify an additional compilation flag
+ifneq (,$(findstring MACOSX_M1,$(FEATURES)))
+FFLAGS4 += -mcmodel=small
+endif
 
 # object files sorted by size for fastest parallel compilation; dp2.o first as it takes the longest
 # ls -S *.F | egrep -v 'msfort_intel' | sed 's/\.F/.o/g' | xargs
@@ -93,7 +201,7 @@ endif
 
 ifneq (,$(findstring CAIRO,$(FEATURES)))
 OBJS += cairo.o
-FEATURES += X11
+FEATURES += X11 GD
 LDFLAGS += -lcairo
 FFLAGS4 += -DHAVE_CAIRO
 CFLAGS += -DHAVE_X11
@@ -113,6 +221,21 @@ OBJS += x11.o
 FFLAGS4 += -DHAVE_X11
 LDFLAGS += -lX11 -lXft
 CFLAGS  += -I/usr/include/freetype2
+CFLAGS  += -I/usr/X11/include/freetype2
+endif
+
+ifneq (,$(findstring AQUA,$(FEATURES)))
+OBJS += aqua.o
+LDFLAGS += -F/Library/Frameworks -framework AquaTerm
+FFLAGS4 += -DHAVE_AQUA
+CFLAGS += -I/Library/Frameworks/AquaTerm.framework/Versions/Current/Headers
+endif
+
+ifneq (,$(findstring AQ_MACPORTS,$(FEATURES)))
+OBJS += aqua.o
+LDFLAGS += -F/opt/local/Library/Frameworks -framework AquaTerm
+FFLAGS4 += -DHAVE_AQUA
+CFLAGS += -I/opt/local/Library/Frameworks/AquaTerm.framework/Versions/Current/Headers
 endif
 
 ifneq (,$(findstring XCLIP,$(FEATURES)))
@@ -127,17 +250,20 @@ ifneq (,$(findstring MACOS,$(FEATURES)))
 FFLAGS4 += -DMACOSX
 endif
 
+# Tcl/Tk support reserved for future use
 ifneq (,$(findstring TCL,$(FEATURES)))
 OBJS += ftcl_mod.o
 OBJS += ftcl_c.o
 FFLAGS4 += -DHAVE_TCL
 endif
 
+# GKS should not be turned on, this is for testing only
 ifneq (,$(findstring GKS,$(FEATURES)))
 LDFLAGS += -lgks
 FFLAGS4 += -DHAVE_OPEN_GKS
 endif
 
+# OPENGL reserved for future use
 ifneq (,$(findstring OPENGL,$(FEATURES)))
 OBJS += gl.o
 LDFLAGS += -lGLU -lGL
@@ -146,7 +272,11 @@ endif
 
 
 
-all: xdataplot dataplot
+all: features xdataplot dataplot
+
+features:
+	@echo "Features: $(FEATURES)"
+	@echo "OS_NAME: $(OS_NAME)"
 
 dataplot: $(OBJS)
 	$(FC) -o $@  $(OBJS)  $(LDFLAGS)

@@ -3278,7 +3278,9 @@
       IF(XMAX.LT.X) XMAX=X
       RETURN
       END SUBROUTINE SINGLE
-      SUBROUTINE SPLIT(MM, N, A, RLAB, DMW, W, IL, IU, DMU, U,   &
+!     SPLIT IS NOW AN INTRINSIC ROUTINE, RENAME TO AVOID NAME CONFLICT
+!CCCC SUBROUTINE SPLIT(MM, N, A, RLAB, DMW, W, IL, IU, DMU, U,   &
+      SUBROUTINE SPLITDPZ(MM, N, A, RLAB, DMW, W, IL, IU, DMU, U,   &
                        WCLAB, IM, DM)
 !
 !<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -3422,7 +3424,7 @@
          RLAB(II) = CTEMP
    80 CONTINUE
       RETURN
-      END SUBROUTINE SPLIT
+      END SUBROUTINE SPLITDPZ
       SUBROUTINE SPLIT1(MM, M, N, A, CLAB, RLAB, TITLE, DMW, W, TH,   &
                         KD, IWORK, DMIWRK, IWORK1, DMWORK, WORK, IERR,   &
                         OUNIT)
@@ -3638,8 +3640,8 @@
          GO TO 10
       ENDIF
 !CCCC CALL SPLIT(MM,M,N,A,CLAB,RLAB,DMW,W,IL,IU,DMWORK,WORK,
-      CALL SPLIT(MM,N,A,RLAB,DMW,W,IL,IU,DMWORK,WORK,   &
-                 IWORK(IWCLAB+1),IM,DM)
+      CALL SPLITDPZ(MM,N,A,RLAB,DMW,W,IL,IU,DMWORK,WORK,   &
+                   IWORK(IWCLAB+1),IM,DM)
       IWORK(INC2+KR+1)=IWORK(INC2+KR)
       IWORK(INC2+KR)=IM
       IWORK(INC1+KR+1)=IM+1

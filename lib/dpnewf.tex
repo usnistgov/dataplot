@@ -10,6 +10,54 @@ The complete news file can be viewed at
 
 -----------------------------------------------------------------------
 The following enhancements were made to DATAPLOT
+September 2026 - October 2026.
+-----------------------------------------------------------------------
+
+ 1. Made a number of corrections to the LaTeX Tikz driver.
+
+ 2. When rendering a plot, Dataplot generates the output for the plot
+    traces (curves) in the following order
+
+       i. CHARACTER
+      ii. LINE (regions are generated when rendering lines)
+     iii. BAR
+      iv. SPIKE
+
+    There may be occassions where you want to modify this order.  For
+    example, if you are generating filled regions you may want to
+    draw these before generating the plot character (i.e., you want
+    the CHARACTER value to be on top of the region fill).  You can
+    change the order with the command
+
+         SET RENDER ORDER CHARACTER LINE BAR SPIKE
+
+    The above gives the default order.  To specify that lines be
+    generated before characters, enter
+
+         SET RENDER ORDER LINE CHARACTER BAR SPIKE
+
+    You must enter all four settings (CHARACTER, LINE, BAR, SPIKE) and
+    each setting must be entered exactly once.  If this is not the case,
+    the default order will be used.
+
+ 3. Added the commands
+
+       LET S = COMBINED STANDARD DEVIATION YMEAN YSD YN
+       LET C = COMBINED VARIANCE           YMEAN YSD YN
+
+    This computes a combined standard deviation for grouped data when only
+    summary statistics are available.  This is related to, but distinct from,
+    the POOLED STANDARD DEVIATION and POOLED VARIANCE.
+
+ 4. The default Makefile has been updated to specifically check if you
+    are running on a Cygwin system, a MacOS system, a MacOS system with
+    Homebrew, a MacOS system with MacPorts or a Linux system.  Note that
+    if you have both Homebrew and MacPorts installed on a MacOS system,
+    the Makefile will default to Homebrew (you will need to manually edit
+    the Makefile if you want to make MacPorts the default).
+
+-----------------------------------------------------------------------
+The following enhancements were made to DATAPLOT
 August 2026 - August 2026.
 -----------------------------------------------------------------------
 

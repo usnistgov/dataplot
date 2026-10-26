@@ -10462,7 +10462,7 @@
 !
       RETURN
       END SUBROUTINE DPMABA
-      SUBROUTINE DPMACL(IHARG,IARG,NUMARG,IDEFMC,IRGBMX,IMARCO,IMARC2,   &
+      SUBROUTINE DPMACL(IHARG,IARG,NUMARG,IDEFMC,IRGBMX,IMARCO,IMARC2, &
                         IFOUND,IERROR)
 !
 !     PURPOSE--DEFINE THE COLOR FOR THE MARGIN (THE REGION OUTSIDE THE
@@ -10487,6 +10487,8 @@
 !     ORIGINAL VERSION--SEPTEMBER 1980.
 !     UPDATED         --MAY       1982.
 !     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
+!     UPDATED         --SEPTEMBER 2026. PRINT WARNING MESSAGE IF RGB
+!                                       COLOR IS OUT OF RANGE
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -10540,12 +10542,68 @@
           IMARC2(2)=-1
           IMARC2(3)=-1
         ELSE
-          IMARC2(1)=IARG(3)
-          IMARC2(2)=IARG(4)
-          IMARC2(3)=IARG(5)
-          IF(IMARC2(1).LT.0 .OR. IMARC2(1).GT.IRGBMX)IMARC2(1)=-1
-          IF(IMARC2(2).LT.0 .OR. IMARC2(2).GT.IRGBMX)IMARC2(2)=-1
-          IF(IMARC2(3).LT.0 .OR. IMARC2(3).GT.IRGBMX)IMARC2(3)=-1
+          JHOLD1=IARG(3)
+          JHOLD2=IARG(4)
+          JHOLD3=IARG(5)
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+ 2011       FORMAT('****** WARNING IN MARGIN RGB COLOR (DPBACL)--')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2113)IRGBMX
+ 2113       FORMAT('       THE RED CHANNEL IS OUTSIDE THE RANGE (0,', &
+                   I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2015)JHOLD1
+ 2015       FORMAT('       THE RED CHANNEL VALUE IS ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+ 2017       FORMAT('       THE RGB COLOR WILL NOT BE USED.')
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2123)IRGBMX
+ 2123       FORMAT('       THE GREEN CHANNEL IS OUTSIDE THE RANGE (0,', &
+                   I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2025)JHOLD2
+ 2025       FORMAT('       THE GREEN CHANNEL VALUE IS ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2133)IRGBMX
+ 2133       FORMAT('       THE BLUE CHANNEL IS OUTSIDE THE RANGE (0,', &
+                   I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2035)JHOLD3
+ 2035       FORMAT('       THE BLUE CHANNEL VALUE IS ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IMARC2(1)=JHOLD1
+          IMARC2(2)=JHOLD2
+          IMARC2(3)=JHOLD3
         ENDIF
 !
         IFOUND='YES'
@@ -15402,9 +15460,11 @@
 !     FEBRUARY 2007: FOR BOB, SUPPRESS IF NLAB > 5.  FOR
 !                    BAYESIAN CONSENSUS PROCEDURE, SUPPRESS
 !                    IF NLAB > 6.
+!     OCTOBER 2026: FOR BOB, SUPPRESS IF NLAB > 6 INSTEAD OF NLAB > 5
 !
       IF(NLAB.GT.6)IBCPCM='OFF'
-      IF(NLAB.GT.5)IBOBCM='OFF'
+!     IF(NLAB.GT.5)IBOBCM='OFF'
+      IF(NLAB.GT.6)IBOBCM='OFF'
 !
       IF(IERROR.EQ.'YES')GO TO 9000
 !

@@ -12920,26 +12920,77 @@
       JHOLD3=-1
       NUMCHA=MAXCHA
 !
-      IF(NUMARG.EQ.2 .AND. IHARG(2).EQ.'ALL')THEN
+      IF(NUMARG.LE.1)THEN
+        GO TO 2300
+      ELSEIF(NUMARG.EQ.2 .AND. IHARG(2).EQ.'ALL')THEN
         GO TO 2300
       ELSEIF(NUMARG.EQ.5)THEN
         IF(IHARG(2).EQ.'ALL')THEN
           JHOLD1=IARG(3)
           JHOLD2=IARG(4)
           JHOLD3=IARG(5)
-          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD1=-1
-          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD1=-1
-          GO TO 2300
         ELSEIF(IHARG(5).EQ.'ALL')THEN
           JHOLD1=IARG(2)
           JHOLD2=IARG(3)
           JHOLD3=IARG(4)
-          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD1=-1
-          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD1=-1
-          GO TO 2300
         ENDIF
+        IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2011)
+ 2011     FORMAT('****** WARNING IN CHARACTER RGB COLOR (DPCHCL)--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2013)IRGBMX
+ 2013     FORMAT('       THE RED CHANNEL IS OUTSIDE THE RANGE ',       &
+                 '(0,',I5,')')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2015)JHOLD1
+ 2015     FORMAT('       THE RED CHANNEL VALUE IS ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2017)
+ 2017     FORMAT('       THE RGB COLOR WILL NOT BE USED.')
+          CALL DPWRST('XXX','BUG ')
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ENDIF
+        IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2011)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2023)IRGBMX
+ 2023     FORMAT('       THE GREEN CHANNEL IS OUTSIDE THE RANGE ',     &
+                 '(0,',I5,')')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2025)JHOLD2
+ 2025     FORMAT('       THE GREEN CHANNEL VALUE IS ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2017)
+          CALL DPWRST('XXX','BUG ')
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ENDIF
+        IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2011)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2033)IRGBMX
+ 2033     FORMAT('       THE BLUE CHANNEL IS OUTSIDE THE RANGE ',     &
+                 '(0,',I5,')')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2035)JHOLD3
+ 2035     FORMAT('       THE BLUE CHANNEL VALUE IS ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2017)
+          CALL DPWRST('XXX','BUG ')
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ENDIF
+        GO TO 2300
       ENDIF
 !
 !               *************************************************
@@ -12951,48 +13002,101 @@
       IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'CHCL')   &
       CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 !
-      IF(NUMARG.LE.1)THEN
+      NTEMP=NUMARG-2
+      NUMCHA=NTEMP/3
+      IF(NUMCHA.GT.MAXCHA)NUMCHA=MAXCHA
+      IF(NUMCHA.LT.1)THEN
         NUMCHA=1
         ICHAC2(1,1)=-1
         ICHAC2(1,2)=-1
         ICHAC2(1,3)=-1
+!
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2011)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2103)
+ 2103   FORMAT('       LESS THAN THREE VALUES ENTERED.  NO RGB ',      &
+               'COLORS WILL BE SET.')
+        CALL DPWRST('XXX','BUG ')
+        IFOUND='YES'
+        GO TO 9000
+!
       ELSE
-        NTEMP=NUMARG-1
-        NUMCHA=NTEMP/3
-        IF(NUMCHA.LT.1)THEN
-          NUMCHA=1
-          ICHAC2(1,1)=-1
-          ICHAC2(1,2)=-1
-          ICHAC2(1,3)=-1
-        ELSEIF(NUMCHA.GT.MAXCHA)THEN
-          NUMCHA=MAXCHA
-        ENDIF
-        DO 2225 I=1,NUMCHA
+        DO I=1,NUMCHA
           J1=(I-1)*3+2
           J2=J1+1
           J3=J1+2
           JHOLD1=IARG(J1)
           JHOLD2=IARG(J2)
           JHOLD3=IARG(J3)
-          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-999
-          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-999
-          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-999
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2113)I,IRGBMX
+ 2113       FORMAT('       THE RED CHANNEL FOR TRACE ',I3,' IS ', &
+                   'OUTSIDE THE RANGE (0,',I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2015)JHOLD1
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2123)I,IRGBMX
+ 2123       FORMAT('       THE GREEN CHANNEL FOR TRACE ',I3,' IS ', &
+                   'OUTSIDE THE RANGE (0,',I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2025)JHOLD2
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2133)I,IRGBMX
+ 2133       FORMAT('       THE BLUE CHANNEL FOR TRACE ',I3,' IS ', &
+                   'OUTSIDE THE RANGE (0,',I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2035)JHOLD3
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
           ICHAC2(I,1)=JHOLD1
           ICHAC2(I,2)=JHOLD2
           ICHAC2(I,3)=JHOLD3
- 2225   CONTINUE
-      ENDIF
+        ENDDO
 !
-      IF(IFEEDB.EQ.'ON')THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        DO 2278 I=1,NUMCHA
+        IF(IFEEDB.EQ.'ON')THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
           WRITE(ICOUT,2276)I,ICHAC2(I,1),ICHAC2(I,2),ICHAC2(I,3)
  2276     FORMAT('THE RGB COLORS OF CHARACTER ',I6,   &
                  ' HAVE JUST BEEN SET TO ',3I8)
           CALL DPWRST('XXX','BUG ')
- 2278   CONTINUE
+        ENDIF
+!
       ENDIF
+!
       IFOUND='YES'
       GO TO 9000
 !
@@ -13006,11 +13110,11 @@
       IF(IBUGP2.EQ.'ON' .OR. ISUBRO.EQ.'CHCL')   &
       CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
 !
-      DO 2315 I=1,NUMCHA
+      DO I=1,NUMCHA
         ICHAC2(I,1)=JHOLD1
         ICHAC2(I,2)=JHOLD2
         ICHAC2(I,3)=JHOLD3
- 2315 CONTINUE
+      ENDDO
 !
       IF(IFEEDB.EQ.'ON')THEN
         WRITE(ICOUT,999)

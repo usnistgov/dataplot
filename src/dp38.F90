@@ -4325,7 +4325,8 @@
 !
       RETURN
       END SUBROUTINE GRDRIM
-      SUBROUTINE GRDRLI(IX1,IY1,IX2,IY2,PX1,PY1,PX2,PY2,IFACTO,ICOL,JCOL)
+      SUBROUTINE GRDRLI(IX1,IY1,IX2,IY2,PX1,PY1,PX2,PY2,IFACTO,        &
+                        ICOL,JCOL,ICOLR,ICOLG,ICOLB,IRGBFL)
 !
 !     PURPOSE--FOR A SPECIFIC GRAPHICS DEVICE,
 !              DRAW A LINE FROM (IX1,IY1) TO (IX2,IY2).
@@ -4397,6 +4398,7 @@
 !     UPDATED         --OCTOBER   2016. ADD TEMPLATES FOR SEVERL FUTURE
 !     UPDATED         --JULY      2026. SUPPORT FOR TIKZ IN LATEX
 !     UPDATED         --JULY      2026. ADD ICOL FOR LATEX TIKZ DEVICE
+!     UPDATED         --SEPTEMBER 2026. RGB COLOR SUPPORT FOR LATEX TIKZ
 !
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)---------------------------------
@@ -4489,6 +4491,7 @@
       CHARACTER*1 ICARAT
       CHARACTER*1 IQUOTE
       CHARACTER*2 ICJUNK
+      CHARACTER*8 ICNAME
       INTEGER IXSUN(2)
       INTEGER IYSUN(2)
       REAL PXGKS(2)
@@ -4531,6 +4534,9 @@
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,52)IX1,IY1,IX2,IY2
    52   FORMAT('IX1,IY1,  IX2,IY2 = ',2I8,4X,2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)ICOLR,ICOLG,ICOLB,IRGBFL,JCOL,ICOL
+   53   FORMAT('ICOLR,ICOLG,ICOLB,IRGBFL,JCOL,ICOL = ',5I8,2X,A4)
         CALL DPWRST('XXX','BUG ')
         WRITE(ICOUT,54)PX1,PY1,PX2,PY2
    54   FORMAT('PX1,PY1,  PX2,PY2 = ',2G15.7,4X,2G15.7)
@@ -5320,36 +5326,33 @@
         ICSTR(1:1)=IBASLC
         ICSTR(2:6)='draw['
         NCSTR=6
-        ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
-        NCSTR=NCSTR+NCCOLO
+        IF(ILATDR.EQ.'TIKZ' .AND. IRGBFL.EQ.1)THEN
+          IMODE=2
+          CALL GRTKCN(IMODE,ICNAME,NCTEMP)
+          ICSTR(NCSTR+1:NCSTR+NCTEMP)=ICNAME(1:NCTEMP)
+          NCSTR=NCSTR+NCTEMP
+        ELSE
+          ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+          NCSTR=NCSTR+NCCOLO
+        ENDIF
         ICSTR(NCSTR+1:NCSTR+2)=']('
         NCSTR=NCSTR+2
-        IF(IX1.GT.99)THEN
-          NCHTOT=3
-        ELSEIF(IX1.GT.9)THEN
-          NCHTOT=2
-        ELSE
-          NCHTOT=1
-        ENDIF
+        CALL GRTKNC(IX1,NCHTOT)
         CALL GRTRIN(IX1,NCHTOT,ICSTR,NCSTR)
         ICSTR(NCSTR+1:NCSTR+3)='pt,'
         NCSTR=NCSTR+3
-        IF(IY1.GT.99)THEN
-          NCHTOT=3
-        ELSEIF(IY1.GT.9)THEN
-          NCHTOT=2
-        ELSE
-          NCHTOT=1
-        ENDIF
+        CALL GRTKNC(IY1,NCHTOT)
         CALL GRTRIN(IY1,NCHTOT,ICSTR,NCSTR)
         ICSTR(NCSTR+1:NCSTR+8)='pt) -- ('
         NCSTR=NCSTR+8
+        CALL GRTKNC(IX2,NCHTOT)
         CALL GRTRIN(IX2,NCHTOT,ICSTR,NCSTR)
         ICSTR(NCSTR+1:NCSTR+3)='pt,'
         NCSTR=NCSTR+3
+        CALL GRTKNC(IY2,NCHTOT)
         CALL GRTRIN(IY2,NCHTOT,ICSTR,NCSTR)
-        ICSTR(NCSTR+1:NCSTR+2)=');'
-        NCSTR=NCSTR+2
+        ICSTR(NCSTR+1:NCSTR+4)='pt);'
+        NCSTR=NCSTR+4
         CALL GRWRST(ICSTR,NCSTR,ISUBN0)
       ELSE
         ICSTR(1:1)=IBASLC
@@ -5975,6 +5978,7 @@
       CHARACTER*4 ICOL
       CHARACTER*4 IFIG
       CHARACTER*4 IPATT
+      CHARACTER*8 ICNAME
 !
       CHARACTER*24 ISYMBL
       CHARACTER*4 ISPAC
@@ -8342,8 +8346,15 @@
             ICSTR(NCSTR:NCSTR)='\'
             ICSTR(NCSTR+1:NCSTR+10)='node[text='
             NCSTR=NCSTR+10
-            ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
-            NCSTR=NCSTR+NCCOLO
+            IF(IRGBFL.EQ.0)THEN
+              ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+              NCSTR=NCSTR+NCCOLO
+            ELSE
+              IMODE=2
+              CALL GRTKCN(IMODE,ICNAME,NCTEMP)
+              ICSTR(NCSTR+1:NCSTR+NCTEMP)=ICNAME(1:NCTEMP)
+              NCSTR=NCSTR+NCTEMP
+            ENDIF
 !
             IF(ILATFF.EQ.'RMFA')THEN
               IF(ILATST.EQ.'NORM')THEN
@@ -8410,8 +8421,8 @@
               ICSTR(NCSTR+1:NCSTR+5)='\HUGE'
               NCSTR=NCSTR+5
             ENDIF
-!             ICSTR(NCSTR+1:NCSTR+32)=', inner ysep=0pt, text depth=0pt'
-!             NCSTR=NCSTR+32
+!           ICSTR(NCSTR+1:NCSTR+32)=', inner ysep=0pt, text depth=0pt'
+!           NCSTR=NCSTR+32
 !
             IF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'CENT')THEN
               CONTINUE
@@ -8442,23 +8453,11 @@
             ENDIF
             ICSTR(NCSTR+1:NCSTR+6)='] at ('
             NCSTR=NCSTR+6
-            IF(IX.GT.99)THEN
-              NCHTOT=3
-            ELSEIF(IX.GT.9)THEN
-              NCHTOT=2
-            ELSE
-              NCHTOT=1
-            ENDIF
+            CALL GRTKNC(IX,NCHTOT)
             CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
             ICSTR(NCSTR+1:NCSTR+3)='pt,'
             NCSTR=NCSTR+3
-            IF(IY.GT.99)THEN
-              NCHTOT=3
-            ELSEIF(IY.GT.9)THEN
-              NCHTOT=2
-            ELSE
-              NCHTOT=1
-            ENDIF
+            CALL GRTKNC(IY,NCHTOT)
             CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
             ICSTR(NCSTR+1:NCSTR+5)='pt) {'
             NCSTR=NCSTR+5
@@ -9387,6 +9386,7 @@
       CHARACTER*4 IPATT
       CHARACTER*4 ICOL
       CHARACTER*2 ICJUNK
+      CHARACTER*8 ICNAME
 !
       INCLUDE 'DPCOPA.INC'
       DIMENSION PX(*)
@@ -10639,8 +10639,15 @@
             ICSTR(1:1)=IBASLC
             ICSTR(2:6)='draw['
             NCSTR=6
-            ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
-            NCSTR=NCSTR+NCCOLO
+            IF(IRGBFL.EQ.0)THEN
+              ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+              NCSTR=NCSTR+NCCOLO
+            ELSE
+              IMODE=2
+              CALL GRTKCN(IMODE,ICNAME,NCTEMP)
+              ICSTR(NCSTR+1:NCSTR+NCTEMP)=ICNAME(1:NCTEMP)
+              NCSTR=NCSTR+NCTEMP
+            ENDIF
 !
 !           SET LINE PATTERN IF NOT SOLID
 !
@@ -10744,8 +10751,15 @@
               ICSTR(1:1)=IBASLC
               ICSTR(2:6)='draw['
               NCSTR=6
-              ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
-              NCSTR=NCSTR+NCCOLO
+              IF(IRGBFL.EQ.0)THEN
+                ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+                NCSTR=NCSTR+NCCOLO
+              ELSE
+                IMODE=2
+                CALL GRTKCN(IMODE,ICNAME,NCTEMP)
+                ICSTR(NCSTR+1:NCSTR+NCTEMP)=ICNAME(1:NCTEMP)
+                NCSTR=NCSTR+NCTEMP
+              ENDIF
               IF(JPATT.EQ.2)THEN
                 ICSTR(NCSTR+1:NCSTR+7)=',dashed'
                 NCSTR=NCSTR+7
@@ -11535,9 +11549,10 @@
 !     UPDATED         --OCTOBER  2016. ADD TEMPLATES FOR SEVERL FUTURE
 !                                      DEVICE DRIVERS (CAIRO, WMF, D3)
 !     UPDATED         --OCTOBER  2020. SUPPORT RGB COLOR FOR BACKGROUND
-!     UPDATED         --OCTOBER  2023. UPDATE TO GD DRIVER TO SET
-!                                      BACKGROUND COLOR
-!     UPDATED         --JULY     2026. TIKZ OPTION FOR LATEX
+!     UPDATED         --OCTOBER   2023. UPDATE TO GD DRIVER TO SET
+!                                       BACKGROUND COLOR
+!     UPDATED         --JULY      2026. TIKZ OPTION FOR LATEX
+!     UPDATED         --SEPTEMBER 2026. RGB COLOR SUPPORT FOR LATEX TIKZ
 !
 #ifdef HAVE_QWIN
       USE IFQWIN
@@ -14982,6 +14997,9 @@
 !     UPDATED         --JULY      2019. TWEAK SCRATCH SPACE
 !     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
 !     UPDATED         --AUGUST    2026. TIKZ SUPPORT FOR LATEX
+!     UPDATED         --SEPTEMBER 2026. RGB COLOR SUPPORT FOR LATEX TIKZ
+!     UPDATED         --SEPTEMBER 2026. HARDWARE FILL FOR LATEX TIKZ FOR
+!                                       NON-BOX REGIONS
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)----------------------------------
 !
@@ -15076,6 +15094,7 @@
       CHARACTER*1 IQUOTE
       CHARACTER*4 IPATT2
       CHARACTER*4 IFLAG
+      CHARACTER*8 ICNAME
 !
       DIMENSION PX(*)
       DIMENSION PY(*)
@@ -16187,8 +16206,15 @@
         ICSTR(1:1)=IBASLC
         ICSTR(2:6)='fill['
         NCSTR=6
-        ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
-        NCSTR=NCSTR+NCCOLO
+        IF(IRGBFL.EQ.0)THEN
+          ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+          NCSTR=NCSTR+NCCOLO
+        ELSE
+          IMODE=2
+          CALL GRTKCN(IMODE,ICNAME,NCTEMP)
+          ICSTR(NCSTR+1:NCSTR+NCTEMP)=ICNAME(1:NCTEMP)
+          NCSTR=NCSTR+NCTEMP
+        ENDIF
         ICSTR(NCSTR+1:NCSTR+3)='] ('
         NCSTR=NCSTR+3
         IF(IX1.GT.99)THEN
@@ -16231,6 +16257,72 @@
         CALL GRTRIN(IY2,NCHTOT,ICSTR,NCSTR)
         ICSTR(NCSTR+1:NCSTR+4)='pt);'
         NCSTR=NCSTR+4
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      ELSEIF(ILATDR.EQ.'TIKZ' .AND. IFIG.NE.'BOX' .AND.    &
+        (IPATT.EQ.'SOLI' .OR. IPATT.EQ.'FILL'))THEN
+!
+!       2026/09: HARDWARE FILL FOR A SOLID NON-BOX REGION.  WRITE THE
+!                VERTICES AS ONE CLOSED TIKZ PATH INSTEAD OF FALLING
+!                THROUGH TO THE SOFTWARE SCANLINE FILL IN GRFIR2.  THE PATH
+!                MAY SPAN SEVERAL OUTPUT LINES; TIKZ READS TO THE SEMICOLON.
+!                CONSECUTIVE VERTICES THAT ROUND TO THE SAME POINT ARE
+!                WRITTEN ONCE.  TIKZ FILLS CONCAVE POLYGONS CORRECTLY, SO
+!                NO CONVEXITY TEST IS NEEDED.
+!
+!                CODE UPDATE PROVIDED BY JONATHAN MORGAN.
+!
+        IF(NP.LT.3)GO TO 9000
+        ICSTR(1:1)=IBASLC
+        ICSTR(2:6)='fill['
+        NCSTR=6
+        NCCOLO=4
+        DO II=4,1,-1
+           IF(ICOL(II:II).NE.' ')THEN
+             NCCOLO=II
+             EXIT
+           ENDIF
+        ENDDO
+        IF(IRGBFL.EQ.0)THEN
+          ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+          NCSTR=NCSTR+NCCOLO
+        ELSE
+          IMODE=2
+          CALL GRTKCN(IMODE,ICNAME,NCTEMP)
+          ICSTR(NCSTR+1:NCSTR+NCTEMP)=ICNAME(1:NCTEMP)
+          NCSTR=NCSTR+NCTEMP
+        ENDIF
+        ICSTR(NCSTR+1:NCSTR+1)=']'
+        NCSTR=NCSTR+1
+        ITKNV=0
+        ITKXL=0
+        ITKYL=0
+        DO ITKI=1,NP
+          CALL GRTRSD(PX(ITKI),PY(ITKI),ITKX,ITKY,ISUBN0)
+          IF(ITKNV.GT.0 .AND. ITKX.EQ.ITKXL .AND. ITKY.EQ.ITKYL)CYCLE
+          IF(NCSTR.GT.90)THEN
+            CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+            NCSTR=0
+          ENDIF
+          IF(ITKNV.GT.0)THEN
+            ICSTR(NCSTR+1:NCSTR+3)=' --'
+            NCSTR=NCSTR+3
+          ENDIF
+          ICSTR(NCSTR+1:NCSTR+2)=' ('
+          NCSTR=NCSTR+2
+          CALL GRTKNC(ITKX,NCHTOT)
+          CALL GRTRIN(ITKX,NCHTOT,ICSTR,NCSTR)
+          ICSTR(NCSTR+1:NCSTR+3)='pt,'
+          NCSTR=NCSTR+3
+          CALL GRTKNC(ITKY,NCHTOT)
+          CALL GRTRIN(ITKY,NCHTOT,ICSTR,NCSTR)
+          ICSTR(NCSTR+1:NCSTR+3)='pt)'
+          NCSTR=NCSTR+3
+          ITKXL=ITKX
+          ITKYL=ITKY
+          ITKNV=ITKNV+1
+        ENDDO
+        ICSTR(NCSTR+1:NCSTR+10)=' -- cycle;'
+        NCSTR=NCSTR+10
         CALL GRWRST(ICSTR,NCSTR,ISUBN0)
       ELSE
         IFACTO=-999
@@ -16586,14 +16678,15 @@
          IPATT.EQ.'NONE' .OR. NP.LE.1)GO TO 9000
       IF(IFIG.EQ.'BOX')THEN
         CALL GRDRBP(PX,PY,NP,PXSPA2,PYSPA2,IFACTO,   &
-                    IHORPA,IVERPA,IDUPPA,IDDOPA,   &
+                    IHORPA,IVERPA,IDUPPA,IDDOPA,     &
                     IPATT2,PTHICK,ICOL,ICOLR,ICOLG,ICOLB,IRGBFL)
       ELSEIF(IFIG.NE.'BOX')THEN
         IF(IFLAG.EQ.'SOLI')THEN
-          CALL GRFIR2(PX,PY,NP,PXSPA2,PYSPA2,IFACTO,   &
-                    IHORPA,IVERPA,IDUPPA,IDDOPA,ICOLF,JCOLF)
+          CALL GRFIR2(PX,PY,NP,PXSPA2,PYSPA2,IFACTO,          &
+                    IHORPA,IVERPA,IDUPPA,IDDOPA,ICOLF,JCOLF,  &
+                    ICOLFR,ICOLFG,ICOLFB,IRGBFL)
         ELSE
-          CALL GRFIR3(PX,PY,NP,PXSPA2,PYSPA2,IFACTO,   &
+          CALL GRFIR3(PX,PY,NP,PXSPA2,PYSPA2,IFACTO,             &
                     IHORPA,IVERPA,IDUPPA,IDDOPA,IPATT2,PTHICK,   &
                     ICOL,ICOLR,ICOLG,ICOLB,IRGBFL)
         ENDIF
@@ -19717,7 +19810,10 @@
 !
 !       DEFINE GRAY SCALE AND COLORS
 !
-        IF(ILATCO.EQ.'ON')THEN
+!       2026/09: Include color definitions regardless of whether
+!                SET LATEX COLOR switch is set to.
+!
+!!!!!   IF(ILATCO.EQ.'ON')THEN
           NCHTOT=5
           NCHDEC=3
           DO I=0,9
@@ -19747,7 +19843,7 @@
           NCSTR=29
           CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
-!  IF COLOR SWITCH ON, DEFINE COLORS BASED ON RGB VALUES
+!         IF COLOR SWITCH ON, DEFINE COLORS BASED ON RGB VALUES
 !
           DO JJ=1,MAXCLR
             ARED=REAL(IRED(JJ))/255.
@@ -19774,7 +19870,7 @@
             CALL GRWRST(ICSTR,NCSTR,ISUBN0)
           ENDDO
 !
-        ENDIF
+!!!!!   ENDIF
 !
 !CCCC     PGRAPHIC AND LGRAPHIC FOR IMPORTING EXTERNAL
 !CCCC     POSTSCRIPT FILES.  NOT RELEVANT IN THIS CONTEXT,
@@ -21946,6 +22042,15 @@
            end subroutine cardlo
        end interface
 #endif
+!#ifdef HAVE_AQUA
+!       interface
+!           subroutine aqrdlo(ixret,iyret,ierr) bind(C,name="aqrdlo")
+!              integer(c_int), intent(inout)      :: ixret
+!              integer(c_int), intent(inout)      :: iyret
+!              integer(c_int), intent(inout)      :: ierr
+!           end subroutine aqrdlo
+!       end interface
+!#endif
 !
       CHARACTER*1 IBCH
       CHARACTER*1 IBHIX
@@ -24803,61 +24908,62 @@
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     VERSION NUMBER--83.6
 !     ORIGINAL VERSION (AS A SEPARATE SUBROUTINE)--MAY       1983.
-!     UPDATED         --JANUARY  1989. SUN (BY BILL ANDERSON)
-!                                      DRIVER OBSOLETE
-!     UPDATED         --JANUARY  1989. POSTSCRIPT (BY ALAN HECKERT)
-!     UPDATED         --JANUARY  1989. CGM (BY ALAN HECKERT)
-!     UPDATED         --JANUARY  1989. QMS QUIC (BY ALAN HECKERT)
-!     UPDATED         --JANUARY  1989. CALCOMP (BY ALAN HECKERT)
-!     UPDATED         --JANUARY  1989. ZETA (BY ALAN HECKERT)
-!     UPDATED         --MARCH    1990. X11 (BY ALAN HECKERT)
-!     UPDATED         --JULY     1990. SUPPORT COLOR FOR SOME HP-2622 DEVICES
-!     UPDATED         --JANUARY  1991. SUPPORT COLOR ON REGIS (ALAN)
-!     UPDATED         --MAY      1991. RENUMBER TOP BRANCHES (JJF)
-!     UPDATED         --MAY      1991. VGA/TURBOC DRIVER (JJF)
-!                                      DRIVER OBSOLETE
-!     UPDATED         --APRIL    1992. FIX DEBUG CODE
-!     UPDATED         --AUGUST   1992. POSTSCRIPT TO HANDLE FULL SET OF
-!                                      COLORS (ALAN)
-!     UPDATED         --MARCH    1993. POSTSCRIPT (HANDLE GRAY SCALE
-!                                      DIFFERENTLY ON BLACK AND WHITE
-!                                      AND COLOR DEVICES)
-!     UPDATED         --JULY     1996. LAHEY DRIVER (ALAN HECKERT)
-!                                      OLD STYLE CALCOMP
-!                                      DRIVER OBSOLETE
-!     UPDATED         --OCTOBER  1996. QUICKWIN DRIVER (ALAN)
-!     UPDATED         --OCTOBER  1996. OPENGL DRIVER (ALAN)
-!                                      USE BILL MITCHELLS OPENGL
-!                                      BINDING FOR FORTRAN
-!     UPDATED         --OCTOBER  1996. GKS (ALAN)
-!     UPDATED         --OCTOBER  1996. BINARY CGM (ALAN)
-!                                      PLACEHOLDER FOR NOW
-!     UPDATED         --OCTOBER  1996. DISPLAY POSTSCRIPT (ALAN)
-!                                      USE BILL MITCHELLS OPENGL
-!                                      BINDING FOR FORTRAN
-!     UPDATED         --OCTOBER  1997. LAHEY INTERACTOR (ALAN)
-!     UPDATED         --JULY     1998. LAHEY WINTERACTOR
-!     UPDATED         --JUNE     2000. GD (FOR JPEG, PNG, WINDOWS BMP)
-!     UPDATED         --JUNE     2000. MACINTOSH
-!                                      PLACEHOLDER FOR NOW
-!     UPDATED         --JUNE     2000. PC PRINTER
-!                                      PLACEHOLDER FOR NOW
-!     UPDATED         --MARCH    2005. SUPPORT FOR AQUATERM
-!     UPDATED         --LATEK    2006. LATEX COLOR
-!     UPDATED         --APRIL    2009. REMOVE PCL, RAMTEK, PRIN, XXXX DRIVERS
-!                                      (THESE WERE NEVER ACTUALLY IMPLEMENTED)
-!     UPDATED         --MAY      2012. ADD SUPPORT FOR:
-!                                         R0 - R255   - 1000 TO 1255
-!                                         Z0 - Z255   - 2000 TO 2255
-!                                         B0 - B255   - 3000 TO 3255
-!                                      THIS ADDS SHADING TO PRIMRY COLORS
-!                                      SIMILAR TO GRAY SCALE.  A BIT OF A
-!                                      STOP GAP TO IMPLEMENTING FULL RGB
-!                                      SUPPORT.
-!     UPDATED         --OCTOBER  2016. ADD PRE-PROCESSOR DIRECTIVES
-!     UPDATED         --OCTOBER  2016. ADD TEMPLATES FOR SEVERL FUTURE
-!     UPDATED         --JULY     2020. CHECK FOR SUPPORTED COLOR FOR
-!                                      GENERAL AND GENERAL CODED DEVICES
+!     UPDATED         --JANUARY  1989.  SUN (BY BILL ANDERSON)
+!                                       DRIVER OBSOLETE
+!     UPDATED         --JANUARY  1989.  POSTSCRIPT (BY ALAN HECKERT)
+!     UPDATED         --JANUARY  1989.  CGM (BY ALAN HECKERT)
+!     UPDATED         --JANUARY  1989.  QMS QUIC (BY ALAN HECKERT)
+!     UPDATED         --JANUARY  1989.  CALCOMP (BY ALAN HECKERT)
+!     UPDATED         --JANUARY  1989.  ZETA (BY ALAN HECKERT)
+!     UPDATED         --MARCH    1990.  X11 (BY ALAN HECKERT)
+!     UPDATED         --JULY     1990.  SUPPORT COLOR FOR SOME HP-2622 DEVICES
+!     UPDATED         --JANUARY  1991.  SUPPORT COLOR ON REGIS (ALAN)
+!     UPDATED         --MAY      1991.  RENUMBER TOP BRANCHES (JJF)
+!     UPDATED         --MAY      1991.  VGA/TURBOC DRIVER (JJF)
+!                                       DRIVER OBSOLETE
+!     UPDATED         --APRIL    1992.  FIX DEBUG CODE
+!     UPDATED         --AUGUST   1992.  POSTSCRIPT TO HANDLE FULL SET OF
+!                                       COLORS (ALAN)
+!     UPDATED         --MARCH    1993.  POSTSCRIPT (HANDLE GRAY SCALE
+!                                       DIFFERENTLY ON BLACK AND WHITE
+!                                       AND COLOR DEVICES)
+!     UPDATED         --JULY     1996.  LAHEY DRIVER (ALAN HECKERT)
+!                                       OLD STYLE CALCOMP
+!                                       DRIVER OBSOLETE
+!     UPDATED         --OCTOBER  1996.  QUICKWIN DRIVER (ALAN)
+!     UPDATED         --OCTOBER  1996.  OPENGL DRIVER (ALAN)
+!                                       USE BILL MITCHELLS OPENGL
+!                                       BINDING FOR FORTRAN
+!     UPDATED         --OCTOBER  1996.  GKS (ALAN)
+!     UPDATED         --OCTOBER  1996.  BINARY CGM (ALAN)
+!                                       PLACEHOLDER FOR NOW
+!     UPDATED         --OCTOBER  1996.  DISPLAY POSTSCRIPT (ALAN)
+!                                       USE BILL MITCHELLS OPENGL
+!                                       BINDING FOR FORTRAN
+!     UPDATED         --OCTOBER  1997.  LAHEY INTERACTOR (ALAN)
+!     UPDATED         --JULY     1998.  LAHEY WINTERACTOR
+!     UPDATED         --JUNE     2000.  GD (FOR JPEG, PNG, WINDOWS BMP)
+!     UPDATED         --JUNE     2000.  MACINTOSH
+!                                       PLACEHOLDER FOR NOW
+!     UPDATED         --JUNE     2000.  PC PRINTER
+!                                       PLACEHOLDER FOR NOW
+!     UPDATED         --MARCH    2005.  SUPPORT FOR AQUATERM
+!     UPDATED         --LATEK    2006.  LATEX COLOR
+!     UPDATED         --APRIL    2009.  REMOVE PCL, RAMTEK, PRIN, XXXX DRIVERS
+!                                       (THESE WERE NEVER ACTUALLY IMPLEMENTED)
+!     UPDATED         --MAY      2012.  ADD SUPPORT FOR:
+!                                          R0 - R255   - 1000 TO 1255
+!                                          Z0 - Z255   - 2000 TO 2255
+!                                          B0 - B255   - 3000 TO 3255
+!                                       THIS ADDS SHADING TO PRIMRY COLORS
+!                                       SIMILAR TO GRAY SCALE.  A BIT OF A
+!                                       STOP GAP TO IMPLEMENTING FULL RGB
+!                                       SUPPORT.
+!     UPDATED         --OCTOBER   2016. ADD PRE-PROCESSOR DIRECTIVES
+!     UPDATED         --OCTOBER   2016. ADD TEMPLATES FOR SEVERL FUTURE
+!     UPDATED         --JULY      2020. CHECK FOR SUPPORTED COLOR FOR
+!                                       GENERAL AND GENERAL CODED DEVICES
+!     UPDATED         --SEPTEMBER 2020. CHECK FOR SUPPORTED COLOR FOR
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 !
@@ -24923,6 +25029,7 @@
       CHARACTER*1 ICOL2
       CHARACTER*130 ICSTR
       CHARACTER*4 ISUBN0
+      CHARACTER*8 ITKCNM
       INTEGER RD(8),GN(8),BE(8)
       INTEGER RED(8),GRN(8),BLE(8)
       PARAMETER(MAXCLR=163)
@@ -25951,6 +26058,24 @@
           ICSTR(8:11)=ICOL(1:4)
           NCSTR=12
           CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        ELSE
+!
+!         RECORD THE NAMED COLOR AS THE CURRENT TIKZ COLOR TOKEN.  THIS IS
+!         DONE WHETHER OR NOT COLOR IS ON SO THAT THE TOKEN CAN NEVER GO
+!         STALE.
+!
+          ITKCNM=' '
+          ITKCNM(1:4)=ICOL(1:4)
+          NTKCNM=4
+          DO ITKJJ=4,1,-1
+            IF(ICOL(ITKJJ:ITKJJ).NE.' ')THEN
+              NTKCNM=ITKJJ
+              EXIT
+            ENDIF
+          ENDDO
+          IMODE=1
+          CALL GRTKCN(IMODE,ITKCNM,NTKCNM)
+!
         ENDIF
       ENDIF
       GO TO 9000
@@ -26065,7 +26190,8 @@
 !           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     VERSION NUMBER--2020.10
-!     ORIGINAL VERSION--OCTOBER  2020
+!     ORIGINAL VERSION--OCTOBER   2020
+!     UPDATED         --SEPTEMBER 2026 RGB COLOR SUPPORT FOR LATEX TIKZ
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 !
@@ -26639,6 +26765,27 @@
 !               ******************************************************
 !
 15000 CONTINUE
+!
+!     2026/09: THE TIKZ DRIVER CAN EXPRESS AN ARBITRARY RGB COLOR BY
+!              WRITING A \\definecolor LINE AND REFERENCING THE GENERATED
+!              NAME.  THE EPIC/EEPIC DRIVER HAS NO EQUIVALENT, SO IT IS
+!              LEFT WITH THE NAMED-COLOR BEHAVIOR.
+!
+!              NOTE THAT THE ARGUMENT ORDER OF THIS ROUTINE IS
+!              (ARED,ABLUE,AGREEN) RATHER THAN (ARED,AGREEN,ABLUE).
+!
+!              GRTRC2 RETURNS RAW VALUES IN THE RANGE 0 TO IRGBMX (255 BY
+!              DEFAULT), NOT NORMALIZED VALUES.  EACH DEVICE BRANCH SCALES
+!              THEM AS IT NEEDS, SO SCALE TO 0-255 FOR \definecolor{}{RGB}.
+!
+      IF(ILATDR.EQ.'TIKZ' .AND. IRGBFL.EQ.1)THEN
+        ATKMAX=REAL(IRGBMX)
+        IF(ATKMAX.LE.0.0)ATKMAX=255.0
+        ITKRED=INT(ARED*255.0/ATKMAX + 0.5)
+        ITKGRE=INT(AGREEN*255.0/ATKMAX + 0.5)
+        ITKBLU=INT(ABLUE*255.0/ATKMAX + 0.5)
+        CALL GRTKRG(ITKRED,ITKGRE,ITKBLU)
+      ENDIF
       GO TO 9000
 !
 !               ******************************************************
@@ -33454,6 +33601,177 @@
 !
       RETURN
       END SUBROUTINE GRSETH
+      SUBROUTINE GRTKNC(IX,NCH)
+!
+!     PURPOSE--FOR THE TIKZ LATEX DRIVER, RETURN IN NCH THE NUMBER OF
+!              CHARACTERS NEEDED TO WRITE THE INTEGER IX, INCLUDING A
+!              LEADING MINUS SIGN.  THIS IS THE FIELD WIDTH TO PASS TO
+!              GRTRIN, WHICH WRITES ASTERISKS IF THE FIELD IS TOO NARROW
+!              AND PADS WITH BLANKS IF IT IS TOO WIDE.
+!
+!     WRITTEN BY--CODE PROVIDED BY JONATHAN MORGAN
+!                 jonathan.h.morgan@gmail.com
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     ORIGINAL VERSION--SEPTEMBER 2026.
+!
+!-----------------------------------------------------------------------
+!
+      INTEGER IX,NCH,IABSX
+!
+      IABSX=IABS(IX)
+      NCH=1
+   10 CONTINUE
+      IF(IABSX.GE.10)THEN
+        IABSX=IABSX/10
+        NCH=NCH+1
+        GO TO 10
+      ENDIF
+      IF(IX.LT.0)NCH=NCH+1
+!
+      RETURN
+      END SUBROUTINE GRTKNC
+      SUBROUTINE GRTKCN(IMODE,ICNAME,NCNAME)
+!
+!     PURPOSE--HOLD THE CURRENT COLOR TOKEN FOR THE TIKZ LATEX DRIVER.
+!              IMODE=1 STORES A TOKEN, IMODE=2 RETURNS THE STORED TOKEN.
+!
+!              THE TIKZ DRIVER WRITES A COLOR TOKEN IN SEVEN PLACES, AND
+!              NOT ALL OF THE ROUTINES INVOLVED RECEIVE THE RGB
+!              ARGUMENTS (GRDRLI RECEIVES ONLY ICOL AND JCOL).  KEEPING
+!              THE TOKEN HERE LETS GRSECO AND GRSEC2 SET IT AND LETS ALL
+!              SEVEN EMITTERS READ IT WITHOUT CHANGING ANY SIGNATURES.
+!
+!     INPUT ARGUMENTS--IMODE: INTEGER SCALAR WHERE 1 => SET SAVED COLOR NAME
+!                                                  2 => RETRIEVE SAVED COLOR NAME
+!                      ICNAME: CHARACTER VARIABLE THAT STORES THE COLOR NAME
+!                      NCNAME: INTEGER SCALAR THAT SPECIFIES THE NUMBER
+!                              OF CHARACTERS IN ICNAME
+!     OUTPUT ARGUMENTS--ICNAME: CHARACTER VARIABLE CONTAINING THE COLOR NAME
+!                       NCNAME: INTEGER SCALAR THAT SPECIFIES THE NUMBER
+!                               OF CHARACTERS IN ICNAME
+!     WRITTEN BY--CODE PROVIDED BY JONATHAN MORGAN
+!                 jonathan.h.morgan@gmail.com
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     ORIGINAL VERSION--SEPTEMBER 2026.
+!
+!-----------------------------------------------------------------------
+!
+      CHARACTER*8 ICNAME
+      CHARACTER*8 ISAVED
+      INTEGER IMODE,NCNAME,NSAVED
+      SAVE ISAVED,NSAVED
+      DATA ISAVED/'BLAC    '/
+      DATA NSAVED/4/
+!
+      IF(IMODE.EQ.1)THEN
+        ISAVED=ICNAME
+        NSAVED=NCNAME
+        IF(NSAVED.LT.1)NSAVED=1
+        IF(NSAVED.GT.8)NSAVED=8
+      ELSE
+        ICNAME=ISAVED
+        NCNAME=NSAVED
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE GRTKCN
+      SUBROUTINE GRTKRG(IRED2,IGREE2,IBLUE2)
+!
+!     PURPOSE--FOR THE TIKZ LATEX DRIVER, WRITE A \definecolor LINE FOR
+!              AN ARBITRARY RGB TRIPLET AND MAKE THE GENERATED NAME THE
+!              CURRENT COLOR TOKEN.
+!
+!              \definecolor IS VALID INSIDE A tikzpicture ENVIRONMENT AND
+!              IS WRITTEN IMMEDIATELY BEFORE THE COMMAND THAT USES IT.
+!
+!     INPUT ARGUMENTS--IRED2: INTEGER SCALAR THAT SPECIFIES THE RED
+!                             COMPONENT
+!                    --IGREEN2: INTEGER SCALAR THAT SPECIFIES THE GREEN
+!                               COMPONENT
+!                    --IBLUE2: INTEGER SCALAR THAT SPECIFIES THE BLUE
+!                              COMPONENT
+!     WRITTEN BY--CODE PROVIDED BY JONATHAN MORGAN
+!                 jonathan.h.morgan@gmail.com
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     ORIGINAL VERSION--SEPTEMBER 2026.
+!
+!-----------------------------------------------------------------------
+!
+      CHARACTER*4 ISUBN0
+      CHARACTER*130 ICSTR
+      CHARACTER*8 ICNAME
+      CHARACTER*8 INUMBR
+      INTEGER IRED2,IGREE2,IBLUE2
+      INTEGER ICOUNT,NCSTR,NCNAME,I1,I2,I3,J
+      SAVE ICOUNT
+      DATA ICOUNT/0/
+!
+      ISUBN0='TKRG'
+!
+      I1=IRED2
+      I2=IGREE2
+      I3=IBLUE2
+      IF(I1.LT.0)I1=0
+      IF(I1.GT.255)I1=255
+      IF(I2.LT.0)I2=0
+      IF(I2.GT.255)I2=255
+      IF(I3.LT.0)I3=0
+      IF(I3.GT.255)I3=255
+!
+      ICOUNT=ICOUNT+1
+      IF(ICOUNT.GT.99999)ICOUNT=1
+      WRITE(INUMBR,'(I8)')ICOUNT
+      ICNAME='DPC'
+      NCNAME=3
+      DO J=1,8
+        IF(INUMBR(J:J).NE.' ')THEN
+          NCNAME=NCNAME+1
+          ICNAME(NCNAME:NCNAME)=INUMBR(J:J)
+        ENDIF
+      ENDDO
+!
+      ICSTR=' '
+      ICSTR(1:13)='\definecolor{'
+      NCSTR=13
+      ICSTR(NCSTR+1:NCSTR+NCNAME)=ICNAME(1:NCNAME)
+      NCSTR=NCSTR+NCNAME
+      ICSTR(NCSTR+1:NCSTR+7)='}{RGB}{'
+      NCSTR=NCSTR+7
+!
+      WRITE(INUMBR,'(I8)')I1
+      DO J=1,8
+        IF(INUMBR(J:J).NE.' ')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=INUMBR(J:J)
+        ENDIF
+      ENDDO
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=','
+      WRITE(INUMBR,'(I8)')I2
+      DO J=1,8
+        IF(INUMBR(J:J).NE.' ')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=INUMBR(J:J)
+        ENDIF
+      ENDDO
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)=','
+      WRITE(INUMBR,'(I8)')I3
+      DO J=1,8
+        IF(INUMBR(J:J).NE.' ')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=INUMBR(J:J)
+        ENDIF
+      ENDDO
+      NCSTR=NCSTR+1
+      ICSTR(NCSTR:NCSTR)='}'
+!
+      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+      IMODE=1
+      CALL GRTKCN(IMODE,ICNAME,NCNAME)
+!
+      RETURN
+      END SUBROUTINE GRTKRG
       SUBROUTINE GRTRCA(ITYPE,ICASE,JCASE)
 !
 !     PURPOSE--FOR A LINE, REGION, MARKER, OR TEXT, TRANSLATE A CASE
@@ -33664,7 +33982,7 @@
       DATA (ICOLNM(I),I=1,50)/   &
        'WHIT', 'BLAC', 'RED ', 'BLUE', 'GREE', 'MAGE', 'ORAN', 'CYAN',   &
        'YELL', 'YGRE',   &
-       'DGRE', 'LBLU', 'VBLU', 'VRED', 'DGRA', 'LGRA', 'AQUA', 'BROW',   &
+       'DGRE', 'LBLU', 'VBLU', 'VRED', 'DGRA', 'LGRA', 'AMAR', 'BROW',   &
        'CABL', 'CORA',   &
        'CBLU', 'DOGR', 'DORC', 'DSBL', 'DTUR', 'FIRE', 'FGRE', 'GOLD',   &
        'GLDR', 'GRAY',   &
@@ -33697,7 +34015,7 @@
       DATA (ICOLNM(I),I=150,MAXCLR)/   &
        'WSMO', 'SEAS', 'BEIG', 'OLDL', 'FLOR', 'IVOR', 'ANIT', 'LINE',   &
        'MROS', 'GAIN',   &
-       'SILV', 'DGRA', 'LSLG', 'SLGR'/
+       'SILV', 'DAGR', 'LSLG', 'SLGR'/
 !
 !  TEKTRONIX 4027
 !
@@ -35242,7 +35560,8 @@
 !           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
 !     LANGUAGE--ANSI FORTRAN (1977)
 !     VERSION NUMBER--2020.10
-!     ORIGINAL VERSION--OCTOBER  2020.
+!     ORIGINAL VERSION--OCTOBER   2020.
+!     UPDATED         --SEPTEMBER 2026. LATEX TIKZ RGB SUPPORT
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 !
@@ -35663,7 +35982,16 @@
 !               ******************************************************
 !
 15000 CONTINUE
-      IRGBFL=0
+!
+!     2026/09: THE TIKZ DRIVER CAN EXPRESS AN ARBITRARY RGB COLOR VIA
+!              \\definecolor.  THE EPIC/EEPIC DRIVER CANNOT, SO IT KEEPS
+!              THE NAMED-COLOR MODEL.
+!
+      IF(ILATDR.EQ.'TIKZ')THEN
+        IRGBFL=1
+      ELSE
+        IRGBFL=0
+      ENDIF
       GO TO 9000
 !
 !               ******************************************************
@@ -39510,6 +39838,7 @@
 !     UPDATED         --JUNE      2024. FOR GD DEVICE, CHECK IF FONT
 !                                       FILE EXISTS
 !     UPDATED         --AUGUST    2026. SUPPORT TIKZ FOR LATEX
+!     UPDATED         --SEPTEMBER 2026. RGB COLOR SUPPORT FOR LATEX TIKZ
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 !
@@ -39671,6 +40000,7 @@
       CHARACTER*4 IERROR
       CHARACTER*4 ISUBRO
       CHARACTER*4 ICTEMP
+      CHARACTER*8 ICNAME
 #ifdef HAVE_GD
       CHARACTER*4 IEXIST
       CHARACTER*4 IEXIST2
@@ -41574,208 +41904,215 @@
       CALL GRTRSD(PX1,PY1,IX,IY,ISUBN0)
       IF(ILATDR.EQ.'TIKZ')THEN
 !
-      NCCOLO=4
-      DO II=4,1,-1
-         IF(ICOL(II:II).NE.' ')THEN
-           NCCOLO=II
-           EXIT
-         ENDIF
-      ENDDO
+        NCCOLO=4
+        DO II=4,1,-1
+          IF(ICOL(II:II).NE.' ')THEN
+            NCCOLO=II
+            EXIT
+          ENDIF
+        ENDDO
 !
-      NCSTR=1
-      ICSTR(NCSTR:NCSTR)='\'
-      ICSTR(NCSTR+1:NCSTR+10)='node[text='
-      NCSTR=NCSTR+10
-      ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
-      NCSTR=NCSTR+NCCOLO
+        NCSTR=1
+        ICSTR(NCSTR:NCSTR)='\'
+        ICSTR(NCSTR+1:NCSTR+10)='node[text='
+        NCSTR=NCSTR+10
+        IF(IRGBFL.EQ.0)THEN
+          ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+          NCSTR=NCSTR+NCCOLO
+        ELSE
+          IMODE=2
+          CALL GRTKCN(IMODE,ICNAME,NCTEMP)
+          ICSTR(NCSTR+1:NCSTR+NCTEMP)=ICNAME(1:NCTEMP)
+          NCSTR=NCSTR+NCTEMP
+        ENDIF
 !
-      IF(ILATFF.EQ.'RMFA')THEN
-        IF(ILATST.EQ.'NORM')THEN
-          ICSTR(NCSTR+1:NCSTR+15)=',font=\rmfamily'
-          NCSTR=NCSTR+15
-        ELSEIF(ILATST.EQ.'BOLD')THEN
-          ICSTR(NCSTR+1:NCSTR+24)=',font=\rmfamily\bfseries'
-          NCSTR=NCSTR+24
-        ELSEIF(ILATST.EQ.'ITAL')THEN
-          ICSTR(NCSTR+1:NCSTR+23)=',font=\rmfamily\itshape'
-          NCSTR=NCSTR+23
+        IF(ILATFF.EQ.'RMFA')THEN
+          IF(ILATST.EQ.'NORM')THEN
+            ICSTR(NCSTR+1:NCSTR+15)=',font=\rmfamily'
+            NCSTR=NCSTR+15
+          ELSEIF(ILATST.EQ.'BOLD')THEN
+            ICSTR(NCSTR+1:NCSTR+24)=',font=\rmfamily\bfseries'
+            NCSTR=NCSTR+24
+          ELSEIF(ILATST.EQ.'ITAL')THEN
+            ICSTR(NCSTR+1:NCSTR+23)=',font=\rmfamily\itshape'
+            NCSTR=NCSTR+23
+          ENDIF
+        ELSEIF(ILATFF.EQ.'SFFA')THEN
+          IF(ILATST.EQ.'NORM')THEN
+            ICSTR(NCSTR+1:NCSTR+15)=',font=\sffamily'
+            NCSTR=NCSTR+15
+          ELSEIF(ILATST.EQ.'BOLD')THEN
+            ICSTR(NCSTR+1:NCSTR+24)=',font=\sffamily\bfseries'
+            NCSTR=NCSTR+24
+          ELSEIF(ILATST.EQ.'ITAL')THEN
+            ICSTR(NCSTR+1:NCSTR+23)=',font=\sffamily\itshape'
+            NCSTR=NCSTR+23
+          ENDIF
+        ELSEIF(ILATFF.EQ.'TTFA')THEN
+          IF(ILATST.EQ.'NORM')THEN
+            ICSTR(NCSTR+1:NCSTR+15)=',font=\ttfamily'
+            NCSTR=NCSTR+15
+          ELSEIF(ILATST.EQ.'BOLD')THEN
+            ICSTR(NCSTR+1:NCSTR+24)=',font=\ttfamily\bfseries'
+            NCSTR=NCSTR+24
+          ELSEIF(ILATST.EQ.'ITAL')THEN
+            ICSTR(NCSTR+1:NCSTR+23)=',font=\ttfamily\itshape'
+            NCSTR=NCSTR+23
+          ENDIF
         ENDIF
-      ELSEIF(ILATFF.EQ.'SFFA')THEN
-        IF(ILATST.EQ.'NORM')THEN
-          ICSTR(NCSTR+1:NCSTR+15)=',font=\sffamily'
-          NCSTR=NCSTR+15
-        ELSEIF(ILATST.EQ.'BOLD')THEN
-          ICSTR(NCSTR+1:NCSTR+24)=',font=\sffamily\bfseries'
-          NCSTR=NCSTR+24
-        ELSEIF(ILATST.EQ.'ITAL')THEN
-          ICSTR(NCSTR+1:NCSTR+23)=',font=\sffamily\itshape'
-          NCSTR=NCSTR+23
-        ENDIF
-      ELSEIF(ILATFF.EQ.'TTFA')THEN
-        IF(ILATST.EQ.'NORM')THEN
-          ICSTR(NCSTR+1:NCSTR+15)=',font=\ttfamily'
-          NCSTR=NCSTR+15
-        ELSEIF(ILATST.EQ.'BOLD')THEN
-          ICSTR(NCSTR+1:NCSTR+24)=',font=\ttfamily\bfseries'
-          NCSTR=NCSTR+24
-        ELSEIF(ILATST.EQ.'ITAL')THEN
-          ICSTR(NCSTR+1:NCSTR+23)=',font=\ttfamily\itshape'
-          NCSTR=NCSTR+23
-        ENDIF
-      ENDIF
 
-      IF(JSIZE.EQ.1)THEN
-        ICSTR(NCSTR+1:NCSTR+5)='\tiny'
-        NCSTR=NCSTR+5
-      ELSEIF(JSIZE.EQ.2)THEN
-        ICSTR(NCSTR+1:NCSTR+11)='\scriptsize'
-        NCSTR=NCSTR+11
-      ELSEIF(JSIZE.EQ.3)THEN
-        ICSTR(NCSTR+1:NCSTR+13)='\footnotesize'
-        NCSTR=NCSTR+13
-      ELSEIF(JSIZE.EQ.4)THEN
-        ICSTR(NCSTR+1:NCSTR+6)='\small'
-        NCSTR=NCSTR+6
-      ELSEIF(JSIZE.EQ.5)THEN
-        ICSTR(NCSTR+1:NCSTR+11)='\normalsize'
-        NCSTR=NCSTR+11
-      ELSEIF(JSIZE.EQ.6)THEN
-        ICSTR(NCSTR+1:NCSTR+6)='\large'
-        NCSTR=NCSTR+6
-      ELSEIF(JSIZE.EQ.7)THEN
-        ICSTR(NCSTR+1:NCSTR+6)='\Large'
-        NCSTR=NCSTR+6
-      ELSEIF(JSIZE.EQ.8)THEN
-        ICSTR(NCSTR+1:NCSTR+5)='\LARGE'
-        NCSTR=NCSTR+6
-      ELSEIF(JSIZE.EQ.9)THEN
-        ICSTR(NCSTR+1:NCSTR+5)='\huge'
-        NCSTR=NCSTR+5
-      ELSEIF(JSIZE.EQ.11)THEN
-        ICSTR(NCSTR+1:NCSTR+5)='\HUGE'
-        NCSTR=NCSTR+5
-      ENDIF
+        IF(JSIZE.EQ.1)THEN
+          ICSTR(NCSTR+1:NCSTR+5)='\tiny'
+          NCSTR=NCSTR+5
+        ELSEIF(JSIZE.EQ.2)THEN
+          ICSTR(NCSTR+1:NCSTR+11)='\scriptsize'
+          NCSTR=NCSTR+11
+        ELSEIF(JSIZE.EQ.3)THEN
+          ICSTR(NCSTR+1:NCSTR+13)='\footnotesize'
+          NCSTR=NCSTR+13
+        ELSEIF(JSIZE.EQ.4)THEN
+          ICSTR(NCSTR+1:NCSTR+6)='\small'
+          NCSTR=NCSTR+6
+        ELSEIF(JSIZE.EQ.5)THEN
+          ICSTR(NCSTR+1:NCSTR+11)='\normalsize'
+          NCSTR=NCSTR+11
+        ELSEIF(JSIZE.EQ.6)THEN
+          ICSTR(NCSTR+1:NCSTR+6)='\large'
+          NCSTR=NCSTR+6
+        ELSEIF(JSIZE.EQ.7)THEN
+          ICSTR(NCSTR+1:NCSTR+6)='\Large'
+          NCSTR=NCSTR+6
+        ELSEIF(JSIZE.EQ.8)THEN
+          ICSTR(NCSTR+1:NCSTR+5)='\LARGE'
+          NCSTR=NCSTR+6
+        ELSEIF(JSIZE.EQ.9)THEN
+          ICSTR(NCSTR+1:NCSTR+5)='\huge'
+          NCSTR=NCSTR+5
+        ELSEIF(JSIZE.EQ.11)THEN
+          ICSTR(NCSTR+1:NCSTR+5)='\HUGE'
+          NCSTR=NCSTR+5
+        ENDIF
 !       ICSTR(NCSTR+1:NCSTR+32)=', inner ysep=0pt, text depth=0pt'
 !       NCSTR=NCSTR+32
 !
-      IF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'CENT')THEN
-        CONTINUE
-      ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'TOP')THEN
-        ICSTR(NCSTR+1:NCSTR+14)=', anchor=north'
-        NCSTR=NCSTR+14
-      ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'BOTT')THEN
-        ICSTR(NCSTR+1:NCSTR+14)=', anchor=south'
-        NCSTR=NCSTR+14
-      ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'CENT')THEN
-        ICSTR(NCSTR+1:NCSTR+13)=', anchor=west'
-        NCSTR=NCSTR+13
-      ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'TOP')THEN
-        ICSTR(NCSTR+1:NCSTR+19)=', anchor=north west'
-        NCSTR=NCSTR+19
-      ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'BOTT')THEN
-        ICSTR(NCSTR+1:NCSTR+19)=', anchor=south west'
-        NCSTR=NCSTR+19
-      ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'CENT')THEN
-        ICSTR(NCSTR+1:NCSTR+13)=', anchor=east'
-        NCSTR=NCSTR+13
-      ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'TOP')THEN
-        ICSTR(NCSTR+1:NCSTR+19)=', anchor=north east'
-        NCSTR=NCSTR+19
-      ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'BOTT')THEN
-        ICSTR(NCSTR+1:NCSTR+19)=', anchor=south east'
-        NCSTR=NCSTR+19
-      ENDIF
-      ICSTR(NCSTR+1:NCSTR+6)='] at ('
-      NCSTR=NCSTR+6
-      IF(IX.GT.99)THEN
-        NCHTOT=3
-      ELSEIF(IX.GT.9)THEN
-        NCHTOT=2
+        IF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'CENT')THEN
+          CONTINUE
+        ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'TOP')THEN
+          ICSTR(NCSTR+1:NCSTR+14)=', anchor=north'
+          NCSTR=NCSTR+14
+        ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'BOTT')THEN
+          ICSTR(NCSTR+1:NCSTR+14)=', anchor=south'
+          NCSTR=NCSTR+14
+        ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'CENT')THEN
+          ICSTR(NCSTR+1:NCSTR+13)=', anchor=west'
+          NCSTR=NCSTR+13
+        ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'TOP')THEN
+          ICSTR(NCSTR+1:NCSTR+19)=', anchor=north west'
+          NCSTR=NCSTR+19
+        ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'BOTT')THEN
+          ICSTR(NCSTR+1:NCSTR+19)=', anchor=south west'
+          NCSTR=NCSTR+19
+        ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'CENT')THEN
+          ICSTR(NCSTR+1:NCSTR+13)=', anchor=east'
+          NCSTR=NCSTR+13
+        ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'TOP')THEN
+          ICSTR(NCSTR+1:NCSTR+19)=', anchor=north east'
+          NCSTR=NCSTR+19
+        ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'BOTT')THEN
+          ICSTR(NCSTR+1:NCSTR+19)=', anchor=south east'
+          NCSTR=NCSTR+19
+        ENDIF
+        ICSTR(NCSTR+1:NCSTR+6)='] at ('
+        NCSTR=NCSTR+6
+        IF(IX.GT.99)THEN
+          NCHTOT=3
+        ELSEIF(IX.GT.9)THEN
+          NCHTOT=2
+        ELSE
+          NCHTOT=1
+        ENDIF
+        CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+        ICSTR(NCSTR+1:NCSTR+3)='pt,'
+        NCSTR=NCSTR+3
+        IF(IY.GT.99)THEN
+          NCHTOT=3
+        ELSEIF(IY.GT.9)THEN
+          NCHTOT=2
+        ELSE
+          NCHTOT=1
+        ENDIF
+        CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+        ICSTR(NCSTR+1:NCSTR+5)='pt) {'
+        NCSTR=NCSTR+5
+        DO J=1,NCTEXT
+          ICSTR2(J:J)=ICTEXT(J)(1:1)
+        ENDDO
+        MAXWID=130
+        CALL LATCON(ICSTR2,NCTEXT,ICSTR3,NCTEX2,MAXWID,ISUBRO,IERROR)
+!
+        DO J=1,NCTEX2
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=ICSTR3(J:J)
+        ENDDO
+        ICSTR(NCSTR+1:NCSTR+2)='};'
+        NCSTR=NCSTR+2
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
       ELSE
-        NCHTOT=1
-      ENDIF
-      CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-      ICSTR(NCSTR+1:NCSTR+3)='pt,'
-      NCSTR=NCSTR+3
-      IF(IY.GT.99)THEN
-        NCHTOT=3
-      ELSEIF(IY.GT.9)THEN
-        NCHTOT=2
-      ELSE
-        NCHTOT=1
-      ENDIF
-      CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-      ICSTR(NCSTR+1:NCSTR+5)='pt) {'
-      NCSTR=NCSTR+5
-      DO J=1,NCTEXT
-        ICSTR2(J:J)=ICTEXT(J)(1:1)
-      ENDDO
-      MAXWID=130
-      CALL LATCON(ICSTR2,NCTEXT,ICSTR3,NCTEX2,MAXWID,ISUBRO,IERROR)
+        ICSTR(1:1)=IBASLC
+        ICSTR(2:5)='put('
+        NCSTR=5
+        NCHTOT=5
+        CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=','
+        CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR+15)='){ makebox(0,0)['
+        ICSTR(NCSTR+2:NCSTR+2)=IBASLC
+        NCSTR=NCSTR+15
 !
-      DO J=1,NCTEX2
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=ICSTR3(J:J)
-      ENDDO
-      ICSTR(NCSTR+1:NCSTR+2)='};'
-      NCSTR=NCSTR+2
-      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
-      ELSE
-      ICSTR(1:1)=IBASLC
-      ICSTR(2:5)='put('
-      NCSTR=5
-      NCHTOT=5
-      CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)=','
-      CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR+15)='){ makebox(0,0)['
-      ICSTR(NCSTR+2:NCSTR+2)=IBASLC
-      NCSTR=NCSTR+15
+        IF(IJUSTV.EQ.'CENT')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='c'
+        ELSEIF(IJUSTV.EQ.'BOTT')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='b'
+        ELSEIF(IJUSTV.EQ.'TOP ')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='t'
+        ENDIF
 !
-      IF(IJUSTV.EQ.'CENT')THEN
+        IF(IJUSTH.EQ.'CENT')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='c'
+        ELSEIF(IJUSTH.EQ.'LEFT')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='l'
+        ELSEIF(IJUSTH.EQ.'RIGH')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='r'
+        ENDIF
         NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='c'
-      ELSEIF(IJUSTV.EQ.'BOTT')THEN
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='b'
-      ELSEIF(IJUSTV.EQ.'TOP ')THEN
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='t'
-      ENDIF
+        ICSTR(NCSTR:NCSTR)=']'
 !
-      IF(IJUSTH.EQ.'CENT')THEN
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='c'
-      ELSEIF(IJUSTH.EQ.'LEFT')THEN
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='l'
-      ELSEIF(IJUSTH.EQ.'RIGH')THEN
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='r'
-      ENDIF
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)=']'
+        DO J=1,NCTEXT
+          ICSTR2(J:J)=ICTEXT(J)(1:1)
+        ENDDO
+        MAXWID=130
+        CALL LATCON(ICSTR2,NCTEXT,ICSTR3,NCTEX2,MAXWID,ISUBRO,IERROR)
 !
-      DO J=1,NCTEXT
-        ICSTR2(J:J)=ICTEXT(J)(1:1)
-      ENDDO
-      MAXWID=130
-      CALL LATCON(ICSTR2,NCTEXT,ICSTR3,NCTEX2,MAXWID,ISUBRO,IERROR)
-!
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)='{'
-      ICNT=NCSTR
-      DO J=1,NCTEX2
-        ICNT=ICNT+1
-        ICSTR(ICNT:ICNT)=ICSTR3(J:J)
-      ENDDO
-      NCSTR=ICNT
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR+1)='}}'
-      NCSTR=NCSTR+1
-      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)='{'
+        ICNT=NCSTR
+        DO J=1,NCTEX2
+          ICNT=ICNT+1
+          ICSTR(ICNT:ICNT)=ICSTR3(J:J)
+        ENDDO
+        NCSTR=ICNT
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR+1)='}}'
+        NCSTR=NCSTR+1
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
       ENDIF
       GO TO 9000
 !
@@ -42403,6 +42740,7 @@
 !     UPDATED         --JUNE      2024. FOR GD DEVICE, CHECK IF FONT
 !                                       FILE EXISTS
 !     UPDATED         --AUGUST    2026. SUPPORT TIKZ FOR LATEX
+!     UPDATED         --SEPTEMBER 2026. RGB COLOR SUPPORT FOR LATEX TIKZ
 !
 !-----NON-COMMON VARIABLES (GRAPHICS)-------------------------------------------
 !
@@ -42575,6 +42913,7 @@
       INTEGER IADE(80)
       CHARACTER*4 IJUSTH
       CHARACTER*4 IJUSTV
+      CHARACTER*8 ICNAME
 #ifdef HAVE_LAHEY_CALCOMP
       CHARACTER*40 CLAHEY
       REAL RLAHEY(7)
@@ -42625,6 +42964,8 @@
       IC='-'
       IC1='-'
       IC2='-'
+      IJUSTH='    '
+      IJUSTV='    '
 !
       NCSTR=(-999)
 !
@@ -44698,151 +45039,158 @@
 !
 !       TKIZ DRIVER
 !
-      NCCOLO=4
-      DO II=4,1,-1
-         IF(ICOL(II:II).NE.' ')THEN
-           NCCOLO=II
-           EXIT
-         ENDIF
-      ENDDO
+        NCCOLO=4
+        DO II=4,1,-1
+           IF(ICOL(II:II).NE.' ')THEN
+             NCCOLO=II
+             EXIT
+           ENDIF
+        ENDDO
 !
-      NCSTR=1
-      ICSTR(NCSTR:NCSTR)='\'
-      ICSTR(NCSTR+1:NCSTR+20)='node[rotate=90,text='
-      NCSTR=NCSTR+20
-      ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
-      NCSTR=NCSTR+NCCOLO
+        NCSTR=1
+        ICSTR(NCSTR:NCSTR)='\'
+        ICSTR(NCSTR+1:NCSTR+20)='node[rotate=90,text='
+        NCSTR=NCSTR+20
+        IF(IRGBFL.EQ.0)THEN
+          ICSTR(NCSTR+1:NCSTR+NCCOLO)=ICOL(1:NCCOLO)
+          NCSTR=NCSTR+NCCOLO
+        ELSE
+          IMODE=2
+          CALL GRTKCN(IMODE,ICNAME,NCTEMP)
+          ICSTR(NCSTR+1:NCSTR+NCTEMP)=ICNAME(1:NCTEMP)
+          NCSTR=NCSTR+NCTEMP
+        ENDIF
 !
-      IF(ILATFF.EQ.'RMFA')THEN
-        IF(ILATST.EQ.'NORM')THEN
-          ICSTR(NCSTR+1:NCSTR+15)=',font=\rmfamily'
-          NCSTR=NCSTR+15
-        ELSEIF(ILATST.EQ.'BOLD')THEN
-          ICSTR(NCSTR+1:NCSTR+24)=',font=\rmfamily\bfseries'
-          NCSTR=NCSTR+24
-        ELSEIF(ILATST.EQ.'ITAL')THEN
-          ICSTR(NCSTR+1:NCSTR+23)=',font=\rmfamily\itshape'
-          NCSTR=NCSTR+23
+        IF(ILATFF.EQ.'RMFA')THEN
+          IF(ILATST.EQ.'NORM')THEN
+            ICSTR(NCSTR+1:NCSTR+15)=',font=\rmfamily'
+            NCSTR=NCSTR+15
+          ELSEIF(ILATST.EQ.'BOLD')THEN
+            ICSTR(NCSTR+1:NCSTR+24)=',font=\rmfamily\bfseries'
+            NCSTR=NCSTR+24
+          ELSEIF(ILATST.EQ.'ITAL')THEN
+            ICSTR(NCSTR+1:NCSTR+23)=',font=\rmfamily\itshape'
+            NCSTR=NCSTR+23
+          ENDIF
+        ELSEIF(ILATFF.EQ.'SFFA')THEN
+          IF(ILATST.EQ.'NORM')THEN
+            ICSTR(NCSTR+1:NCSTR+15)=',font=\sffamily'
+            NCSTR=NCSTR+15
+          ELSEIF(ILATST.EQ.'BOLD')THEN
+            ICSTR(NCSTR+1:NCSTR+24)=',font=\sffamily\bfseries'
+            NCSTR=NCSTR+24
+          ELSEIF(ILATST.EQ.'ITAL')THEN
+            ICSTR(NCSTR+1:NCSTR+23)=',font=\sffamily\itshape'
+            NCSTR=NCSTR+23
+          ENDIF
+        ELSEIF(ILATFF.EQ.'TTFA')THEN
+          IF(ILATST.EQ.'NORM')THEN
+            ICSTR(NCSTR+1:NCSTR+15)=',font=\ttfamily'
+            NCSTR=NCSTR+15
+          ELSEIF(ILATST.EQ.'BOLD')THEN
+            ICSTR(NCSTR+1:NCSTR+24)=',font=\ttfamily\bfseries'
+            NCSTR=NCSTR+24
+          ELSEIF(ILATST.EQ.'ITAL')THEN
+            ICSTR(NCSTR+1:NCSTR+23)=',font=\ttfamily\itshape'
+            NCSTR=NCSTR+23
+          ENDIF
         ENDIF
-      ELSEIF(ILATFF.EQ.'SFFA')THEN
-        IF(ILATST.EQ.'NORM')THEN
-          ICSTR(NCSTR+1:NCSTR+15)=',font=\sffamily'
-          NCSTR=NCSTR+15
-        ELSEIF(ILATST.EQ.'BOLD')THEN
-          ICSTR(NCSTR+1:NCSTR+24)=',font=\sffamily\bfseries'
-          NCSTR=NCSTR+24
-        ELSEIF(ILATST.EQ.'ITAL')THEN
-          ICSTR(NCSTR+1:NCSTR+23)=',font=\sffamily\itshape'
-          NCSTR=NCSTR+23
+        IF(JSIZE.EQ.1)THEN
+          ICSTR(NCSTR+1:NCSTR+5)='\tiny'
+          NCSTR=NCSTR+5
+        ELSEIF(JSIZE.EQ.2)THEN
+          ICSTR(NCSTR+1:NCSTR+11)='\scriptsize'
+          NCSTR=NCSTR+11
+        ELSEIF(JSIZE.EQ.3)THEN
+          ICSTR(NCSTR+1:NCSTR+13)='\footnotesize'
+          NCSTR=NCSTR+13
+        ELSEIF(JSIZE.EQ.4)THEN
+          ICSTR(NCSTR+1:NCSTR+6)='\small'
+          NCSTR=NCSTR+6
+        ELSEIF(JSIZE.EQ.5)THEN
+          ICSTR(NCSTR+1:NCSTR+11)='\normalsize'
+          NCSTR=NCSTR+11
+        ELSEIF(JSIZE.EQ.6)THEN
+          ICSTR(NCSTR+1:NCSTR+6)='\large'
+          NCSTR=NCSTR+6
+        ELSEIF(JSIZE.EQ.7)THEN
+          ICSTR(NCSTR+1:NCSTR+6)='\Large'
+          NCSTR=NCSTR+6
+        ELSEIF(JSIZE.EQ.8)THEN
+          ICSTR(NCSTR+1:NCSTR+5)='\LARGE'
+          NCSTR=NCSTR+6
+        ELSEIF(JSIZE.EQ.9)THEN
+          ICSTR(NCSTR+1:NCSTR+5)='\huge'
+          NCSTR=NCSTR+5
+        ELSEIF(JSIZE.EQ.11)THEN
+          ICSTR(NCSTR+1:NCSTR+5)='\HUGE'
+          NCSTR=NCSTR+5
         ENDIF
-      ELSEIF(ILATFF.EQ.'TTFA')THEN
-        IF(ILATST.EQ.'NORM')THEN
-          ICSTR(NCSTR+1:NCSTR+15)=',font=\ttfamily'
-          NCSTR=NCSTR+15
-        ELSEIF(ILATST.EQ.'BOLD')THEN
-          ICSTR(NCSTR+1:NCSTR+24)=',font=\ttfamily\bfseries'
-          NCSTR=NCSTR+24
-        ELSEIF(ILATST.EQ.'ITAL')THEN
-          ICSTR(NCSTR+1:NCSTR+23)=',font=\ttfamily\itshape'
-          NCSTR=NCSTR+23
-        ENDIF
-      ENDIF
-      IF(JSIZE.EQ.1)THEN
-        ICSTR(NCSTR+1:NCSTR+5)='\tiny'
-        NCSTR=NCSTR+5
-      ELSEIF(JSIZE.EQ.2)THEN
-        ICSTR(NCSTR+1:NCSTR+11)='\scriptsize'
-        NCSTR=NCSTR+11
-      ELSEIF(JSIZE.EQ.3)THEN
-        ICSTR(NCSTR+1:NCSTR+13)='\footnotesize'
-        NCSTR=NCSTR+13
-      ELSEIF(JSIZE.EQ.4)THEN
-        ICSTR(NCSTR+1:NCSTR+6)='\small'
-        NCSTR=NCSTR+6
-      ELSEIF(JSIZE.EQ.5)THEN
-        ICSTR(NCSTR+1:NCSTR+11)='\normalsize'
-        NCSTR=NCSTR+11
-      ELSEIF(JSIZE.EQ.6)THEN
-        ICSTR(NCSTR+1:NCSTR+6)='\large'
-        NCSTR=NCSTR+6
-      ELSEIF(JSIZE.EQ.7)THEN
-        ICSTR(NCSTR+1:NCSTR+6)='\Large'
-        NCSTR=NCSTR+6
-      ELSEIF(JSIZE.EQ.8)THEN
-        ICSTR(NCSTR+1:NCSTR+5)='\LARGE'
-        NCSTR=NCSTR+6
-      ELSEIF(JSIZE.EQ.9)THEN
-        ICSTR(NCSTR+1:NCSTR+5)='\huge'
-        NCSTR=NCSTR+5
-      ELSEIF(JSIZE.EQ.11)THEN
-        ICSTR(NCSTR+1:NCSTR+5)='\HUGE'
-        NCSTR=NCSTR+5
-      ENDIF
 !       ICSTR(NCSTR+1:NCSTR+32)=', inner ysep=0pt, text depth=0pt'
 !       NCSTR=NCSTR+32
 !
-      IF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'CENT')THEN
-        CONTINUE
-      ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'TOP')THEN
-        ICSTR(NCSTR+1:NCSTR+14)=', anchor=north'
-        NCSTR=NCSTR+14
-      ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'BOTT')THEN
-        ICSTR(NCSTR+1:NCSTR+14)=', anchor=south'
-        NCSTR=NCSTR+14
-      ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'CENT')THEN
-        ICSTR(NCSTR+1:NCSTR+13)=', anchor=west'
-        NCSTR=NCSTR+13
-      ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'TOP')THEN
-        ICSTR(NCSTR+1:NCSTR+19)=', anchor=north west'
-        NCSTR=NCSTR+19
-      ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'BOTT')THEN
-        ICSTR(NCSTR+1:NCSTR+19)=', anchor=south west'
-        NCSTR=NCSTR+19
-      ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'CENT')THEN
-        ICSTR(NCSTR+1:NCSTR+13)=', anchor=east'
-        NCSTR=NCSTR+13
-      ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'TOP')THEN
-        ICSTR(NCSTR+1:NCSTR+19)=', anchor=north east'
-        NCSTR=NCSTR+19
-      ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'BOTT')THEN
-        ICSTR(NCSTR+1:NCSTR+19)=', anchor=south east'
-        NCSTR=NCSTR+19
-      ENDIF
-      ICSTR(NCSTR+1:NCSTR+6)='] at ('
-      NCSTR=NCSTR+6
-      IF(IX.GT.99)THEN
-        NCHTOT=3
-      ELSEIF(IX.GT.9)THEN
-        NCHTOT=2
-      ELSE
-        NCHTOT=1
-      ENDIF
-      CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-      ICSTR(NCSTR+1:NCSTR+3)='pt,'
-      NCSTR=NCSTR+3
-      IF(IY.GT.99)THEN
-        NCHTOT=3
-      ELSEIF(IY.GT.9)THEN
-        NCHTOT=2
-      ELSE
-        NCHTOT=1
-      ENDIF
-      CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-      ICSTR(NCSTR+1:NCSTR+5)='pt) {'
-      NCSTR=NCSTR+5
-      DO J=1,NCTEXT
-        ICSTR2(J:J)=ICTEXT(J)(1:1)
-      ENDDO
-      MAXWID=130
-      CALL LATCON(ICSTR2,NCTEXT,ICSTR3,NCTEX2,MAXWID,ISUBRO,IERROR)
+        IF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'CENT')THEN
+          CONTINUE
+        ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'TOP')THEN
+          ICSTR(NCSTR+1:NCSTR+14)=', anchor=north'
+          NCSTR=NCSTR+14
+        ELSEIF(IJUSTH.EQ.'CENT' .AND. IJUSTV.EQ.'BOTT')THEN
+          ICSTR(NCSTR+1:NCSTR+14)=', anchor=south'
+          NCSTR=NCSTR+14
+        ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'CENT')THEN
+          ICSTR(NCSTR+1:NCSTR+13)=', anchor=west'
+          NCSTR=NCSTR+13
+        ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'TOP')THEN
+          ICSTR(NCSTR+1:NCSTR+19)=', anchor=north west'
+          NCSTR=NCSTR+19
+        ELSEIF(IJUSTH.EQ.'LEFT' .AND. IJUSTV.EQ.'BOTT')THEN
+          ICSTR(NCSTR+1:NCSTR+19)=', anchor=south west'
+          NCSTR=NCSTR+19
+        ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'CENT')THEN
+          ICSTR(NCSTR+1:NCSTR+13)=', anchor=east'
+          NCSTR=NCSTR+13
+        ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'TOP')THEN
+          ICSTR(NCSTR+1:NCSTR+19)=', anchor=north east'
+          NCSTR=NCSTR+19
+        ELSEIF(IJUSTH.EQ.'RIGH' .AND. IJUSTV.EQ.'BOTT')THEN
+          ICSTR(NCSTR+1:NCSTR+19)=', anchor=south east'
+          NCSTR=NCSTR+19
+        ENDIF
+        ICSTR(NCSTR+1:NCSTR+6)='] at ('
+        NCSTR=NCSTR+6
+        IF(IX.GT.99)THEN
+          NCHTOT=3
+        ELSEIF(IX.GT.9)THEN
+          NCHTOT=2
+        ELSE
+          NCHTOT=1
+        ENDIF
+        CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+        ICSTR(NCSTR+1:NCSTR+3)='pt,'
+        NCSTR=NCSTR+3
+        IF(IY.GT.99)THEN
+          NCHTOT=3
+        ELSEIF(IY.GT.9)THEN
+          NCHTOT=2
+        ELSE
+          NCHTOT=1
+        ENDIF
+        CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+        ICSTR(NCSTR+1:NCSTR+5)='pt) {'
+        NCSTR=NCSTR+5
+        DO J=1,NCTEXT
+          ICSTR2(J:J)=ICTEXT(J)(1:1)
+        ENDDO
+        MAXWID=130
+        CALL LATCON(ICSTR2,NCTEXT,ICSTR3,NCTEX2,MAXWID,ISUBRO,IERROR)
 !
-      DO J=1,NCTEX2
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)=ICSTR3(J:J)
-      ENDDO
-      ICSTR(NCSTR+1:NCSTR+2)='};'
-      NCSTR=NCSTR+2
-      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        DO J=1,NCTEX2
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)=ICSTR3(J:J)
+        ENDDO
+        ICSTR(NCSTR+1:NCSTR+2)='};'
+        NCSTR=NCSTR+2
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
       ELSE
 !
 !       epic/eepic DRIVER
@@ -44855,69 +45203,69 @@
 !CCCC         (THIS PLOTS THE VERTICAL STRING AS A COLUMN OF
 !CCCC         HORIZONTAL CHARACTERS).
 !
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)=IBASLC
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR+3)='put('
-      NCSTR=NCSTR+3
-      NCHTOT=5
-      CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)=','
-      CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR+15)='){ makebox(0,0)['
-      ICSTR(NCSTR+2:NCSTR+2)=IBASLC
-      NCSTR=NCSTR+15
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=IBASLC
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR+3)='put('
+        NCSTR=NCSTR+3
+        NCHTOT=5
+        CALL GRTRIN(IX,NCHTOT,ICSTR,NCSTR)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR)=','
+        CALL GRTRIN(IY,NCHTOT,ICSTR,NCSTR)
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR+15)='){ makebox(0,0)['
+        ICSTR(NCSTR+2:NCSTR+2)=IBASLC
+        NCSTR=NCSTR+15
 !
-      IF(IJUSTV.EQ.'CENT')THEN
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='c'
-      ELSEIF(IJUSTV.EQ.'BOTT')THEN
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='b'
-      ELSEIF(IJUSTV.EQ.'TOP ')THEN
-        NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='t'
-      ENDIF
+        IF(IJUSTV.EQ.'CENT')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='c'
+        ELSEIF(IJUSTV.EQ.'BOTT')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='b'
+        ELSEIF(IJUSTV.EQ.'TOP ')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='t'
+        ENDIF
 !
-      IF(IJUSTH.EQ.'CENT')THEN
+        IF(IJUSTH.EQ.'CENT')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='c'
+        ELSEIF(IJUSTH.EQ.'LEFT')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='l'
+        ELSEIF(IJUSTH.EQ.'RIGH')THEN
+          NCSTR=NCSTR+1
+          ICSTR(NCSTR:NCSTR)='r'
+        ENDIF
         NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='c'
-      ELSEIF(IJUSTH.EQ.'LEFT')THEN
+        ICSTR(NCSTR:NCSTR)=']'
+!
+        DO J=1,NCTEXT
+          ICSTR2(J:J)=ICTEXT(J)(1:1)
+        ENDDO
+        MAXWID=130
+        CALL LATCON(ICSTR2,NCTEXT,ICSTR3,NCTEX2,MAXWID,ISUBRO,IERROR)
+!
         NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='l'
-      ELSEIF(IJUSTH.EQ.'RIGH')THEN
+        ICSTR(NCSTR:NCSTR)='{'
         NCSTR=NCSTR+1
-        ICSTR(NCSTR:NCSTR)='r'
-      ENDIF
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)=']'
+        ICSTR(NCSTR:NCSTR)=IBASLC
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR+13)='rotatebox{90}{'
+        NCSTR=NCSTR+13
+        ICNT=NCSTR
+        DO J=1,NCTEX2
+          ICNT=ICNT+1
+          ICSTR(ICNT:ICNT)=ICSTR3(J:J)
+        ENDDO
+        NCSTR=ICNT
+        NCSTR=NCSTR+1
+        ICSTR(NCSTR:NCSTR+2)='}}}'
+        NCSTR=NCSTR+2
 !
-      DO J=1,NCTEXT
-        ICSTR2(J:J)=ICTEXT(J)(1:1)
-      ENDDO
-      MAXWID=130
-      CALL LATCON(ICSTR2,NCTEXT,ICSTR3,NCTEX2,MAXWID,ISUBRO,IERROR)
-!
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)='{'
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR)=IBASLC
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR+13)='rotatebox{90}{'
-      NCSTR=NCSTR+13
-      ICNT=NCSTR
-      DO J=1,NCTEX2
-        ICNT=ICNT+1
-        ICSTR(ICNT:ICNT)=ICSTR3(J:J)
-      ENDDO
-      NCSTR=ICNT
-      NCSTR=NCSTR+1
-      ICSTR(NCSTR:NCSTR+2)='}}}'
-      NCSTR=NCSTR+2
-!
-      CALL GRWRST(ICSTR,NCSTR,ISUBN0)
+        CALL GRWRST(ICSTR,NCSTR,ISUBN0)
 !
       ENDIF
       GO TO 9000

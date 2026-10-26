@@ -834,35 +834,35 @@
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','WRIT')
       WRITE(ICOUT,30)
-   30 FORMAT(1H ,'  DDS (Data Dependent System) Modeling')
+   30 FORMAT(1X,'  DDS (Data Dependent System) Modeling')
       CALL DPWRST('XXX','WRIT')
       WRITE(ICOUT,31)
-   31 FORMAT(1H ,'  S. M. Pandit, S. M. Wu, & G. A. Joshi')
+   31 FORMAT(1X,'  S. M. Pandit, S. M. Wu, & G. A. Joshi')
       CALL DPWRST('XXX','WRIT')
       WRITE(ICOUT,32)
-   32 FORMAT(1H ,'  906-487-2153              701-231-8671')
+   32 FORMAT(1X,'  906-487-2153              701-231-8671')
       CALL DPWRST('XXX','WRIT')
       WRITE(ICOUT,33)
-   33 FORMAT(1H ,'  Reference--Time Series & System Analysis')
+   33 FORMAT(1X,'  Reference--Time Series & System Analysis')
       CALL DPWRST('XXX','WRIT')
       WRITE(ICOUT,34)
-   34 FORMAT(1H ,'             With Applications. Pandit/Wu (1983)')
+   34 FORMAT(1X,'             With Applications. Pandit/Wu (1983)')
       CALL DPWRST('XXX','WRIT')
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','WRIT')
       IF(NSER.GE.2)THEN
          WRITE(ICOUT,41)NSER
-   41    FORMAT(1H ,'Number of Time Series             = ',I8)
+   41    FORMAT(1X,'Number of Time Series             = ',I8)
          CALL DPWRST('XXX','WRIT')
       ENDIF
       IF(NSER.GE.2)CALL DPWRST('XXX','WRIT')
       WRITE(ICOUT,42)N1
-   42 FORMAT(1H ,'Number of Observations per Series = ',I8)
+   42 FORMAT(1X,'Number of Observations per Series = ',I8)
       CALL DPWRST('XXX','WRIT')
 !CCCC WRITE(ICOUT,43)IORDAR
-!CC43 FORMAT(1H ,'Order of Autoregressive Terms    = ',I8)
+!CC43 FORMAT(1X,'Order of Autoregressive Terms    = ',I8)
 !CCCC WRITE(ICOUT,44)IORDMA
-!CC44 FORMAT(1H ,'Order of Moving Average Terms    = ',I8)
+!CC44 FORMAT(1X,'Order of Moving Average Terms    = ',I8)
       WRITE(ICOUT,999)
       CALL DPWRST('XXX','WRIT')
 !
@@ -1089,11 +1089,11 @@
             SDI=SQRT(VAR(I))
 !
             WRITE(ICOUT,170)
-  170       FORMAT(1H ,'Series      Obs.  Average      Variance    SD')
+  170       FORMAT(1X,'Series      Obs.  Average      Variance    SD')
             CALL DPWRST('XXX','WRIT')
 !
             WRITE(ICOUT,171) I,N1,AVG(I),VAR(I),SDI
-  171       FORMAT(1H ,I3,2X,I8,4X,3G12.5)
+  171       FORMAT(1X,I3,2X,I8,4X,3G12.5)
             CALL DPWRST('XXX','WRIT')
 !
 !     SCALE DATA FOR EARMA MODELS
@@ -1424,7 +1424,7 @@
           WRITE(IOUNI1,772) NAR(1,INDEX), NMA(INDEX)
   772     FORMAT('Residuals for ARMA(',I2,',',I2,') model')
           WRITE(IOUNI1,773)
-  773     FORMAT(1H )
+  773     FORMAT(1X)
           WRITE(IOUNI1,774)
   774     FORMAT('residuals')
           WRITE(IOUNI1,775)
@@ -1480,7 +1480,7 @@
   782              FORMAT('Greens function for ARMA(',I2,',',I2,   &
                           ') model')
                    WRITE(IOUNI2,783)
-  783              FORMAT(1H )
+  783              FORMAT(1X)
                    WRITE(IOUNI2,784)
   784              FORMAT('index   Green (total)   Green (comp. 1) ...')
                    WRITE(IOUNI2,785)
@@ -1495,7 +1495,7 @@
                    WRITE(IOUNI3,792) NAR(1,INDEX), NMA(INDEX)
   792              FORMAT('Spectrum for ARMA(',I2,',',I2,') model')
                    WRITE(IOUNI3,793)
-  793              FORMAT(1H )
+  793              FORMAT(1X)
                    WRITE(IOUNI3,794)
   794              FORMAT('index   Spectrum (total)   Spectrum ',   &
                           '(comp. 1) ','...')
@@ -1534,17 +1534,17 @@
          WRITE(ICOUT,999)
          CALL DPWRST('XXX','WRIT')
          WRITE(ICOUT,770)
-  770    FORMAT(1H ,'Residuals       written to file   RESIDUAL.OUT')
+  770    FORMAT(1X,'Residuals       written to file   RESIDUAL.OUT')
          CALL DPWRST('XXX','WRIT')
       ENDIF
       IF(IFGREEN .EQ. 1)THEN
          WRITE(ICOUT,780)
-  780    FORMAT(1H ,'Greens function written to file      GREEN.OUT')
+  780    FORMAT(1X,'Greens function written to file      GREEN.OUT')
          CALL DPWRST('XXX','WRIT')
       ENDIF
       IF(IFSPECTR .EQ. 1)THEN
          WRITE(ICOUT,790)
-  790    FORMAT(1H ,'Spectrum        written to file   SPECTRUM.OUT')
+  790    FORMAT(1X,'Spectrum        written to file   SPECTRUM.OUT')
          CALL DPWRST('XXX','WRIT')
       ENDIF
 !
@@ -2613,7 +2613,7 @@
 420   CONTINUE
       IF(SSB.LT.SSR.AND.IFPRT.GT.0) WRITE(ICOUT,430) SSR,SSB
 !CCCC IF(SSB.LT.SSR.AND.IFPRT.GT.0) WRITE(3,430) SSR,SSB
-430   FORMAT (1H ,' CURRENT SSQ',E15.8,' EXCEEDS SSQ',E15.8,   &
+430   FORMAT (1X ,' CURRENT SSQ',E15.8,' EXCEEDS SSQ',E15.8,   &
       ' OF PREVIOUS ITERATION')
       IF(SSB.LT.SSR.AND.IFPRT.GT.0) CALL DPWRST('XXX','WRIT')
       IF(ITNO.LE.ITMAX.AND.ABS((SSR-SSB)/CONTOL).GT.SSB.AND.IGRID.GT.1)   &
@@ -2812,7 +2812,7 @@
 !     PRINT PHI'S
 !
       WRITE(ICOUT,999)
-  999 FORMAT(1H )
+  999 FORMAT(1X)
       CALL DPWRST('XXX','WRIT')
 !
 !CCCC AUGUST, 1995.  MODIFIY FOLLOWING LINE FOR CRAY.
@@ -2841,7 +2841,7 @@
          DO 550 I=1,NSER
             IF(LAG(I,INDEX).EQ.0)THEN
                WRITE(ICOUT,510)INDEX,I,PAR(L)
-  510          FORMAT(1H ,I4,I4,G12.5)
+  510          FORMAT(1X,I4,I4,G12.5)
                CALL DPWRST('XXX','WRIT')
                LAGT=1
                L=L+1
@@ -4178,23 +4178,23 @@
 70    CONTINUE
 !
       WRITE(ICOUT,999)
-  999 FORMAT(1H )
+  999 FORMAT(1X)
       CALL DPWRST('XXX','WRIT')
 !
       WRITE(ICOUT,81)
-   81 FORMAT(1H ,   &
+   81 FORMAT(1X,   &
       'Index  Roots    Roots   Natural  Damping   Green    Green',   &
       '   Var.')
       CALL DPWRST('XXX','WRIT')
 !
       WRITE(ICOUT,82)
-   82 FORMAT(1H ,   &
+   82 FORMAT(1X,   &
       '       Real     Imag     Freq.    Ratio    Real     Imag ',   &
       '   D(I)')
       CALL DPWRST('XXX','WRIT')
 !
       WRITE(ICOUT,84)
-   84 FORMAT(1H ,   &
+   84 FORMAT(1X,   &
       '---------------------------------------------------------',   &
       '---------')
       CALL DPWRST('XXX','WRIT')
@@ -4250,25 +4250,25 @@
          IF(IFLAG.LE.0.AND.AIMAG(ROOT(I)).NE.0)THEN
             WRITE(ICOUT,101)I,REAL(ROOT(I)),AIMAG(ROOT(I)),W,ZD,   &
             REAL(G(I)),AIMAG(G(I)),REAL(D(I))
-  101       FORMAT(1H ,I2,2X,6F9.3,E10.3)
+  101       FORMAT(1X,I2,2X,6F9.3,E10.3)
             CALL DPWRST('XXX','WRIT')
 !
          ELSEIF(IFLAG.GT.0.AND.AIMAG(ROOT(I)).NE.0)THEN
             WRITE(ICOUT,102)I,REAL(ROOT(I)),AIMAG(ROOT(I)),W,ZD,   &
             REAL(G(I)),AIMAG(G(I))
-  102       FORMAT(1H ,I2,6F9.3,'  Infin.')
+  102       FORMAT(1X,I2,6F9.3,'  Infin.')
             CALL DPWRST('XXX','WRIT')
 !
          ELSEIF(IFLAG.LE.0.AND.AIMAG(ROOT(I)).EQ.0)THEN
             WRITE(ICOUT,103)I,REAL(ROOT(I)),AIMAG(ROOT(I)),W,   &
             REAL(G(I)),AIMAG(G(I)),REAL(D(I))
-  103       FORMAT(1H ,I2,2X,3F9.3,'  Undef. ',2F9.3,E10.3)
+  103       FORMAT(1X,I2,2X,3F9.3,'  Undef. ',2F9.3,E10.3)
             CALL DPWRST('XXX','WRIT')
 !
          ELSEIF(IFLAG.GT.0.AND.AIMAG(ROOT(I)).EQ.0)THEN
             WRITE(ICOUT,104)I,REAL(ROOT(I)),AIMAG(ROOT(I)),W,   &
             REAL(G(I)),AIMAG(G(I))
-  104       FORMAT(1H ,I2,2X,3F9.3,'  Undef. ',2F9.3,'  Infin.')
+  104       FORMAT(1X,I2,2X,3F9.3,'  Undef. ',2F9.3,'  Infin.')
             CALL DPWRST('XXX','WRIT')
 !
          ENDIF

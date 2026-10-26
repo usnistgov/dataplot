@@ -81,8 +81,8 @@
 
 #ifdef HAVE_STDLIB_H
 #  include <stdlib.h>
-#else 
-   extern void exit();
+##else 
+#   extern void exit();
 #endif
 
 #if defined (READLINE_LIBRARY)

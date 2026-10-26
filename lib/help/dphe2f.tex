@@ -1,4 +1,4 @@
- 69000.   (VERSION 2025.07)  total number of lines in file (including this line)
+ 69200.   (VERSION 2026.07)  total number of lines in file (including this line)
  3.                          number of     sections below
   100.    A                  first line number of A section
  8400.    B                  first line number of B section
@@ -4775,20 +4775,20 @@ Type:
  
 Purpose:
     Generate screen graphics using the Aquaterm library for
-    Mac OSX.
+    MacOS.
 
 Description:
     For Unix/Linux platforms, Dataplot typically uses the
     X Window System to generate screen graphics.  If you have
-    X11 installed on your Mac OSX system, this option is
+    X11 installed on your MacOS system, this option is
     available (initiate Dataplot from an xterm window and
     enter the command DEVICE 1 X11 to open the graphics
     window).
 
-    The native mode windowing/graphics system under Mac OSX is
+    The native mode windowing/graphics system under MacOS is
     referrred to as Aqua.  In addition to X11, Dataplot supports
     an Aqua driver.  If you initiate Dataplot from a regular
-    Mac OSX terminal session, you use the Aqua driver for screen
+    MacOS terminal session, you use the Aqua driver for screen
     graphics rather than the X11 driver.
 
 Syntax:
@@ -4812,7 +4812,7 @@ Note:
 
       http://sourceforge.net/projects/aquaterm/
 
-    You need to install Aquaterm on your Mac OSX system before
+    You need to install Aquaterm on your MacOS system before
     installing Dataplot.
 
 Note:
@@ -4837,7 +4837,7 @@ Note:
        fonts, intitiate Dataplot and enter a DEVICE 1 AQUA
        command.  Click on the graphics window (you may need to
        generate a plot before this becomes visible).  This will
-       switch the top menus on the Mac OSX screen to the Aquaterm
+       switch the top menus on the MacOS screen to the Aquaterm
        menus.  From this menu bar, select HELP and then select
        "Show Fonts".
 
@@ -36188,23 +36188,21 @@ Type:
 Purpose:
     The CAPTURE LATEX command redirects Dataplot alphanumeric output
     from the screen to the specified file and formats it using
-    Latex syntax.  The END OF CAPTURE command reverts alphanumeric
+    LaTeX syntax.  The END OF CAPTURE command reverts alphanumeric
     output back to the screen.
 
 Description:
-    Latex is a popular text processing system.  Although developed
-    originally on Unix platforms, versions of Latex are available
-    for Windows platforms as well.
+    LaTeX is a popular and powerful text processing system that is
+    available on Linux/Unix, MacOS and Windows platforms.  The
+    CAPTURE LATEX command is useful for generating Dataplot output in a
+    format suitable for inclusion into publications and reports
+    generated using LaTeX.
 
-    The CAPTURE LATEX command is useful for generating Dataplot
-    output in a format suitable for inclusion into publications
-    and reports.
-
-    As of the 2013/12 version of Dataplot, most of the Analysis
-    commands support LaTeX formatted output.  The following are
-    the Analysis commands that do not yet support LaTeX formatted
-    output (th output from these commands will be enclosed in a
-    {\verbatim} ... {\verbatim} block (that is, an "asis" format).
+    Most of the Dataplot Analysis commands support LaTeX formatted
+    output.  The following are Analysis commands that do not support
+    LaTeX formatted output (the output from these commands will be
+    enclosed in a {\verbatim} ... {\verbatim} block (that is, an
+    "asis" format).
 
         ARMA
         DDS
@@ -36215,18 +36213,24 @@ Description:
         SIMCOV
         SMOOTH
 
-    In addition, WRITE LATEX can be used to generate 1-way
-    tables in Latex format.  This is described in more detail
-    in a Note below.
+    The WRITE LATEX command can be used to generate 1-way tables in
+    LaTeX format.  This is described in a Note below.
 
-    Dataplot generates a LaTeX file.  The LaTeX file is then
-    typically processed by the "latex" command to create a
-    Device Independent (DVI) file.  The DVI file is then processed
-    by a command that converts the DVI output to a device specific
-    format.  The following block of code uses the system command
-    to process the LaTeX output to a Postscript format and then
-    view it with Ghostview from within Dataplot (the names
-    of the Latex/Ghostview commands may be different on your system).
+    Dataplot graphics can be incorporated into the LaTeX file in
+    several ways.
+
+       1. You can generated the graphs in LaTeX format using the
+          DEVICE 1 LATEX command.  This is demonstrated in the
+          documentation for the LATEX command.  Specifically, see
+          the Program 2 example.
+
+       2. You can use the DEVICE 2 POSTSCRIPT command and have the
+          LaTeX code import the resulting graph.  This is discussed
+          in more detail in a Note section below and demonstrated in
+          the Program examples.
+
+    A typical sequence for creating and processing the LaTeX output
+    is as follows
 
        SKIP 25
        READ RIPKEN.DAT Y X1 X2
@@ -36235,21 +36239,14 @@ Description:
        CROSS TABULATE MEAN Y X1 X2
        END OF CAPTURE
        .
-       .  Following code invokes Latex/Ghostview commands.  It is
-       . assumed that these programs are available on your system.
-       . You may need to check how these commands are invoked on
-       . your local system.
+       . Now process the LaTeX output to a PDF file.
        .
        system latex table.tex
-       system dvips table.dvi  > table.ps
-       system ghostview  table.ps
+       system pdflatex table
        .
 
-    In addition, if DEVICE 2 is set to Postscript, Dataplot will
-    incorporate the graphics output into the Latex file.  Dataplot
-    defines the commands LGRAPHIC and PGRAPHIC for importing
-    Postscript commands into the Latex file in landscape and
-    portrait mode, respectively.
+    You can then view the file table.pdf using your preferred PDF
+    viewer.
 
 Syntax:
     CAPTURE LATEX <file name>
@@ -36261,56 +36258,6 @@ Examples:
     CAPTURE LATEX  FITOUT.TEX
         ... DATAPLOT COMMANDS ....
     END OF CAPTURE
- 
-Note:
-    DATAPLOT has the following restrictions on the file name:
-
-       1) The file name should be a valid file name on the local
-          operating system.
-
-       2) It must contain a period "." in the file name itself or as a
-          trailing character.  DATAPLOT strips off trailing periods on
-          those systems where it is appropriate to do so.  On systems
-          where trailing periods can be a valid file name (e.g., Unix),
-          DATAPLOT opens the file with the trailing period.
- 
-       3) On systems where file names are case sensitive (i.e., Unix),
-          the case is preserved as entered on the CAPTURE command.
-
-       4) The file name cannot contain more than 80 characters.
-
-       5) If the file name contains a space, then use the SET FILE
-          NAME QUOTE command and enclose the file name in quotes.
-          For example,
-
-             SET FILE NAME QUOTE ON
-             CAPTURE "junk temp.out"
-
-Note:
-    The capture command can be toggled on and off (END OF CAPTURE
-    redirects alphanumeric output to the screen).  However, a new file
-    name should be used each time since invoking a new CAPTURE command
-    overwrites any existing file (END OF CAPTURE automatically closes
-    the file).
- 
-Note:
-    Dataplot provides the following switches for controlling
-    what output Datplot generates:
-
-       FEEDBACK <ON/OFF>
-       PRINT <ON/OFF>
-
-   The PRINT command controls most of the output generated by
-   the Analysis category commands.  Output from most other commands
-   is controlled by the FEEDBACK command.  The purpose of this
-   distinction is to allow you to generate the output from
-   commands such as FIT while suppressing most of the other
-   output.
-
-   When generating LaTeX formatted output, a common choice is
-
-       PRINT ON
-       FEEDBACK OFF
 
 Note:
     You can create one-way tables using the command
@@ -36342,75 +36289,113 @@ Note:
     will be used instead of the variable name.
 
 Note:
-    By default, Dataplot generates the folllowing code at the
-    beginning of the LaTeX file:
+    Within a CAPTURE LATEX/END OF CAPTURE block Dataplot can generate
+    the LaTeX code to import Postscript/PDF graphics created with a
+    DEVICE 2 POSTSCRIPT command.  A typical command sequence would look
+    something like
 
-        \documentclass[12pt]{article}
-         
-        \usepackage{epsfig}
-         
-        \setlength{\textwidth}{6.25in}
-        \setlength{\textheight}{9in}
-        \setlength{\oddsidemargin}{0.25in}
-        \setlength{\evensidemargin}{0in}
-        \setlength{\headheight}{0.5in}
-        \setlength{\headsep}{0.5in}
-        \setlength{\topmargin}{-1in}
-        \setlength{\parindent}{0in}
-        \setlength{\parskip}{10pt}
-        \setlength{\textfloatsep}{4ex}
-        \addtolength{\footskip}{0.25in}
-        \overfullrule=0pt
-        \baselineskip=12pt
-         
-        \newcommand{\PGRAPHIC}[1]{\begin{figure}[h]
-                               \epsfig{file=#1,width=6.0in}
-                               \end{figure}}
-        \newcommand{\LGRAPHIC}[1]{\begin{figure}[h]
-                               \epsfig{file=#1,angle=-90,width=6.0in}
-                               \end{figure}}
-         
-        \begin{document}
-         
-        \begin{verbatim}
+       DEVICE 2 CLOSE
+       SET LATEX CAPTURE GRAPHS PDF
+       CAPTURE LATEX plots.tex
+       SET IPL1NA plot1.ps
+       DEVICE 2 POSTSCRIPT
+       ... generate the first plot ...
+       DEVICE 2 CLOSE
+       SET IPL1NA plot12ps
+       DEVICE 2 POSTSCRIPT
+       ... generate the second plot ...
+       DEVICE 2 CLOSE
+       END OF CAPTURE
 
-    and the following Latex code at the end of the file:
+    A few things to note on this sequence.
 
-       \end{verbatim}
+       1. It is recommended that you enter a DEVICE 2 CLOSE command
+          before the CAPTURE LATEX command to ensure that the graphics
+          file is not open.
 
-       \end{document}
+       2. The SET LATEX CAPTURE GRAPHS PDF command tells Dataplot that
+          graphs will be generated using DEVICE 2 POSTSCRIPT rather than
+          DEVICE 1 LATEX.  The PDF option is the default, so this
+          command may not be necessary.
 
-    You can specify files containing what LaTeX code goes at
-    the beginning and end of the LaTeX file with the commands
+       3. Each plot should be created in a separate file.  The
+          SET IPL1NA command can be used to give each graph a unique
+          name.  The SET IPL1NA command should be entered before the
+          DEVICE 2 POSTSCRIPT command as the name is assigned when the
+          DEVICE 2 POSTSCRIPT command is entered.
 
-      SET LATEX HEADER FILE <file-name>
-      SET LATEX FOOTER FILE <file-name>
+       4. The final DEVICE 2 CLOSE command should be entered before the
+          END OF CAPTURE command since the LaTeX code for importing the
+          graph is generated by the DEVICE 2 CLOSE command.
 
-    If you are going to incorporate Postscript graphics, be sure
-    to include a PGRAPHIC and LGRAPHIC (for portrait and landscape
-    orientation graphs, respectively).  You can edit the defintions
-    given above, but you should have some definition for these
-    since Dataplot uses PGRAPHIC and LGRAPHIC to insert the
-    Postscript graphs.
+       5. You have the option of importing either the Postscript file
+          or the PDF file.  If you want to import the PDF file, you
+          need to enter the command SET POSTSCRIPT CONVERT PDF before
+          the CAPTURE LATEX command (this command is set in the 
+          default DPLOGF.TEX file).  If given, Dataplot will run
+          ghostscript in the background to automatically convert the
+          postscript file to a PDF file.  For details on this command,
+          enter HELP SET POSTSCRIPT CONVERT.
 
-    In particular, if you are going to insert the Dataplot generated
-    LaTeX into a larger file, you might want to specify files that
-    contain no active LaTeX code.
+          To specify that Postscript be imported, enter the command
+
+             SET LATEX TYPE POSTSCRIPT
+
+          To specify that PDF be imported (the default), enter the
+          command
+
+             SET LATEX TYPE PDF
+
+          If you choose to import Postscript, you should process the
+          resulting LaTeX source with
+
+             latex sample.tex
+             dvipdfmx  sample
+
+          If you choose to import PDF, you should process the resulting
+          LaTeX source with
+
+             pdflatex sample.tex
+
+          We recommend using the PDF option unless ghostscript is not
+          installed on your system.
+
+          Note that pdflatex does not support importing Postscript
+          files which is why we use dvipdfmx for that case.  However,
+          if you import the PDF files, pdflatex generates better results
+          than dvipdfmx.
+
+    Dataplot supports two methods for importing Postscript/PDF files.
+    The first uses the epsfig package while the second uses the
+    graphicx package.  We recommend using the graphicx package method
+    and this is the default.  However, if you prefer to use the epsfig
+    method, enter the command (before the CAPTURE LATEX command)
+
+       SET LATEX IMPORT PDF EPSFIG
+
+    To reset the default graphicx method, enter
+
+       SET LATEX IMPORT PDF GRAPHICX
+
+    If you use the GRAPHICX option, you can specify captions for the
+    graphs by entering the following command before the DEVICE 2 CLOSE
+    command
+
+       SET LATEX CAPTION <text for caption>
 
 Note:
-    Dataplot is not a word processor.  The LaTeX code generated is
-    fairly basic.  That is, Dataplot creates the basic table or
-    list structure for the output.  However, it does not give you
-    control over font sizes, colors, and so on.
+    Dataplot generates LaTeX preamble and postamble code.  The preamble
+    will vary depending on the options chosen for importing graphs.
+    In most cases, using the default preamble is sufficient.  However,
+    you can specify your own preamble and postamble with the commands
 
-    If you want to modify the appearance of the LaTeX output,
-    edit the generated LaTeX output using the ASCII editor of your
-    choice.  We have written the LaTeX in a style which we believe
-    is relatively easy to read and edit.
+       SET LATEX HEADER FILE <file-name>
+       SET LATEX FOOTER FILE <file-name>
 
-Note:
-    The February, 2006 version of Dataplot added the capability to
-    generate graphics in LaTeX format.  Enter HELP LATEX for details.
+    It is recommended that you view the default preamble that Dataplot
+    generates to ensure that you are including all the LaTeK code
+    that is needed (i.e., typically you will be adding additional
+    preamble code rather than subtracting).
 
 Note:
     The August 2014 version of Dataplot added the command
@@ -36425,60 +36410,171 @@ Note:
     a large number of columns.  This LaTex command automatically resizes
     the text size if needed when there are a large number of columns.
 
+Note:
+    Dataplot is not a word processor.  The LaTeX code generated is
+    fairly basic.  That is, Dataplot creates the basic table or
+    list structure for the output.  However, it does not give you
+    control over font sizes, colors, and so on.
+
+    If you want to modify the appearance of the LaTeX output,
+    edit the generated LaTeX output using the ASCII editor of your
+    choice.  We have written the LaTeX in a style which we believe
+    is relatively easy to read and edit.
+
+Note:
+    The capture command can be toggled on and off (END OF CAPTURE
+    redirects alphanumeric output to the screen).  However, a new file
+    name should be used each time since invoking a new CAPTURE command
+    overwrites any existing file (END OF CAPTURE automatically closes
+    the file).  You can pause sending output to the capture file by
+    entering CAPTURE SUSPEND (and enter CAPTURE RESUME to resume sending
+    output to the capture file).
+ 
+Note:
+    Dataplot provides the following switches for controlling
+    what output Datplot generates:
+
+       FEEDBACK <ON/OFF>
+       PRINT <ON/OFF>
+
+   The PRINT command controls most of the output generated by
+   the Analysis category commands.  Output from most other commands
+   is controlled by the FEEDBACK command.  The purpose of this
+   distinction is to allow you to generate the output from
+   commands such as FIT while suppressing most of the other
+   output.
+
+   When generating LaTeX formatted output, a common choice is
+
+       PRINT ON
+       FEEDBACK OFF
+
+Note:
+    DATAPLOT has the following restrictions on the file name:
+
+       1) The file name should be a valid file name on the local
+          operating system.
+
+       2) It must contain a period "." in the file name itself or as a
+          trailing character.  DATAPLOT strips off trailing periods on
+          those systems where it is appropriate to do so.  On systems
+          where trailing periods can be a valid file name (e.g., Unix),
+          DATAPLOT opens the file with the trailing period.
+ 
+       3) On systems where file names are case sensitive (i.e., Unix),
+          the case is preserved as entered on the CAPTURE command.
+
+       4) The file name cannot contain more than 80 characters.
+
+       5) If the file name contains a space, then use the SET FILE
+          NAME QUOTE command and enclose the file name in quotes.
+          For example,
+
+             SET FILE NAME QUOTE ON
+             CAPTURE "junk temp.out"
+
 Default:
     None
  
 Synonyms:
-    None
+    SET LATEX CAPTURE GRAPHS POSTSCRIPT is a synonym for
+        SET LATEX CAPTURE GRAPHS PDF
+    SET LATEX IMPORT PDF LGRAPHIC is a synonym for
+        SET LATEX IMPORT PDF EPSFIG
+    SET LATEX IMPORT PDF PGRAPHIC is a synonym for
+        SET LATEX IMPORT PDF EPSFIG
  
 Related Commands:
     CAPTURE             = Redirect alphanumeric output to a file.
     CAPTURE HTML        = Redirect alphanumeric output to a file in
                           HTML format.
     END OF CAPTURE      = Revert alphanumeric output back to the screen.
-    LIST                = Lists the contents of a file.
-    CALL                = Execute commands stored in a file.
-    CREATE              = Echo entered commands to a file.
     POSTSCRIPT CONVERT  = Automatically generate JPEG, PDF, TIFF, PBM,
                           PGM, PPM, or PNM from postscript output.
-    LATEX HEADER FILE   = Specify a file to use for the header of
-                          the LaTeX output.
-    LATEX FOOTER FILE   = Specify a file to use for the footer of
-                          the LaTeX output.
  
 Applications:
-    Web Output
+    Publication
  
 Implementation Date:
-    2003/10
-    2014/08 Added SET LATEX RESIZE command
+    2003/10: Original implementation
+    2014/08: Added SET LATEX RESIZE command
+    2026/07: Added SET LATEX IMPORT PDF command<BR>
+    2026/07: Added SET LATEX CAPTION command<BR>
+    2026/07: Added SET LATEX TYPE command<BR>
+    2026/07: Added SET LATEX CAPTURE GRAPHICS command<BR>
+    2026/07: Updated code for importing graphics into the LaTeX file
 
     Support for LaTex formatted output added for various Analysis
     commands over the years
  
 Program:
+    .  Step 1: Read Data
+    .
     skip 25
-    read gear.dat y x
+    read stutz86.dat y1 to y5 x
     .
-    line blank solid
-    character x blank
+    .  Step 2: Generate the Analysis Output
+    .
     feedback off
-    .
-    capture latex tabulate.htm
-    .
-    summary y
-    tabulate mean y x
-    tabulate sd y x
-    .
-    set ipl1na meanplot.eps
-    device 2 postscript encapsulated
-    orientation landscape wordperfect
-    title mean plot
-    y1label diameter
-    x1label batch
-    mean plot y x
+    let iflag = 1;   . Set this to import graphs as PDF files
+    . let iflag = 2; . Set this to import graphs as Postscript files
+    if iflag = 1
+       set latex type pdf
+    else
+       set latex type postscript
+       orientation landscape
+    end of if
     device 2 close
+    set latex capture graphs pdf
+    .
+    capture latex  stutz86_pdf.tex
+    tabulate mean y1 x
+    tabulate sd y1 x
+    .
+    .  Step 3: Generate Some Complementary Graphics
+    .
+    title offset 2
+    title size 3
+    label size 3
+    tic mark label size 3
+    title automatic
+    tic offset units screen
+    tic offset 3 3
+    line blank solid
+    char x blank
+    .
+    set ipl1na mean_plot.ps
+    device 2 postscript
+    set latex caption Mean Plot
+    mean plot y1 x
+    device 2 close
+    .
+    set ipl1na sd_plot.ps
+    device 2 postscript
+    set latex caption Standard Deviation Plot
+    sd plot y1 x
+    .
+    character box plot
+    lines box plot
+    fences on
+    device 2 close
+    set ipl1na box_plot.ps
+    device 2 postscript
+    set latex caption Box Plot
+    box plot y1 x
+    device 2 close
+    .
     end of capture
+    .
+    . Step 3:   Close and convert LaTeX to PDF
+    .
+    if iflag = 1
+       system pdflatex stutz86.tex
+    else if iflag = 2
+       system latex stutz86.tex
+       system dvipdfmx stutz86
+    end of if
+    system okular latex5.pdf; . This command is for Linux to view the document
 
 -----CAPTURE RTF--------------------------------------------------
 
@@ -54837,6 +54933,79 @@ Implementation Date:
 Program:
     XX
  
+-----COMMON DIGITS (LET)---------------------------------------------------
+ 
+COMMON DIGITS
+NUMBER OF COMMON DIGITS
+ 
+Name:
+    COMMON DIGITS (LET)
+    NUMBER OF COMMON DIGITS (LET)
+ 
+Type:
+    Let Subcommand
+ 
+Purpose:
+    Compute the common digits for a vector of numbers.
+ 
+Description:
+    As an example, given the numbers 0.0321, 0.0323 and 0.0325,
+    the COMMON DIGITS command will return the scalar value 0.03.
+
+    Note that only digits to the right of the decimal point are
+    considered.  If the integer portion (i.e., to the left of the
+    decimal point) do not agree, a value of -1 is returned.  If
+    the first digit to the right of the decimal point does not agree,
+    a value of -1 is returned.
+
+    The NUMBER OF COMMON DIGITS command returns the number of common
+    digits.  In the above example, this would be 3.
+
+Syntax 1:
+    LET <par> = COMMON DIGITS <y>    <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <par> is a parameter where the common digits are saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Syntax 2:
+    LET <par> = NUMBER OF COMMON DIGITS <y>
+                <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the response variable;
+          <par> is a parameter where the number of common digits is saved;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Examples:
+    LET AVAL = COMMON DIGITS Y1
+    LET AVAL = COMMON DIGITS Y1 SUBSET Y1 = 0 TO 1
+
+Note:
+    Dataplot statistics can be used in a number of commands.  For
+    details, enter
+
+         HELP STATISTICS
+
+Default:
+    None
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    SIZE           = Return the number of elements in a variable.
+ 
+Applications:
+    Utility Routine
+ 
+Implementation Date:
+    2001/08
+ 
+Program:
+    LET Y1 = DATA 0.0321 0.0323 0.0329 0.0325
+    LET COMDIG = COMMON DIGITS Y1
+    LET NUMCOM = NUMBER OF COMMON DIGITS Y1
+    PRINT "COMMON DIGITS:           ^COMDIG"
+    PRINT "NUMBER OF COMMON DIGITS: ^NUMCOM"
+
 -----COMBINE FREQUENCY TABLE (LET)---------------------------------
  
 COMBINE FREQUENCY TABLE
@@ -62601,6 +62770,14 @@ Note:
         HELP BIWEIGHT MIDCORRELATION
         HELP PERCENTAGE BEND
 
+    There are several alternative formulations for Kendall's tau.  You
+    can specify which formulation to use with the command
+
+        SET KENDALL TAU DEFINITION <B/C/CONOVER>
+
+    with B denoting Kendall's Tau B, C denoting Kendall's Tau C and
+    CONOVER denoting Conover's formula, respectively.
+
 Note:
     Matrices are created with either the READ MATRIX command or the
     MATRIX DEFINITION command.  Enter HELP MATRIX DEFINITION and HELP
@@ -68850,6 +69027,29 @@ Program:
     CYCLE PLOT
  
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

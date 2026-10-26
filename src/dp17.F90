@@ -15695,7 +15695,7 @@
       RETURN
       END SUBROUTINE DPJBSP
       SUBROUTINE DPJBS3(TEMP1,N1,ICASJB,IJACIN,ISEED,TEMP2,N2,   &
-                        INDX,AINDEX,   &
+                        INDX,AINDEX,                             &
                         IBUGG3,IERROR)
 !
 !     PURPOSE--GENERATE 1 JACKNIFE  SUBSAMPLE OF SIZE N1-1
@@ -16033,21 +16033,21 @@
 !
       RETURN
       END SUBROUTINE DPJBS5
-      SUBROUTINE DPJBS6(Y,Z,Z2,XDESGN,N,N2,NUMV2,NGRPV,ICASPL,ISTARA,   &
-                        ISIZE,ICONT,   &
+      SUBROUTINE DPJBS6(Y,Z,Z2,XDESGN,N,N2,NUMV2,NGRPV,ICASPL,ISTARA,     &
+                        ISIZE,ICONT,                                      &
                         ICASJB,IBOOSS,ISEED,IBCABT,ALPHA,IFLAGI,IFLAGD,   &
-                        TEMP,TEMPZ,TEMPZ2,XIDTEM,XTEMP1,XTEMP2,XTEMP3,   &
-                        XTEMP4,XTEMP5,   &
-                        MAXNXT,MAXBGR,   &
-                        ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,   &
-                        Y2,X2,D2,NPLOTP,NPLOTV,   &
-                        TEMP0,TEMPZ0,TMPZ20,RES1,RES2,   &
-                        TEMP4,TEMPTH,TEMP6,   &
-                        DTEMP1,DTEMP2,DTEMP3,   &
-                        APERC,BPERC,NPERC,   &
-                        BMEAN,BSD,B001,B005,B01,B025,B05,B10,B20,B50,   &
-                        B80,B90,B95,B975,B99,B995,B999,   &
-                        ICAPSW,ICAPTY,IFORSW,IVARID,IVARI2,ISTANM,   &
+                        TEMP,TEMPZ,TEMPZ2,XIDTEM,XTEMP1,XTEMP2,XTEMP3,    &
+                        XTEMP4,XTEMP5,                                    &
+                        MAXNXT,MAXBGR,                                    &
+                        ITEMP1,ITEMP2,ITEMP3,ITEMP4,ITEMP5,ITEMP6,        &
+                        Y2,X2,D2,NPLOTP,NPLOTV,                           &
+                        TEMP0,TEMPZ0,TMPZ20,RES1,RES2,                    &
+                        TEMP4,TEMPTH,TEMP6,                               &
+                        DTEMP1,DTEMP2,DTEMP3,                             &
+                        APERC,BPERC,NPERC,                                &
+                        BMEAN,BSD,B001,B005,B01,B025,B05,B10,B20,B50,     &
+                        B80,B90,B95,B975,B99,B995,B999,                   &
+                        ICAPSW,ICAPTY,IFORSW,IVARID,IVARI2,ISTANM,        &
                         ISUBRO,IBUGG3,IERROR)
 !
 !     PURPOSE--GENERATE A PAIR OF COORDINATE VECTORS
@@ -16084,6 +16084,8 @@
 !     UPDATED         --OCTOBER   2011. SUPPORT FOR "SUMMARY" STATISTICS
 !     UPDATED         --JUNE      2017. FIX BUG IN "UNPAIRED" SAMPLES
 !     UPDATED         --AUGUST    2023. CALL LIST TO CMPSTA
+!     UPDATED         --AUGUST    2026. ZETA DINS STATISTIC USES CLUSTERED
+!                                       BOOTSTRAP SAMPLES, HANDLE SEPARATELY
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -16455,12 +16457,11 @@
 !
       DO 11000 ISET=1,ISETMX
 !
-        CALL DPJBS8(ISETMX,ISET,NUMSET,NUMSE1,N,N2,NGRPV,   &
-                    MAXNXT,MAXBGR,NUMV2,   &
+        CALL DPJBS8(ISETMX,ISET,NUMSET,NUMSE1,N,N2,NGRPV,       &
+                    MAXNXT,MAXBGR,NUMV2,                        &
                     Y,Z,Z2,XDESGN,XIDTEM,TEMP0,TEMPZ0,TMPZ20,   &
-                    NS2,NSS2,NI,NI2,ISET1,ISET2,   &
+                    NS2,NSS2,NI,NI2,ISET1,ISET2,                &
                     ISUBRO,IBUGG3,IERROR)
-                                                                                                                                  
 !
         NRESAM=NS2
         IF(ICASJB.EQ.'BOOT')NRESAM=IBOOSS
@@ -16481,12 +16482,18 @@
 !          LINEAR INTERCEPT HANDLED SEPARATELY.
 !       6) SUMMARY STATISTIC CASE HANDLED SEPARATELY (USE THE
 !          PARAMETERIC BOOTSTRAP)
+!       7) DINS ZETA STATISTIC HANDLED SEPARATELY (USES CLUSTERED
+!          BOOTSTRAP SAMPLE)
 !
 !
 !       HANDLE LINEAR CALIBRATION, QUADRATIC CALIBRATION SEPARATELY.
 !
         IF(ICASPL.EQ.'LICA')GO TO 12240
         IF(ICASPL.EQ.'QUCA')GO TO 12240
+!
+!       HANDLE DINS ZETA SEPARATELY
+!
+        IF(ICASPL.EQ.'DINS')GO TO 12600
 !
 !       FOR REMAINING CASES, DEFINE
 !
@@ -17087,6 +17094,34 @@
                  'SELECTED.')
           CALL DPWRST('XXX','BUG ')
         ENDIF
+        GO TO 79000
+!
+!       DINS ZETA CASE: USE CLUSTERED BOOTSTRAP
+!
+12600   CONTINUE
+!
+!       COMPUTE STATISTIC FOR ORIGINAL DATA
+!
+        CALL DPDIN3(TEMP0,TEMPZ0,TMPZ20,NS2,MAXNXT,IWRITE,       &
+                    XTEMP1,XTEMP2,XTEMP3,                         &
+                    STATD,YPOOLVAR,XPOOLVAR,BETA,RESSD,SP2,       &
+                    IBUGG3,ISUBRO,IERROR)
+        IF(IERROR.EQ.'YES')GO TO 9000
+!
+        DO IRESAM=1,NRESAM
+           CALL DPJBSA(TEMP0,TEMPZ0,TMPZ20,NS2,ISEED,MAXNXT,     &
+                       XTEMP4,XTEMP5,TEMP4,NOUT,                  &
+                       TEMPTH,TEMP6,                              &
+                       IBUGG3,IERROR)
+           IF(IERROR.EQ.'YES')GO TO 9000
+           CALL DPDIN3(XTEMP4,XTEMP5,TEMP4,NOUT,MAXNXT,IWRITE,    &
+                       XTEMP1,XTEMP2,XTEMP3,                      &
+                       RIGHT,YPOOLVAR,XPOOLVAR,BETA,RESSD,SP2,    &
+                       IBUGG3,ISUBRO,IERROR)
+           CALL DPJBS4(ISET,NUMSET,J,J2,RIGHT,TAGID,XIDTEM(1,1),  &
+                       Y2,X2,D2)
+        ENDDO
+!
         GO TO 79000
 !
 79000   CONTINUE
@@ -19178,10 +19213,10 @@
 !
       RETURN
       END SUBROUTINE DPJBS7
-      SUBROUTINE DPJBS8(ISETMX,ISET,NUMSET,NUMSE2,N1,N2,NGRP,   &
-                        MAXOBV,MAXGRP,NUMV2,   &
+      SUBROUTINE DPJBS8(ISETMX,ISET,NUMSET,NUMSE2,N1,N2,NGRP,          &
+                        MAXOBV,MAXGRP,NUMV2,                           &
                         Y,Z,TEMPL,XDESGN,XIDTEM,TEMP0,TEMPZ0,TEMPZL,   &
-                        NS2,NSS2,NI,NI2,ISET1,ISET2,   &
+                        NS2,NSS2,NI,NI2,ISET1,ISET2,                   &
                         ISUBRO,IBUGG3,IERROR)
 !
 !     PURPOSE--UTILITY ROUTINE FOR DPJBS6 AND DPJBS7.  FOR A
@@ -19351,12 +19386,12 @@
       END SUBROUTINE DPJBS8
       SUBROUTINE DPJBS9(Y2,D2,TEMP,XTEMP1,XTEMP2,MAXNXT,IOUNI1,IOUNI2,   &
                         NUMPAR,NGRPV,NUMSET,ISET,ISET1,ISET2,NUMSE1,J,   &
-                        APERC,BPERC,NPERC,   &
-                        BMEAN,BSD,BMIN,BMAX,BMAD,   &
-                        B001,B005,B01,B025,B05,B10,B20,B50,   &
-                        B80,B90,B95,B975,B99,B995,B999,   &
-                        ALOWPA,AUPPPA,ALPHA,NUMALP,   &
-                        ZMEAN,ZMED,ZSD,ZMAD,NFAIL,   &
+                        APERC,BPERC,NPERC,                               &
+                        BMEAN,BSD,BMIN,BMAX,BMAD,                        &
+                        B001,B005,B01,B025,B05,B10,B20,B50,              &
+                        B80,B90,B95,B975,B99,B995,B999,                  &
+                        ALOWPA,AUPPPA,ALPHA,NUMALP,                      &
+                        ZMEAN,ZMED,ZSD,ZMAD,NFAIL,                       &
                         ISUBRO,IBUGG3,IERROR)
 !
 !     PURPOSE--UTILITY ROUTINE FOR BOOTSTRAP/JACKNIFE PLOT.  THIS
@@ -19709,6 +19744,172 @@
 !
       RETURN
       END SUBROUTINE DPJBS9
+      SUBROUTINE DPJBSA(Y1,Y2,TAG,N1,ISEED,MAXNXT,           &
+                        Y1OUT,Y2OUT,TAGOUT,N2,               &
+                        XIDTEM,AINDEX,                       &
+                        IBUGG3,IERROR)
+!
+!     PURPOSE--GENERATE A CLUSTERED BOOTSTRAP.  FOR THIS CASE,
+!              WE BOOTSTRAP THE GROUP RATHER THAN THE OBSERVATIONS
+!              WITHIN A GROUP.  THIS IS SPECIFICALLY USED BY THE
+!              "DINS ZETA" STATISTIC, BUT CAN BE USED FOR OTHER
+!              CASES AS WELL.
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2026/08
+!     ORIGINAL VERSION--AUGUST    2026.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IBUGG3
+      CHARACTER*4 IERROR
+!
+!---------------------------------------------------------------------
+!
+!CCCC INCLUDE 'DPCOPA.INC'
+!
+      DIMENSION Y1(*)
+      DIMENSION Y2(*)
+      DIMENSION TAG(*)
+      DIMENSION XIDTEM(*)
+      DIMENSION AINDEX(*)
+      DIMENSION Y1OUT(*)
+      DIMENSION Y2OUT(*)
+      DIMENSION TAGOUT(*)
+!
+      CHARACTER*4 IWRITE
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      IERROR='NO'
+      IWRITE='NO'
+!
+      IF(IBUGG3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPJBSA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)N1,ISEED,MAXNXT,IBUGG3
+   52   FORMAT('N1,ISEED,IBUGG3 = ',3I8,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        IF(N1.GT.0)THEN
+          DO I=1,N1
+            WRITE(ICOUT,56)I,Y1(I),Y2(I),TAG(I)
+   56       FORMAT('I,Y1(I),Y2(I),TAG(I) = ',I8,3G15.7)
+            CALL DPWRST('XXX','BUG ')
+          ENDDO
+        ENDIF
+      ENDIF
+!
+!               **************************************************
+!               **  STEP 11--                                   **
+!               **  CHECK THE INPUT NUMBER FOR ERRORS           **
+!               **************************************************
+!
+      IF(N1.LT.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1111)
+ 1111   FORMAT('***** ERROR IN CLUSTERED BOOTSTRAP (DPJBSA)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1112)N1
+ 1112   FORMAT('      THE NUMBER OF OBSERVATIONS IS NON-POSITIVE.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1113)N1
+ 1113   FORMAT('      THE NUMBER OF OBSERVATIONS = ',I8)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!               **************************************************
+!               **  STEP 12--                                   **
+!               **  GENERATE THE CLUSTERED BOOTSTRAP SAMPLE     **
+!               **************************************************
+!
+      CALL DISTIN(TAG,N1,IWRITE,XIDTEM,NGROUP,IBUGG3,IERROR)
+      IF(IERROR.EQ.'YES')GO TO 9000
+      IF(NGROUP.EQ.1)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1111)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1122)
+ 1122   FORMAT('      THERE IS ONLY A SINGLE GROUP.')
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+!     BOOTSTRAP THE GROUP-ID
+!
+      CALL DUNRA2(NGROUP,NGROUP,ISEED,AINDEX)
+!
+      N2=0
+      DO ISET=1,NGROUP
+         J=INT(AINDEX(I)+0.5)
+         HOLD=XIDTEM(J)
+         DO IROW=1,N1
+            IF(TAG(IROW).EQ.HOLD)THEN
+              N2=N2+1
+              IF(N2.GT.MAXNXT)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,1111)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,1132)
+ 1132           FORMAT('      THE MAXIMUM NUMBER OF ROWS EXCEEDED ',   &
+                       'FOR THE BOOTSTRAP SAMPLE.')
+                CALL DPWRST('XXX','BUG ')
+                IERROR='YES'
+                GO TO 9000
+              ENDIF
+              Y1OUT(N2)=Y1(IROW)
+              Y2OUT(N2)=Y2(IROW)
+              TAGOUT(N2)=Y2(IROW)
+            ENDIF
+         ENDDO
+      ENDDO
+!
+!               *******************
+!               **   STEP 90--   **
+!               **   EXIT        **
+!               *******************
+!
+ 9000 CONTINUE
+      IF(IBUGG3.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPJBSA--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)N2,IERROR
+ 9012   FORMAT('N2,IERROR = ',I8,2X,A4)
+        CALL DPWRST('XXX','BUG ')
+        IF(N2.GT.0)THEN
+          DO I=1,N2
+            WRITE(ICOUT,9032)I,Y1OUT(I),Y2OUT(I),TAGOUT(I)
+ 9032       FORMAT('I,Y1OUT(I),Y2OUT(I),TAGOUT(I) = ',I8,3G15.7)
+            CALL DPWRST('XXX','BUG ')
+          ENDDO
+        ENDIF
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPJBSA
       SUBROUTINE DPJTTE(MAXNXT,ICAPSW,IFORSW,ISEED,   &
                         IBUGA2,IBUGA3,IBUGQ,ISUBRO,IFOUND,IERROR)
 !

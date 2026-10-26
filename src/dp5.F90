@@ -6548,6 +6548,266 @@
 !
       RETURN
       END SUBROUTINE COMARI
+      SUBROUTINE COMBSD(YMEAN,YSD,YN,NGRPS,ICASE,IWRITE,               &
+                        XVARC,XSDC,ISUBRO,IBUGA3,IERROR)
+!
+!     PURPOSE--THIS SUBROUTINE COMPUTES ONE OF THE FOLLOWING:
+!
+!                 1. COMBINED VARIANCE FROM SUMMARY DATA
+!                 2. COMBINED STANDARD DEVIATION FROM SUMMARY DATA
+!
+!              THERE MAY BE TIMES WHEN YOU NEED TO COMPUTE THE STANDARD
+!              DEVIATION (OR VARIANCE) OF THE DATA FROM SEVERAL GROUPS
+!              WHEN ONLY THE SUMMARY DATA IS AVAILABLE.  THIS IS RELATED
+!              TO, BUT DISTINCT FROM, THE POOLED SD.  FOR THE POOLED SD,
+!              WE ASSUME THE GROUPS HAVE A COMMON VARIANCE AND WE USE A
+!              WEIGHTED MEAN OF THE GROUP VARIANCES TO ESTIMATE THE COMMON
+!              VARIANCE.  FOR THE COMBINED SD, WE WANT THE SD BASED ON ALL
+!              THE DATA.  FOR THIS, WE NEED TO TAKE THE MEAN VALUES INTO
+!              ACCOUNT.
+!
+!              THE FORMULA FOR THE POOLED VARIANCE FOR 2 GROOUPS IS:
+!
+!                V(pooled) = {(n1-1)*s1**2 + (n2-1)*s2**2}/(n1 + n2 - 1)
+!
+!
+!              THE FORMULA FOR THE COMBIBED VARIANCE IS
+!
+!                V(combined) = {(n1-1)*s1**2 + (n2-1)*s2**2 + C*(ybar1-ybar2)**2}/
+!                               (n1 + n2 - 1)
+!
+!              WHERE
+!
+!                C = N1*N2/(N1+N2)
+!
+!              THE DISTINCTION IS THE ADDITION OF THE C*(ybar1-ybar2)**2 TERM.
+!
+!              IF THERE ARE MORE THAN 2 GROUPS, THE COMBINED VALUES ARE
+!              COMPUTED PAIRWISE.  THAT IS, GROUPS 1 AND 2 ARE COMBINE
+!              AND THEN THIS COMBINED VALUE IS COMBINED WITH GROUP 3 AND
+!              SO ON.
+!
+!              THE COMBINED STANDARD DEVIATION IS SIMPLY THE SQUARE
+!              ROOT OF THE COMBINED VARIANCE.
+!
+!     INPUT  ARGUMENTS--YMEAN  = THE SINGLE PRECISION VECTOR OF
+!                                MEAN VALUES FOR THE GROUPS
+!                     --YSD    = THE SINGLE PRECISION VECTOR OF STANDARD
+!                                DEVIATION VALUES FOR THE GROUPS
+!                     --YN     = THE SINGLE PRECISION VECTOR OF SAMPLE
+!                                SIZE VALUES FOR THE GROUPS
+!                     --NGRPS  = THE INTEGER NUMBER OF GROUPS
+!                     --ICASE  = CHARACTER SCALAR THAT SPECIFIES WHETHER
+!                                COMBINED VARIANCE OR COMBINED STANDARD
+!                                DEVIATION IS PRINTED
+!     OUTPUT ARGUMENTS--XVARC  = THE SINGLE PRECISION VALUE OF THE
+!                                COMPUTED SAMPLE COMBINED VARIANCE
+!                     --XSDC   = THE SINGLE PRECISION VALUE OF THE
+!                                COMPUTED SAMPLE COMBINED STANDARD
+!                                DEVIATION
+!     OUTPUT--THE COMPUTED SINGLE PRECISION VALUE OF THE
+!             SAMPLE COMBINED VARIANCE AND COMBINED STANDARD DEVIATION.
+!     OTHER DATAPAC   SUBROUTINES NEEDED--NONE
+!     FORTRAN LIBRARY SUBROUTINES NEEDED--SQRT.
+!     MODE OF INTERNAL OPERATIONS--DOUBLE PRECISION.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2026/10
+!     ORIGINAL VERSION--OCTOBER   2026.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 ICASE
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION YMEAN(*)
+      DIMENSION YSD(*)
+      DIMENSION YN(*)
+!
+!-----COMMON----------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='COMB'
+      ISUBN2='SD  '
+      IERROR='NO'
+      XVARC=CPUMIN
+      XSDC=CPUMIN
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MBSD')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF COMBSD--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,NGRPS
+   52   FORMAT('IBUGA3,ISUBRO,NGRPS = ',2(A4,2X),I8)
+        CALL DPWRST('XXX','BUG ')
+        DO I=1,NGRPS
+          WRITE(ICOUT,56)I,YMEAN(I),YSD(I),YN(I)
+   56     FORMAT('I,YMEAN(I),YSD(I),YN(I) = ',I8,2G15.7,F12.1)
+          CALL DPWRST('XXX','BUG ')
+        ENDDO
+      ENDIF
+!
+!               ********************************************
+!               **  STEP 1--                              **
+!               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+!               ********************************************
+!
+      NMIN=2
+!
+      IF(NGRPS.LT.NMIN)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,111)
+  111   FORMAT('***** ERROR IN COMPUTING COMBINED VARIANCE/SD (COMBSD)--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,112)NMIN
+  112   FORMAT('      THE MINIMUM NUMBER OF GROUPS  = ',I5)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,117)NGRPS
+  117   FORMAT('      THE NUMBER OF GROUPS          = ',I5)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      DO II=1,N
+        NI=INT(YN(I)+0.5)
+        IF(YSD(II).LT.0.0)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,111)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,132)II
+  132     FORMAT('      GROUP ',I8,' HAS A NEGATIVE STANDARD DEVIATION.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,137)YSD(II)
+  137     FORMAT('      THE STANDARD DEVIATION = ',G15.7)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ELSEIF(NI.LT.2)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,111)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,142)II
+  142     FORMAT('      GROUP ',I8,' HAS A SAMPLE SIZE LESS THAN 2.')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,147)NI
+  147     FORMAT('      THE SAMPLE SIZE = ',I6)
+          CALL DPWRST('XXX','BUG ')
+          IERROR='YES'
+          GO TO 9000
+        ENDIF
+      ENDDO
+!
+!               ****************************************************
+!               **  STEP 2--                                      **
+!               **  COMPUTE THE COMBINED VARIANCE                 **
+!               ****************************************************
+!
+      YSD_SAVE=0.0
+      YBAR_SAVE=0.0
+      YN_SAVE=0.0
+!
+      DO IROW=2,NGRPS
+        I1=IROW-1
+        I2=IROW
+        IF(IROW.EQ.2)THEN
+          N1=INT(YN(1)+ 0.5)
+          YBAR1=YMEAN(1)
+          S1=YSD(1)
+        ELSE
+          N1=INT(YN_SAVE+0.5)
+          YBAR1=YBAR_SAVE
+          S1=YSD_SAVE
+        ENDIF
+        N2=INT(YN(IROW)+0.5)
+        YBAR2=YMEAN(IROW)
+        S2=YSD(IROW)
+!
+        C=REAL(N1*N2)/REAL(N1+N2)
+        ANUM=REAL(N1-1)*S1**2 + REAL(N2-1)*S2**2 + C*(YBAR1 - YBAR2)**2
+        DENOM=REAL(N1 + N2 - 1)
+        XVARC=ANUM/DENOM
+        XSDC=SQRT(XVARC)
+!
+        YBAR_SAVE=(REAL(N1)*YBAR1 + REAL(N2)*YBAR2)/REAL(N1+N2)
+        YSD_SAVE=XSDC
+        YN_SAVE=REAL(N1+N2)
+!
+        IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MBSD')THEN
+          WRITE(ICOUT,1011)IROW,N1,N2
+ 1011     FORMAT('IROW,N1,N2 = ',3I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,1013)YBAR1,S1,YBAR2,S2,C,ANUM,DENOM
+ 1013     FORMAT('YNAR1,S1,YBAR2,S2,C,ANUM,DENOM = ',7G15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+!
+      ENDDO
+!
+!               *******************************
+!               **  STEP 3--                 **
+!               **  WRITE OUT A LINE         **
+!               **  OF SUMMARY INFORMATION.  **
+!               *******************************
+!
+      IF(IFEEDB.EQ.'ON' .AND. IWRITE.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        IF(ICASE.EQ.'VARI')THEN
+          WRITE(ICOUT,811)XVARC
+  811     FORMAT('THE COMBINED VARIANCE = ',E15.7)
+          CALL DPWRST('XXX','BUG ')
+        ELSE
+          WRITE(ICOUT,821)XSDC
+  821     FORMAT('THE COMBINED STANDARD DEVIATION = ',E15.7)
+          CALL DPWRST('XXX','BUG ')
+        ENDIF
+      ENDIF
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT.      **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'MBSD')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END OF COMBINED VARIANCE/SD--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9012)IERROR,XVARC,XSDC
+ 9012   FORMAT('IERROR,XVARC,XSDC = ',A4,2G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE COMBSD
       SUBROUTINE COMDIG(X,N,IWRITE,XDIGI,NDIGI,IBUGA3,IERROR)
 !
 !     PURPOSE--THIS SUBROUTINE COMPUTES THE COMMON DIGITS FOR A

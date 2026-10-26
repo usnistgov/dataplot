@@ -2881,6 +2881,13 @@
 !                                       SAVE IN A COMMON BLOCK
 !     UPDATED         --JUNE      2024. CHANGE THE DEFAULT EXTENSION
 !                                       FOR DPPL1F AND DPPL2F TO ".PS"
+!     UPDATED         --AUGUST    2026. CHANGE METHOD FOR ACCESSING
+!                                       ENVIRONMENT UNDER WINDOWS
+!     UPDATED         --AUGUST    2026. FOR TEMPORARY FILES, ADD OPTION
+!                                       FOR APPENDING PROCESS-ID TO
+!                                       FILE NAME (AVOIDS PROBLEM IF
+!                                       MULTIPLE DATAPLOT SESSIONS OPEN
+!                                       IN SAME DIRECTORY
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -2893,9 +2900,8 @@
 #endif
 #ifdef INTEL
       CHARACTER*80 CTEMP
-      CHARACTER*4 IBASLC
-      CHARACTER*4 ISUBRO
-      CHARACTER*4 IERROR
+      CHARACTER (LEN=4)      :: IERROR
+      CHARACTER (LEN=4)      :: ISUBRO
 #endif
 #ifdef WIN32_OTG
       CHARACTER*4 ISUBRO
@@ -2914,7 +2920,7 @@
 !CCCC CHARACTER*80 IPATH2
       CHARACTER (LEN=MAXFNC) :: IPATH1
       CHARACTER (LEN=MAXFNC) :: IPATH2
-      CHARACTER*6  INAME
+      CHARACTER*30 INAME
       CHARACTER*10 IEXT1
       CHARACTER*10 IEXT2
       CHARACTER*10 IEXT3
@@ -2938,9 +2944,11 @@
 !CCCC THE FOLLOWING LINE WAS ADDED SEPTEMBER 1990
 !CCCC CHARACTER*80 ICDIR
       CHARACTER (LEN=MAXFNC) :: ICDIR
+      CHARACTER (LEN=1)      :: IBASLC
 !
 !-----COMMON----------------------------------------------------------
 !
+      INCLUDE 'DPCOST.INC'
       INCLUDE 'DPCOF2.INC'
       INCLUDE 'DPCOHO.INC'
 !CCCC AUGUST 1992.  FOLLOWING COMMON BLOCK FOR EDIT COMMAND
@@ -2977,6 +2985,7 @@
       ISUBN2='FO  '
       IFHOME='NO'
       IGUIIO='PIPE'
+      IBASLC='\'
 !
       PROFIL='C:\Program Files'
       NCPROF=16
@@ -3102,8 +3111,15 @@
           )THEN
 !
 #ifdef LINUX
-        CALL getenv('DATAPLOT_GUI_IO',IGUII2)
-        IF(IGUII2.EQ.'FILE'.OR.IGUII2.EQ.'file')IGUIIO='FILE'
+!
+!       2026/08: FOR LINUX/UNIX, USE FORTRAN STANDARD
+!                "GET_ENVIRONMENT_VARIABLE" INSTEAD OF "getenv".
+!
+!       CALL getenv('DATAPLOT_GUI_IO',IGUII2)
+        CALL GET_ENVIRONMENT_VARIABLE('DATAPLOT_GUI_IO',IGUII2,ILEN,IRESLT)
+        IF(IRESLT.EQ.0)THEN
+          IF(IGUII2.EQ.'FILE'.OR.IGUII2.EQ.'file')IGUIIO='FILE'
+        ENDIF
 !
 !       CHECK FOR LOCATION OF DATAPLOT AUXILIARY FILES.
 !
@@ -3124,7 +3140,8 @@
 !
         UNIXPN=' '
         UNIXPV='DATAPLOT_FILES'
-        CALL getenv(UNIXPV,UNIXPN)
+!       CALL getenv(UNIXPV,UNIXPN)
+        CALL GET_ENVIRONMENT_VARIABLE(UNIXPV,UNIXPN,NLAST,IRESLT)
 !
 #define STRZZZ(x)    x
 #ifdef DPLIBDIR
@@ -3187,7 +3204,8 @@
 !CCCC               CURRENT DIRECTORY.
 !
         UNIXPV='HOME'
-        CALL getenv(UNIXPV,IPATH3)
+!       CALL getenv(UNIXPV,IPATH3)
+        CALL GET_ENVIRONMENT_VARIABLE(UNIXPV,IPATH3,ILEN,IRESLT)
         IF(IPATH3.NE.' ')THEN
           IFHOME='YES'
           DO 1002 I=80,1,-1
@@ -3201,45 +3219,50 @@
         UPROFI(1:NCP3)=IPATH3(1:NCP3)
         NCUPRO=NCP3
 !
-        CALL getenv('USER',USRNAM)
-        IF(USRNAM.NE.' ')THEN
-          DO 7002 I=20,1,-1
-            NCUSER=I
-            IF(USRNAM(I:I).NE.' ')GO TO 7003
- 7002     CONTINUE
- 7003     CONTINUE
-        ENDIF
+!       CALL getenv('USER',USRNAM)
+        CALL GET_ENVIRONMENT_VARIABLE('USER',USRNAM,NCUSER,IRESLT)
+!       IF(USRNAM.NE.' ')THEN
+!         DO 7002 I=20,1,-1
+!           NCUSER=I
+!           IF(USRNAM(I:I).NE.' ')GO TO 7003
+!7002     CONTINUE
+!7003     CONTINUE
+!       ENDIF
 !
-        CALL getenv('SHELL',ISHELL)
-        IF(ISHELL.NE.' ')THEN
-          DO 7007 I=20,1,-1
-            NCSHEL=I
-            IF(ISHELL(I:I).NE.' ')GO TO 7008
- 7007     CONTINUE
- 7008     CONTINUE
-        ENDIF
+!       CALL getenv('SHELL',ISHELL)
+        CALL GET_ENVIRONMENT_VARIABLE('SHELL',ISHELL,NCSHEL,IRESLT)
+!       IF(ISHELL.NE.' ')THEN
+!         DO 7007 I=20,1,-1
+!           NCSHEL=I
+!           IF(ISHELL(I:I).NE.' ')GO TO 7008
+!7007     CONTINUE
+!7008     CONTINUE
+!       ENDIF
 !
         IF(ISHELL.EQ.'/bin/bash')THEN
-          CALL getenv('HOSTNAME',COMNAM)
+!         CALL getenv('HOSTNAME',COMNAM)
+          CALL GET_ENVIRONMENT_VARIABLE('HOST_NAME',COMNAM,NCCOMP,IRESLT)
         ELSE
-          CALL getenv('HOST',COMNAM)
+!         CALL getenv('HOST',COMNAM)
+          CALL GET_ENVIRONMENT_VARIABLE('HOST',COMNAM,NCCOMP,IRESLT)
         ENDIF
-        IF(COMNAM.NE.' ')THEN
-          DO 7012 I=80,1,-1
-            NCCOMP=I
-            IF(COMNAM(I:I).NE.' ')GO TO 7013
- 7012     CONTINUE
- 7013     CONTINUE
-        ENDIF
+!       IF(COMNAM.NE.' ')THEN
+!         DO 7012 I=80,1,-1
+!           NCCOMP=I
+!           IF(COMNAM(I:I).NE.' ')GO TO 7013
+!7012     CONTINUE
+!7013     CONTINUE
+!       ENDIF
 !
-        CALL getenv('PRINTER',DEFPRI)
-        IF(DEFPRI.NE.' ')THEN
-          DO 7022 I=80,1,-1
-            NCPRIN=I
-            IF(DEFPRI(I:I).NE.' ')GO TO 7023
- 7022     CONTINUE
- 7023     CONTINUE
-        ENDIF
+!       CALL getenv('PRINTER',DEFPRI)
+        CALL GET_ENVIRONMENT_VARIABLE('PRINTER',DEFPRI,NCPRIN,IRESLT)
+!       IF(DEFPRI.NE.' ')THEN
+!         DO 7022 I=80,1,-1
+!           NCPRIN=I
+!           IF(DEFPRI(I:I).NE.' ')GO TO 7023
+!7022     CONTINUE
+!7023     CONTINUE
+!       ENDIF
 !
         IEDDIR=' '
         NCEDT1=0
@@ -3249,6 +3272,7 @@
         ENDIF
         IPATH2=' '
         NCP2=0
+!
         IEXT1='.tex'
         NCEXT1=4
         IEXT2='.dat'
@@ -3264,7 +3288,8 @@
 !CCCC               /tmp DIRECTORY RATHER THAN CURRENT DIRECTORY.
 !
         UNIXPV='DATAPLOT_WEB'
-        CALL getenv(UNIXPV,ITEMP)
+!       CALL getenv(UNIXPV,ITEMP)
+        CALL GET_ENVIRONMENT_VARIABLE(UNIXPV,ITEMP,ILEN,IRESLT)
         IF(ITEMP.NE.' ')THEN
           IWBFLG='YES'
           IF(ITEMP.EQ.'NO')IWBFLG='NO'
@@ -3298,7 +3323,8 @@
         IDPURL=' '
         IURL=' '
         UNIXPV='BROWSER'
-        CALL getenv(UNIXPV,IBROWS)
+!       CALL getenv(UNIXPV,IBROWS)
+        CALL GET_ENVIRONMENT_VARIABLE(UNIXPV,IBROWS,ILEN,IRESLT)
 !CCCC   IF(IBROWS.EQ.' ')IBROWS='firefox'
         IF(IOPSY2.EQ.'MAC ')THEN
           IF(IBROWS.EQ.' ')IBROWS='open'
@@ -3307,15 +3333,17 @@
         ENDIF
 !
         UNIXPV='DATAPLOT_URL'
-        CALL getenv(UNIXPV,IDPURL)
+!       CALL getenv(UNIXPV,IDPURL)
+        CALL GET_ENVIRONMENT_VARIABLE(UNIXPV,IDPURL,ILEN,IRESLT)
         IF(IDPURL.EQ.' ')THEN
-          IDPURL(1:24)='http://www.itl.nist.gov/'
-          IDPURL(25:49)='div898/software/dataplot/'
+          IDPURL(1:25)='https://www.itl.nist.gov/'
+          IDPURL(26:50)='div898/software/dataplot/'
         ENDIF
 !
         UNIXPV='URL'
-        CALL getenv(UNIXPV,IURL)
-        IF(IURL.EQ.' ')IURL(1:20)='http://www.nist.gov/'
+!       CALL getenv(UNIXPV,IURL)
+        CALL GET_ENVIRONMENT_VARIABLE(UNIXPV,IURL,ILEN,IRESLT)
+        IF(IURL.EQ.' ')IURL(1:21)='https://www.nist.gov/'
 !
         IPATH2=' '
         NCP2=0
@@ -3383,54 +3411,72 @@
 #endif
         ELSE IF(ICOMPI.EQ.'MS-F')THEN
 #ifdef INTEL
-          IRESLT=GETENVQQ('USERNAME',USRNAM)
-          IF(IRESLT.GT.0)THEN
-            DO 7111 II=20,1,-1
-              IF(USRNAM(II:II).NE.' ')THEN
-                NCUSER=II
-                GO TO 7119
-              ENDIF
- 7111       CONTINUE
- 7119       CONTINUE
-          ENDIF
+!
+!         THIS IS FOR WINDOWS USING THE INTEL COMPILER.
+!         2026/08: REPLACE GETENVQQ WITH STANDARD FORTRAN
+!                  GET_ENVIRONMENT_VARIABLE
+!
+!         IRESLT=GETENVQQ('USERNAME',USRNAM)
+          USRNAM=' '
+          NCUSER=0
+          CALL GET_ENVIRONMENT_VARIABLE('USERNAME',USRNAM,NCUSER,IRESLT)
+!         IF(IRESLT.GT.0)THEN
+!           DO 7111 II=20,1,-1
+!             IF(USRNAM(II:II).NE.' ')THEN
+!               NCUSER=II
+!               GO TO 7119
+!             ENDIF
+!7111       CONTINUE
+!7119       CONTINUE
+!         ENDIF
 !
           IRESLT=GETENVQQ('COMPUTERNAME',COMNAM)
-          IF(IRESLT.GT.0)THEN
-            DO 7121 II=80,1,-1
-              IF(COMNAM(II:II).NE.' ')THEN
-                NCCOMP=II
-                GO TO 7129
-              ENDIF
- 7121       CONTINUE
- 7129       CONTINUE
-          ENDIF
+          COMNAM=' '
+          NCCOMP=0
+          CALL GET_ENVIRONMENT_VARIABLE('COMPUTERNAME',COMNAM,NCCOMP,IRESLT)
+!         IF(IRESLT.GT.0)THEN
+!           DO 7121 II=80,1,-1
+!             IF(COMNAM(II:II).NE.' ')THEN
+!               NCCOMP=II
+!               GO TO 7129
+!             ENDIF
+!7121       CONTINUE
+!7129       CONTINUE
+!         ENDIF
 !
-          IRESLT=GETENVQQ('LOCALAPPDATA',APPDAT)
-          IF(IRESLT.GT.0)THEN
-            DO 7131 II=80,1,-1
-              IF(APPDAT(II:II).NE.' ')THEN
-                NCAPPD=II
-                GO TO 7139
-              ENDIF
- 7131       CONTINUE
- 7139       CONTINUE
-          ENDIF
+!         IRESLT=GETENVQQ('LOCALAPPDATA',APPDAT)
+          APPDAT=' '
+          NCAPPD=0
+          CALL GET_ENVIRONMENT_VARIABLE('LOCALAPPDATA',APPDAT,ILEN,IRESLT)
+!         IF(IRESLT.GT.0)THEN
+!           DO 7131 II=80,1,-1
+!             IF(APPDAT(II:II).NE.' ')THEN
+!               NCAPPD=II
+!               GO TO 7139
+!             ENDIF
+!7131       CONTINUE
+!7139       CONTINUE
+!         ENDIF
 !
-          IRESLT=GETENVQQ('USERPROFILE',UPROFI)
-          IF(IRESLT.GT.0)THEN
-            DO 7141 II=80,1,-1
-              IF(UPROFI(II:II).NE.' ')THEN
-                NCUPRO=II
-                GO TO 7149
-              ENDIF
- 7141       CONTINUE
- 7149       CONTINUE
-          ENDIF
+!         IRESLT=GETENVQQ('USERPROFILE',UPROFI)
+          UPROFI=' '
+          NCUPRO=0
+          CALL GET_ENVIRONMENT_VARIABLE('USERPROFILE',UPROFI,NCUPRO,IRESLT)
+!         IF(IRESLT.GT.0)THEN
+!           DO 7141 II=80,1,-1
+!             IF(UPROFI(II:II).NE.' ')THEN
+!               NCUPRO=II
+!               GO TO 7149
+!             ENDIF
+!7141       CONTINUE
+!7149       CONTINUE
+!         ENDIF
 !
           WINBIT='64'
           CTEMP=' '
-          IRESLT=GETENVQQ('PROCESSOR_ARCHITECTURE',CTEMP)
-          IF(IRESLT.GT.0)THEN
+!         IRESLT=GETENVQQ('PROCESSOR_ARCHITECTURE',CTEMP)
+          CALL GET_ENVIRONMENT_VARIABLE('PROCESSOR_ARCHITECTURE',CTEMP,ILEN,IRESLT)
+          IF(IRESLT.EQ.0)THEN
             DO 7101 II=1,80
               IF(CTEMP(II:II+1).EQ.'32')THEN
                 WINBIT='32'
@@ -3439,148 +3485,169 @@
  7109       CONTINUE
           ENDIF
 !
-          IRESLT=GETENVQQ('PROGRAMFILES',PROFIL)
-          IF(IRESLT.GT.0)THEN
-            DO 7151 II=80,1,-1
-              IF(PROFIL(II:II).NE.' ')THEN
-                NCPROF=II
-                GO TO 7159
-              ENDIF
- 7151       CONTINUE
- 7159       CONTINUE
-            IF(WINBIT.EQ.'64')THEN
-              DO 7153 II=1,NCPROF-5
-                IF(PROFIL(II:II+5).EQ.' (x86)')THEN
-                  NCPROF=II-1
-                  PROFIL(II:80)=' '
-                  GO TO 7155
-                ELSEIF(PROFIL(II:II+5).EQ.' (X86)')THEN
-                  NCPROF=II-1
-                  PROFIL(II:80)=' '
-                  GO TO 7155
-                ENDIF
- 7153         CONTINUE
- 7155         CONTINUE
-            ENDIF
-          ENDIF
+!         IRESLT=GETENVQQ('PROGRAMFILES',PROFIL)
+          PROFIL='C:\Program Files\'
+          NCPROF=17
+          P86FIL='C:\Program Files (x86)\'
+          NCP86F=23
+!         CALL GET_ENVIRONMENT_VARIABLE('PROGRAMFILES',PROFIL,NCPROF,IRESLT)
+          CALL GET_ENVIRONMENT_VARIABLE('PROGRAMFILES',PROFIL,ILEN,IRESLT)
+          CALL GET_ENVIRONMENT_VARIABLE('PROGRAMFILES(X86)',P86FIL,ILEN,IRESLT)
+!         IF(IRESLT.GT.0)THEN
+!           DO 7151 II=80,1,-1
+!             IF(PROFIL(II:II).NE.' ')THEN
+!               NCPROF=II
+!               GO TO 7159
+!             ENDIF
+!7151       CONTINUE
+!7159       CONTINUE
+!           IF(WINBIT.EQ.'64')THEN
+!             DO 7153 II=1,NCPROF-5
+!               IF(PROFIL(II:II+5).EQ.' (x86)')THEN
+!                 NCPROF=II-1
+!                 PROFIL(II:80)=' '
+!                 GO TO 7155
+!               ELSEIF(PROFIL(II:II+5).EQ.' (X86)')THEN
+!                 NCPROF=II-1
+!                 PROFIL(II:80)=' '
+!                 GO TO 7155
+!               ENDIF
+!7153         CONTINUE
+!7155         CONTINUE
+!           ENDIF
+!         ENDIF
 !
-          IF(WINBIT.EQ.'64')THEN
-            IRESLT=GETENVQQ('PROGRAMFILES(X86)',P86FIL)
-            IF(IRESLT.GT.0)THEN
-              DO 7161 II=80,1,-1
-                IF(P86FIL(II:II).NE.' ')THEN
-                  NCP86F=II
-                  GO TO 7169
-                ENDIF
- 7161         CONTINUE
- 7169         CONTINUE
-            ENDIF
-          ENDIF
+!         IF(WINBIT.EQ.'64')THEN
+!           IRESLT=GETENVQQ('PROGRAMFILES(X86)',P86FIL)
+!           IF(IRESLT.GT.0)THEN
+!             DO 7161 II=80,1,-1
+!               IF(P86FIL(II:II).NE.' ')THEN
+!                 NCP86F=II
+!                 GO TO 7169
+!               ENDIF
+!7161         CONTINUE
+!7169         CONTINUE
+!           ENDIF
+!         ENDIF
 !
-          IRESLT=GETENVQQ('DATAPLO$',ICDIR)
-          IF(IRESLT.LE.0)THEN
-!CCCC       ICDIR='C:\DATAPLOT\'
-            IF(WINBIT.EQ.'32')THEN
-              ICDIR(1:NCPROF)=PROFIL(1:NCPROF)
-              NCP1=NCPROF
-              NCP1=NCP1+1
-              ICDIR(NCP1:NCP1)=IBASLC
-              ICDIR(NCP1+1:NCP1+4)='NIST'
-              NCP1=NCP1+4
-              NCP1=NCP1+1
-              ICDIR(NCP1:NCP1)=IBASLC
-              ICDIR(NCP1+1:NCP1+8)='DATAPLOT'
-              NCP1=NCP1+8
-              NCP1=NCP1+1
-              ICDIR(NCP1:NCP1)=IBASLC
-              NCDIR=NCP1
-            ELSE
-              ICDIR(1:NCP86F)=P86FIL(1:NCP86F)
-              NCP1=NCP86F
-              NCP1=NCP1+1
-              ICDIR(NCP1:NCP1)=IBASLC
-              ICDIR(NCP1+1:NCP1+4)='NIST'
-              NCP1=NCP1+4
-              NCP1=NCP1+1
-              ICDIR(NCP1:NCP1)=IBASLC
-              ICDIR(NCP1+1:NCP1+8)='DATAPLOT'
-              NCP1=NCP1+8
-              NCP1=NCP1+1
-              ICDIR(NCP1:NCP1)=IBASLC
-              NCDIR=NCP1
-            ENDIF
+!         IRESLT=GETENVQQ('DATAPLO$',ICDIR)
+!         IRESLT=GETENVQQ('FED$',IEDDIR)
+          IF(WINBIT.EQ.'32')THEN
+            ICDIR='C:\Program Files\NIST\DATAPLOT\'
+            IEDDIR='C:\Program Files\NIST\DATAPLOT\'
+            NCP1=31
+            NCDIR=31
           ELSE
-            NCDIR=80
-            NMAX=80
-            CALL DPDB80(ICDIR,NCDIR,NMAX,IBUGIN,ISUBRO,IERROR)
-            NCP1=NCDIR
+            ICDIR='C:\Program Files (x86)\NIST\DATAPLOT\'
+            IEDDIR='C:\Program Files (x86)\NIST\DATAPLOT\'
+            NCP1=37
+            NCDIR=37
           ENDIF
-          IF(NCDIR.LE.0)THEN
-            WRITE(ICOUT,999)
-            CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,1111)
- 1111       FORMAT('***** ERROR IN INITFO--')
-            CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,1112)
- 1112       FORMAT('      ERROR IN DEFINING THE DATAPLOT DIRECTORY')
-            CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,1121)ICDIR(1:80)
- 1121       FORMAT('ICDIR(1:40) = ',A80)
-            CALL DPWRST('XXX','BUG ')
-            WRITE(ICOUT,1122)NCDIR
- 1122       FORMAT('NCDIR = ',I8)
-            CALL DPWRST('XXX','BUG ')
-            IERROR='YES'
-            GO TO 9000
-          ENDIF
+          CALL GET_ENVIRONMENT_VARIABLE('DATAPLO$',ICDIR,NCP1,IRESLT)
+          CALL GET_ENVIRONMENT_VARIABLE('FED$',IEDDIR,NCDIR,IRESLT)
+!         IF(IRESLT.LE.0)THEN
+!CCCC       ICDIR='C:\DATAPLOT\'
+!           IF(WINBIT.EQ.'32')THEN
+!             ICDIR(1:NCPROF)=PROFIL(1:NCPROF)
+!             NCP1=NCPROF
+!             NCP1=NCP1+1
+!             ICDIR(NCP1:NCP1)=IBASLC
+!             ICDIR(NCP1+1:NCP1+4)='NIST'
+!             NCP1=NCP1+4
+!             NCP1=NCP1+1
+!             ICDIR(NCP1:NCP1)=IBASLC
+!             ICDIR(NCP1+1:NCP1+8)='DATAPLOT'
+!             NCP1=NCP1+8
+!             NCP1=NCP1+1
+!             ICDIR(NCP1:NCP1)=IBASLC
+!             NCDIR=NCP1
+!           ELSE
+!             ICDIR(1:NCP86F)=P86FIL(1:NCP86F)
+!             NCP1=NCP86F
+!             NCP1=NCP1+1
+!             ICDIR(NCP1:NCP1)=IBASLC
+!             ICDIR(NCP1+1:NCP1+4)='NIST'
+!             NCP1=NCP1+4
+!             NCP1=NCP1+1
+!             ICDIR(NCP1:NCP1)=IBASLC
+!             ICDIR(NCP1+1:NCP1+8)='DATAPLOT'
+!             NCP1=NCP1+8
+!             NCP1=NCP1+1
+!             ICDIR(NCP1:NCP1)=IBASLC
+!             NCDIR=NCP1
+!           ENDIF
+!         ELSE
+!           NCDIR=80
+!           NMAX=80
+!           CALL DPDB80(ICDIR,NCDIR,NMAX,IBUGIN,ISUBRO,IERROR)
+!           NCP1=NCDIR
+!         ENDIF
+!         IF(NCDIR.LE.0)THEN
+!           WRITE(ICOUT,999)
+!           CALL DPWRST('XXX','BUG ')
+!           WRITE(ICOUT,1111)
+!1111       FORMAT('***** ERROR IN INITFO--')
+!           CALL DPWRST('XXX','BUG ')
+!           WRITE(ICOUT,1112)
+!1112       FORMAT('      ERROR IN DEFINING THE DATAPLOT DIRECTORY')
+!           CALL DPWRST('XXX','BUG ')
+!           WRITE(ICOUT,1121)ICDIR(1:80)
+!1121       FORMAT('ICDIR(1:40) = ',A80)
+!           CALL DPWRST('XXX','BUG ')
+!           WRITE(ICOUT,1122)NCDIR
+!1122       FORMAT('NCDIR = ',I8)
+!           CALL DPWRST('XXX','BUG ')
+!           IERROR='YES'
+!           GO TO 9000
+!         ENDIF
           IPATH1(1:NCP1)=ICDIR(1:NCP1)
           IF(IPATH1(NCP1:NCP1).NE.'\')THEN
             NCP1=NCP1+1
             IPATH1(NCP1:NCP1)='\'
           ENDIF
 !
-          IRESLT=GETENVQQ('FED$',IEDDIR)
-          IF(IRESLT.EQ.0)THEN
+!         IRESLT=GETENVQQ('FED$',IEDDIR)
+!         IF(IRESLT.EQ.0)THEN
 !CCCC       ICDIR='C:\FED\'
 !CCCC       NCEDT1=7
 !CCCC       NCDIR=7
-            IF(WINBIT.EQ.'32')THEN
-              ICDIR(1:NCPROF)=PROFIL(1:NCPROF)
-              NCEDT1=NCPROF
-              NCEDT1=NCEDT1+1
-              ICDIR(NCEDT1:NCEDT1)=IBASLC
-              ICDIR(NCEDT1+1:NCEDT1+4)='NIST'
-              NCEDT1=NCEDT1+4
-              NCEDT1=NCEDT1+1
-              ICDIR(NCEDT1:NCEDT1)=IBASLC
-              ICDIR(NCEDT1+1:NCEDT1+8)='DATAPLOT'
-              NCEDT1=NCEDT1+8
-              NCEDT1=NCEDT1+1
-              ICDIR(NCEDT1:NCEDT1)=IBASLC
-              NCDIR=NCEDT1
-            ELSE
-              ICDIR(1:NCP86F)=P86FIL(1:NCP86F)
-              NCEDT1=NCP86F
-              NCEDT1=NCEDT1+1
-              ICDIR(NCEDT1:NCEDT1)=IBASLC
-              ICDIR(NCEDT1+1:NCEDT1+4)='NIST'
-              NCEDT1=NCEDT1+4
-              NCEDT1=NCEDT1+1
-              ICDIR(NCEDT1:NCEDT1)=IBASLC
-              ICDIR(NCEDT1+1:NCEDT1+8)='DATAPLOT'
-              NCEDT1=NCEDT1+8
-              NCEDT1=NCEDT1+1
-              ICDIR(NCEDT1:NCEDT1)=IBASLC
-              NCDIR=NCEDT1
-            ENDIF
-            NCDIR=NCEDT1
-            IEDDIR(1:NCDIR)=ICDIR(1:NCDIR)
-          ELSE
-            NCDIR=80
-            NMAX=80
-            CALL DPDB80(IEDDIR,NCDIR,NMAX,IBUGIN,ISUBRO,IERROR)
-            NCEDT1=NCDIR
-          ENDIF
+!           IF(WINBIT.EQ.'32')THEN
+!             ICDIR(1:NCPROF)=PROFIL(1:NCPROF)
+!             NCEDT1=NCPROF
+!             NCEDT1=NCEDT1+1
+!             ICDIR(NCEDT1:NCEDT1)=IBASLC
+!             ICDIR(NCEDT1+1:NCEDT1+4)='NIST'
+!             NCEDT1=NCEDT1+4
+!             NCEDT1=NCEDT1+1
+!             ICDIR(NCEDT1:NCEDT1)=IBASLC
+!             ICDIR(NCEDT1+1:NCEDT1+8)='DATAPLOT'
+!             NCEDT1=NCEDT1+8
+!             NCEDT1=NCEDT1+1
+!             ICDIR(NCEDT1:NCEDT1)=IBASLC
+!             NCDIR=NCEDT1
+!           ELSE
+!             ICDIR(1:NCP86F)=P86FIL(1:NCP86F)
+!             NCEDT1=NCP86F
+!             NCEDT1=NCEDT1+1
+!             ICDIR(NCEDT1:NCEDT1)=IBASLC
+!             ICDIR(NCEDT1+1:NCEDT1+4)='NIST'
+!             NCEDT1=NCEDT1+4
+!             NCEDT1=NCEDT1+1
+!             ICDIR(NCEDT1:NCEDT1)=IBASLC
+!             ICDIR(NCEDT1+1:NCEDT1+8)='DATAPLOT'
+!             NCEDT1=NCEDT1+8
+!             NCEDT1=NCEDT1+1
+!             ICDIR(NCEDT1:NCEDT1)=IBASLC
+!             NCDIR=NCEDT1
+!           ENDIF
+!           NCDIR=NCEDT1
+!           IEDDIR(1:NCDIR)=ICDIR(1:NCDIR)
+!         ELSE
+!           NCDIR=80
+!           NMAX=80
+!           CALL DPDB80(IEDDIR,NCDIR,NMAX,IBUGIN,ISUBRO,IERROR)
+!           NCEDT1=NCDIR
+!         ENDIF
 !
           IF(IEDDIR(NCDIR:NCDIR).NE.'\')THEN
             NCDIR=NCDIR+1
@@ -3590,6 +3657,7 @@
             WRITE(ICOUT,999)
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,1111)
+ 1111       FORMAT('***** ERROR IN INITFO--')
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,1212)
  1212       FORMAT('      ERROR IN DEFINING THE')
@@ -3601,30 +3669,34 @@
  1221       FORMAT('ICDIR(1:40) = ',A80)
             CALL DPWRST('XXX','BUG ')
             WRITE(ICOUT,1122)NCDIR
+ 1122       FORMAT('NCDIR = ',I8)
             CALL DPWRST('XXX','BUG ')
             IERROR='YES'
-            GO TO 9000
+!           GO TO 9000
           ENDIF
 !
 !         NEED TO CHANGE THE DEFAULT BROWSER
 !
           IBROWS=' '
           IDPURL=' '
-          IRESLT=GETENVQQ('BROWSER',IBROWS)
-          IF(IRESLT.EQ.0)THEN
+!         IRESLT=GETENVQQ('BROWSER',IBROWS)
+          CALL GET_ENVIRONMENT_VARIABLE('BROWSER',IBROWS,ILEN,IRESLT)
+          IF(IRESLT.NE.0)THEN
             IBROWS(1:42)='"C:\Program Files (x86)\Internet Explorer\'
             IBROWS(43:55)='iexplore.exe"'
           ENDIF
 !
-          IRESLT=GETENVQQ('DP_URL',IDPURL)
-          IF(IRESLT.EQ.0)THEN
-            IDPURL(1:24)='http://www.itl.nist.gov/'
-            IDPURL(25:49)='div898/software/dataplot/'
+!         IRESLT=GETENVQQ('DP_URL',IDPURL)
+          CALL GET_ENVIRONMENT_VARIABLE('DP_URL',IDPURL,ILEN,IRESLT)
+          IF(IRESLT.NE.0)THEN
+            IDPURL(1:25)='https://www.itl.nist.gov/'
+            IDPURL(26:50)='div898/software/dataplot/'
           ENDIF
 !
-          IRESLT=GETENVQQ('URL',IDPURL)
+!         IRESLT=GETENVQQ('URL',IURL)
+          CALL GET_ENVIRONMENT_VARIABLE('URL',IURL,ILEN,IRESLT)
           IF(IRESLT.EQ.0)THEN
-            IURL(1:20)='http://www.nist.gov/'
+            IURL(1:21)='https://www.nist.gov/'
           ENDIF
 !
 #endif
@@ -5821,9 +5893,9 @@
 !
       RETURN
       END SUBROUTINE DPOPFI
-      SUBROUTINE CKCLAR(ITEMNU,ITEMNA,ITEMST,ITEMFO,   &
+      SUBROUTINE CKCLAR(ITEMNU,ITEMNA,ITEMST,ITEMFO,          &
                         ITEMAC,ITEMPR,ITEMCS,ITEMEF,ITEMRW,   &
-                        NUMCLA,CLARG1,CLARG2,IECHFL,   &
+                        NUMCLA,CLARG1,CLARG2,IECHFL,          &
                         ISUBN0,IBUGS2,ISUBRO,IERRFI)
 !
 !     PURPOSE--CHECK THE COMMAND LINE (IN DOS) TO INVOKE DATAPLOT,
@@ -5840,6 +5912,7 @@
 !     UPDATED         --AUGUST   2016 CALL LIST TO DPINFI
 !     UPDATED         --JUNE     2021 CHECK FOR "-GUI" AND "-NOGUI"
 !                                     OPTIONS
+!     UPDATED         --AUGUST   2026 CHECK FOR "-PID" OPTION
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -5907,6 +5980,7 @@
 !
       IECHFL=0
       ICNT2=0
+      ITMPFI='IGNO'
       CLARG1=' '
       CLARG2=' '
 !
@@ -5965,58 +6039,72 @@
               ISTAT=0
 #endif
               IF(I.EQ.0)GO TO 210
-              IF(ISTAT.GE.2 .AND. BUF(1:2).EQ.'-W' .OR.   &
-                 BUF(1:2).EQ.'-w')THEN
+              IF(ISTAT.GE.2 .AND. (BUF(1:2).EQ.'-W' .OR.   &
+                 BUF(1:2).EQ.'-w'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.2 .AND. BUF(1:2).EQ.'-H' .OR.   &
-                     BUF(1:2).EQ.'-h')THEN
+              ELSEIF(ISTAT.GE.2 .AND. (BUF(1:2).EQ.'-H' .OR.   &
+                     BUF(1:2).EQ.'-h'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.5 .AND. BUF(1:5).EQ.'-SVGA' .OR.   &
-                     BUF(1:5).EQ.'-svga')THEN
+              ELSEIF(ISTAT.GE.5 .AND. (BUF(1:5).EQ.'-SVGA' .OR.   &
+                     BUF(1:5).EQ.'-svga'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.6 .AND. BUF(1:6).EQ.'-LARGE' .OR.   &
-                     BUF(1:6).EQ.'-large')THEN
+              ELSEIF(ISTAT.GE.6 .AND. (BUF(1:6).EQ.'-LARGE' .OR.   &
+                     BUF(1:6).EQ.'-large'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.7 .AND. BUF(1:7).EQ.'-LAPTOP' .OR.   &
-                     BUF(1:7).EQ.'-laptop')THEN
+              ELSEIF(ISTAT.GE.7 .AND. (BUF(1:7).EQ.'-LAPTOP' .OR.   &
+                     BUF(1:7).EQ.'-laptop'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.9 .AND. BUF(1:9).EQ.'-FILLIBEN' .OR.   &
-                     BUF(1:9).EQ.'-filliben')THEN
+              ELSEIF(ISTAT.GE.9 .AND. (BUF(1:9).EQ.'-FILLIBEN' .OR.   &
+                     BUF(1:9).EQ.'-filliben'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.10 .AND. BUF(1:10).EQ.'-EXTRAWIDE' .OR.   &
-                     BUF(1:10).EQ.'-extrawide')THEN
+              ELSEIF(ISTAT.GE.10 .AND. (BUF(1:10).EQ.'-EXTRAWIDE' .OR.   &
+                     BUF(1:10).EQ.'-extrawide'))THEN
                 CONTINUE
               ELSEIF(ISTAT.GE.16 .AND.   &
-                     BUF(1:16).EQ.'-TILE_HORIZONTAL' .OR.   &
-                     BUF(1:16).EQ.'-tile_horizontal')THEN
+                     (BUF(1:16).EQ.'-TILE_HORIZONTAL' .OR.   &
+                     BUF(1:16).EQ.'-tile_horizontal'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.5 .AND. BUF(1:5).EQ.'-TILE' .OR.   &
-                     BUF(1:5).EQ.'-tile')THEN
+              ELSEIF(ISTAT.GE.5 .AND. (BUF(1:5).EQ.'-TILE' .OR.   &
+                     BUF(1:5).EQ.'-tile'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.7 .AND. BUF(1:7).EQ.'-NOTILE' .OR.   &
-                     BUF(1:7).EQ.'-notile')THEN
+              ELSEIF(ISTAT.GE.7 .AND. (BUF(1:7).EQ.'-NOTILE' .OR.   &
+                     BUF(1:7).EQ.'-notile'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.5 .AND. BUF(1:5).EQ.'-TRUE' .OR.   &
-                     BUF(1:5).EQ.'-true')THEN
+              ELSEIF(ISTAT.GE.5 .AND. (BUF(1:5).EQ.'-TRUE' .OR.   &
+                     BUF(1:5).EQ.'-true'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.7 .AND. BUF(1:5).EQ.'-NOTRUE' .OR.   &
-                     BUF(1:7).EQ.'-notrue')THEN
+              ELSEIF(ISTAT.GE.7 .AND. (BUF(1:5).EQ.'-NOTRUE' .OR.   &
+                     BUF(1:7).EQ.'-notrue'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.4 .AND. BUF(1:4).EQ.'-RGB' .OR.   &
-                     BUF(1:4).EQ.'-rgb')THEN
+              ELSEIF(ISTAT.GE.4 .AND. (BUF(1:4).EQ.'-RGB' .OR.   &
+                     BUF(1:4).EQ.'-rgb'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.6 .AND. BUF(1:6).EQ.'-NORGB' .OR.   &
-                     BUF(1:6).EQ.'-norgb')THEN
+              ELSEIF(ISTAT.GE.6 .AND. (BUF(1:6).EQ.'-NORGB' .OR.   &
+                     BUF(1:6).EQ.'-norgb'))THEN
                 CONTINUE
-              ELSEIF(ISTAT.GE.4 .AND. BUF(1:4).EQ.'ECHO' .OR.   &
-                     BUF(1:4).EQ.'echo')THEN
+              ELSEIF(ISTAT.GE.4 .AND. (BUF(1:4).EQ.'ECHO' .OR.   &
+                     BUF(1:4).EQ.'echo'))THEN
                 IECHFL=1
-              ELSEIF(ISTAT.GE.3 .AND. BUF(1:3).EQ.'GUI' .OR.   &
-                     BUF(1:3).EQ.'gui')THEN
+              ELSEIF(ISTAT.GE.5 .AND. (BUF(1:5).EQ.'ECHO' .OR.   &
+                     BUF(1:5).EQ.'-echo'))THEN
+                IECHFL=1
+              ELSEIF(ISTAT.GE.3 .AND. (BUF(1:3).EQ.'GUI' .OR.   &
+                     BUF(1:3).EQ.'gui'))THEN
                 IGUIFL='ON'
-              ELSEIF(ISTAT.GE.5 .AND. BUF(1:5).EQ.'NOGUI' .OR.   &
-                     BUF(1:5).EQ.'nogui')THEN
+              ELSEIF(ISTAT.GE.4 .AND. (BUF(1:4).EQ.'GUI' .OR.   &
+                     BUF(1:4).EQ.'-gui'))THEN
+                IGUIFL='ON'
+              ELSEIF(ISTAT.GE.5 .AND. (BUF(1:5).EQ.'NOGUI' .OR.   &
+                     BUF(1:5).EQ.'nogui'))THEN
                 IGUIFL='OFF'
+              ELSEIF(ISTAT.GE.6 .AND. (BUF(1:6).EQ.'-NOGUI' .OR.   &
+                     BUF(1:6).EQ.'-nogui'))THEN
+              ELSEIF(ISTAT.GE.3 .AND. (BUF(1:3).EQ.'PID' .OR.   &
+                     BUF(1:3).EQ.'pid'))THEN
+                ITMPFI='PID'
+              ELSEIF(ISTAT.GE.4 .AND. (BUF(1:4).EQ.'-PID' .OR.   &
+                     BUF(1:4).EQ.'-pid'))THEN
+                ITMPFI='PID'
               ELSE
                 IF(ISTAT.GE.1 .AND. ISTAT.LE.80 .AND. ICNT.LE.49)THEN
                   ICNT=ICNT+1
@@ -6305,6 +6393,8 @@
 !CCCC             -gui
 !CCCC             -nogui
 !CCCC             -echo
+!CCCC   2026/08: CHECK FOR FOLLOWING SWITCHES
+!CCCC             -pid
 !CCCC
 !CCCC   2021/06: SET IGUIFL FOR "-gui" AND "-nogui" SWITCHES
 !
@@ -6315,15 +6405,32 @@
             IJUNK=I
             ITEMP=' '
             CALL getarg(IJUNK,ITEMP)
+            print *,'i,ijunk,itemp=',imijunk,itemp
             IF(ITEMP(1:4).EQ.'-gui' .OR. ITEMP(1:4).EQ.'-GUI')THEN
+              IPROAD='OFF'
+              IGUIFL='ON'
+            ELSEIF(ITEMP(1:3).EQ.'gui' .OR. ITEMP(1:3).EQ.'GUI')THEN
               IPROAD='OFF'
               IGUIFL='ON'
             ELSEIF(ITEMP(1:6).EQ.'-nogui' .OR.   &
                    ITEMP(1:6).EQ.'-NOGUI')THEN
               IGUIFL='OFF'
+            ELSEIF(ITEMP(1:5).EQ.'nogui' .OR.   &
+                   ITEMP(1:5).EQ.'NOGUI')THEN
+              IGUIFL='OFF'
             ELSEIF(ITEMP(1:5).EQ.'-echo' .OR.   &
                    ITEMP(1:5).EQ.'-ECHO')THEN
               IECHFL=1
+            ELSEIF(ITEMP(1:4).EQ.'echo' .OR.   &
+                   ITEMP(1:4).EQ.'ECHO')THEN
+              IECHFL=1
+            ELSEIF(ITEMP(1:4).EQ.'-pid' .OR.   &
+                   ITEMP(1:4).EQ.'-PID')THEN
+              ITMPFI='PID '
+              print *,'pid case: ',itmpfi
+            ELSEIF(ITEMP(1:3).EQ.'pid' .OR.   &
+                   ITEMP(1:3).EQ.'PID')THEN
+              ITMPFI='PID '
             ELSE
               ICNT=ICNT+1
               IF(ICNT.EQ.1)THEN
@@ -8050,7 +8157,7 @@
            DO 9035 I=1,NCOUT
              CALL DPCOAN(ICOUT(I:I),IASCNE)
              WRITE(IPR,9036)I,ICOUT(I:I),IASCNE
- 9036        FORMAT(1H ,'I,ICOUT(I:I),IASCNE = ',I8,2X,A1,I8)
+ 9036        FORMAT(1X,'I,ICOUT(I:I),IASCNE = ',I8,2X,A1,I8)
  9035      CONTINUE
          ENDIF
       ENDIF

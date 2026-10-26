@@ -19,6 +19,8 @@
 !              -notile          - do not tile text and graphics windows vertical
 !              -tile_horizontal - tile text and graphics windows
 !                                 horizontally
+!              -pid             - append process-id to writeable temporary
+!                                 files
 !
 !  JUNE 2021: IF THIS ROUTINE IS CALLED, THIS IMPLIES THAT THE
 !             COMMAND LINE VERSION IS BEING EXECUTED.  SO SET
@@ -38,8 +40,9 @@
       CHARACTER*4 QWSCRN
       COMMON/QUICKWN/DPSCREEN,QWSCRN,IQWNFT,IQWNFN
       CHARACTER*4 IECHO
+      CHARACTER*4 ITEMP_FILES
       CHARACTER*80 FTEMP(50)
-      COMMON/QUICKW2/IECHO,FTEMP
+      COMMON/QUICKW2/IECHO,ITEMP_FILES,FTEMP
       INTEGER NCFTMP(50)
       COMMON/QUICKW3/NCFTMP,NPCARG
       CHARACTER*4 IQWNTL
@@ -87,6 +90,7 @@
 !
       NUM=IARGC()
       IECHO='    '
+      ITEMP_FILES='IGNO'
       DO 5 I=1,50
         FTEMP(I)=' '
         NCFTMP(I)=0
@@ -157,11 +161,20 @@
           ELSEIF(ISTAT.GE.4 .AND. BUF(1:4).EQ.'ECHO' .OR.   &
                  BUF(1:4).EQ.'echo')THEN
             IECHO(1:4)='ECHO'
+          ELSEIF(ISTAT.GE.5 .AND. BUF(1:5).EQ.'-ECHO' .OR.   &
+                 BUF(1:5).EQ.'-echo')THEN
+            IECHO(1:4)='ECHO'
           ELSEIF(ISTAT.GE.3 .AND. BUF(1:3).EQ.'GUI' .OR.   &
                  BUF(1:3).EQ.'gui')THEN
             IGUIFL='OFF'
+          ELSEIF(ISTAT.GE.4 .AND. BUF(1:4).EQ.'-GUI' .OR.   &
+                 BUF(1:4).EQ.'-gui')THEN
+            IGUIFL='OFF'
           ELSEIF(ISTAT.GE.5 .AND. BUF(1:5).EQ.'NOGUI' .OR.   &
                  BUF(1:5).EQ.'nogui')THEN
+            IGUIFL='OFF'
+          ELSEIF(ISTAT.GE.6 .AND. BUF(1:6).EQ.'-NOGUI' .OR.   &
+                 BUF(1:6).EQ.'-nogui')THEN
             IGUIFL='OFF'
           ELSE
             IF(ISTAT.GE.1 .AND. ISTAT.LE.80 .AND. ICNT.LE.49)THEN

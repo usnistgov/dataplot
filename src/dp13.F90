@@ -1452,6 +1452,232 @@
 !
       RETURN
       END SUBROUTINE DPDIME
+      SUBROUTINE DPDIN3(Y,X,TAG,N,MAXNXT,IWRITE,                  &
+                        TEMP1,TEMP2,XIDTEM,                       &
+                        STATVA,YPOOLVAR,XPOOLVAR,BETA,RESSD,SP2,  &
+                        IBUGA3,ISUBRO,IERROR)
+!
+!     PURPOSE--THIS ROUTINE COMPUTES THE ZETA STATISTIC FOR THE DIFFERENCE
+!              IN NON-SELECTVITY (DINS) ANALYSIS.
+!
+!              THE DATA CONSISTS OF TWO PAIRED MEASUREMENT PROCESSES
+!              AND A SAMPLE ID VARIABLE.  IT IS ASSUMED THAT THE NUMBER
+!              OF REPLICATIONS IS EQUAL FOR ALL SAMPLES.  THIS STATISTIC
+!              IS APPLIED WHEN COMPARING TWO MEASUREMENT PROCESSES.
+!
+!              THE ZETA STATISTIC IS:
+!
+!                   ZETA = s(p)**2/(s(ypooled)**2 + A1*s(xpooled)**2)
+!
+!              WITH
+!
+!                   s(ypooled) = THE POOLED STANDARD DEVIATION OF Y
+!                   s(xpooled) = THE POOLED STANDARD DEVIATION OF X
+!                   A1         = SLOPE COEFFICIENT OF A LEAST SQUARES
+!                                FIT BETWEEN Y AND X
+!                   s(p)       = RESIDUAL STANDARD DEVIATION*
+!                                (N*R + 2)/(N*R)
+!                   N          = NUMBER OF SAMPLES
+!                   R          = NUMBER OF REPLICATIONS
+!
+!     EXAMPLE--DINS Y X TAG
+!              WHERE TAG IS A GROUP-ID VARIABLE (I.E., SAMPLE).
+!     REFERENCE--FAUSKANGER, SANDBERG, JOHANSEN, KELLER, BUD, MILLER,
+!                STAVELIN, DELATOUR, PANTEGHINI AND STOVE (2025),
+!                "QUANTIFICATION OF DIFFERENCE IN NONSELECTIVITY BETWEEN
+!                IN VITRO DIAGNOSTIC MEDICAL DEVICES," BIOMETRICAL
+!                JOURNAL, 67:e70032, Wiley-VCH GmbH.
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2026/08
+!     ORIGINAL VERSION--AUGUST    2026.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER*4 IWRITE
+      CHARACTER*4 IBUGA3
+      CHARACTER*4 ISUBRO
+      CHARACTER*4 IERROR
+!
+      CHARACTER*4 ISUBN1
+      CHARACTER*4 ISUBN2
+      CHARACTER*4 ISTEPN
+!
+!---------------------------------------------------------------------
+!
+      DIMENSION Y(*)
+      DIMENSION X(*)
+      DIMENSION TAG(*)
+      DIMENSION TEMP1(*)
+      DIMENSION TEMP2(*)
+      DIMENSION XIDTEM(*)
+!
+!---------------------------------------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPDI'
+      ISUBN2='N3  '
+      IERROR='NO'
+      IWRITE='OFF'
+!
+      STATVA=CPUMIN
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'DIN3')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,51)
+   51   FORMAT('**** AT THE BEGINNING OF DPDIN3--')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,52)IBUGA3,ISUBRO,N,MAXNXT
+   52   FORMAT('IBUGA3,ISUBRO,N,MAXNXT = ',2(A4,2X),2I8)
+        CALL DPWRST('XXX','WRIT')
+        DO I=1,N
+          WRITE(ICOUT,57)I,Y(I),X(I),TAG(I)
+   57     FORMAT('I,Y(I),X(I),TAG(I) = ',I8,3G15.7)
+          CALL DPWRST('XXX','WRIT')
+        ENDDO
+      ENDIF
+!
+!               ********************************************
+!               **  STEP 11--                             **
+!               **  CHECK THE INPUT ARGUMENTS FOR ERRORS  **
+!               ********************************************
+!
+      ISTEPN='11'
+      IF(IBUGA3.EQ.'ON'.OR.ISUBRO.EQ.'DIN3')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      CALL DISTIN(TAG,N,IWRITE,XIDTEM,NGROUP,IBUGA3,IERROR)
+      MAXGRP=INT(REAL((N/2) + 0.6))
+!
+      IF(NGROUP.LT.2 .OR. NGROUP.GT.MAXGRP)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,1131)
+ 1131   FORMAT('****** ERROR IN DINS ZETA STATISTIC (DPDIN3)-----')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,1241)
+ 1241   FORMAT('      THE NUMBER OF SAMPLES IS LESS THAN TWO OR')
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,1243)MAXGRP
+ 1243   FORMAT('      GREATER THAN ',I5)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,1245)NGROUP
+ 1245   FORMAT('      THE NUMBER OF GROUPS = ',I8)
+        CALL DPWRST('XXX','WRIT')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IR=-1
+      SUM1=0.0
+      SUM2=0.0
+      SUM3=0.0
+      DO II=1,NGROUP
+         HOLD=XIDTEM(II)
+         K=0
+         DO JJ=1,N
+            IF(TAG(JJ).EQ.HOLD)THEN
+              K=K+1
+              TEMP1(K)=Y(JJ)
+              TEMP2(K)=X(JJ)
+            ENDIF
+         ENDDO
+         IF(IR.LT.0)THEN
+           IR=K
+         ELSE
+           IF(K.NE.IR)THEN
+             WRITE(ICOUT,999)
+             CALL DPWRST('XXX','WRIT')
+             WRITE(ICOUT,1131)
+             CALL DPWRST('XXX','WRIT')
+             WRITE(ICOUT,1251)HOLD
+ 1251        FORMAT('      GROUP ',F10.1,' DOES NOT HAVE THE EXPECTED ', &
+                    'NUMBER OF REPLICATIONS.')
+             CALL DPWRST('XXX','WRIT')
+             WRITE(ICOUT,1253)K
+ 1253        FORMAT('      NUMBER OF REPLICATIONS:           ',I6)
+             CALL DPWRST('XXX','WRIT')
+             WRITE(ICOUT,1255)IR
+ 1255        FORMAT('      EXPECTED NUMBER OF REPLICATIONS:  ',I6)
+             CALL DPWRST('XXX','WRIT')
+             IERROR='YES'
+             GO TO 9000
+           ENDIF
+         ENDIF
+         CALL VAR(TEMP1,K,IWRITE,YVARII,IBUGA3,IERROR)
+         CALL VAR(TEMP2,K,IWRITE,XVARII,IBUGA3,IERROR)
+         SUM1=SUM1 + REAL(K-1)*YVARII
+         SUM2=SUM2 + REAL(K-1)*XVARII
+         SUM3=SUM3 + REAL(K)
+!
+         IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'DIN3')THEN
+           WRITE(ICOUT,1351)II,K,YVARII,XVARII
+ 1351        FORMAT('GROUP ',I6,': K,YVARII,XVARII,SUM1,SUM2,SUM3 = ',  &
+                    I6,2X,5G15.7)
+             CALL DPWRST('XXX','BUG ')
+           ENDIF
+!
+      ENDDO
+!
+      ANUMSE=REAL(NGROUP)
+      AR=REAL(IR)
+      AFACT=(ANUMSE*AR + 2.0)/(ANUMSE*AR)
+!
+      YPOOLVAR=SUM1/(SUM3 - ANUMSE)
+      XPOOLVAR=SUM2/(SUM3 - ANUMSE)
+!
+      CALL LINFIT(Y,X,N,                                               &
+                  ALPHA,BETA,RESSD,RESDF,CCXY,SDALPH,SDBETA,CCALBE,    &
+                  ISUBRO,IBUGA3,IERROR)
+!
+      SP2=AFACT*(RESSD**2)
+      DENOM=YPOOLVAR + BETA*XPOOLVAR
+      STATVA=SP2/DENOM
+!
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'DIN3')THEN
+        WRITE(ICOUT,1361)YPOOLVAR,XPOOLVAR,DENOM,STATVA
+ 1361   FORMAT('YPOOLVAR,XPOOLVAR,DENOM,STATVA = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,1363)AFACT,RESSD,SP2,BETA
+ 1363   FORMAT('AFACT,RESSD,SP2,BETA = ',4G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      IF(IWRITE.EQ.'ON' .AND. IFEEDB.EQ.'ON')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2001)STATVA
+ 2001   FORMAT('THE COMPUTED DINS ZETA STATISTIC IS  ',G15.7)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *****************
+!               **  STEP 90--  **
+!               **  EXIT       **
+!               *****************
+!
+ 9000 CONTINUE
+      IF(IBUGA3.EQ.'ON' .OR. ISUBRO.EQ.'DIN3')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','WRIT')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPDIN3--')
+        CALL DPWRST('XXX','WRIT')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPDIN3
       SUBROUTINE DPDIRE(ICOM,IHARG,NUMARG,IDEFDI,ITEXDI,   &
                         IBUGD2,ISUBRO,IFOUND,IERROR)
 !

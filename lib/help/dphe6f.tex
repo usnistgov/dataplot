@@ -1,13 +1,13 @@
-35900.      (VERSION 2025.11)   total number of lines in file (including this line)
+36300.      (VERSION 2026.08)   total number of lines in file (including this line)
  8.                          number of     sections below
   100.    T                  first line number of T section
-16700.    U                  first line number of U section
-18900.    V                  first line number of V section
-22300.    W                  first line number of W section
-30100.    X                  first line number of X section
-30900.    Y                  first line number of Y section
-32500.    Z                  first line number of Z section
-33900.    MISCELLANEOUS      first line number of MISCELLANEOUS section
+17100.    U                  first line number of U section
+19300.    V                  first line number of V section
+22700.    W                  first line number of W section
+30500.    X                  first line number of X section
+31300.    Y                  first line number of Y section
+32900.    Z                  first line number of Z section
+34300.    MISCELLANEOUS      first line number of MISCELLANEOUS section
  
 --------------------------------------------------------------
  
@@ -3214,6 +3214,117 @@ Implementation Date:
 Program:
     XX
  
+-----SET TEMPORARY FILE (SET)--------------------------------------------
+ 
+TEMPORARY FILE
+ 
+Name:
+    SET TEMPORARY FILE (SET)
+ 
+Type:
+    Set Subcommand
+ 
+Purpose:
+    For certain writeable temporary files, specify whether Dataplot
+    should append the process-id to the name of the file.
+ 
+Description:
+    If you are running multiple Dataplot sessions in the same current
+    directory, certain temporary files may conflict between the different
+    Dataplot sessions.  You can request that these temporary files
+    created by Dataplot append the process-id to the default name.
+
+    The following are files that the user may want to veiw or plot
+
+         IPL1NA - the default DEVICE 2 name (dppl1f.ps)
+         IPL2NA - the default DEVICE 3 name (dppl2f.ps)
+         ICONNA - the conclusions file name (dpconf.dat)
+         IST1NA - file containing output from a command (dpst1f.dat)
+         IST2NA - file containing output from a command (dpst2f.dat)
+         IST3NA - file containing output from a command (dpst3f.dat)
+         IST4NA - file containing output from a command (dpst4f.dat)
+         IST5NA - file containing output from a command (dpst5f.dat)
+
+    The following are files that are used internally by Dataplot but are
+    not typically viewed by the user
+
+         DPZCHF - file containing character data (dpzchf.dat)
+         ISCRNA - scratch file (dpscrf.dat)
+         ISACNA - file used by SAVE commands (dpsacf.dat)
+         ISAVNA - save file used by SAVE MEMORY/RESTORE MEMORY commands
+                  (dpsavf.dat)
+         IPRONA - a file used by certain commands (dpprof.dat)
+         IOUTNA - a file used by certain commands (dpoutf.dat)
+
+    For example, if the process-id is 235612, the default names for the
+    most common temporary files are set to
+
+          dppl1f_235612.ps
+          dpst1f_235612.dat
+          dpst2f_235612.dat
+          dpst3f_235612.dat
+          dpst4f_235612.dat
+          dpst5f_235612.dat
+
+    This change only applies to files that are opened subsequent to the
+    SET TEMPORARY FILES PID command.  So you might want to enter a
+    DEVICE 2 CLOSE command before using this command (and then a
+    DEVICE 2 POSTSCRIPT after entering the command).
+
+Syntax:
+    SET TEMPORARY FILE <PID/IGNORE>
+    where <PID/IGNORE> specifies whether or not Dataplot will append the
+          process id to the file name.
+
+    where <PID> specifies that Dataplot will append the process-id to
+    the file name and <IGNORE> specifies that Dataplot will not append
+ 
+Examples:
+    SET TEMPORARY FILE PID
+    SET TEMPORARY FILE IGNORE
+
+Note:
+    Alternatively, you can use a "-pid" command line argument when
+    initiating Dataplot.  For example
+
+        dataplot -pid
+
+    This has the advantage of setting the default names before any
+    temporary files are opened.
+
+Note:
+    Once you enter a SET TEMPORARY FILES PID you cannot reset the
+    default of not appending the process-id to the file name.  No error
+    message is generated if you try to do this, but the command will
+    have no effect.
+
+Default:
+    IGNORE
+ 
+Synonyms:
+    None
+ 
+Related Commands:
+    PROMPT     = Specify whether the prompt will be printed.
+ 
+Applications:
+    Terminal usage
+ 
+Implementation Date:
+    2026/08
+ 
+Program:
+    DEVICE 2 CLOSE
+    SET TEMPORARY FILE PID
+    DEVICE 2 POSTSCRIPT
+    .
+    SKIP 25
+    READ BERGER1.DAT Y X
+    FIT Y X
+    LINE BLANK DOTTED
+    CHARACTER X BLANKE
+    PLOT Y PRED VS X
+ 
 -----TERMINATOR CHARACTOR-------------------------------------------
 
 TERMINATOR CHARACTOR
@@ -3785,6 +3896,261 @@ Program:
     MOVE 5 10
     TEXT SOURCE: Q.C. TRENDS WINTER 1985, PAGES 22-23.
  
+-----THEIL SEN FIT---------------------------------
+ 
+THEIL SEN FIT
+ 
+Name:
+    THEIL SEN FIT
+ 
+Type:
+    Analysis Command
+ 
+Purpose:
+    Performs a Theil-Sen linear regression.
+ 
+Description:
+    Theil-Sen regression is a non-parametric method for the linear
+    regression case with one independent variable.  It is robust
+    against outliers and does not require that the residuials
+    follow a normal distribution.
+
+    As with ordinary least squares regression, the goal is to use the
+    value of the "X" variable to estimate the value of the "Y"
+    variable.  It is assumed that the "X" values are fixed.
+
+    The primary assumptions for Theil-Sen regression is that there is
+    a linear relationship between the variables.
+
+    The Theil-Sen estimate of the slope is
+
+        beta = Median S
+
+    where
+
+        S = (y(j) - y(i))/(x(j) - x(i))  for i < j
+
+    Observations where x(i) = x(j) are omitted.
+
+    The estimate of the intercept is the median of
+
+        y(i) - beta*x(i)
+
+    To compute a confidence interval for the slope, first compute
+    the standard error
+
+        se(beta) = SQRT(n*(n-1)*(2*n+5)/18)
+
+    Then set k = NORPPF(1-alpha/2)*se(beta).  The lower and upper
+    confidence bounds are then
+
+        beta(L) = S((NS-k)/2)
+        beta(U) = S((NS+k)/2 + 1)
+
+    where S are the sorted slope estimates and NS is the number of
+    slopes.
+
+    Confidence bounds for the intercept are then
+
+        alpha(L) = ymedian - beta(U)*xmedian
+        alpha(U) = ymedian - beta(L)*xmediam
+
+    Alternatively the confidence limits can be computed using
+    either the bootstrap or the jacknife.
+
+Syntax:
+    THEIL SEN FIT <y> <x>     <SUBSET/EXCEPT/FOR qualification>
+    where <y> is the dependent response variable;
+          <x> is the independent response variable;
+    and where the <SUBSET/EXCEPT/FOR qualification> is optional.
+
+Examples:
+    THEIL SEN FIT Y X
+    THEIL SEN FIT Y X SUBSET X > 1
+
+Note:
+    By default the confidence limits will be computed both
+    analytically and with the bootstrap.  To use the jacknife
+    instead of the bootstrap, enter
+
+        SET THEIL SEN CONFIDENCE LIMITS JACKNIFE
+
+    If you do not want either the bootstrap or the jacknife
+    confidence limits, enter
+
+        SET THEIL SEN CONFIDENCE LIMITS BOOTSTRAP
+
+    To restore the default, enter
+
+        SET THEIL SEN CONFIDENCE LIMITS BOOTSTRAP
+
+    Note that you cannot currently specify that both the jacknife and
+    the bootstrap confidence limits be generated.
+
+    The number of bootstrap samples can be specified with the command
+
+         BOOTSTRAP SAMPLES <value>
+
+    There are two approaches to bootstrapping for fitting.
+
+       1) In the first approach, the Theil-Sen fit is computed from
+          the original data.  The residuals are then resampled.
+          The residuals are then added to the predicted values
+          of the original fit to obtain a new Y vector.  This
+          new Y vector is then fit against the original X
+          variables.  We call this approach residual resampling
+          (or the Efron approach).
+
+       2) In the second approach, rows of the original data
+          (both the Y vector and the corresponding rows of the
+          X variables) are resampled.  The resampled data are
+          then fit.  We call this approach data resampling (or
+          the Wu approach).
+
+    Use the following command to specify which bootstrap
+    method is used:
+
+        SET BOOTSTRAP FIT METHOD <RESIDUAL/DATA>
+
+    The default is RESIDUAL.  You can use EFRON as a synonym
+    for RESIDUAL and WU as a synonym for DATA.
+
+    The confidence interval is obtained from the percentiles of the
+    bootstrap samples.
+
+    The jacknife confidence intervals are obtained as
+
+        Beta  +/- tppf(1-alpha/2,N-1)*SE(jacknife)
+        Alpha +/- tppf(1-alpha/2,N-1)*SE(jacknife)
+
+    with tppf denoting the percent point function of the t distribution
+    and SE(jacknife) denoting the standard error of the jacknife
+    estimate.  The jacknife standard error is computed as:
+
+       1. Compute the estimate for the full sample (call this thetahat).
+
+       2. Generate the n "leave-one-out" estimates (call these
+          thetahat(-i)).
+
+       3. Compute the mean of the leave-one-out estimates (call this
+          thetabar(.)).
+
+       4. Then the standard error is
+
+             SE(jacknife) = SQRT{((n-1)/n)*SUM[i=1 to n]
+                            [(thetahat(-i) - theatabar(.))**2]}
+
+Note:
+    The following parameters are saved by the THEIL SEN FIT
+    command
+
+        ALPHA    = the estimate of the intercept parameter.
+        BETA     = the estimate of the slope parameter.
+        ALPHASE  = the estimate of the standard error of the intercept
+                   parameter (based on either the jacknife or the
+                   bootstrap).
+        BETASE   = the estimate of the standard error of the slope
+                   parameter (based on either the jacknife or the
+                   bootstrap).
+
+    The predicted and residual values are saved in the variables PRED
+    and RES, respectively.
+
+    The Theil-Sen confidence intervals are written to the file
+    dpst1f.dat.  If the jacknife or bootstrap confidence intervals are
+    generated, these are written to file dpst2f.dat.
+
+    If jacknife confidence intervals are requested, the n
+    leave-one-out parameter estimates are written to dpst3f.dat.
+
+    If bootstrap confidence intervals are requested, the estimates
+    from the bootstrap samples are written to dpst3f.dat.
+
+    The sorted slopes are written to file dpst4f.dat.
+
+Note:
+    Passing-Bablok regression is related to Theil-Sen regression.
+    The distinction is that Theil-Sen assumes the X values are
+    fixed (i.e., no error) while Passing-Bablok assumes that
+    the X values have measurement error.
+
+Note:
+    The number of slopes is n*(n-1)/2.  For both storage and computation
+    time considerations, this limits the number of observations that can
+    be used for Theil-Sen regression.
+
+    One approach for using Theil-Sen for larger samples is to perform
+    Theil-Sen on a random subset of the data pairs.  This can be done
+    in Dataplot as follows
+
+         LET N = SIZE X;  . Define number of observations
+         LET NS = N*(N-1)/2
+         LET M = MIN(NS,3000); . Define subsample size
+         LET Y2 = Y
+         LET X2 = X
+         LET TAG = RANDOM PERMUTATION FOR I = 1 1 N
+         RETAIN Y2 X2 SUBSET TAG <= M
+         THEIL SEN FIT Y2 X2
+
+    Using M = MIN(N*(N-1)/2,3000) is a common heuristic for
+    determining the subsample size.
+
+Default:
+    None
+ 
+Synonyms:
+    THEIL SEN REGRESSION
+ 
+Related Commands:
+    FIT                         = Carry out a linear or non-linear fit.
+    ORTHOGONAL DISTANCE FIT     = Carry out an orthogonal distance linear
+                                  or non-linear fit.
+    KENDALL TAU                 = Compute Kendall's Tau correlation
+                                  coefficient.
+    DEMING FIT                  = Carry out a Deming fit.
+    ORDINARY LEAST PRODUCTS FIT = Carry out an ordinary least products
+                                  fit.
+    PASSING BABLOK FIT          = Carry out a Passing-Bablok fit.
+    BLAND ALTMAN PLOT           = Generate a Bland-Altman plot.
+ 
+References:
+    Sen (1968), "Estimates of the regression coefficient based
+    on Kendall's tau," Journal of the American Statistical
+    Association, Vol. 63, No. 324, pp. 1379-1389.
+
+Applications:
+    Robust linear regression
+ 
+Implementation Date:
+    2026/06
+ 
+Program 1:
+    read x y
+     5  80
+    23  78
+    25  60
+    48  53
+    17  85
+     8  84
+     4  73
+    26  79
+    11  81
+    19  75
+    14  68
+    35  72
+    29  58
+     4  92
+    23  65
+    end of data
+    .
+    set bootstrap fit method data
+    bootstrap samples 1000
+    set theil sen confidence interval bootstrap
+    theil sen fit y x
+    .
+    set theil sen confidence interval jacknife
+    theil sen fit y x
+
 -----THICKNESS-------------------------------------------------------
  
 THICKNESS
@@ -16641,6 +17007,40 @@ Program:
        PRINT A
     END OF IF
 -------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

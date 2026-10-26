@@ -117,6 +117,7 @@
  *  aqsesi      - set character size
  *  aqtxth      - draw a horizontal character string
  *  aqtxtv      - draw a vertical character string
+ *  aqrdlo      - read mouse position (not working)
  *  i_to_s_4    - utility routine to convert array of ADE's to string
  *                array
  *
@@ -161,6 +162,7 @@ void aqseco(int *jcol);
 void aqsec2(float *jred,float *jgreen,float *jblue);
 void aqsepa(double xpatt[],int *npatt,double *pthick,int *iopt);
 void aqrend();
+void aqrdlo();
 void i_to_s_4(int string1[], char string2[], int maxlen, int *ilen);
 
 /* AQINIT  - routine to initialize Aquaterm.
@@ -711,16 +713,7 @@ void aqtxtv(int string[], int *ixpos, int *iypos,
  * error   - error flag
  *
  */
-#if APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 1
-void aqrdlo_(ixret, iyret, error)
-#elif APPEND_UNDERSCORE == 1 && SUBROUTINE_CASE == 0
-void AQRDLO_(ixret, iyret, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 1
-void aqrdlo(ixret, iyret, error)
-#elif APPEND_UNDERSCORE == 0 && SUBROUTINE_CASE == 0
-void AQRDLO(ixret, iyret, error)
-#endif
-int  *ixret, *iyret, *error;
+void aqrdlo(int *ixret, int *iyret, int *error)
 {
      int running = 0;
      char buffer[AQT_EVENTBUF_SIZE];

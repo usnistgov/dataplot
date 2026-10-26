@@ -4680,12 +4680,12 @@
       ENDIF
       RETURN
       END SUBROUTINE MAINPC
-      SUBROUTINE MAIPC1(IBUGPC,IBUGP2,IBUGQ,ISUBRO,   &
-                        IVGMSW,IHGMSW,   &
-                        IMPSW,IMPNR,IMPNC,IMPCO,   &
-                        PMXMIN,PMXMAX,PMYMIN,PMYMAX,   &
-                        IERASV,ICHAOF,ICHADY,ICHAVN,   &
-                        PWXMIS,PWXMAS,PWYMIS,PWYMAS,   &
+      SUBROUTINE MAIPC1(IBUGPC,IBUGP2,IBUGQ,ISUBRO,                  &
+                        IVGMSW,IHGMSW,                               &
+                        IMPSW,IMPNR,IMPNC,IMPCO,                     &
+                        PMXMIN,PMXMAX,PMYMIN,PMYMAX,                 &
+                        IERASV,ICHAOF,ICHADY,ICHAVN,                 &
+                        PWXMIS,PWXMAS,PWYMIS,PWYMAS,                 &
                         IX1AUT,IX2AUT,IX3AUT,IY1AUT,IY2AUT,IRGBMX,   &
                         IFOUND,IERROR)
 !
@@ -5584,6 +5584,8 @@
             GO TO 3099
           IF(NUMARG.GE.2.AND.IHARG(1).EQ.'BLOC'.AND.IHARG(2).EQ.'PLOT')   &
             GO TO 3099
+          IF(NUMARG.GE.2.AND.IHARG(1).EQ.'TAG '.AND.IHARG(2).EQ.'PLOT')   &
+            GO TO 3099
           IF(NUMARG.GE.3.AND.IHARG(1).EQ.'WIND'.AND.IHARG(2).EQ.'STAT'   &
             .AND.IHARG(3).EQ.'PLOT')GO TO 3199
           IF(NUMARG.GE.3.AND.IHARG(1).EQ.'CUMU'.AND.IHARG(2).EQ.'STAT'   &
@@ -5624,6 +5626,8 @@
           IF(NUMARG.GE.2.AND.IHARG(1).EQ.'STAT'.AND.IHARG(2).EQ.'PLOT')   &
             GO TO 3199
           IF(NUMARG.GE.2.AND.IHARG(1).EQ.'BLOC'.AND.IHARG(2).EQ.'PLOT')   &
+            GO TO 3199
+          IF(NUMARG.GE.2.AND.IHARG(1).EQ.'TAG '.AND.IHARG(2).EQ.'PLOT')   &
             GO TO 3199
           IF(NUMARG.GE.3.AND.IHARG(1).EQ.'WIND'.AND.IHARG(2).EQ.'STAT'   &
             .AND.IHARG(3).EQ.'PLOT')GO TO 3199
@@ -6022,24 +6026,24 @@
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
         CALL DPTCCL(ICOM,IHARG,IHARG2,IARGT,IARG,ARG,NUMARG,   &
-                    IDEFCO,IRGBMX,   &
-                    IX1TCO,IX2TCO,IY1TCO,IY2TCO,   &
-                    IX1TC2,IX2TC2,IY1TC2,IY2TC2,   &
+                    IDEFCO,IRGBMX,                             &
+                    IX1TCO,IX2TCO,IY1TCO,IY2TCO,               &
+                    IX1TC2,IX2TC2,IY1TC2,IY2TC2,               &
                     IBUGPC,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
         CALL DPTCDP(ICOM,IHARG,IARG,NUMARG,IDEFDP,   &
-                    IX1ZDP,IX2ZDP,IY1ZDP,IY2ZDP,   &
+                    IX1ZDP,IX2ZDP,IY1ZDP,IY2ZDP,     &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
-        CALL DPTCJU(ICOM,IHARG,NUMARG,   &
+        CALL DPTCJU(ICOM,IHARG,NUMARG,             &
                     IX1TJU,IX2TJU,IY1TJU,IY2TJU,   &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
         CALL DPTCSZ(ICOM,IHARG,IARGT,ARG,NUMARG,DEFTL,   &
-                    PX1TLE,PX2TLE,PY1TLE,PY2TLE,   &
+                    PX1TLE,PX2TLE,PY1TLE,PY2TLE,         &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
@@ -6051,7 +6055,7 @@
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
-        CALL DPTIC(ICOM,IHARG,NUMARG,   &
+        CALL DPTIC(ICOM,IHARG,NUMARG,             &
                    IX1TSW,IX2TSW,IY1TSW,IY2TSW,   &
                    IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
@@ -6062,31 +6066,31 @@
 !
         PJUNK=PDEFDS-0.5
         CALL DPTLDS(ICOM,IHARG,IARGT,ARG,NUMARG,PDEFDS,PJUNK,   &
-                    PX1ZDS,PX2ZDS,PY1ZDS,PY2ZDS,   &
+                    PX1ZDS,PX2ZDS,PY1ZDS,PY2ZDS,                &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
-        CALL DPTLFO(ICOM,IHARG,NUMARG,IDEFFO,   &
+        CALL DPTLFO(ICOM,IHARG,NUMARG,IDEFFO,      &
                     IX1ZFO,IX2ZFO,IY1ZFO,IY2ZFO,   &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
-        CALL DPTLCA(ICOM,IHARG,NUMARG,IDEFCA,   &
+        CALL DPTLCA(ICOM,IHARG,NUMARG,IDEFCA,      &
                     IX1ZCA,IX2ZCA,IY1ZCA,IY2ZCA,   &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
-        CALL DPTLJU(ICOM,IHARG,NUMARG,IDEFJU,   &
+        CALL DPTLJU(ICOM,IHARG,NUMARG,IDEFJU,      &
                     IX1ZJU,IX2ZJU,IY1ZJU,IY2ZJU,   &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
-        CALL DPTLDI(ICOM,IHARG,NUMARG,IDEFDI,   &
+        CALL DPTLDI(ICOM,IHARG,NUMARG,IDEFDI,      &
                     IX1ZDI,IX2ZDI,IY1ZDI,IY2ZDI,   &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
-        CALL DPTLFI(ICOM,IHARG,NUMARG,IDEFFI,   &
+        CALL DPTLFI(ICOM,IHARG,NUMARG,IDEFFI,      &
                     IX1ZFI,IX2ZFI,IY1ZFI,IY2ZFI,   &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
@@ -6096,36 +6100,36 @@
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
         CALL DPTLAN(ICOM,IHARG,ARG,NUMARG,ADEFAN,   &
-                    AX1ZAN,AX2ZAN,AY1ZAN,AY2ZAN,   &
+                    AX1ZAN,AX2ZAN,AY1ZAN,AY2ZAN,    &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
         CALL DPTLCL(ICOM,IHARG,IHARG2,IARGT,IARG,ARG,NUMARG,   &
-                    IDEFCO,IRGBMX,   &
-                    IX1ZCO,IX2ZCO,IY1ZCO,IY2ZCO,   &
-                    IX1ZC2,IX2ZC2,IY1ZC2,IY2ZC2,   &
+                    IDEFCO,IRGBMX,                             &
+                    IX1ZCO,IX2ZCO,IY1ZCO,IY2ZCO,               &
+                    IX1ZC2,IX2ZC2,IY1ZC2,IY2ZC2,               &
                     IBUGPC,IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
         CALL DPTLSZ(ICOM,IHARG,IARGT,ARG,NUMARG,PDEFHE,PDEFWI,   &
-                    PX1ZHE,PX1ZWI,PX1ZVG,PX1ZHG,   &
-                    PX2ZHE,PX2ZWI,PX2ZVG,PX2ZHG,   &
-                    PY1ZHE,PY1ZWI,PY1ZVG,PY1ZHG,   &
-                    PY2ZHE,PY2ZWI,PY2ZVG,PY2ZHG,   &
+                    PX1ZHE,PX1ZWI,PX1ZVG,PX1ZHG,                 &
+                    PX2ZHE,PX2ZWI,PX2ZVG,PX2ZHG,                 &
+                    PY1ZHE,PY1ZWI,PY1ZVG,PY1ZHG,                 &
+                    PY2ZHE,PY2ZWI,PY2ZVG,PY2ZHG,                 &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
-        CALL DPTLFM(ICOM,IHARG,NUMARG,IDETLF,   &
+        CALL DPTLFM(ICOM,IHARG,NUMARG,IDETLF,      &
                     IX1ZFM,IX2ZFM,IY1ZFM,IY2ZFM,   &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
         CALL DPTLCN(ICOM,IHARG,NUMARG,IANS,IANSLC,IWIDTH,   &
-                    IX1ZCN,IX2ZCN,IY1ZCN,IY2ZCN,   &
+                    IX1ZCN,IX2ZCN,IY1ZCN,IY2ZCN,            &
                     IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000
 !
-        CALL DPTL(ICOM,IHARG,NUMARG,   &
+        CALL DPTL(ICOM,IHARG,NUMARG,             &
                   IX1ZSW,IX2ZSW,IY1ZSW,IY2ZSW,   &
                   IFOUND,IERROR)
         IF(IFOUND.EQ.'YES'.OR.IERROR.EQ.'YES')GO TO 9000

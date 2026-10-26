@@ -1345,8 +1345,8 @@
  1900 CONTINUE
       RETURN
       END SUBROUTINE DPLACA
-      SUBROUTINE DPLACL(ICOM,IARG,IHARG,NUMARG,IDEFCO,   &
-                        IX1LCO,IX2LCO,IX3LCO,IY1LCO,IY2LCO,   &
+      SUBROUTINE DPLACL(ICOM,IARG,IHARG,NUMARG,IDEFCO,               &
+                        IX1LCO,IX2LCO,IX3LCO,IY1LCO,IY2LCO,          &
                         IX1LC2,IX2LC2,IX3LC2,IY1LC2,IY2LC2,IRGBMX,   &
                         IFOUND,IERROR)
 !
@@ -1387,7 +1387,9 @@
 !     ORIGINAL VERSION--OCTOBER   1980.
 !     UPDATED         --MARCH     1981.
 !     UPDATED         --MAY       1982.
-!     UPDATED         --OCTOBER   2020.
+!     UPDATED         --OCTOBER   2020. RGB COLOR SUPPORT
+!     UPDATED         --SEPTEMBER 2026. PRINT WARNING MESSAGE IF RGB
+!                                       COLOR IS OUT OF RANGE
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -1430,17 +1432,17 @@
          IHARG(3).EQ.'COLO')GO TO 2000
 !
       IF((NUMARG.GE.1.AND.IHARG(1).EQ.'COLO') .OR.   &
-         (NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.   &
+         (NUMARG.GE.2.AND.IHARG(1).EQ.'MARK'.AND.    &
           IHARG(2).EQ.'COLO'))GO TO 1090
 !
       GO TO 9000
 !
  1090 CONTINUE
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE FIRST  HORIZONTAL LABEL IS      TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  FIRST  HORIZONTAL LABEL IS      TO BE CHANGED     **
+!               ********************************************************
 !
       IF(ICOM.EQ.'XLAB' .OR. ICOM.EQ.'X1LA')THEN
         IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.   &
@@ -1467,10 +1469,10 @@
         ENDIF
         GO TO 9000
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE SECOND HORIZONTAL LABEL IS      TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLOY THE                     **
+!               **  SECOND HORIZONTAL LABEL IS      TO BE CHANGED     **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'X2LA')THEN
         IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.   &
@@ -1496,10 +1498,10 @@
         ENDIF
         GO TO 9000
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE THIRD  HORIZONTAL LABEL IS      TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  THIRD  HORIZONTAL LABEL IS      TO BE CHANGED     **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'X3LA')THEN
         IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.   &
@@ -1525,10 +1527,10 @@
         ENDIF
         GO TO 9000
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE LEFT   VERTICAL   LABEL IS      TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  LEFT   VERTICAL   LABEL IS      TO BE CHANGED     **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'Y1LA')THEN
         IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.   &
@@ -1554,10 +1556,10 @@
         ENDIF
         GO TO 9000
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE RIGHT  VERTICAL   LABEL IS      TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  RIGHT  VERTICAL   LABEL IS      TO BE CHANGED     **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'Y2LA')THEN
         IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.   &
@@ -1583,10 +1585,10 @@
         ENDIF
         GO TO 9000
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  BOTH LEFT AND RIGHT VERTICAL LABELS ARE TO BE CHANGED   **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN BOTH                          **
+!               **  LEFT AND RIGHT VERTICAL LABELS ARE TO BE CHANGED  **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'YLAB')THEN
         IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.   &
@@ -1614,10 +1616,10 @@
         ENDIF
         GO TO 9000
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY ALL  5 LABELS ARE                   TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ALL 5                         **
+!               **  LABELS ARE TO BE CHANGED                          **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'LABE' .OR. ICOM.EQ.'XYLA' .OR.   &
              ICOM.EQ.'YXLA')THEN
@@ -1665,10 +1667,10 @@
 !
  2090 CONTINUE
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE FIRST  HORIZONTAL LABEL IS      TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  FIRST  HORIZONTAL LABEL IS TO BE CHANGED          **
+!               ********************************************************
 !
       IF(ICOM.EQ.'XLAB' .OR. ICOM.EQ.'X1LA')THEN
         IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.   &
@@ -1681,9 +1683,62 @@
           JHOLD1=IARG(NUMARG-2)
           JHOLD2=IARG(NUMARG-1)
           JHOLD3=IARG(NUMARG)
-          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+ 2011       FORMAT('****** WARNING IN LABEL RGB COLOR (DPBACL)--')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2113)IRGBMX
+ 2113       FORMAT('       THE RED CHANNEL IS OUTSIDE THE RANGE (0,', &
+                   I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2015)JHOLD1
+ 2015       FORMAT('       THE RED CHANNEL VALUE IS ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+ 2017       FORMAT('       THE RGB COLOR WILL NOT BE USED.')
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2123)IRGBMX
+ 2123       FORMAT('       THE GREEN CHANNEL IS OUTSIDE THE RANGE (0,', &
+                   I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2025)JHOLD2
+ 2025       FORMAT('       THE GREEN CHANNEL VALUE IS ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2133)IRGBMX
+ 2133       FORMAT('       THE BLUE CHANNEL IS OUTSIDE THE RANGE (0,', &
+                   I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2035)JHOLD3
+ 2035       FORMAT('       THE BLUE CHANNEL VALUE IS ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
         ENDIF
 !
         IFOUND='YES'
@@ -1704,10 +1759,10 @@
         ENDIF
         GO TO 9000
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE SECOND HORIZONTAL LABEL IS      TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  SECOND HORIZONTAL LABEL IS TO BE CHANGED          **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'X2LA')THEN
         IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.   &
@@ -1720,9 +1775,51 @@
           JHOLD1=IARG(NUMARG-2)
           JHOLD2=IARG(NUMARG-1)
           JHOLD3=IARG(NUMARG)
-          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2113)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2015)JHOLD1
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2123)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2025)JHOLD2
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2133)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2035)JHOLD3
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
         ENDIF
 !
         IFOUND='YES'
@@ -1743,10 +1840,10 @@
         ENDIF
         GO TO 9000
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE THIRD  HORIZONTAL LABEL IS      TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  THIRD  HORIZONTAL LABEL IS TO BE CHANGED          **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'X3LA')THEN
         IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.   &
@@ -1759,9 +1856,51 @@
           JHOLD1=IARG(NUMARG-2)
           JHOLD2=IARG(NUMARG-1)
           JHOLD3=IARG(NUMARG)
-          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2113)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2015)JHOLD1
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2123)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2025)JHOLD2
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2133)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2035)JHOLD3
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
         ENDIF
 !
         IFOUND='YES'
@@ -1782,10 +1921,10 @@
         ENDIF
         GO TO 9000
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE LEFT   VERTICAL   LABEL IS      TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  LEFT   VERTICAL   LABEL IS TO BE CHANGED          **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'Y1LA')THEN
         IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.   &
@@ -1798,9 +1937,51 @@
           JHOLD1=IARG(NUMARG-2)
           JHOLD2=IARG(NUMARG-1)
           JHOLD3=IARG(NUMARG)
-          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2113)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2015)JHOLD1
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2123)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2025)JHOLD2
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2133)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2035)JHOLD3
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
         ENDIF
 !
         IFOUND='YES'
@@ -1820,10 +2001,10 @@
         ENDIF
         GO TO 9000
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY THE RIGHT  VERTICAL   LABEL IS      TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ONLY THE                      **
+!               **  RIGHT  VERTICAL   LABEL IS TO BE CHANGED          **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'Y2LA')THEN
         IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.   &
@@ -1836,9 +2017,51 @@
           JHOLD1=IARG(NUMARG-2)
           JHOLD2=IARG(NUMARG-1)
           JHOLD3=IARG(NUMARG)
-          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2113)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2015)JHOLD1
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2123)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2025)JHOLD2
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2133)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2035)JHOLD3
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
         ENDIF
 !
         IFOUND='YES'
@@ -1859,10 +2082,10 @@
         ENDIF
         GO TO 9000
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  BOTH LEFT AND RIGHT VERTICAL LABELS ARE TO BE CHANGED   **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN BOTH                          **
+!               **  LEFT AND RIGHT VERTICAL LABELS ARE TO BE CHANGED  **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'YLAB')THEN
         IF(IHARG(NUMARG).EQ.'ON'   .OR. IHARG(NUMARG).EQ.'OFF'  .OR.   &
@@ -1875,9 +2098,51 @@
           JHOLD1=IARG(NUMARG-2)
           JHOLD2=IARG(NUMARG-1)
           JHOLD3=IARG(NUMARG)
-          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2113)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2015)JHOLD1
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2123)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2025)JHOLD2
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2133)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2035)JHOLD3
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
         ENDIF
 !
         IY1LCO=IHOLD
@@ -1902,10 +2167,10 @@
         ENDIF
         GO TO 9000
 !
-!               **************************************************************
-!               **  TREAT THE CASE WHEN                                     **
-!               **  ONLY ALL  5 LABELS ARE                   TO BE CHANGED  **
-!               **************************************************************
+!               ********************************************************
+!               **  TREAT THE CASE WHEN ALL 5                         **
+!               **  5 LABELS ARE TO BE CHANGED                        **
+!               ********************************************************
 !
       ELSEIF(ICOM.EQ.'LABE' .OR. ICOM.EQ.'XYLA' .OR.   &
              ICOM.EQ.'YXLA')THEN
@@ -1919,9 +2184,51 @@
           JHOLD1=IARG(NUMARG-2)
           JHOLD2=IARG(NUMARG-1)
           JHOLD3=IARG(NUMARG)
-          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2113)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2015)JHOLD1
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2123)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2025)JHOLD2
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2133)IRGBMX
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2035)JHOLD3
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
         ENDIF
 !
         IFOUND='YES'
@@ -1959,9 +2266,9 @@
  9000 CONTINUE
       RETURN
       END SUBROUTINE DPLACL
-      SUBROUTINE DPLACO(ICOM,IHARG,IARGT,ARG,NUMARG,   &
+      SUBROUTINE DPLACO(ICOM,IHARG,IARGT,ARG,NUMARG,                 &
                         PX1LXC,PX1LYC,PX2LXC,PX2LYC,PX3LXC,PX3LYC,   &
-                        PY1LXC,PY1LYC,PY2LXC,PY2LYC,   &
+                        PY1LXC,PY1LYC,PY2LXC,PY2LYC,                 &
                         IFOUND,IERROR)
 !
 !     PURPOSE--DEFINE THE LABEL COORDINATES FOR ANY OF THE 5 LABELS.
@@ -9099,6 +9406,8 @@
 !     ORIGINAL VERSION--SEPTEMBER 1980.
 !     UPDATED         --MAY       1982.
 !     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
+!     UPDATED         --SEPTEMBER 2026. PRINT WARNING MESSAGE IF RGB
+!                                       COLOR IS OUT OF RANGE
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -9153,17 +9462,17 @@
         WRITE(ICOUT,53)IDEBCO,MAXLEG,NUMLEG,NUMARG,IRGBMX
    53   FORMAT('IDEBCO,MAXLEG,NUMLEG,NUMARG,IRGBMX = ',A4,2X,4I8)
         CALL DPWRST('XXX','BUG ')
-        DO 65 I=1,NUMARG
+        DO I=1,NUMARG
           WRITE(ICOUT,66)I,IARG(I),IHARG(I)
    66     FORMAT('I,IARG(I),IHARG(I) = ',2I8,2X,A4)
           CALL DPWRST('XXX','BUG ')
-   65   CONTINUE
-        DO 75 I=1,10
+        ENDDO
+        DO I=1,10
           WRITE(ICOUT,76)I,ILEGCO(I),ILEGC2(I,1),ILEGC2(I,2),ILEGC2(I,3)
    76     FORMAT('I,ILEGCO(I),ILEGC2(I,1),ILEGC2(I,2),ILEGC2(I,3) = ',   &
                  I8,2X,A4,2X,3I5)
           CALL DPWRST('XXX','BUG ')
-   75   CONTINUE
+        ENDDO
       ENDIF
 !
       ISTEPN='1'
@@ -9215,9 +9524,62 @@
               JHOLD1=IARG(2)
               JHOLD2=IARG(3)
               JHOLD3=IARG(4)
-              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+ 2011           FORMAT('****** WARNING IN LEGEND RGB COLOR (DPLECL)--')
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2013)IRGBMX
+ 2013           FORMAT('       THE RED CHANNEL IS OUTSIDE THE RANGE ', &
+                       '(0,',I5,')')
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2015)JHOLD1
+ 2015           FORMAT('       THE RED CHANNEL VALUE IS ',I8)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+ 2017           FORMAT('       THE RGB COLOR WILL NOT BE USED.')
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2023)IRGBMX
+ 2023           FORMAT('       THE GREEN CHANNEL IS OUTSIDE THE RANGE ', &
+                       '(0,',I5,')')
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2025)JHOLD2
+ 2025           FORMAT('       THE GREEN CHANNEL VALUE IS ',I8)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2033)IRGBMX
+ 2033           FORMAT('       THE BLUE CHANNEL IS OUTSIDE THE RANGE ', &
+                       '(0,',I5,')')
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2035)JHOLD3
+ 2035           FORMAT('       THE BLUE CHANNEL VALUE IS ',I8)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
             ELSE
               JHOLD1=-1
               JHOLD2=-1
@@ -9327,9 +9689,52 @@
               JHOLD1=IARG(3)
               JHOLD2=IARG(4)
               JHOLD3=IARG(5)
-              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+              IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2013)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2015)JHOLD1
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2023)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2025)JHOLD2
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+              IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+                WRITE(ICOUT,999)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2011)
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2033)IRGBMX
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2035)JHOLD3
+                CALL DPWRST('XXX','BUG ')
+                WRITE(ICOUT,2017)
+                CALL DPWRST('XXX','BUG ')
+                JHOLD1=-1
+                JHOLD2=-1
+                JHOLD3=-1
+              ENDIF
+!
             ENDIF
           ELSE
             IHOLD=IHARG(3)
@@ -37641,7 +38046,7 @@
 !
       RETURN
       END SUBROUTINE DPLIC3
-      SUBROUTINE DPLICL(IHARG,IARG,NUMARG,IDEFCO,MAXLIN,ILINCO,ILINC2,   &
+      SUBROUTINE DPLICL(IHARG,IARG,NUMARG,IDEFCO,MAXLIN,ILINCO,ILINC2, &
                         IRGBMX,ICASCL,IFOUND,IERROR)
 !
 !     PURPOSE--DEFINE PLOT LINE COLORS FOR USE IN MULTI-TRACE PLOTS.
@@ -37672,6 +38077,8 @@
 !     UPDATED         --MARCH     1982.
 !     UPDATED         --MAY       1982.
 !     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLORS
+!     UPDATED         --SEPTEMBER 2026. FIX BUG WITH RED CHANNEL FOR
+!                                       RGB COLOR
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -37803,7 +38210,7 @@
       JHOLD3=-1
       NUMLIN=MAXLIN
 !
-      IF(NUMARG.EQ.1)THEN
+      IF(NUMARG.LE.1)THEN
         GO TO 2300
       ELSEIF(NUMARG.EQ.2 .AND. IHARG(2).EQ.'ALL')THEN
         GO TO 2300
@@ -37812,13 +38219,68 @@
           JHOLD1=IARG(3)
           JHOLD2=IARG(4)
           JHOLD3=IARG(5)
-          GO TO 2300
         ELSEIF(IHARG(5).EQ.'ALL')THEN
           JHOLD1=IARG(2)
           JHOLD2=IARG(3)
           JHOLD3=IARG(4)
-          GO TO 2300
         ENDIF
+        IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2011)
+ 2011     FORMAT('****** WARNING IN LINE RGB COLOR (DPLICL)--')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2013)IRGBMX
+ 2013     FORMAT('       THE RED CHANNEL IS OUTSIDE THE RANGE ',       &
+                 '(0,',I5,')')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2015)JHOLD1
+ 2015     FORMAT('       THE RED CHANNEL VALUE IS ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2017)
+ 2017     FORMAT('       THE RGB COLOR WILL NOT BE USED.')
+          CALL DPWRST('XXX','BUG ')
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ENDIF
+        IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2011)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2023)IRGBMX
+ 2023     FORMAT('       THE GREEN CHANNEL IS OUTSIDE THE RANGE ',     &
+                 '(0,',I5,')')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2025)JHOLD2
+ 2025     FORMAT('       THE GREEN CHANNEL VALUE IS ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2017)
+          CALL DPWRST('XXX','BUG ')
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ENDIF
+        IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+          WRITE(ICOUT,999)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2011)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2033)IRGBMX
+ 2033     FORMAT('       THE BLUE CHANNEL IS OUTSIDE THE RANGE ',     &
+                 '(0,',I5,')')
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2035)JHOLD3
+ 2035     FORMAT('       THE BLUE CHANNEL VALUE IS ',I8)
+          CALL DPWRST('XXX','BUG ')
+          WRITE(ICOUT,2017)
+          CALL DPWRST('XXX','BUG ')
+          JHOLD1=-1
+          JHOLD2=-1
+          JHOLD3=-1
+        ENDIF
+        GO TO 2300
       ENDIF
 !
 !               *************************************************
@@ -37826,47 +38288,100 @@
 !               **  TREAT THE SINGLE      SPECIFICATION  CASE  **
 !               *************************************************
 !
-      IF(NUMARG.LE.2)THEN
-        NUMLIN=1
+      NTEMP=NUMARG-1
+      NUMLIN=NTEMP/3
+      IF(NUMLIN.GT.MAXLIN)NUMLIN=MAXLIN
+      IF(NUMLIN.LT.1)THEN
         ILINC2(1,1)=-1
         ILINC2(1,2)=-1
         ILINC2(1,3)=-1
+!
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2011)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,2103)
+ 2103   FORMAT('       LESS THAN THREE VALUES ENTERED.  NO RGB ',      &
+               'COLORS WILL BE SET.')
+        CALL DPWRST('XXX','BUG ')
+        IFOUND='YES'
+        GO TO 9000
+!
       ELSE
-        NTEMP=NUMARG-1
-        NUMLIN=NTEMP/3
-        IF(NUMLIN.LT.1)THEN
-          ILINC2(1,1)=-1
-          ILINC2(1,2)=-1
-          ILINC2(1,3)=-1
-        ELSEIF(NUMLIN.GT.MAXLIN)THEN
-          NUMLIN=MAXLIN
-        ENDIF
-        DO 2225 I=1,NUMLIN
+        DO I=1,NUMLIN
           J1=(I-1)*3+2
           J2=J1+1
           J3=J1+2
           JHOLD1=IARG(J1)
           JHOLD2=IARG(J2)
           JHOLD3=IARG(J3)
-          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)JHOLD1=-1
-          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)JHOLD2=-1
-          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)JHOLD3=-1
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2113)I,IRGBMX
+ 2113       FORMAT('       THE RED CHANNEL FOR TRACE ',I3,' IS ', &
+                   'OUTSIDE THE RANGE (0,',I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2015)JHOLD1
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2123)I,IRGBMX
+ 2123       FORMAT('       THE GREEN CHANNEL FOR TRACE ',I3,' IS ', &
+                   'OUTSIDE THE RANGE (0,',I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2025)JHOLD2
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2133)I,IRGBMX
+ 2133       FORMAT('       THE BLUE CHANNEL FOR TRACE ',I3,' IS ', &
+                   'OUTSIDE THE RANGE (0,',I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2035)JHOLD3
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
           ILINC2(I,1)=JHOLD1
           ILINC2(I,2)=JHOLD2
           ILINC2(I,3)=JHOLD3
- 2225   CONTINUE
+!
+          IF(IFEEDB.EQ.'ON')THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2276)I,ILINC2(I,1),ILINC2(I,2),ILINC2(I,3)
+ 2276       FORMAT('THE RGB COLORS OF LINE ',I6,   &
+                   ' HAVE JUST BEEN SET TO ',3I8)
+            CALL DPWRST('XXX','BUG ')
+          ENDIF
+!
+        ENDDO
       ENDIF
 !
-      IF(IFEEDB.EQ.'ON')THEN
-        WRITE(ICOUT,999)
-        CALL DPWRST('XXX','BUG ')
-        DO 2278 I=1,NUMLIN
-          WRITE(ICOUT,2276)I,ILINC2(I,1),ILINC2(I,2),ILINC2(I,3)
- 2276     FORMAT('THE RGB COLORS OF LINE ',I6,   &
-                 ' HAVE JUST BEEN SET TO ',3I8)
-          CALL DPWRST('XXX','BUG ')
- 2278   CONTINUE
-      ENDIF
       IFOUND='YES'
       GO TO 9000
 !
@@ -37876,13 +38391,11 @@
 !               **************************
 !
  2300 CONTINUE
-      IF(JHOLD1.LT.0)JHOLD1=0
-      IF(JHOLD1.GT.0)JHOLD1=0
-      DO 2315 II=1,NUMLIN
+      DO II=1,NUMLIN
         ILINC2(II,1)=JHOLD1
         ILINC2(II,2)=JHOLD2
         ILINC2(II,3)=JHOLD3
- 2315 CONTINUE
+      ENDDO
 !
       IF(IFEEDB.EQ.'ON')THEN
         WRITE(ICOUT,999)

@@ -7875,7 +7875,7 @@
 !
         IF(IGCONT.EQ.'OFF')THEN
           WRITE(ICOUT,998)
-  998     FORMAT(1H1)
+  998     FORMAT('1')
           CALL DPWRST('XXX','BUG ')
           GO TO 8000
         ENDIF

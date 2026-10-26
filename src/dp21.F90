@@ -23282,13 +23282,13 @@
 !
       RETURN
       END SUBROUTINE DPOPT
-      SUBROUTINE DPOPT2(MODEL,NUMCHA,PARAM,IPARN,IPARN2,NUMPV,   &
-                        ITYPEH,IW21HO,IW22HO,W2HOLD,NWHOLD,   &
-                        IVARN,IVARN2,NUMVAR,XMIN,XMAX,FMIN,FVAL,   &
-                        OPTACC,IFLGFB,IOPTMM,   &
-                        IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,MAXCOL,   &
-                        NUMNAM,MAXNAM,IANGLU,IFTEXP,IFTORD,IFORSW,   &
-                        PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,VTEMP,MAXN,   &
+      SUBROUTINE DPOPT2(MODEL,NUMCHA,PARAM,IPARN,IPARN2,NUMPV,         &
+                        ITYPEH,IW21HO,IW22HO,W2HOLD,NWHOLD,            &
+                        IVARN,IVARN2,NUMVAR,XMIN,XMAX,FMIN,FVAL,       &
+                        OPTACC,IFLGFB,IOPTMM,                          &
+                        IHNAME,IHNAM2,IUSE,IN,IVALUE,VALUE,MAXCOL,     &
+                        NUMNAM,MAXNAM,IANGLU,IFTEXP,IFTORD,IFORSW,     &
+                        PRED,RES,YPLOT,XPLOT,X2PLOT,TAGPLO,VTEMP,MAXN, &
                         ISUBRO,IBUGA3,IBUGCO,IBUGEV,IERROR)
 !
 !     PURPOSE--COMPUTE THE MINIMUM OF A FUNCTION
@@ -23457,6 +23457,8 @@
       ISUBN2='T2  '
       IERROR='NO'
       IFOUND='NO'
+      IH=' '
+      IH2=' '
 !
       J2=0
       IPASS=2
@@ -26486,6 +26488,7 @@
       IERROR='NO'
       IMPFLG='OFF'
       IPAROC(1)='NONE'
+      IKEY='    '
 !
       MAXCP1=MAXCOL+1
       MAXCP2=MAXCOL+2
@@ -48040,7 +48043,7 @@
  1199 CONTINUE
       RETURN
       END SUBROUTINE DPPEBA
-      SUBROUTINE DPPECL(IHARG,IARG,NUMARG,IDEPCO,IRGBMX,IPEDCO,IPEDC2,   &
+      SUBROUTINE DPPECL(IHARG,IARG,NUMARG,IDEPCO,IRGBMX,IPEDCO,IPEDC2, &
                         IFOUND,IERROR)
 !
 !     PURPOSE--DEFINE THE COLOR FOR THE 3-D PEDESTAL.  THE COLOR FOR THE
@@ -48065,6 +48068,8 @@
 !     UPDATED         --MAY       1982.
 !     UPDATED         --SEPTEMBER 1988. (WITH GENERAL 3-D UPDATE)
 !     UPDATED         --OCTOBER   2020. SUPPORT FOR RGB COLOR
+!     UPDATED         --SEPTEMBER 2026. PRINT WARNING MESSAGE IF RGB
+!                                       COLOR IS OUT OF RANGE
 !
 !-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
 !
@@ -48118,12 +48123,68 @@
           IPEDC2(2)=-1
           IPEDC2(3)=-1
         ELSE
-          IPEDC2(1)=IARG(3)
-          IPEDC2(2)=IARG(4)
-          IPEDC2(3)=IARG(5)
-          IF(IPEDC2(1).LT.0 .OR. IPEDC2(1).GT.IRGBMX)IPEDC2(1)=-1
-          IF(IPEDC2(2).LT.0 .OR. IPEDC2(2).GT.IRGBMX)IPEDC2(2)=-1
-          IF(IPEDC2(3).LT.0 .OR. IPEDC2(3).GT.IRGBMX)IPEDC2(3)=-1
+          JHOLD1=IARG(3)
+          JHOLD2=IARG(4)
+          JHOLD3=IARG(5)
+          IF(JHOLD1.LT.0 .OR. JHOLD1.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+ 2011       FORMAT('****** WARNING IN PEDESTAL RGB COLOR (DPPECL)--')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2113)IRGBMX
+ 2113       FORMAT('       THE RED CHANNEL IS OUTSIDE THE RANGE (0,', &
+                   I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2015)JHOLD1
+ 2015       FORMAT('       THE RED CHANNEL VALUE IS ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+ 2017       FORMAT('       THE RGB COLOR WILL NOT BE USED.')
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD2.LT.0 .OR. JHOLD2.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2123)IRGBMX
+ 2123       FORMAT('       THE GREEN CHANNEL IS OUTSIDE THE RANGE (0,', &
+                   I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2025)JHOLD2
+ 2025       FORMAT('       THE GREEN CHANNEL VALUE IS ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IF(JHOLD3.LT.0 .OR. JHOLD3.GT.IRGBMX)THEN
+            WRITE(ICOUT,999)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2011)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2133)IRGBMX
+ 2133       FORMAT('       THE BLUE CHANNEL IS OUTSIDE THE RANGE (0,', &
+                   I5,')')
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2035)JHOLD3
+ 2035       FORMAT('       THE BLUE CHANNEL VALUE IS ',I8)
+            CALL DPWRST('XXX','BUG ')
+            WRITE(ICOUT,2017)
+            CALL DPWRST('XXX','BUG ')
+            JHOLD1=-1
+            JHOLD2=-1
+            JHOLD3=-1
+          ENDIF
+          IPEDC2(1)=JHOLD1
+          IPEDC2(2)=JHOLD2
+          IPEDC2(3)=JHOLD3
         ENDIF
 !
         IFOUND='YES'
@@ -50025,6 +50086,161 @@
 !
       RETURN
       END SUBROUTINE DPPID
+      SUBROUTINE DPPIDF(INAME,MAXCHR,CPID,NCPID,IBUGS2,ISUBRO,IERROR)
+!
+!     PURPOSE--INSERT PID INTO FILE NAME
+!
+!     WRITTEN BY--ALAN HECKERT
+!                 STATISTICAL ENGINEERING DIVISION
+!                 INFORMATION TECHNOLOGY LABORATORY
+!                 NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY
+!                 GAITHERSBURG, MD 20899-8980
+!                 PHONE--301-975-2899
+!     NOTE--DATAPLOT IS A REGISTERED TRADEMARK
+!           OF THE NATIONAL INSTITUTE OF STANDARDS AND TECHNOLOGY.
+!     LANGUAGE--ANSI FORTRAN (1977)
+!     VERSION NUMBER--2026/08
+!     ORIGINAL VERSION--AUGUST    2026.
+!
+!-----CHARACTER STATEMENTS FOR NON-COMMON VARIABLES-------------------
+!
+      CHARACTER (LEN=*) :: INAME
+      CHARACTER (LEN=*) :: CPID
+      CHARACTER (LEN=4) :: IBUGS2
+      CHARACTER (LEN=4) :: ISUBRO
+      CHARACTER (LEN=4) :: IERROR
+!
+      CHARACTER (LEN=10) :: IEXT
+      CHARACTER (LEN=4)  :: ISUBN1
+      CHARACTER (LEN=4)  :: ISUBN2
+      CHARACTER (LEN=4)  :: ISTEPN
+!
+!-----COMMON VARIABLES (GENERAL)--------------------------------------
+!
+      INCLUDE 'DPCOP2.INC'
+!
+!-----START POINT-----------------------------------------------------
+!
+      ISUBN1='DPPI'
+      ISUBN2='DF  '
+      IERROR='NO'
+!
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'PIDF')THEN
+        WRITE(ICOUT,999)
+  999   FORMAT(1X)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,51)
+   51   FORMAT('***** AT THE BEGINNING OF DPPIDF--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,53)IBUGS2,ISUBRO,IERROR,MAXCHR,NCPID
+   53   FORMAT('IBUGS2,ISUBRO,IERROR,MAXCHR,NCPID = ',3(A4,2X),2I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,54)(INAME(J:J),J=1,MIN(40,MAXCHR))
+   54   FORMAT('(INAME(J:J),J=1,40) = ',40A1)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+!               *********************************************
+!               **  STEP 1--                               **
+!               **  DETERMINE THE LAST NON-BLANK CHARACTER **
+!               *********************************************
+!
+      ISTEPN='1'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'PIDF')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      ILAST=0
+      DO I=MAXCHR,1,-1
+        IF(INAME(I:I).NE.' ')THEN
+          ILAST=I
+          EXIT
+        ENDIF
+      ENDDO
+!
+      IF(ILAST.EQ.0) GO TO 9000
+!
+!               *********************************************
+!               **  STEP 2--                               **
+!               **  DETERMINE LOCATION OF "."              **
+!               *********************************************
+!
+      ISTEPN='2'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'PIDF')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      IPERIOD=0
+      DO I=ILAST,1,-1
+        IF(INAME(I:I).EQ.'.')THEN
+          IPERIOD=I
+          EXIT
+        ENDIF
+      ENDDO
+!
+      IF(IPERIOD.EQ.0) GO TO 9000
+!
+!               *********************************************
+!               **  STEP 3--                               **
+!               **  INSERT PROCESS ID INTO NAME            **
+!               *********************************************
+!
+      ISTEPN='3'
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'PIDF')   &
+         CALL TRACE2(ISTEPN,ISUBN1,ISUBN2)
+!
+      NLAST=ILAST+NCPID+1
+      IF(NLAST.GT.MAXCHR)THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,101)
+  101   FORMAT('***** ERROR IN DPPIDF--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,103)
+  103   FORMAT('      FILE NAME WITH PROCESS ID INSERTED EXCEEDS ',    &
+               'MAXIMUM LENGTH.')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,105)INAME(1:ILAST)
+  105   FORMAT('      FILE NAME: ',A)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,107)CPID(1:NCPID)
+  107   FORMAT('      PROCESS ID: ',A10)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,109)MAXCHR
+  109   FORMAT('      MAXIMUM CHARACTER LENGTH:  ',I6)
+        CALL DPWRST('XXX','BUG ')
+        IERROR='YES'
+        GO TO 9000
+      ENDIF
+!
+      IEXT=' '
+      NCEXT=ILAST-IPERIOD+1
+      IEXT(1:NCEXT)=INAME(IPERIOD:ILAST)
+      NTEMP=IPERIOD+NCPID-1
+      INAME(IPERIOD:NTEMP)=CPID(1:NCPID)
+      INAME(NTEMP+1:NTEMP+NCEXT)=IEXT(1:NCEXT)
+!
+!               ****************
+!               **  STEP 90-- **
+!               **  EXIT.     **
+!               ****************
+!
+ 9000 CONTINUE
+!
+      IF(IBUGS2.EQ.'ON'.OR.ISUBRO.EQ.'PIDF')THEN
+        WRITE(ICOUT,999)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9011)
+ 9011   FORMAT('***** AT THE END       OF DPPIDF--')
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9013)IERROR,ILAST,IPERIOD,NCEXT,NTEMP
+ 9013   FORMAT('IERROR,ILAST,IPERIOD,NCEXT,NTEMP = ',A4,2X,4I8)
+        CALL DPWRST('XXX','BUG ')
+        WRITE(ICOUT,9014)INAME(1:NTEMP+NCEXT)
+ 9014   FORMAT('(INAME(1:NTEMP+NCEXT) = ',A)
+        CALL DPWRST('XXX','BUG ')
+      ENDIF
+!
+      RETURN
+      END SUBROUTINE DPPIDF
       SUBROUTINE DPPETE(ICAPSW,IFORSW,ISUBRO,IBUGA2,IBUGA3,IBUGQ,   &
                         IFOUND,IERROR)
 !
