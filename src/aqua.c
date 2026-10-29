@@ -145,7 +145,7 @@ int decodeEvent(char *event, int *x, int *y);
 static int    OPEN_FLAG_AQUA = 0;          /* 0 - closed, 1 - open */
 
 void aqend();
-void aqdraw(int xpts[], int ypts[], int *npts, int *icap);
+void aqdraw(double xpts[], double ypts[], int *npts, int *icap);
 void aqmove(double *x1, double *y1);
 void aqpoin(int *ix, int *iy, int *ired, int *igreen, int *iblue);
 void aqrgfl(int xpts[], int ypts[], int *npts);
@@ -162,7 +162,7 @@ void aqseco(int *jcol);
 void aqsec2(float *jred,float *jgreen,float *jblue);
 void aqsepa(double xpatt[],int *npatt,double *pthick,int *iopt);
 void aqrend();
-void aqrdlo();
+void aqrdlo(int *ixret, int *iyret, int *error);
 void i_to_s_4(int string1[], char string2[], int maxlen, int *ilen);
 
 /* AQINIT  - routine to initialize Aquaterm.
@@ -283,7 +283,7 @@ void aqrend()
  *          Calling routine should send points in increments of
  *          1,000.
  */
-void aqdraw(int xpts[], int ypts[], int *npts, int *icap)
+void aqdraw(double xpts[], double ypts[], int *npts, int *icap)
 {
    int     i;
    int     iindx;

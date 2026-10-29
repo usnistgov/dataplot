@@ -68821,7 +68821,7 @@ Syntax 1:
           <par> is a parameter where the computed combined sd is saved;
     and where the <SUBSET/EXCEPT/FOR qualification> is optional.
 
-Syntax 4:
+Syntax 2:
     LET <par> = SUMMARY COMBINED VARIANCE  <ymean> <yvar> <n>
                 <SUBSET/EXCEPT/FOR qualification>
     where <ymean> is a variable containing the sample group means;
@@ -68867,7 +68867,7 @@ Program:
     SET LET CROSS TABULATE COLLAPSE
     LET YMEAN = CROSS TABULATE MEAN Y X
     LET YSD   = CROSS TABULATE SD   Y X
-    LET YN    = CROSS TABULATE        X
+    LET YN    = CROSS TABULATE SIZE   X
     .
     LET YCOMBSD  = SUMMARY COMBINED STANDARD DEVIATION YMEAN YSD YN
     LET YCOMBVAR = SUMMARY COMBINED VARIANCE           YMEAN YSD YN
