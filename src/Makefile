@@ -22,9 +22,9 @@ FEATURES = X11 STACK_SIZE
 # PREFIX is the parent of where are installed
 # for non-root install, consider PREFIX=$(HOME) or /var/tmp
 # DESTDIR is used by packaging programs (e.g., rpmbuild).
-PREFIX = $(DESTDIR)/usr/local
+#PREFIX = $(DESTDIR)/usr/local
 #PREFIX = $(DESTDIR)/usr
-#PREFIX = $(HOME)
+PREFIX = $(HOME)
 BINDIR = $(PREFIX)/bin
 
 # Check if running Cygwin or MacOS (and if using Homebrew or MacPorts).
@@ -42,7 +42,7 @@ endif
 
 # Add features for Cygwin
 ifeq ($(OS_NAME_2),Cygwin)
-    FEATURES +=  CYGWIN READLINE NCURSES XCLIP GD TIFF CAIRO
+    FEATURES +=  CYGWIN READLINE NCURSES GD TIFF CAIRO
 endif
 
 # Add features for MacOS (but determine if Homebrew or Macports is
@@ -60,6 +60,7 @@ endif
 # trivial for many MacOS users.  Check to see if the directory
 # "/Library/Frameworks/AquaTerm.framework" exists before turning on
 # "Aqua" feature.
+# feature.
 #
 ifeq ($(OS_NAME),Darwin)
     FEATURES +=  MACOSX
@@ -78,7 +79,7 @@ ifeq ($(OS_NAME),Darwin)
     ifeq ($(BREW_PATH),)
         # Homebrew is missing, check for MacPorts
         ifeq ($(IS_MACPORTS),yes)
-           FEATURES +=  AQ_MACPORTS MACPORTS MACOSX_M1 READLINE NCURSES
+           FEATURES +=  AQ_MACPORTS MACPORTS MACOSX_M1 READLINE NCURSES GD TIFF CAIRO
            PREFIX = $(DESTDIR)/opt/local
            BINDIR = $(PREFIX)/bin
            FC = /opt/local/bin/gfortran
@@ -86,7 +87,7 @@ ifeq ($(OS_NAME),Darwin)
            LDFLAGS += -L/opt/local/lib
            CPPFLAGS += -I/opt/local/include -I/opt/local/include/freetype2
            CFLAGS += -I/opt/local/include -I/opt/local/include/freetype2
-       else
+        else
            # Neither Homebrew or MacPorts available
            ifeq ($(ARCH),arm64)
               # Silicon Chips
@@ -100,7 +101,7 @@ ifeq ($(OS_NAME),Darwin)
        endif
     else
         # Homebrew is found
-        FEATURES +=  HOMEBREW
+        FEATURES +=  HOMEBREW GD TIFF CAIRO
         ifeq ($(IS_AQUA),yes)
            FEATURES +=  AQUA
         endif
