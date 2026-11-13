@@ -23,8 +23,8 @@ FEATURES = X11 STACK_SIZE
 # for non-root install, consider PREFIX=$(HOME) or /var/tmp
 # DESTDIR is used by packaging programs (e.g., rpmbuild).
 #PREFIX = $(DESTDIR)/usr/local
-#PREFIX = $(DESTDIR)/usr
-PREFIX = $(HOME)
+PREFIX = $(DESTDIR)/usr
+#PREFIX = $(HOME)
 BINDIR = $(PREFIX)/bin
 
 # Check if running Cygwin or MacOS (and if using Homebrew or MacPorts).
